@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Bx POS</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="search">Search</string>
+    <string name="number_of_guests">Set number of guests</string>
+    <string name="set">Set</string>
+    <string name="action_settings">Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_create_order">New Order</string>
+
+
+</resources>
