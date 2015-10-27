@@ -1,16 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context=".CreateOrderActivity">
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/set_guests"
+        android:title="@string/guests"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
-    <item android:id="@+id/ic_search"
+    <item android:id="@+id/add_note"
+        android:title="@string/note"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/item_search"
         android:title="@string/search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_search" />
+
 </menu>
