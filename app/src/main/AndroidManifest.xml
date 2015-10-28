@@ -27,6 +27,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.bxservice.bxpos.MainActivity" />
         </activity>
+        <activity
+            android:name=".ViewOpenOrdersActivity"
+            android:label="@string/title_activity_view_open_orders"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".ManageReservationActivity"
+            android:label="@string/title_activity_create_reservation"
+            android:theme="@style/AppTheme" >
+        </activity>
     </application>
 
 </manifest>

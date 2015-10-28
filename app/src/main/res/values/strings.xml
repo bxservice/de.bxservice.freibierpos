@@ -11,6 +11,8 @@
     <string name="cancel">Cancel</string>
     <string name="title_activity_create_order">New Order</string>
     <string name="note">Note</string>
-
-
+    <string name="title_activity_view_open_orders">Open Orders</string>
+    <string name="reservation">Reservation</string>
+    <string name="report">Report</string>
+    <string name="title_activity_create_reservation">Reservation</string>
 </resources>
