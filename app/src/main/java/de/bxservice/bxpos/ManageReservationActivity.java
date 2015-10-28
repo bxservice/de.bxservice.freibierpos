@@ -1,8 +1,12 @@
 package de.bxservice.bxpos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -38,12 +42,13 @@ public class ManageReservationActivity extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.new_reservation);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton newReservationBtn = (FloatingActionButton) findViewById(R.id.new_reservation);
+        newReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                createReservation(view);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
     }
@@ -66,13 +71,13 @@ public class ManageReservationActivity extends AppCompatActivity {
         List<String> today= new ArrayList<String>();
         today.add("Table 1  - 9:30");
         today.add("Table 25 - 12:00");
-        today.add("Civil");
-        today.add("Electronics and Communication");
-        today.add("Electrical and Electronics");
-        today.add("Information science");
-        today.add("Industrial Production");
-        today.add("Mechanical");
-        today.add("Basic Sciences");
+        today.add("eeee");
+        today.add("eeee");
+        today.add("eeee");
+        today.add("eeee");
+        today.add("eeee");
+        today.add("eeee");
+
 
         List<String> tomorrow = new ArrayList<String>();
         tomorrow.add("Table 9 - 21:00");
@@ -85,6 +90,34 @@ public class ManageReservationActivity extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(0), today); // Header, Child data
         listDataChild.put(listDataHeader.get(1), tomorrow);
         listDataChild.put(listDataHeader.get(2), pasadomanana);
+
+    }
+
+    /**
+     * Calls the create reservation activity
+     * @param view
+     */
+    public void createReservation(View view){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        CreateReservationDialogFragment newFragment = new CreateReservationDialogFragment();
+        newFragment.show(fragmentManager, "dialog");
+
+        /*if (mIsLargeLayout) {
+            // The device is using a large layout, so show the fragment as a dialog
+            newFragment.show(fragmentManager, "dialog");
+        } else {*/
+            // The device is smaller, so show the fragment fullscreen
+            //FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            // For a little polish, specify a transition animation
+            //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+           // transaction.add(android.R.id.content, newFragment)
+                    //.addToBackStack(null).commit();
+        //}
 
     }
 

@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void createOrder(View view){
+
         Intent intent = new Intent(this, CreateOrderActivity.class);
         intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
         intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
