@@ -13,7 +13,6 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -26,8 +25,16 @@
             app:layout_scrollFlags="scroll|enterAlways">
 
 
-
         </android.support.v7.widget.Toolbar>
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/openOrderTabs"
+            app:pstsShouldExpand="true"
+            android:layout_width="match_parent"
+            app:pstsIndicatorColor="#fff"
+            app:pstsIndicatorHeight="3sp"
+            android:textColor="#fff"
+            android:layout_height="30dip" />
 
     </android.support.design.widget.AppBarLayout>
 
