@@ -16,7 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.astuetz.PagerSlidingTabStrip;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class EditOrderActivity extends AppCompatActivity {
 
@@ -28,7 +36,7 @@ public class EditOrderActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private EditPagerAdapter mEditPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -41,16 +49,20 @@ public class EditOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_order);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar)
-        ;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mEditPagerAdapter = new EditPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.editTabViewPager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mEditPagerAdapter);
 
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.openOrderTabs);
+        tabs.setViewPager(mViewPager);
 
         FloatingActionButton payButton = (FloatingActionButton) findViewById(R.id.fab);
         payButton.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +103,9 @@ public class EditOrderActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class EditPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public EditPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -101,7 +113,7 @@ public class EditOrderActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a FoodMenuFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return EditOrderFragment.newInstance(position + 1);
         }
 
         @Override
@@ -114,11 +126,9 @@ public class EditOrderActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "ORDERING";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return "ORDERED";
             }
             return null;
         }
@@ -127,26 +137,28 @@ public class EditOrderActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class EditOrderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        ListView listView;
+        OrderArrayAdapter<String> mAdapter;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static EditOrderFragment newInstance(int sectionNumber) {
+            EditOrderFragment fragment = new EditOrderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public EditOrderFragment() {
         }
 
         @Override
@@ -154,15 +166,23 @@ public class EditOrderActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
 
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText("Caesar Salad  €10");
 
             TextView textView1 = (TextView) rootView.findViewById(R.id.section_label1);
             textView1.setText("Africola  €3");
 
             TextView textView2 = (TextView) rootView.findViewById(R.id.section_label2);
-            textView2.setText("Desert €2");
+            textView2.setText("Desert €2");*/
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+
+            listView = (ListView) rootView.findViewById(R.id.lista);
+            mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);
+
+
+
+            listView.setAdapter(mAdapter);
 
 
             return rootView;
