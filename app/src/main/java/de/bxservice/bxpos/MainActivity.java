@@ -80,7 +80,15 @@ public class MainActivity extends AppCompatActivity
         newOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createOrder(view);
+                Intent intent = new Intent(view.getContext(), CreateOrderActivityOption2.class);
+                intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
+                intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
+
+                Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
+                        Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
+                //createOrder(view);
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
@@ -146,6 +154,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_report) {
+
+            Intent intent = new Intent(this, EditOrderActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_settings) {
 
