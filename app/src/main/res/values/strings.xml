@@ -31,7 +31,6 @@
         completions."
     </string>
     <string name="title_activity_edit_order">EditOrder</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_create_order_activity_option2">Create Order</string>
 
 
