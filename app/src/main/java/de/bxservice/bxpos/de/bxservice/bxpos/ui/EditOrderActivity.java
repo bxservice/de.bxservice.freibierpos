@@ -1,4 +1,4 @@
-package de.bxservice.bxpos;
+package de.bxservice.bxpos.de.bxservice.bxpos.ui;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,11 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-public class CreateOrderActivityOption2 extends AppCompatActivity {
+import de.bxservice.bxpos.de.bxservice.bxpos.de.bxservice.bxpos.persistence.OrderDataExample;
+import de.bxservice.bxpos.R;
+
+public class EditOrderActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -30,7 +33,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
+    private EditPagerAdapter mEditPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -40,28 +43,29 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_order_activity_option2);
+        setContentView(R.layout.activity_edit_order);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.edit_order_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mCreateOrderPagerAdapter = new CreateOrderPagerAdapter(getSupportFragmentManager());
+        mEditPagerAdapter = new EditPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mCreateOrderPagerAdapter);
+        mViewPager = (ViewPager) findViewById(R.id.editTabViewPager);
+        mViewPager.setAdapter(mEditPagerAdapter);
 
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.openOrderTabs);
         tabs.setViewPager(mViewPager);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton payButton = (FloatingActionButton) findViewById(R.id.fab);
+        payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Payment", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -72,7 +76,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_order_activity_option2, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_order, menu);
         return true;
     }
 
@@ -96,12 +100,9 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class CreateOrderPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+    public class EditPagerAdapter extends FragmentPagerAdapter {
 
-        final int NUMBER_OF_TABS = 3;
-        private int tabIcons[] = {R.drawable.star129, R.drawable.cutlery23, R.drawable.beer25};
-
-        public CreateOrderPagerAdapter(FragmentManager fm) {
+        public EditPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -109,71 +110,78 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a FoodMenuFragment (defined as a static inner class below).
-            return FoodMenuFragment.newInstance(position + 1);
+            return EditOrderFragment.newInstance(position + 1);
         }
 
         @Override
-        /**
-         * Total number of tabs
-          */
         public int getCount() {
-            // Show 3 total pages.
-            return NUMBER_OF_TABS;
+            // Show 2 total pages. Ordered - Ordering.
+            return 2;
         }
 
-        /*@Override
-
-         * Return the titles of each tab
-
+        @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Favs";
+                    return "ORDERING";
                 case 1:
-                    return "Food";
-                case 2:
-                    return "Drinks";
+                    return "ORDERED";
             }
             return null;
-        }*/
-
-        @Override
-        public int getPageIconResId(int position) {
-            return tabIcons[position];
         }
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class FoodMenuFragment extends Fragment {
+    public static class EditOrderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        ListView listView;
+        OrderArrayAdapter<String> mAdapter;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static FoodMenuFragment newInstance(int sectionNumber) {
-            FoodMenuFragment fragment = new FoodMenuFragment();
+        public static EditOrderFragment newInstance(int sectionNumber) {
+            EditOrderFragment fragment = new EditOrderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public FoodMenuFragment() {
+        public EditOrderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_create_order_activity_option2, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
+
             /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
+            textView.setText("Caesar Salad  €10");
+
+            TextView textView1 = (TextView) rootView.findViewById(R.id.section_label1);
+            textView1.setText("Africola  €3");
+
+            TextView textView2 = (TextView) rootView.findViewById(R.id.section_label2);
+            textView2.setText("Desert €2");*/
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+
+            listView = (ListView) rootView.findViewById(R.id.lista);
+            mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);
+
+
+
+            listView.setAdapter(mAdapter);
+
+
             return rootView;
         }
     }

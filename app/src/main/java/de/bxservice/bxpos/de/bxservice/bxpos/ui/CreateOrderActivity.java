@@ -1,4 +1,4 @@
-package de.bxservice.bxpos;
+package de.bxservice.bxpos.de.bxservice.bxpos.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+
+import de.bxservice.bxpos.R;
 
 public class CreateOrderActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package de.bxservice.bxpos;
+package de.bxservice.bxpos.de.bxservice.bxpos.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.bxservice.bxpos.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {

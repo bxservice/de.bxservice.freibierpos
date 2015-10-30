@@ -1,4 +1,4 @@
-package de.bxservice.bxpos;
+package de.bxservice.bxpos.de.bxservice.bxpos.logic;
 
 /**
  * Created by diego on 29/10/15.

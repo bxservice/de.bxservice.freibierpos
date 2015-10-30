@@ -1,13 +1,15 @@
-package de.bxservice.bxpos;
+package de.bxservice.bxpos.de.bxservice.bxpos.de.bxservice.bxpos.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.bxservice.bxpos.de.bxservice.bxpos.logic.Order;
 
 /**
  * Created by diego on 29/10/15.
  */
 public class OrderDataExample {
-    static List ORDERS = new ArrayList<Order>();
+    public static List ORDERS = new ArrayList<Order>();
 
     static{
 

@@ -1,4 +1,4 @@
-package de.bxservice.bxpos;
+package de.bxservice.bxpos.de.bxservice.bxpos.ui;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+
+import de.bxservice.bxpos.R;
 
 /**
  * Created by Diego Ruiz on 28/10/15.
