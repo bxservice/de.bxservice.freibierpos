@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.de.bxservice.bxpos.ui;
+package de.bxservice.bxpos.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

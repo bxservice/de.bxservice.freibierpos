@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="de.bxservice.bxpos.de.bxservice.bxpos.ui.CreateOrderActivityOption2.FoodMenuFragment">
+    tools:context="de.bxservice.bxpos.ui.CreateOrderActivityOption2.FoodMenuFragment">
 
     <GridLayout
         android:layout_width="match_parent"
