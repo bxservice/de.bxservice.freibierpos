@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.de.bxservice.bxpos.ui;
+package de.bxservice.bxpos.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

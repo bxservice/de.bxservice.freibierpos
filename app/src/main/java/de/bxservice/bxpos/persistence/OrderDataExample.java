@@ -1,9 +1,9 @@
-package de.bxservice.bxpos.de.bxservice.bxpos.de.bxservice.bxpos.persistence;
+package de.bxservice.bxpos.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.de.bxservice.bxpos.logic.Order;
+import de.bxservice.bxpos.logic.Order;
 
 /**
  * Created by diego on 29/10/15.

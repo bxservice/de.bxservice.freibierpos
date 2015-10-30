@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.de.bxservice.bxpos.ui;
+package de.bxservice.bxpos.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
