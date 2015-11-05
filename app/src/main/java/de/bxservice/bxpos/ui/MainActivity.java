@@ -3,6 +3,7 @@ package de.bxservice.bxpos.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.AbstractWSObject;
+import de.bxservice.bxpos.logic.MProductCategory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
@@ -86,13 +89,17 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
                 intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
 
-                Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
-                        Toast.LENGTH_SHORT).show();
+               /* Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
+                        Toast.LENGTH_SHORT).show();*/
 
                 startActivity(intent);
                 //createOrder(view);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                MProductCategory a = new MProductCategory();
+               /* Snackbar.make(view, a.getTemp(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+
+                Toast.makeText(getBaseContext(), a.getTemp(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
