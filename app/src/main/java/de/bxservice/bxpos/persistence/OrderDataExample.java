@@ -3,7 +3,7 @@ package de.bxservice.bxpos.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.Order;
+import de.bxservice.bxpos.logic.model.Order;
 
 /**
  * Created by diego on 29/10/15.

@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 
 /**
