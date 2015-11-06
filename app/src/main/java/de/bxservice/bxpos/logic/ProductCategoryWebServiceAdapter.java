@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.logic;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
@@ -8,25 +9,33 @@ import org.idempiere.webservice.client.net.WebServiceClient;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by diego on 4/11/15.
+ * This class brings the product category data from iDempiere
+ * Created by Diego Ruiz on 4/11/15.
  */
-public class MProductCategory extends AbstractWSObject{
+public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
+
+    //Associated record in Web Service Security in iDempiere
+    private static final String SERVICE_TYPE = "QueryProductCategory";
 
     QueryDataRequest ws = new QueryDataRequest();
     String temp="";
+    List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
 
     @Override
     public String getServiceType() {
-        return "QueryProductCategory";
+        return SERVICE_TYPE;
     }
 
     @Override
     public void queryPerformed() {
+
         QueryDataRequest ws = new QueryDataRequest();
         ws.setServiceType(getServiceType());
         ws.setLogin(getLogin());
-        ws.setLimit(3);
 
         WebServiceClient client = getClient();
 
@@ -36,14 +45,35 @@ public class MProductCategory extends AbstractWSObject{
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 System.out.println(response.getErrorMessage());
             } else {
+
                 Log.i("info", "Total rows: " + response.getNumRows());
+                String categoryName;
+                int categoryID;
+
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
+
                     Log.i("info", "Row: " + (i + 1));
+                    categoryName = null;
+                    categoryID = 0;
+
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
+
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
-                        temp += field.getColumn() + " = " + field.getValue() + "\n";
+
+                        if( "Name".equalsIgnoreCase(field.getColumn()) )
+                            categoryName = field.getValue();
+                        else if ( ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()) )
+                            categoryID = Integer.valueOf(field.getValue());
+
+                        //temp += field.getColumn() + " = " + field.getValue() + "\n";
                     }
+
+                    if( categoryName != null &&  categoryID!= 0){
+                        ProductCategory p = new ProductCategory(categoryID, categoryName);
+                        productCategoryList.add(p);
+                    }
+
                 }
             }
 
@@ -51,6 +81,15 @@ public class MProductCategory extends AbstractWSObject{
             e.printStackTrace();
         }
     }
+
+    public List<ProductCategory> getProductCategoryList() {
+        return productCategoryList;
+    }
+
+    public void setProductCategoryList(List<ProductCategory> productCategoryList) {
+        this.productCategoryList = productCategoryList;
+    }
+
 
     public String getTemp(){
         return temp;
