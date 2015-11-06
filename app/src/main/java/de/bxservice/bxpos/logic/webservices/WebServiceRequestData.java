@@ -13,15 +13,15 @@ public class WebServiceRequestData {
 
     private static volatile WebServiceRequestData instance = null;
 
-    private String username;
-    private String password;
-    private String clientId;
-    private String roleId;
-    private String orgId;
-    private String attemptsNo;
-    private String timeout;
-    private String attemptsTimeout;
-    private String urlBase;
+    private String username        = null;
+    private String password        = null;
+    private String clientId        = null;
+    private String roleId          = null;
+    private String orgId           = null;
+    private String attemptsNo      = null;
+    private String timeout         = null;
+    private String attemptsTimeout = null;
+    private String urlBase         = null;
 
     //Properties reader
     private AssetsPropertyReader assetsPropertyReader;
@@ -53,6 +53,17 @@ public class WebServiceRequestData {
         attemptsTimeout = properties.getProperty("attemptsTimeout");
         urlBase = properties.getProperty("urlBase");
 
+    }
+
+    public boolean isDataComplete() {
+        if ( username != null && password != null &&
+                clientId != null && roleId != null &&
+                orgId != null && attemptsNo != null &&
+                attemptsNo != null && timeout != null &&
+                attemptsTimeout != null && urlBase != null )
+            return true;
+
+        return false;
     }
 
 

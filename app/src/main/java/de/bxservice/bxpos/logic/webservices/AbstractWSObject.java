@@ -14,33 +14,37 @@ public abstract class AbstractWSObject {
 
     private LoginRequest login;
     private WebServiceClient client;
-
+    private WebServiceRequestData wsData;
 
     public AbstractWSObject() {
 
-        login = new LoginRequest();
-        login.setUser("SuperUser");
-        login.setPass("System");
-        login.setClientID(11);
-        login.setRoleID(102);
-        login.setOrgID(0);
+        wsData = WebServiceRequestData.getInstance();
 
-        client = new WebServiceClient();
-        client.setAttempts(3);
-        client.setTimeout(2000);
-        client.setAttemptsTimeout(2000);
-        client.setWebServiceUrl(getUrlBase());
-       // client.setUserAgentProduct("Android Test WS Client");
+        if ( wsData.isDataComplete()  ){
 
-        runWebService();
+            login = new LoginRequest();
+
+            login.setUser(wsData.getUsername());
+            login.setPass(wsData.getPassword());
+            login.setClientID(Integer.parseInt(wsData.getClientId()));
+            login.setRoleID(Integer.parseInt(wsData.getRoleId()));
+            login.setOrgID(Integer.parseInt(wsData.getOrgId()));
+
+            client = new WebServiceClient();
+
+            client.setAttempts(Integer.parseInt(wsData.getAttemptsNo()));
+            client.setTimeout(Integer.parseInt(wsData.getTimeout()));
+            client.setAttemptsTimeout(Integer.parseInt(wsData.getAttemptsTimeout()));
+            client.setWebServiceUrl(wsData.getUrlBase());
+            client.setUserAgentProduct("Android BX POS");
+
+            runWebService();
+        }
+
     }
 
     public LoginRequest getLogin() {
         return login;
-    }
-
-    public String getUrlBase() {
-        return "https://192.168.2.4:8443";
     }
 
     public WebServiceClient getClient() {
