@@ -1,7 +1,11 @@
 package de.bxservice.bxpos.logic;
 
+import android.content.Context;
+
 import org.idempiere.webservice.client.base.LoginRequest;
 import org.idempiere.webservice.client.net.WebServiceClient;
+
+import java.util.Properties;
 
 /**
  * Created by Diego Ruiz on 4/11/15.
@@ -11,7 +15,9 @@ public abstract class AbstractWSObject {
     private LoginRequest login;
     private WebServiceClient client;
 
+
     public AbstractWSObject() {
+
         login = new LoginRequest();
         login.setUser("SuperUser");
         login.setPass("System");
@@ -24,7 +30,7 @@ public abstract class AbstractWSObject {
         client.setTimeout(2000);
         client.setAttemptsTimeout(2000);
         client.setWebServiceUrl(getUrlBase());
-        client.setUserAgentProduct("Android Test WS Client");
+       // client.setUserAgentProduct("Android Test WS Client");
 
         runWebService();
     }

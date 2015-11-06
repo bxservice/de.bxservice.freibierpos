@@ -3,7 +3,6 @@ package de.bxservice.bxpos.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,10 +20,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.AbstractWSObject;
-import de.bxservice.bxpos.logic.MProductCategory;
+import de.bxservice.bxpos.logic.AssetsPropertyReader;
+import de.bxservice.bxpos.logic.ProductCategoryWebServiceAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity
 
     private int numberOfGuests = 0;
     private String selectedTable = "";
+    private AssetsPropertyReader assetsPropertyReader;
+    private Properties properties;
 
     List<String> list;
     GridView grid;
@@ -92,14 +94,21 @@ public class MainActivity extends AppCompatActivity
                /* Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
                         Toast.LENGTH_SHORT).show();*/
 
+
                 startActivity(intent);
                 //createOrder(view);
-                MProductCategory a = new MProductCategory();
+                /*Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProductCategoryWebServiceAdapter a = new ProductCategoryWebServiceAdapter();
+
+                    }
+                });
+                thread.start();*/
                /* Snackbar.make(view, a.getTemp(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-                Toast.makeText(getBaseContext(), a.getTemp(),
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -111,6 +120,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        assetsPropertyReader = new AssetsPropertyReader(this);
+        properties = assetsPropertyReader.getProperties("bxpos.properties");
+
+        Toast.makeText(getBaseContext(),properties.getProperty("username"),
+                Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
