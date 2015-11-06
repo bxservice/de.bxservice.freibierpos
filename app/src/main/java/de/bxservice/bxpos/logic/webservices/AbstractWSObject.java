@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.logic;
+package de.bxservice.bxpos.logic.webservices;
 
 import android.content.Context;
 

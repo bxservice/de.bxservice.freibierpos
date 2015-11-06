@@ -1,6 +1,5 @@
-package de.bxservice.bxpos.logic;
+package de.bxservice.bxpos.logic.webservices;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
@@ -11,6 +10,8 @@ import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.bxservice.bxpos.logic.ProductCategory;
 
 /**
  * This class brings the product category data from iDempiere
