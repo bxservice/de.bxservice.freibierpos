@@ -1,8 +1,10 @@
-package de.bxservice.bxpos.logic;
+package de.bxservice.bxpos.logic.webservices;
 
 import android.content.Context;
 
 import java.util.Properties;
+
+import de.bxservice.bxpos.logic.AssetsPropertyReader;
 
 /**
  * Created by Diego Ruiz on 6/11/15.

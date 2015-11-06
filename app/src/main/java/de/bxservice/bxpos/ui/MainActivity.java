@@ -24,7 +24,6 @@ import java.util.Properties;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.AssetsPropertyReader;
-import de.bxservice.bxpos.logic.ProductCategoryWebServiceAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {

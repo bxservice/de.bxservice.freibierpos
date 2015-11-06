@@ -3,6 +3,8 @@ package de.bxservice.bxpos.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
+
 /**
  * Class in charge of work as the mediator between the data and the UI
  * it uses a singleton pattern to create the instance to secure that
