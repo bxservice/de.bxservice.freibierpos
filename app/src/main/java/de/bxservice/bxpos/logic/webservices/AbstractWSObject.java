@@ -36,7 +36,7 @@ public abstract class AbstractWSObject {
             client.setTimeout(Integer.parseInt(wsData.getTimeout()));
             client.setAttemptsTimeout(Integer.parseInt(wsData.getAttemptsTimeout()));
             client.setWebServiceUrl(wsData.getUrlBase());
-           // client.setUserAgentProduct("Android BX POS");
+            client.setUserAgentProduct("Android BX POS");
 
             runWebService();
         }
