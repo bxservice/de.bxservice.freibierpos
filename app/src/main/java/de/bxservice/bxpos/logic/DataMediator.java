@@ -1,5 +1,7 @@
 package de.bxservice.bxpos.logic;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,20 +21,29 @@ public class DataMediator {
     private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
 
 
-    private DataMediator() {
+    private DataMediator(Context ctx) {
 
-        ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter();
+        ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(ctx);
         productCategoryList = productCategoryWS.getProductCategoryList();
 
     }
 
-    public static synchronized DataMediator getInstance() {
-        if (instance == null) {
-            instance = new DataMediator();
-        }
+    /*public static synchronized DataMediator getInstance() {
+       // if (instance == null) {
+            //instance = new DataMediator();
+        //}
+
+        return instance;
+    }*/
+
+    public static synchronized DataMediator getInstance(Context ctx) {
+        // if (instance == null) {
+        instance = new DataMediator(ctx);
+        //}
 
         return instance;
     }
+
 
     public List<ProductCategory> getProductCategoryList() {
         return productCategoryList;
