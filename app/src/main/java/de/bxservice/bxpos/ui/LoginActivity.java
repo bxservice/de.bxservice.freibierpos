@@ -29,11 +29,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.DataMediator;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -191,9 +193,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
             mAuthTask.onCancelled();
-            Intent intent = new Intent(this, MainActivity.class);
 
-            startActivity(intent);
+            DataMediator data = DataMediator.getInstance(getBaseContext());
+
+            if( !data.getProductCategoryList().isEmpty() ){
+
+                Toast.makeText(getBaseContext(), data.getProductCategoryList().get(0).getName(),
+                        Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
+
+            }
+            else{
+                Toast.makeText(getBaseContext(), "No data found",
+                        Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

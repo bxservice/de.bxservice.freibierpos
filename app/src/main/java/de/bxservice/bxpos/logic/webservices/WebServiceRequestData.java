@@ -28,11 +28,22 @@ public class WebServiceRequestData {
     private Properties properties;
 
 
-    private WebServiceRequestData() {    }
+    private WebServiceRequestData(Context ctx) {
+        readValues(ctx);
 
-    public static synchronized WebServiceRequestData getInstance() {
+    }
+
+    /*public static synchronized WebServiceRequestData getInstance() {
         if (instance == null) {
             instance = new WebServiceRequestData();
+        }
+
+        return instance;
+    }*/
+
+    public static synchronized WebServiceRequestData getInstance(Context ctx) {
+        if (instance == null) {
+            instance = new WebServiceRequestData(ctx);
         }
 
         return instance;

@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.logic.webservices;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
@@ -23,8 +24,11 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
     private static final String SERVICE_TYPE = "QueryProductCategory";
 
     QueryDataRequest ws = new QueryDataRequest();
-    String temp="";
     List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
+
+    public ProductCategoryWebServiceAdapter(Context ctx) {
+        super(ctx);
+    }
 
     @Override
     public String getServiceType() {
@@ -43,7 +47,7 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
 
-            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
+            if ( response.getStatus() == Enums.WebServiceResponseStatus.Error ) {
                 System.out.println(response.getErrorMessage());
             } else {
 
@@ -67,10 +71,9 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
                         else if ( ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()) )
                             categoryID = Integer.valueOf(field.getValue());
 
-                        //temp += field.getColumn() + " = " + field.getValue() + "\n";
                     }
 
-                    if( categoryName != null &&  categoryID!= 0){
+                    if( categoryName != null &&  categoryID!= 0 ){
                         ProductCategory p = new ProductCategory(categoryID, categoryName);
                         productCategoryList.add(p);
                     }
@@ -91,8 +94,4 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
         this.productCategoryList = productCategoryList;
     }
 
-
-    public String getTemp(){
-        return temp;
-    }
 }
