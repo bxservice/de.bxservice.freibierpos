@@ -21,11 +21,17 @@ public class DataMediator {
     private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
 
 
-    private DataMediator(Context ctx) {
+    private DataMediator(final Context ctx) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(ctx);
+                productCategoryList = productCategoryWS.getProductCategoryList();
 
-        ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(ctx);
-        productCategoryList = productCategoryWS.getProductCategoryList();
+            }
+        });
 
+        //TODO: Create threads for all the other MOdel classes
     }
 
     /*public static synchronized DataMediator getInstance() {
