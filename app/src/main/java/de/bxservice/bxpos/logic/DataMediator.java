@@ -8,6 +8,7 @@ import java.util.List;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
 
 /**
@@ -45,6 +46,16 @@ public class DataMediator {
         });
 
         tableThread.run();
+
+        Thread productThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ProductWebServiceAdapter tableWS = new ProductWebServiceAdapter(ctx);
+                //tableList = tableWS.getTableList();
+            }
+        });
+
+        productThread.run();
 
         //TODO: Create threads for all the other MOdel classes
     }

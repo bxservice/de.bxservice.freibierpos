@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.Product;
+import de.bxservice.bxpos.logic.model.ProductCategory;
 
 /**
  * Created by Diego Ruiz on 9/11/15.
@@ -20,8 +21,7 @@ import de.bxservice.bxpos.logic.model.Product;
 public class ProductWebServiceAdapter extends AbstractWSObject{
 
     //Associated record in Web Service Security in iDempiere
-    //TODO: Create and fill
-    private static final String SERVICE_TYPE = "QueryProductCategory";
+    private static final String SERVICE_TYPE = "QueryProduct";
 
     QueryDataRequest ws = new QueryDataRequest();
     List<Product> productList = new ArrayList<Product>();
@@ -44,6 +44,8 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
 
         WebServiceClient client = getClient();
 
+        productList = new ArrayList<Product>();
+
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
 
@@ -52,13 +54,15 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
-                String categoryName;
+                String productName;
                 int categoryID;
+                int productId;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
                     Log.i("info", "Row: " + (i + 1));
-                    categoryName = null;
+                    productId = 0;
+                    productName = null;
                     categoryID = 0;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
@@ -67,14 +71,19 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
                         if( "Name".equalsIgnoreCase(field.getColumn()) )
-                            categoryName = field.getValue();
-                        else if ( Product.M_Product.equalsIgnoreCase(field.getColumn()) )
+                            productName = field.getValue();
+                        else if ( Product.M_Product_ID.equalsIgnoreCase(field.getColumn()) )
+                            productId = Integer.valueOf(field.getValue());
+                        else if ( ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()) )
                             categoryID = Integer.valueOf(field.getValue());
 
                     }
 
-                    if( categoryName != null &&  categoryID!= 0 ){
+                    if( productName != null && productId != 0 && categoryID != 0 ){
                         Product p = new Product();
+                        p.setProductCategoryId(categoryID);
+                        p.setProductID(productId);
+                        p.setProductName(productName);
                         productList.add(p);
                     }
 
