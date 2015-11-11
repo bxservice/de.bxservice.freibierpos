@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.ProductCategory;
+import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
 
@@ -20,7 +21,7 @@ public class DataMediator {
     private static volatile DataMediator instance = null;
 
     private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
-
+    private List<Table> tableList = new ArrayList<Table>();
 
     private DataMediator(final Context ctx) {
         Thread productCategoryThread = new Thread(new Runnable() {
@@ -37,8 +38,8 @@ public class DataMediator {
         Thread tableThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                TableWebServiceAdapter productCategoryWS = new TableWebServiceAdapter(ctx);
-                //productCategoryList = productCategoryWS.getProductCategoryList();
+                TableWebServiceAdapter tableWS = new TableWebServiceAdapter(ctx);
+                tableList = tableWS.getTableList();
 
             }
         });
