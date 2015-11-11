@@ -10,6 +10,7 @@ public class ProductPrice {
     public static final String M_ProductPrice = "M_ProductPrice";
 
     private int priceListVersionID;
+    private int productPriceID;
     private Product product;
     private BigDecimal sellingPrice;
 

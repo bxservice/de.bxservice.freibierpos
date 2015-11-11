@@ -1,7 +1,7 @@
 package de.bxservice.bxpos.logic.model;
 
 /**
- * Created by diego on 29/10/15.
+ * Created by Diego Ruiz on 29/10/15.
  */
 public class Order {
 

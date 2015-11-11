@@ -15,16 +15,14 @@ import java.util.List;
 import de.bxservice.bxpos.logic.model.Table;
 
 /**
- * Created by diego on 9/11/15.
+ * Created by Diego Ruiz on 9/11/15.
  */
 public class TableWebServiceAdapter extends AbstractWSObject{
 
     //Associated record in Web Service Security in iDempiere
-    //TODO: Create and fill
-    private static final String SERVICE_TYPE = "QueryProductCategory";
+    private static final String SERVICE_TYPE = "QueryTable";
 
-    QueryDataRequest ws = new QueryDataRequest();
-    List<Table> productList = new ArrayList<Table>();
+    List<Table> tableList;
 
     public TableWebServiceAdapter(Context ctx) {
         super(ctx);
@@ -44,6 +42,9 @@ public class TableWebServiceAdapter extends AbstractWSObject{
 
         WebServiceClient client = getClient();
 
+        tableList = new ArrayList<Table>();
+
+
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
 
@@ -58,25 +59,25 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
                     Log.i("info", "Row: " + (i + 1));
-                    categoryName = null;
-                    categoryID = 0;
+                    /*categoryName = null;
+                    categoryID = 0;*/
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
-                        if( "Name".equalsIgnoreCase(field.getColumn()) )
+                        /*if( "Name".equalsIgnoreCase(field.getColumn()) )
                             categoryName = field.getValue();
                         else if ( Table.M_Product.equalsIgnoreCase(field.getColumn()) )
-                            categoryID = Integer.valueOf(field.getValue());
+                            categoryID = Integer.valueOf(field.getValue());*/
 
                     }
 
-                    if( categoryName != null &&  categoryID!= 0 ){
+                   /* if( categoryName != null &&  categoryID!= 0 ){
                         Table p = new Table();
-                        productList.add(p);
-                    }
+                        tableList.add(p);
+                    }*/
 
                 }
             }
@@ -86,11 +87,11 @@ public class TableWebServiceAdapter extends AbstractWSObject{
         }
     }
 
-    public List<Table> getProductList() {
-        return productList;
+    public List<Table> getTableList() {
+        return tableList;
     }
 
-    public void setProductList(List<Table> productList) {
-        this.productList = productList;
+    public void setTableList(List<Table> tableList) {
+        this.tableList = tableList;
     }
 }
