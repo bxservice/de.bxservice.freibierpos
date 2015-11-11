@@ -10,6 +10,7 @@ public class Table {
 
     private int tableID;
     private String tableName;
+    private boolean isSummary;
 
     public int getTableID() {
         return tableID;

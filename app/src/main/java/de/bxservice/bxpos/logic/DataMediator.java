@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
 
 /**
  * Class in charge of work as the mediator between the data and the UI
@@ -22,7 +23,7 @@ public class DataMediator {
 
 
     private DataMediator(final Context ctx) {
-        Thread thread = new Thread(new Runnable() {
+        Thread productCategoryThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(ctx);
@@ -30,6 +31,19 @@ public class DataMediator {
 
             }
         });
+
+        productCategoryThread.run();
+
+        Thread tableThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TableWebServiceAdapter productCategoryWS = new TableWebServiceAdapter(ctx);
+                //productCategoryList = productCategoryWS.getProductCategoryList();
+
+            }
+        });
+
+        tableThread.run();
 
         //TODO: Create threads for all the other MOdel classes
     }

@@ -11,6 +11,7 @@ import de.bxservice.bxpos.logic.AssetsPropertyReader;
  */
 public class WebServiceRequestData {
 
+    private static final String PROPERTIES_FILE = "bxpos.properties";
     private static volatile WebServiceRequestData instance = null;
 
     private String username        = null;
@@ -52,7 +53,7 @@ public class WebServiceRequestData {
     public void readValues(Context context){
 
         assetsPropertyReader = new AssetsPropertyReader(context);
-        properties = assetsPropertyReader.getProperties("bxpos.properties");
+        properties = assetsPropertyReader.getProperties(PROPERTIES_FILE);
 
         username = properties.getProperty("username");
         password = properties.getProperty("password");
