@@ -53,31 +53,41 @@ public class TableWebServiceAdapter extends AbstractWSObject{
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
-                String categoryName;
-                int categoryID;
+                String tableName;
+                int tableId;
+                boolean isSummary;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
                     Log.i("info", "Row: " + (i + 1));
-                    /*categoryName = null;
-                    categoryID = 0;*/
+                    tableName = null;
+                    tableId = 0;
+                    isSummary = false;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
-                        /*if( "Name".equalsIgnoreCase(field.getColumn()) )
-                            categoryName = field.getValue();
-                        else if ( Table.M_Product.equalsIgnoreCase(field.getColumn()) )
-                            categoryID = Integer.valueOf(field.getValue());*/
+                        if( "Name".equalsIgnoreCase(field.getColumn()) )
+                            tableName = field.getValue();
+                        else if ( Table.BAY_Table_ID.equalsIgnoreCase(field.getColumn()) )
+                            tableId = Integer.valueOf(field.getValue());
+                        else if ( "IsSummary".equalsIgnoreCase(field.getColumn()) ){
+                            if("Y".equalsIgnoreCase(field.getValue()))
+                                isSummary = true;
+                        }
+
 
                     }
 
-                   /* if( categoryName != null &&  categoryID!= 0 ){
-                        Table p = new Table();
-                        tableList.add(p);
-                    }*/
+                    if( tableName != null &&  tableId!= 0 ){
+                        Table table = new Table();
+                        table.setTableID(tableId);
+                        table.setTableName(tableName);
+                        table.setIsSummary(isSummary);
+                        tableList.add(table);
+                    }
 
                 }
             }

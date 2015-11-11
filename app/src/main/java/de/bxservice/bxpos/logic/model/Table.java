@@ -6,10 +6,19 @@ package de.bxservice.bxpos.logic.model;
 public class Table {
 
     //TODO: Create the table in iDempiere and fill this variable
-    public static final String M_Product = "?????";
+    public static final String BAY_Table_ID = "BAY_Table_ID";
 
     private int tableID;
     private String tableName;
+
+    public boolean isSummary() {
+        return isSummary;
+    }
+
+    public void setIsSummary(boolean isSummary) {
+        this.isSummary = isSummary;
+    }
+
     private boolean isSummary;
 
     public int getTableID() {
