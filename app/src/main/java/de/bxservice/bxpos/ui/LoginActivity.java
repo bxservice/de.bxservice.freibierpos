@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,21 +202,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-
-                            DataMediator data = DataMediator.getInstance(getBaseContext());
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                thread.start();
-
+                new InitiateData().execute(getBaseContext());
 
             } else {
                 // display error
@@ -379,6 +366,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+    /**
+     * params, progress, result
+     */
+    private class InitiateData extends AsyncTask<Context, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Context... contexts) {
+
+            DataMediator data = DataMediator.getInstance(getBaseContext());
+
+            return true;
+            /*} catch (IOException e) {
+                return "Unable to retrieve web page. URL may be invalid.";
+            }*/
+        }
+        // onPostExecute displays the results of the AsyncTask.
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result){
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
         }
     }
 }
