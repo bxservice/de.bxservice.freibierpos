@@ -9,9 +9,11 @@ import org.idempiere.webservice.client.net.WebServiceClient;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 
 /**
@@ -20,11 +22,10 @@ import de.bxservice.bxpos.logic.model.ProductPrice;
 public class ProductPriceWebServiceAdapter extends AbstractWSObject{
 
     //Associated record in Web Service Security in iDempiere
-    //TODO: Create and fill
-    private static final String SERVICE_TYPE = "QueryProductCategory";
+    private static final String SERVICE_TYPE = "QueryProductPrice";
 
     QueryDataRequest ws = new QueryDataRequest();
-    List<ProductPrice> productPriceList = new ArrayList<ProductPrice>();
+    List<ProductPrice> productPriceList;
 
     public ProductPriceWebServiceAdapter(Context ctx) {
         super(ctx);
@@ -43,6 +44,7 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject{
         ws.setLogin(getLogin());
 
         WebServiceClient client = getClient();
+        productPriceList = new ArrayList<ProductPrice>();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
@@ -52,29 +54,42 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject{
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
-                String categoryName;
-                int categoryID;
+                int priceListVersionId;
+                int productId;
+                int productPriceId;
+                BigDecimal price;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
                     Log.i("info", "Row: " + (i + 1));
-                    categoryName = null;
-                    categoryID = 0;
+                    priceListVersionId = 0;
+                    productId = 0;
+                    productPriceId = 0;
+                    price = null;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
-                        if( "Name".equalsIgnoreCase(field.getColumn()) )
-                            categoryName = field.getValue();
-                        else if ( ProductPrice.M_ProductPrice.equalsIgnoreCase(field.getColumn()) )
-                            categoryID = Integer.valueOf(field.getValue());
+                        if( "M_PriceList_Version_ID".equalsIgnoreCase(field.getColumn()) )
+                            priceListVersionId = Integer.valueOf(field.getValue());
+                        else if ( ProductPrice.M_ProductPrice_ID.equalsIgnoreCase(field.getColumn()) )
+                            productPriceId = Integer.valueOf(field.getValue());
+                        else if ( Product.M_Product_ID.equalsIgnoreCase(field.getColumn()) )
+                            productId = Integer.valueOf(field.getValue());
+                        else if ( "PriceStd".equalsIgnoreCase(field.getColumn()) )
+                            price = new BigDecimal(field.getValue());
 
                     }
 
-                    if( categoryName != null &&  categoryID!= 0 ){
+                    if( priceListVersionId != 0 &&  productPriceId!= 0 &&
+                            productId != 0 && price != null ){
                         ProductPrice p = new ProductPrice();
+                        p.setProductID(productId);
+                        p.setPriceListVersionID(priceListVersionId);
+                        p.setProductPriceID(productPriceId);
+                        p.setStdPrice(price);
                         productPriceList.add(p);
                     }
 
