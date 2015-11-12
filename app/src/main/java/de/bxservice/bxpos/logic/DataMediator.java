@@ -5,9 +5,12 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductCategory;
+import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
 
@@ -23,6 +26,9 @@ public class DataMediator {
 
     private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
     private List<Table> tableList = new ArrayList<Table>();
+    private List<Product> productList = new ArrayList<Product>();
+    private List<ProductPrice> productPriceList = new ArrayList<ProductPrice>();
+
 
     private DataMediator(final Context ctx) {
         Thread productCategoryThread = new Thread(new Runnable() {
@@ -50,28 +56,30 @@ public class DataMediator {
         Thread productThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ProductWebServiceAdapter tableWS = new ProductWebServiceAdapter(ctx);
-                //tableList = tableWS.getTableList();
+                ProductWebServiceAdapter productWS = new ProductWebServiceAdapter(ctx);
+                productList = productWS.getProductList();
             }
         });
 
         productThread.run();
 
+        Thread productPriceThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter(ctx);
+                productPriceList = productPriceWS.getProductPriceList();
+            }
+        });
+
+        productPriceThread.run();
         //TODO: Create threads for all the other MOdel classes
     }
 
-    /*public static synchronized DataMediator getInstance() {
-       // if (instance == null) {
-            //instance = new DataMediator();
-        //}
-
-        return instance;
-    }*/
 
     public static synchronized DataMediator getInstance(Context ctx) {
-        // if (instance == null) {
+         if (instance == null) {
         instance = new DataMediator(ctx);
-        //}
+        }
 
         return instance;
     }

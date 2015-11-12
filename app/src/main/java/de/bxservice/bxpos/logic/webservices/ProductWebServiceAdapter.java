@@ -24,7 +24,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
     private static final String SERVICE_TYPE = "QueryProduct";
 
     QueryDataRequest ws = new QueryDataRequest();
-    List<Product> productList = new ArrayList<Product>();
+    List<Product> productList;
 
     public ProductWebServiceAdapter(Context ctx) {
         super(ctx);
