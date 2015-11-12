@@ -40,6 +40,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -194,21 +195,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-            mAuthTask.onCancelled();
 
             //Check if network connection is available
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                new InitiateData().execute(getBaseContext());
+                mAuthTask = new UserLoginTask(email, password);
+                mAuthTask.execute((Void) null);
+                mAuthTask.onCancelled();
 
             } else {
                 // display error
             }
-
-
         }
     }
 
@@ -328,25 +326,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            AuthenticationWebService auth = new AuthenticationWebService(getBaseContext(), mEmail);
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+            if ( mPassword.equals(auth.getPassword()) )
+                return true;
 
-            // TODO: register the new account here.
-            return true;
+            return false;
         }
 
         @Override
@@ -355,6 +341,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                new InitiateData().execute(getBaseContext());
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

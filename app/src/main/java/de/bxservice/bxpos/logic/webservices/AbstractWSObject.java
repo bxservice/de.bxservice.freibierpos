@@ -21,28 +21,43 @@ public abstract class AbstractWSObject {
         wsData = WebServiceRequestData.getInstance(ctx);
 
         if ( wsData.isDataComplete()  ){
+            initLogin();
+            initClient();
+            runWebService();
+        }
+    }
 
-            login = new LoginRequest();
+    public AbstractWSObject(Context ctx, String parameter) {
 
-            login.setUser(wsData.getUsername());
-            login.setPass(wsData.getPassword());
-            login.setClientID(Integer.parseInt(wsData.getClientId()));
-            login.setRoleID(Integer.parseInt(wsData.getRoleId()));
-            login.setOrgID(Integer.parseInt(wsData.getOrgId()));
+        wsData = WebServiceRequestData.getInstance(ctx);
 
-            client = new WebServiceClient();
-
-            client.setAttempts(Integer.parseInt(wsData.getAttemptsNo()));
-            client.setTimeout(Integer.parseInt(wsData.getTimeout()));
-            client.setAttemptsTimeout(Integer.parseInt(wsData.getAttemptsTimeout()));
-            client.setWebServiceUrl(wsData.getUrlBase());
-            //client.setUserAgentProduct("Android BX POS");
-            client.setUserAgentProduct("Android Test WS Client");
-
-
+        if ( wsData.isDataComplete()  ){
+            initLogin();
+            initClient();
+            setParameter(parameter);
             runWebService();
         }
 
+    }
+
+    public void initLogin(){
+        login = new LoginRequest();
+
+        login.setUser(wsData.getUsername());
+        login.setPass(wsData.getPassword());
+        login.setClientID(Integer.parseInt(wsData.getClientId()));
+        login.setRoleID(Integer.parseInt(wsData.getRoleId()));
+        login.setOrgID(Integer.parseInt(wsData.getOrgId()));
+    }
+
+    public void initClient(){
+        client = new WebServiceClient();
+
+        client.setAttempts(Integer.parseInt(wsData.getAttemptsNo()));
+        client.setTimeout(Integer.parseInt(wsData.getTimeout()));
+        client.setAttemptsTimeout(Integer.parseInt(wsData.getAttemptsTimeout()));
+        client.setWebServiceUrl(wsData.getUrlBase());
+        client.setUserAgentProduct("Android Test WS Client");
     }
 
     public LoginRequest getLogin() {
@@ -64,6 +79,6 @@ public abstract class AbstractWSObject {
 
     public abstract void queryPerformed();
 
-
+    public void setParameter(String parameter) {};
 
 }

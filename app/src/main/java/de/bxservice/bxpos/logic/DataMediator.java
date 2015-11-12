@@ -72,7 +72,6 @@ public class DataMediator {
         });
 
         productPriceThread.run();
-        //TODO: Create threads for all the other MOdel classes
     }
 
 
