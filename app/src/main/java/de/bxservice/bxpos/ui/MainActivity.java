@@ -68,16 +68,6 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
-/*        list.add("Table 1");
-        list.add("Table 2");
-        list.add("Table 3");
-        list.add("Table 4");
-        list.add("Table 5");
-        list.add("Table 6");
-        list.add("Table 7");
-        list.add("Table 8");
-*/
         grid.setGravity(Gravity.CENTER_HORIZONTAL);
 
         ArrayAdapter<String> adp = new ArrayAdapter<String>(this,
@@ -114,18 +104,6 @@ public class MainActivity extends AppCompatActivity
 
                 startActivity(intent);
                 //createOrder(view);
-                /*Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ProductCategoryWebServiceAdapter a = new ProductCategoryWebServiceAdapter();
-
-                    }
-                });
-                thread.start();*/
-               /* Snackbar.make(view, a.getTemp(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-
-
             }
         });
 
