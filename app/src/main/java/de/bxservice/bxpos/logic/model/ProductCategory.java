@@ -1,5 +1,8 @@
 package de.bxservice.bxpos.logic.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by diego on 5/11/15.
  */
@@ -9,6 +12,8 @@ public class ProductCategory {
 
     private int productCategoryID;
     private String name;
+    List<Product> products = new ArrayList<Product>();
+
 
     public ProductCategory(int id, String name){
         productCategoryID = id;
@@ -32,4 +37,11 @@ public class ProductCategory {
         this.name = name;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
