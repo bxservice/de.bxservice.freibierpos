@@ -37,6 +37,11 @@ public class DataMediator {
                 ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(ctx);
                 productCategoryList = productCategoryWS.getProductCategoryList();
 
+                ProductWebServiceAdapter productWS = new ProductWebServiceAdapter(ctx);
+                productList = productWS.getProductList();
+
+                setProductRelations();
+
             }
         });
 
@@ -53,15 +58,6 @@ public class DataMediator {
 
         tableThread.run();
 
-        Thread productThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ProductWebServiceAdapter productWS = new ProductWebServiceAdapter(ctx);
-                productList = productWS.getProductList();
-            }
-        });
-
-        productThread.run();
 
         Thread productPriceThread = new Thread(new Runnable() {
             @Override
@@ -119,4 +115,28 @@ public class DataMediator {
     public void setProductPriceList(List<ProductPrice> productPriceList) {
         this.productPriceList = productPriceList;
     }
+
+    /**
+     * Set the relation between product category and its respective products
+     */
+    private void setProductRelations(){
+
+        if( !productCategoryList.isEmpty() && !productList.isEmpty() ){
+
+            int productCategoryId;
+            int childProductCategoryId;
+            for( ProductCategory pc : productCategoryList ){
+
+                productCategoryId = pc.getProductCategoryID();
+                for( Product p : productList ){
+                    childProductCategoryId = p.getProductCategoryId();
+                    if( childProductCategoryId == productCategoryId )
+                        pc.getProducts().add(p);
+                }
+            }
+
+        }
+
+    }
+
 }
