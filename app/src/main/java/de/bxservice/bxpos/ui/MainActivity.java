@@ -24,6 +24,9 @@ import java.util.Properties;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.AssetsPropertyReader;
+import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.Table;
+import de.bxservice.bxpos.logic.model.TableGroup;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity
     private String selectedTable = "";
     private AssetsPropertyReader assetsPropertyReader;
     private Properties properties;
+
+    DataMediator dataProvider;
 
     List<String> list;
     GridView grid;
@@ -51,7 +56,20 @@ public class MainActivity extends AppCompatActivity
         list=new ArrayList<String>();
         grid=(GridView) findViewById(R.id.tableView);
 
-        list.add("Table 1");
+        dataProvider = DataMediator.getInstance();
+
+        for ( TableGroup tg : dataProvider.getTableGroupList() ){
+
+            Toast.makeText(getBaseContext(), tg.getName(),
+                    Toast.LENGTH_SHORT).show();
+
+            for (Table table : tg.getTables() )
+                list.add(table.getTableName());
+
+        }
+
+
+/*        list.add("Table 1");
         list.add("Table 2");
         list.add("Table 3");
         list.add("Table 4");
@@ -59,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         list.add("Table 6");
         list.add("Table 7");
         list.add("Table 8");
-
+*/
         grid.setGravity(Gravity.CENTER_HORIZONTAL);
 
         ArrayAdapter<String> adp = new ArrayAdapter<String>(this,

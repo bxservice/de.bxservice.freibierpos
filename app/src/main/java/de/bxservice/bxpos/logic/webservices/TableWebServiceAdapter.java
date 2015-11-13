@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.Table;
+import de.bxservice.bxpos.logic.model.TableGroup;
 
 /**
  * Created by Diego Ruiz on 9/11/15.
@@ -22,7 +23,8 @@ public class TableWebServiceAdapter extends AbstractWSObject{
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryTable";
 
-    List<Table> tableList;
+    private List<Table> tableList;
+    private List <TableGroup> tableGroupList;
 
     public TableWebServiceAdapter(Context ctx) {
         super(ctx);
@@ -43,7 +45,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
         WebServiceClient client = getClient();
 
         tableList = new ArrayList<Table>();
-
+        tableGroupList = new ArrayList<TableGroup>();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
@@ -53,16 +55,18 @@ public class TableWebServiceAdapter extends AbstractWSObject{
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
-                String tableName;
+                String name;
                 int tableId;
                 boolean isSummary;
+                String value;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
                     Log.i("info", "Row: " + (i + 1));
-                    tableName = null;
+                    name = null;
                     tableId = 0;
                     isSummary = false;
+                    value = null;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
@@ -70,26 +74,39 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
                         if( "Name".equalsIgnoreCase(field.getColumn()) )
-                            tableName = field.getValue();
+                            name = field.getValue();
                         else if ( Table.BAY_Table_ID.equalsIgnoreCase(field.getColumn()) )
                             tableId = Integer.valueOf(field.getValue());
                         else if ( "IsSummary".equalsIgnoreCase(field.getColumn()) ){
                             if("Y".equalsIgnoreCase(field.getValue()))
                                 isSummary = true;
                         }
-
+                        else if ( "Value".equalsIgnoreCase(field.getColumn()) )
+                            value = field.getValue();
 
                     }
 
-                    if( tableName != null &&  tableId!= 0 ){
-                        Table table = new Table();
-                        table.setTableID(tableId);
-                        table.setTableName(tableName);
-                        table.setIsSummary(isSummary);
-                        tableList.add(table);
+                    if( name != null &&  tableId!= 0 && value != null ){
+                        // If isSummary is a table group else is a table
+                        if(isSummary){
+                            TableGroup tableGroup =  new TableGroup();
+                            tableGroup.setValue(value);
+                            tableGroup.setName(name);
+                            tableGroupList.add(tableGroup);
+                        }
+                        else{
+                            Table table = new Table();
+                            table.setTableID(tableId);
+                            table.setTableName(name);
+                            table.setValue(value);
+                            tableList.add(table);
+                        }
                     }
 
                 }
+
+                associateGroupsAndTables();
+
             }
 
         } catch (Exception e) {
@@ -97,11 +114,48 @@ public class TableWebServiceAdapter extends AbstractWSObject{
         }
     }
 
-    public List<Table> getTableList() {
-        return tableList;
+    /**
+     * Associate the tables to their corresponding group based on search key
+     * If there are no groups - a default one is created
+     */
+    public void associateGroupsAndTables(){
+
+        if ( tableList != null && !tableList.isEmpty() ){
+            //If there are no table groups - create a default one
+            if ( tableGroupList.isEmpty() ){
+                TableGroup tableGroup =  new TableGroup();
+                tableGroup.setValue("default");
+                tableGroup.setName("default");
+
+                for ( Table table : tableList ){
+                    tableGroup.getTables().add(table);
+                }
+
+                tableGroupList.add(tableGroup);
+            } else {
+
+                String groupValue;
+                String tableValue;
+                for ( TableGroup tg : tableGroupList){
+
+                    groupValue = tg.getValue();
+                    for ( Table table : tableList ){
+
+                        tableValue = table.getValue().substring(0,2);
+                        if (tableValue.equals(groupValue)){
+                            tg.getTables().add(table);
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    public void setTableList(List<Table> tableList) {
-        this.tableList = tableList;
+    public List<TableGroup> getTableGroupList() {
+        return tableGroupList;
+    }
+
+    public void setTableGroupList(List<TableGroup> tableGroupList) {
+        this.tableGroupList = tableGroupList;
     }
 }
