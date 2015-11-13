@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui;
 
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,11 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import java.util.List;
+
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.ProductCategory;
 
 public class CreateOrderActivityOption2 extends AppCompatActivity {
 
@@ -47,6 +52,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mCreateOrderPagerAdapter = new CreateOrderPagerAdapter(getSupportFragmentManager());
@@ -98,10 +104,9 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class CreateOrderPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+    public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
-        final int NUMBER_OF_TABS = 3;
-        private int tabIcons[] = {R.drawable.star129, R.drawable.cutlery23, R.drawable.beer25};
+        private List<ProductCategory> productCategoryList;
 
         public CreateOrderPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -119,29 +124,18 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
          * Total number of tabs
           */
         public int getCount() {
-            // Show 3 total pages.
-            return NUMBER_OF_TABS;
+
+            productCategoryList = DataMediator.getInstance().getProductCategoryList();
+            return productCategoryList.size();
         }
 
-        /*@Override
-
-         * Return the titles of each tab
-
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Favs";
-                case 1:
-                    return "Food";
-                case 2:
-                    return "Drinks";
-            }
-            return null;
-        }*/
-
         @Override
-        public int getPageIconResId(int position) {
-            return tabIcons[position];
+        /**
+         * Return the titles of each tab
+         */
+        public CharSequence getPageTitle(int position) {
+
+            return productCategoryList.get(position).getName();
         }
     }
 
