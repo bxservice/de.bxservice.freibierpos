@@ -8,7 +8,7 @@ import java.util.List;
 import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.model.ProductPrice;
-import de.bxservice.bxpos.logic.model.Table;
+import de.bxservice.bxpos.logic.model.TableGroup;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
@@ -25,7 +25,7 @@ public class DataMediator {
     private static volatile DataMediator instance = null;
 
     private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
-    private List<Table> tableList = new ArrayList<Table>();
+    private List<TableGroup> tableGroupList = new ArrayList<TableGroup>();
     private List<Product> productList = new ArrayList<Product>();
     private List<ProductPrice> productPriceList = new ArrayList<ProductPrice>();
 
@@ -46,7 +46,7 @@ public class DataMediator {
             @Override
             public void run() {
                 TableWebServiceAdapter tableWS = new TableWebServiceAdapter(ctx);
-                tableList = tableWS.getTableList();
+                tableGroupList = tableWS.getTableGroupList();
 
             }
         });
@@ -76,10 +76,14 @@ public class DataMediator {
 
 
     public static synchronized DataMediator getInstance(Context ctx) {
-         if (instance == null) {
-        instance = new DataMediator(ctx);
+        if (instance == null) {
+            instance = new DataMediator(ctx);
         }
 
+        return instance;
+    }
+
+    public static synchronized DataMediator getInstance() {
         return instance;
     }
 
@@ -90,5 +94,29 @@ public class DataMediator {
 
     public void setProductCategoryList(List<ProductCategory> productCategoryList) {
         this.productCategoryList = productCategoryList;
+    }
+
+    public List<TableGroup> getTableGroupList() {
+        return tableGroupList;
+    }
+
+    public void setTableGroupList(List<TableGroup> tableGroupList) {
+        this.tableGroupList = tableGroupList;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    public List<ProductPrice> getProductPriceList() {
+        return productPriceList;
+    }
+
+    public void setProductPriceList(List<ProductPrice> productPriceList) {
+        this.productPriceList = productPriceList;
     }
 }

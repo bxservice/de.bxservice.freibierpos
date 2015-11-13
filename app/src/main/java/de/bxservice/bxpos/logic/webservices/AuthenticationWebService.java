@@ -55,18 +55,13 @@ public class AuthenticationWebService extends AbstractWSObject{
                 System.out.println(response.getErrorMessage());
             } else {
 
-                Log.i("info", "Total rows: " + response.getNumRows());
-
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
-                    Log.i("info", "Row: " + (i + 1));
                     password = null;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
-                        Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
-
                         if( "Password".equalsIgnoreCase(field.getColumn()) )
                             password = field.getValue();
 

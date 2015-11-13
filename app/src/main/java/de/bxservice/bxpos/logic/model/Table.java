@@ -9,16 +9,7 @@ public class Table {
 
     private int tableID;
     private String tableName;
-
-    public boolean isSummary() {
-        return isSummary;
-    }
-
-    public void setIsSummary(boolean isSummary) {
-        this.isSummary = isSummary;
-    }
-
-    private boolean isSummary;
+    private String value;
 
     public int getTableID() {
         return tableID;
@@ -34,5 +25,13 @@ public class Table {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
