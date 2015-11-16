@@ -11,37 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:columnCount="3"
+        android:id="@+id/productsLayout"
         android:orientation="horizontal">
-
-        <Button
-            android:text="Coca Cola"
-            android:id="@+id/button"
-            android:layout_gravity="fill_horizontal"/>
-
-        <Button
-            android:text="Duff Beer"
-            android:id="@+id/button1"
-            android:layout_gravity="fill_horizontal"/>
-
-        <Button
-            android:text="Red Red Wine"
-            android:id="@+id/button11"
-            android:layout_gravity="fill_horizontal"/>
-
-        <Button
-            android:text="Orange Juice"
-            android:id="@+id/button12"
-            android:layout_gravity="fill_horizontal"/>
-
-        <Button
-            android:text="Water"
-            android:id="@+id/button13"
-            android:layout_gravity="fill_horizontal"/>
-
-        <Button
-            android:text="Coffee"
-            android:id="@+id/button14"
-            android:layout_gravity="fill_horizontal"/>
 
     </GridLayout>
 

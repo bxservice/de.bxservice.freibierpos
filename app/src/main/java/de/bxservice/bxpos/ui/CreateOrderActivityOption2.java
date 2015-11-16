@@ -11,12 +11,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -25,6 +28,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 
 public class CreateOrderActivityOption2 extends AppCompatActivity {
@@ -148,6 +152,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private List<ProductCategory> productCategoryList;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -167,7 +172,21 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_create_order_activity_option2, container, false);
+            GridLayout gl = (GridLayout) rootView.findViewById(R.id.productsLayout);
+
+            productCategoryList = DataMediator.getInstance().getProductCategoryList();
+
+            ProductCategory pc = productCategoryList.get(getArguments().getInt(ARG_SECTION_NUMBER));
+
+            for( Product p : pc.getProducts() ){
+                Button b = new Button(getContext());
+                b.setText(p.getProductName());
+                b.setGravity(Gravity.FILL_HORIZONTAL);
+                gl.addView(b);
+            }
+
             /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
             return rootView;
