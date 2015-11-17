@@ -34,5 +34,9 @@
     <string name="title_activity_edit_order">EditOrder</string>
     <string name="title_activity_create_order_activity_option2">Create Order</string>
 
+    <!-- Strings related to roles -->
+    <string name="waiter_role">Server</string>
+    <string name="supervisor_role">Supervisor</string>
+
 
 </resources>
