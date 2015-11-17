@@ -20,10 +20,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.AssetsPropertyReader;
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.logic.model.TableGroup;
@@ -36,8 +34,6 @@ public class MainActivity extends AppCompatActivity
 
     private int numberOfGuests = 0;
     private String selectedTable = "";
-    private AssetsPropertyReader assetsPropertyReader;
-    private Properties properties;
 
     DataMediator dataProvider;
 
@@ -115,12 +111,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        assetsPropertyReader = new AssetsPropertyReader(this);
-        properties = assetsPropertyReader.getProperties("bxpos.properties");
-
-        Toast.makeText(getBaseContext(),properties.getProperty("username"),
-                Toast.LENGTH_SHORT).show();
 
     }
 

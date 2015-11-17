@@ -54,9 +54,7 @@ public class WebServiceRequestData {
 
         assetsPropertyReader = new AssetsPropertyReader(context);
         properties = assetsPropertyReader.getProperties(PROPERTIES_FILE);
-
-        username = properties.getProperty("username");
-        password = properties.getProperty("password");
+        
         clientId = properties.getProperty("clientId");
         roleId = properties.getProperty("roleID");
         orgId = properties.getProperty("orgId");
