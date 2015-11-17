@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,14 +32,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.PosRoles;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
@@ -64,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private ArrayList<String> roles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +98,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        getRoleNames();
+
+        Spinner spinner = (Spinner) findViewById(R.id.roles_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, roles);
+        /*ArrayAdapter.createFromResource(this,PosRoles.getRoles(), android.R.layout.simple_spinner_item);*/
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void getRoleNames(){
+        roles = new ArrayList<String>();
+
+        String roleName;
+        try {
+            Class res = R.string.class;
+            for( String role : PosRoles.getRoles() ){
+                Field field = res.getField(role);
+                int drawableId = field.getInt(null);
+                roleName = getString(drawableId);
+                roles.add(roleName);
+            }
+        }
+        catch (Exception e) {
+            Log.e("MyTag", "Failure to get drawable id.", e);
+        }
     }
 
     private void populateAutoComplete() {
