@@ -25,10 +25,6 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
 
     List<ProductCategory> productCategoryList;
 
-    public ProductCategoryWebServiceAdapter(Context ctx) {
-        super(ctx);
-    }
-
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

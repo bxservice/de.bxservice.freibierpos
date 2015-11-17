@@ -12,8 +12,6 @@ public class PosRoles {
     public static final String WAITER_ROLE     = "waiter_role";
     public static final String SUPERVISOR_ROLE = "supervisor_role";
 
-    private HashMap<String, String> roles1 = new HashMap<String, String>();
-
     public static ArrayList<String> getRoles(){
         ArrayList<String> roles = new ArrayList<String>();
 
