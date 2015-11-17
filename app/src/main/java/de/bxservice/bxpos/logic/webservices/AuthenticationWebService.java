@@ -3,12 +3,10 @@ package de.bxservice.bxpos.logic.webservices;
 import android.content.Context;
 import android.util.Log;
 
-import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
-import org.idempiere.webservice.client.base.Field;
 import org.idempiere.webservice.client.net.WebServiceClient;
-import org.idempiere.webservice.client.request.QueryDataRequest;
-import org.idempiere.webservice.client.response.WindowTabDataResponse;
+import org.idempiere.webservice.client.request.CompositeOperationRequest;
+import org.idempiere.webservice.client.response.CompositeResponse;
 
 /**
  * Created by Diego Ruiz on 12/11/15.
@@ -16,18 +14,13 @@ import org.idempiere.webservice.client.response.WindowTabDataResponse;
 public class AuthenticationWebService extends AbstractWSObject{
 
     //Associated record in Web Service Security in iDempiere
-    private static final String SERVICE_TYPE = "ReadUser";
-    private String username;
-    private String password;
+    private static final String SERVICE_TYPE = "TestLogin";
+
+    private boolean success;
 
     public AuthenticationWebService(Context ctx) {
         super(ctx);
     }
-
-    public AuthenticationWebService(Context ctx, String username) {
-        super(ctx, username);
-    }
-
 
     @Override
     public String getServiceType() {
@@ -37,54 +30,30 @@ public class AuthenticationWebService extends AbstractWSObject{
     @Override
     public void queryPerformed() {
 
-        QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
-        ws.setLogin(getLogin());
-        ws.setLimit(1);  //Limit number of rows
-
-        DataRow data = new DataRow();
-        data.addField("EMail", username);
-        ws.setDataRow(data);
+        CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
+        compositeOperation.setLogin(getLogin());
+        compositeOperation.setServiceType(getServiceType());
 
         WebServiceClient client = getClient();
 
         try {
-            WindowTabDataResponse response = client.sendRequest(ws);
+            CompositeResponse response = client.sendRequest(compositeOperation);
 
             if ( response.getStatus() == Enums.WebServiceResponseStatus.Error ) {
-                System.out.println(response.getErrorMessage());
+                Log.i("Error: ", response.getErrorMessage());
+                success = false;
             } else {
-
-                for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
-
-                    password = null;
-
-                    for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
-
-                        Field field = response.getDataSet().getRow(i).getFields().get(j);
-                        if( "Password".equalsIgnoreCase(field.getColumn()) )
-                            password = field.getValue();
-
-                    }
-                }
+                success = true;
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.i("Exception: ", e.getMessage());
+            success = false;
         }
     }
 
-    public String getPassword(){
-        return password;
+    public boolean isSuccess() {
+        return success;
     }
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    public void setParameter(String parameter){
-        username = parameter;
-    }
-
 
 }
