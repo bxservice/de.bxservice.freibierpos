@@ -16,9 +16,9 @@ public abstract class AbstractWSObject {
     private WebServiceClient client;
     private WebServiceRequestData wsData;
 
-    public AbstractWSObject(Context ctx) {
+    public AbstractWSObject() {
 
-        wsData = WebServiceRequestData.getInstance(ctx);
+        wsData = WebServiceRequestData.getInstance();
 
         if ( wsData.isDataComplete()  ){
             initLogin();
@@ -27,9 +27,9 @@ public abstract class AbstractWSObject {
         }
     }
 
-    public AbstractWSObject(Context ctx, String parameter) {
+    public AbstractWSObject(String parameter) {
 
-        wsData = WebServiceRequestData.getInstance(ctx);
+        wsData = WebServiceRequestData.getInstance();
 
         if ( wsData.isDataComplete()  ){
             initLogin();

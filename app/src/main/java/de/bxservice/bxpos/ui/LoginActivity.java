@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
@@ -69,6 +70,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private ArrayList<String> roles;
+    private Spinner rolesSpinner;
+    private HashMap<String, String> roleCodes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,14 +103,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         getRoleNames();
 
-        Spinner spinner = (Spinner) findViewById(R.id.roles_spinner);
+        rolesSpinner = (Spinner) findViewById(R.id.roles_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, roles);
         /*ArrayAdapter.createFromResource(this,PosRoles.getRoles(), android.R.layout.simple_spinner_item);*/
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        rolesSpinner.setAdapter(adapter);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -115,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void getRoleNames(){
         roles = new ArrayList<String>();
+        roleCodes = new HashMap<String, String>();
 
         String roleName;
         try {
@@ -124,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 int drawableId = field.getInt(null);
                 roleName = getString(drawableId);
                 roles.add(roleName);
+                roleCodes.put(roleName, role);
             }
         }
         catch (Exception e) {
@@ -192,6 +197,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String roleName = rolesSpinner.getSelectedItem().toString();
+        String role     = roleCodes.get(roleName);
 
         boolean cancel = false;
         View focusView = null;
@@ -229,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // perform the user login attempt.
                 showProgress(true);
 
-                mAuthTask = new UserLoginTask(username, password);
+                mAuthTask = new UserLoginTask(username, password, role);
                 mAuthTask.execute((Void) null);
 
             } else {
@@ -348,20 +355,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mUsername;
         private final String mPassword;
+        private final String mRole;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, String role) {
             mUsername = email;
             mPassword = password;
+            mRole     = role;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            WebServiceRequestData wsData = WebServiceRequestData.getInstance(getBaseContext());
+            WebServiceRequestData wsData = WebServiceRequestData.getInstance();
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
+            wsData.setRole(mRole);
 
-            AuthenticationWebService auth = new AuthenticationWebService(getBaseContext());
+            wsData.readValues(getBaseContext());
+
+
+            AuthenticationWebService auth = new AuthenticationWebService();
 
             if ( auth.isSuccess() )
                 return true;
@@ -397,15 +410,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Context... contexts) {
 
-            DataMediator data = DataMediator.getInstance(getBaseContext());
+            DataMediator data = DataMediator.getInstance();
 
-            return true;
-            /*} catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
-            }*/
+            if( data.isDataComplete() )
+                return true;
+
+            return false;
         }
-        // onPostExecute displays the results of the AsyncTask.
 
+        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(Boolean result) {
             showProgress(false);
@@ -413,8 +426,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if(result){
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
-                finish();
             }
+            finish();
         }
     }
 }

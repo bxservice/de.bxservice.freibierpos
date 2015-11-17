@@ -18,10 +18,6 @@ public class AuthenticationWebService extends AbstractWSObject{
 
     private boolean success;
 
-    public AuthenticationWebService(Context ctx) {
-        super(ctx);
-    }
-
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

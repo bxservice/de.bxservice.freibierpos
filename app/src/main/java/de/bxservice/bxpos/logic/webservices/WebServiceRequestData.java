@@ -23,14 +23,14 @@ public class WebServiceRequestData {
     private String timeout         = null;
     private String attemptsTimeout = null;
     private String urlBase         = null;
+    private String role            = null;
 
     //Properties reader
     private AssetsPropertyReader assetsPropertyReader;
     private Properties properties;
 
 
-    private WebServiceRequestData(Context ctx) {
-        readValues(ctx);
+    private WebServiceRequestData() {
 
     }
 
@@ -42,9 +42,9 @@ public class WebServiceRequestData {
         return instance;
     }*/
 
-    public static synchronized WebServiceRequestData getInstance(Context ctx) {
+    public static synchronized WebServiceRequestData getInstance() {
         if (instance == null) {
-            instance = new WebServiceRequestData(ctx);
+            instance = new WebServiceRequestData();
         }
 
         return instance;
@@ -55,13 +55,13 @@ public class WebServiceRequestData {
         assetsPropertyReader = new AssetsPropertyReader(context);
         properties = assetsPropertyReader.getProperties(PROPERTIES_FILE);
 
-        clientId = properties.getProperty("clientId");
-        roleId = properties.getProperty("roleID");
-        orgId = properties.getProperty("orgId");
-        attemptsNo = properties.getProperty("attemtpsno");
-        timeout = properties.getProperty("timeout");
+        clientId        = properties.getProperty("clientId");
+        roleId          = properties.getProperty(role);
+        orgId           = properties.getProperty("orgId");
+        attemptsNo      = properties.getProperty("attemtpsno");
+        timeout         = properties.getProperty("timeout");
         attemptsTimeout = properties.getProperty("attemptsTimeout");
-        urlBase = properties.getProperty("urlBase");
+        urlBase         = properties.getProperty("urlBase");
 
     }
 
@@ -91,6 +91,10 @@ public class WebServiceRequestData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getClientId() {
