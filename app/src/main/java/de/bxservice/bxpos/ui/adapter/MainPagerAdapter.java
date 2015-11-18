@@ -63,6 +63,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         private static final String ARG_SECTION_NUMBER = "section_number";
         List<String> list;
         GridView grid;
+        GridTableViewAdapter mGridAdapter;
+        ArrayList<GridItem> mGridData;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -90,26 +92,36 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             grid = (GridView) rootView.findViewById(R.id.tableView);
 
             List<TableGroup> tableGroupList = DataMediator.getInstance().getTableGroupList();
-
             TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
+            mGridData = new ArrayList<>();
             list=new ArrayList<String>();
 
-            for ( Table table : tableGroup.getTables() )
-                list.add(table.getTableName());
+            GridItem item;
+            for ( Table table : tableGroup.getTables() ){
+                item = new GridItem();
+                item.setTitle(table.getTableName());
+                mGridData.add(item);
+            }
+                //list.add(table.getTableName());
 
 
             grid.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line,list);
-            grid.setAdapter(adp);
+            mGridAdapter = new GridTableViewAdapter(this.getContext(), R.layout.table_grid_item_layout, mGridData);
+
+            //ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line,list);
+            grid.setAdapter(mGridAdapter);
 
             grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                        long arg3) {
-                    ((MainActivity)getActivity()).setSelectedTable(list.get(arg2));
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                    //Get item at position
+                    GridItem item = (GridItem) parent.getItemAtPosition(position);
+
+                    ((MainActivity)getActivity()).setSelectedTable(item.getTitle());
                     ((MainActivity)getActivity()).showGuestNumberDialog();
                 }
             });
