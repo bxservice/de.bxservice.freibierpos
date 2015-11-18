@@ -9,9 +9,19 @@ package de.bxservice.bxpos.ui.adapter;
 public class GridItem {
 
     private String title;
+    private String image;
+
 
     public GridItem() {
         super();
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getTitle() {
