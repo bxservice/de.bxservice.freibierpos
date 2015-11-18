@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity  {
     private View mLoginFormView;
     private ArrayList<String> roles;
     private Spinner rolesSpinner;
+
+    // Reference to the role code in the properties file
     private HashMap<String, String> roleCodes;
 
     @Override
@@ -86,8 +88,8 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
+        mSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -97,18 +99,19 @@ public class LoginActivity extends AppCompatActivity  {
         getRoleNames();
 
         rolesSpinner = (Spinner) findViewById(R.id.roles_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.selected_item, roles);
-        /*ArrayAdapter.createFromResource(this,PosRoles.getRoles(), android.R.layout.simple_spinner_item);*/
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         rolesSpinner.setAdapter(adapter);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    /**
+     * Sets the role name in the corresponding language
+     * set the hashmap for inner references
+     */
     private void getRoleNames(){
         roles = new ArrayList<String>();
         roleCodes = new HashMap<String, String>();
@@ -130,8 +133,8 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * Attempts to sign in .
+     * If there are form errors (invalid username, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
@@ -164,10 +167,6 @@ public class LoginActivity extends AppCompatActivity  {
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
-        } else if (!isEmailValid(username)) {
-            mUsernameView.setError(getString(R.string.error_invalid_email));
-            focusView = mUsernameView;
-            cancel = true;
         }
 
         if (cancel) {
@@ -191,18 +190,11 @@ public class LoginActivity extends AppCompatActivity  {
             } else {
                 Toast.makeText(getBaseContext(), getString(R.string.error_no_connection),
                         Toast.LENGTH_SHORT).show();
-
             }
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return true;
-    }
-
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -242,19 +234,8 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
-
     /**
-     * Represents an asynchronous login/registration task used to authenticate
+     * Represents an asynchronous login task used to authenticate
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
@@ -272,6 +253,7 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Void... params) {
 
+            // Sets the data to create a ws request to iDempiere
             WebServiceRequestData wsData = WebServiceRequestData.getInstance();
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
@@ -293,6 +275,7 @@ public class LoginActivity extends AppCompatActivity  {
             mAuthTask = null;
 
             if (success) {
+                // Read the data needed - Products. Product Category - Table ...
                 new InitiateData().execute(getBaseContext());
 
             } else {
@@ -313,6 +296,7 @@ public class LoginActivity extends AppCompatActivity  {
      * params, progress, result
      */
     private class InitiateData extends AsyncTask<Context, Void, Boolean> {
+
         @Override
         protected Boolean doInBackground(Context... contexts) {
 
