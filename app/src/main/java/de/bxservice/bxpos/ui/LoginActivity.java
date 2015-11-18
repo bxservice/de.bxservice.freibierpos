@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         rolesSpinner = (Spinner) findViewById(R.id.roles_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, roles);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.selected_item, roles);
         /*ArrayAdapter.createFromResource(this,PosRoles.getRoles(), android.R.layout.simple_spinner_item);*/
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
