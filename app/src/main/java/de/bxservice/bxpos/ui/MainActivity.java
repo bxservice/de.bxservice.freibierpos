@@ -34,6 +34,7 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.logic.model.TableGroup;
+import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
@@ -49,9 +50,6 @@ public class MainActivity extends AppCompatActivity
 
     DataMediator dataProvider;
 
-    List<String> list;
-    GridView grid;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +57,8 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+
+        dataProvider = DataMediator.getInstance();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -70,43 +70,6 @@ public class MainActivity extends AppCompatActivity
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.mainTabs);
         tabs.setViewPager(mViewPager);
-
-        list=new ArrayList<String>();
-        grid=(GridView) findViewById(R.id.tableView);
-
-        dataProvider = DataMediator.getInstance();
-
-        for ( TableGroup tg : dataProvider.getTableGroupList() ){
-
-            Toast.makeText(getBaseContext(), tg.getName(),
-                    Toast.LENGTH_SHORT).show();
-
-            for (Table table : tg.getTables() )
-                list.add(table.getTableName());
-
-        }
-
-        grid.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        ArrayAdapter<String> adp = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line,list);
-        grid.setAdapter(adp);
-
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-
-
-                /*Toast.makeText(getBaseContext(), list.get(arg2),
-                        Toast.LENGTH_SHORT).show();*/
-                /*Toast.makeText(getBaseContext(), "Hola",
-                        Toast.LENGTH_SHORT).show();*/
-                setSelectedTable(list.get(arg2));
-                showGuestNumberDialog();
-            }
-        });
 
         FloatingActionButton newOrderButton = (FloatingActionButton) findViewById(R.id.new_order_button);
         newOrderButton.setOnClickListener(new View.OnClickListener() {
@@ -245,96 +208,6 @@ public class MainActivity extends AppCompatActivity
                 Toast.LENGTH_SHORT).show();
 
         startActivity(intent);
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class MainPagerAdapter extends FragmentPagerAdapter {
-
-        public MainPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a FoodMenuFragment (defined as a static inner class below).
-            return MainTableFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 2 total pages. Ordered - Ordering.
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "ORDERING";
-                case 1:
-                    return "ORDERED";
-            }
-            return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class MainTableFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        ListView listView;
-        OrderArrayAdapter<String> mAdapter;
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static MainTableFragment newInstance(int sectionNumber) {
-            MainTableFragment fragment = new MainTableFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public MainTableFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
-
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText("Caesar Salad  €10");
-
-            TextView textView1 = (TextView) rootView.findViewById(R.id.section_label1);
-            textView1.setText("Africola  €3");
-
-            TextView textView2 = (TextView) rootView.findViewById(R.id.section_label2);
-            textView2.setText("Desert €2");*/
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
-
-            /*listView = (ListView) rootView.findViewById(R.id.lista);
-            mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);*/
-
-
-
-            //listView.setAdapter(mAdapter);
-
-
-            return rootView;
-        }
     }
 
 }
