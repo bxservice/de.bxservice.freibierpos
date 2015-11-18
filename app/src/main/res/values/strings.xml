@@ -9,41 +9,34 @@
     <string name="set">Set</string>
     <string name="action_settings">Settings</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_create_order">New Order</string>
     <string name="note">Note</string>
-    <string name="title_activity_view_open_orders">Open Orders</string>
     <string name="reservation">Reservation</string>
     <string name="report">Report</string>
-    <string name="title_activity_create_reservation">Reservation</string>
     <string name="save">Save</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="role">Role</string>
-    <string name="login_title">Bx POS</string>
-
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_no_connection">Check the connection</string>
     <string name="error_incorrect_password">Wrong username or password</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+
+    <!-- Activity titles strings -->
+    <string name="login_title">Bx POS</string>
     <string name="title_activity_edit_order">EditOrder</string>
     <string name="title_activity_create_order_activity_option2">Create Order</string>
+    <string name="title_activity_create_order">New Order</string>
+    <string name="title_activity_view_open_orders">Open Orders</string>
+    <string name="title_activity_create_reservation">Reservation</string>
+    <string name="title_activity_login">Sign in</string>
+
 
     <!-- Strings related to roles -->
+    <string name="role">Role</string>
     <string name="waiter_role">Server</string>
     <string name="supervisor_role">Supervisor</string>
-    <string name="title_activity_login2">Sign in</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-
 
 </resources>
