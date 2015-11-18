@@ -72,12 +72,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/roles_spinner"
+                android:layout_marginTop="16dp"
                 android:layout_gravity="center_horizontal"
                 android:spinnerMode="dropdown" />
 
-            <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:text="@string/action_sign_in"
+            <Button android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="@string/action_sign_in"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
         </LinearLayout>
