@@ -3,7 +3,12 @@ package de.bxservice.bxpos.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,10 +18,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +41,9 @@ public class MainActivity extends AppCompatActivity
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
 
+    private MainPagerAdapter mMainPagerAdapter;
+    private ViewPager mViewPager;
+
     private int numberOfGuests = 0;
     private String selectedTable = "";
 
@@ -44,10 +56,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mMainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
 
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.mainTabViewPager);
+        mViewPager.setAdapter(mMainPagerAdapter);
+
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.mainTabs);
+        tabs.setViewPager(mViewPager);
 
         list=new ArrayList<String>();
         grid=(GridView) findViewById(R.id.tableView);
@@ -224,4 +246,95 @@ public class MainActivity extends AppCompatActivity
 
         startActivity(intent);
     }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class MainPagerAdapter extends FragmentPagerAdapter {
+
+        public MainPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a FoodMenuFragment (defined as a static inner class below).
+            return MainTableFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            // Show 2 total pages. Ordered - Ordering.
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "ORDERING";
+                case 1:
+                    return "ORDERED";
+            }
+            return null;
+        }
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class MainTableFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+        ListView listView;
+        OrderArrayAdapter<String> mAdapter;
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static MainTableFragment newInstance(int sectionNumber) {
+            MainTableFragment fragment = new MainTableFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public MainTableFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
+
+            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText("Caesar Salad  €10");
+
+            TextView textView1 = (TextView) rootView.findViewById(R.id.section_label1);
+            textView1.setText("Africola  €3");
+
+            TextView textView2 = (TextView) rootView.findViewById(R.id.section_label2);
+            textView2.setText("Desert €2");*/
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+
+            /*listView = (ListView) rootView.findViewById(R.id.lista);
+            mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);*/
+
+
+
+            //listView.setAdapter(mAdapter);
+
+
+            return rootView;
+        }
+    }
+
 }
