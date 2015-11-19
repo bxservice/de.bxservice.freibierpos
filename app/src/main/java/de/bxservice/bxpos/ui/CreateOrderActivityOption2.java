@@ -120,7 +120,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a FoodMenuFragment (defined as a static inner class below).
-            return FoodMenuFragment.newInstance(position + 1);
+            return FoodMenuFragment.newInstance(position);
         }
 
         @Override
