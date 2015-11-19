@@ -19,10 +19,13 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_retry">RETRY</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_no_connection">Check the connection</string>
+    <string name="error_no_connection">No internet connection!</string>
     <string name="error_incorrect_password">Wrong username or password</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_config_server">Data error. Please contact the administrator</string>
+
 
     <!-- Activity titles strings -->
     <string name="login_title">Bx POS</string>

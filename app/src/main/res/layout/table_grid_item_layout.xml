@@ -12,7 +12,7 @@
         android:id="@+id/grid_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_local_dining_white_24dp"
+        android:src="@drawable/cutlery23"
         android:scaleType="centerCrop"/>
 
     <TextView
@@ -24,7 +24,6 @@
         android:gravity="left"
         android:maxLines="1"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@android:color/white"
         android:ellipsize="marquee"
         android:textSize="18sp" />
 

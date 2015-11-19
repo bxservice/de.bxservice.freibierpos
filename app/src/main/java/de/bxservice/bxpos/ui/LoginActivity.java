@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -188,8 +189,18 @@ public class LoginActivity extends AppCompatActivity  {
                 mAuthTask.execute((Void) null);
 
             } else {
-                Toast.makeText(getBaseContext(), getString(R.string.error_no_connection),
-                        Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar
+                        .make(mLoginFormView, getString(R.string.error_no_connection), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.action_retry), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        attemptLogin();
+                    }
+                });
+
+                // Changing message text color
+                snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
             }
         }
     }
@@ -302,7 +313,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             DataMediator data = DataMediator.getInstance();
 
-            if( data.isDataComplete() )
+            if( data.isDataComplete() && !data.isError() )
                 return true;
 
             return false;
@@ -316,8 +327,13 @@ public class LoginActivity extends AppCompatActivity  {
             if(result){
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
+            }else{
+                Snackbar snackbar = Snackbar
+                        .make(mLoginFormView, getString(R.string.error_config_server), Snackbar.LENGTH_LONG);
+
+                snackbar.show();
             }
-            finish();
         }
     }
 }
