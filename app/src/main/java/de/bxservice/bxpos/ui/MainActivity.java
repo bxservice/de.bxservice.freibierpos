@@ -3,12 +3,7 @@ package de.bxservice.bxpos.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,22 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.Table;
-import de.bxservice.bxpos.logic.model.TableGroup;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 
 public class MainActivity extends AppCompatActivity
@@ -195,7 +180,7 @@ public class MainActivity extends AppCompatActivity
 
     public void createOrder(){
 
-        Intent intent = new Intent(this, CreateOrderActivityOption2.class);
+        Intent intent = new Intent(this, CreateOrderActivity.class);
         intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
         intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
 

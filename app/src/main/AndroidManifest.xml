@@ -56,7 +56,7 @@
                 android:value=".ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.CreateOrderActivityOption2"
+            android:name=".ui.CreateOrderActivity"
             android:label="@string/title_activity_create_order_activity_option2"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" >
