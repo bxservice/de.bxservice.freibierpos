@@ -1,18 +1,18 @@
 package de.bxservice.bxpos.ui.adapter;
 
 /**
- * This represents every GridItem
+ * This represents every TableGridItem
  * it is written like this to allow future images of tables
  * instead of only names
  * Created by Diego Ruiz on 18/11/15.
  */
-public class GridItem {
+public class TableGridItem {
 
     private String title;
     private String image;
 
 
-    public GridItem() {
+    public TableGridItem() {
         super();
     }
 
