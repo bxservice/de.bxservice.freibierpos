@@ -19,15 +19,6 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ui.CreateOrderActivity"
-            android:label="@string/title_activity_create_order"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
-        </activity>
-        <activity
             android:name=".ui.ViewOpenOrdersActivity"
             android:label="@string/title_activity_view_open_orders"
             android:parentActivityName=".ui.MainActivity"
