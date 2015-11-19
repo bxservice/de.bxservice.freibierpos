@@ -1,6 +1,5 @@
 package de.bxservice.bxpos.ui;
 
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -31,7 +29,7 @@ import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 
-public class CreateOrderActivityOption2 extends AppCompatActivity {
+public class CreateOrderActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,7 +49,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_order_activity_option2);
+        setContentView(R.layout.activity_create_order_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,7 +82,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_order_activity_option2, menu);
+        getMenuInflater().inflate(R.menu.menu_create_order_activity, menu);
         return true;
     }
 
@@ -173,7 +171,7 @@ public class CreateOrderActivityOption2 extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.fragment_create_order_activity_option2, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_create_order_activity, container, false);
             GridLayout gl = (GridLayout) rootView.findViewById(R.id.productsLayout);
 
             productCategoryList = DataMediator.getInstance().getProductCategoryList();
