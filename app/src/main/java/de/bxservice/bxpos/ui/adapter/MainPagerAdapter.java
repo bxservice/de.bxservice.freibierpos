@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -61,10 +60,9 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        List<String> list;
         GridView grid;
         GridTableViewAdapter mGridAdapter;
-        ArrayList<GridItem> mGridData;
+        ArrayList<TableGridItem> mGridData;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -95,17 +93,14 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
             mGridData = new ArrayList<>();
-            list=new ArrayList<String>();
 
-            GridItem item;
+            TableGridItem item;
             for ( Table table : tableGroup.getTables() ){
-                item = new GridItem();
+                item = new TableGridItem();
                 item.setTitle(table.getTableName());
                 //item.setImage(R.drawable.ic_local_dining_white_24dp);
                 mGridData.add(item);
             }
-                //list.add(table.getTableName());
-
 
             grid.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -120,7 +115,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
                     //Get item at position
-                    GridItem item = (GridItem) parent.getItemAtPosition(position);
+                    TableGridItem item = (TableGridItem) parent.getItemAtPosition(position);
 
                     ((MainActivity)getActivity()).setSelectedTable(item.getTitle());
                     ((MainActivity)getActivity()).showGuestNumberDialog();

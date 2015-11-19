@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -67,10 +65,9 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        List<String> list;
         GridView grid;
-        GridTableViewAdapter mGridAdapter;
-        ArrayList<GridItem> mGridData;
+        ArrayList<NewOrderGridItem> mGridData;
+        GridOrderViewAdapter mGridAdapter;
         private List<ProductCategory> productCategoryList;
 
         /**
@@ -102,19 +99,25 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
             ProductCategory pc = productCategoryList.get(sectionNumber);
 
-            list=new ArrayList<String>();
+            mGridData = new ArrayList<>();
 
-            for( Product p : pc.getProducts() ){
-                list.add(p.getProductName());
+            NewOrderGridItem item;
+            for( Product product : pc.getProducts() ){
+                item = new NewOrderGridItem();
+                item.setName(product.getProductName());
+                item.setPrice("€ 25");
+                mGridData.add(item);
             }
 
             grid.setGravity(Gravity.CENTER_HORIZONTAL);
+            mGridAdapter = new GridOrderViewAdapter(this.getContext(), R.layout.food_menu_grid_item_layout, mGridData);
 
-            ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line,list);
-            grid.setAdapter(adp);
 
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));*/
+            /*ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line,list);
+            grid.setAdapter(adp);*/
+
+            grid.setAdapter(mGridAdapter);
+
             return rootView;
         }
     }
