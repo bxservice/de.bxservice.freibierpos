@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
@@ -102,6 +104,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
             mGridData = new ArrayList<>();
 
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
             NewOrderGridItem item;
             ProductPrice productPrice;
@@ -110,7 +113,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
                 item.setName(product.getProductName());
 
                 productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product);
-                item.setPrice(productPrice.getStdPrice().toString());
+                item.setPrice(currencyFormat.format(productPrice.getStdPrice()));
                 mGridData.add(item);
             }
 

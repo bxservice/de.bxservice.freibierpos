@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductCategory;
@@ -23,6 +24,8 @@ import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
  * Created by Diego Ruiz on 6/11/15.
  */
 public class DataMediator {
+
+    public static final Locale LOCALE = Locale.GERMANY;
 
     private static volatile DataMediator instance = null;
 
