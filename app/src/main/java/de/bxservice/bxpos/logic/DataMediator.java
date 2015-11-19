@@ -1,8 +1,10 @@
 package de.bxservice.bxpos.logic;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.Product;
@@ -28,6 +30,8 @@ public class DataMediator {
     private List<TableGroup> tableGroupList = new ArrayList<TableGroup>();
     private List<Product> productList = new ArrayList<Product>();
     private List<ProductPrice> productPriceList = new ArrayList<ProductPrice>();
+    private HashMap<Product, ProductPrice> productPriceHashMap = new HashMap<Product, ProductPrice>();
+    private boolean error = false;
 
 
     private DataMediator() {
@@ -39,6 +43,9 @@ public class DataMediator {
 
                 ProductWebServiceAdapter productWS = new ProductWebServiceAdapter();
                 productList = productWS.getProductList();
+
+                ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter();
+                productPriceList = productPriceWS.getProductPriceList();
 
                 setProductRelations();
 
@@ -58,16 +65,6 @@ public class DataMediator {
 
         tableThread.run();
 
-
-        Thread productPriceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter();
-                productPriceList = productPriceWS.getProductPriceList();
-            }
-        });
-
-        productPriceThread.run();
     }
 
 
@@ -111,6 +108,10 @@ public class DataMediator {
         this.productPriceList = productPriceList;
     }
 
+    public boolean isError() {
+        return error;
+    }
+
     public boolean isDataComplete(){
         if( productCategoryList  != null && !productCategoryList.isEmpty() &&
                 productList      != null && !productList.isEmpty() &&
@@ -121,11 +122,16 @@ public class DataMediator {
         return false;
     }
 
+    public HashMap<Product, ProductPrice> getProductPriceHashMap() {
+        return productPriceHashMap;
+    }
+
     /**
      * Set the relation between product category and its respective products
      */
     private void setProductRelations(){
 
+        //Relation between product category and product
         if( productCategoryList != null && !productCategoryList.isEmpty() &&
                 productList != null && !productList.isEmpty() ){
 
@@ -140,7 +146,34 @@ public class DataMediator {
                         pc.getProducts().add(p);
                 }
             }
+        }
+        else {
+            Log.i("Error: ", "missing products");
+            error = true;
+        }
 
+        //Relation between products and prices - the list has to be the same long. One price per every product
+        if( productPriceList != null && !productPriceList.isEmpty() &&
+                productList != null && !productList.isEmpty() &&
+                productPriceList.size() == productList.size() ){
+
+            int productId;
+            int priceProductId;
+            for( ProductPrice pp : productPriceList ){
+
+                priceProductId = pp.getProductID();
+                for( Product p : productList ){
+                    productId = p.getProductID();
+                    if( priceProductId == productId ) {
+                        pp.setProduct(p);
+                        productPriceHashMap.put(p,pp);
+                    }
+                }
+            }
+        }
+        else {
+            Log.i("Error: ", "missing price products");
+            error = true;
         }
 
     }

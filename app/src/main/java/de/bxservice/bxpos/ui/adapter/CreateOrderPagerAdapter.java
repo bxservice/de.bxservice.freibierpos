@@ -18,6 +18,7 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.Product;
 import de.bxservice.bxpos.logic.model.ProductCategory;
+import de.bxservice.bxpos.logic.model.ProductPrice;
 
 /**
  * Created by Diego Ruiz on 19/11/15.
@@ -101,11 +102,15 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
             mGridData = new ArrayList<>();
 
+
             NewOrderGridItem item;
+            ProductPrice productPrice;
             for( Product product : pc.getProducts() ){
                 item = new NewOrderGridItem();
                 item.setName(product.getProductName());
-                item.setPrice("€ 25");
+
+                productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product);
+                item.setPrice(productPrice.getStdPrice().toString());
                 mGridData.add(item);
             }
 
