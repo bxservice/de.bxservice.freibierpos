@@ -49,8 +49,8 @@
         <activity
             android:name=".ui.EditOrderActivity"
             android:label="@string/title_activity_edit_order"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
@@ -62,7 +62,13 @@
             android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:resource="@xml/searchable"
                 android:value=".ui.MainActivity" />
+        </activity>
+        <activity android:name=".ui.SearchMenuItemActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
         </activity>
     </application>
 
