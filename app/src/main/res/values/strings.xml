@@ -30,7 +30,6 @@
     <!-- Activity titles strings -->
     <string name="login_title">Bx POS</string>
     <string name="title_activity_edit_order">EditOrder</string>
-    <string name="title_activity_create_order_activity_option2">Create Order</string>
     <string name="title_activity_create_order">New Order</string>
     <string name="title_activity_view_open_orders">Open Orders</string>
     <string name="title_activity_create_reservation">Reservation</string>

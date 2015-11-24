@@ -2,6 +2,7 @@ package de.bxservice.bxpos.ui;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -88,14 +89,6 @@ public class CreateOrderActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_create_order_activity, menu);
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.items_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 
@@ -108,6 +101,11 @@ public class CreateOrderActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if(id == R.id.items_search){
+            Intent intent = new Intent(this, SearchMenuItemActivity.class);
+            startActivity(intent);
             return true;
         }
 
