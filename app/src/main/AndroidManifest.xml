@@ -63,11 +63,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.SearchMenuItemActivity" >
+        <activity android:name=".ui.SearchMenuItemActivity"
+            android:label="">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"
                 />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.CreateOrderActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
