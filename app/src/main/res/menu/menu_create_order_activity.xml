@@ -9,7 +9,7 @@
     <item android:id="@+id/items_search"
         android:title="@string/search"
         android:orderInCategory="100"
-        app:showAsAction="collapseActionView|ifRoom"
+        app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_search"
         />
 
