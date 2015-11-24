@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.ui;
+package de.bxservice.bxpos.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -31,8 +31,8 @@ public class OrderArrayAdapter<T> extends ArrayAdapter<T> {
         }
 
         //Obteniendo instancias de los text views
-        TextView titulo = (TextView)listItemView.findViewById(android.R.id.text1);
-        TextView subtitulo = (TextView)listItemView.findViewById(android.R.id.text2);
+        TextView title = (TextView)listItemView.findViewById(android.R.id.text1);
+        TextView subtitle = (TextView)listItemView.findViewById(android.R.id.text2);
 
         //Obteniendo instancia de la Tarea en la posición actual
         T item = (T)getItem(position);
@@ -45,8 +45,8 @@ public class OrderArrayAdapter<T> extends ArrayAdapter<T> {
         cadenaBruta = item.toString();
         subCadenas = cadenaBruta.split(delimitador,2);
 
-        titulo.setText(subCadenas[0]);
-        subtitulo.setText(subCadenas[1]);
+        title.setText(subCadenas[0]);
+        subtitle.setText(subCadenas[1]);
 
         //Devolver al ListView la fila creada
         return listItemView;
