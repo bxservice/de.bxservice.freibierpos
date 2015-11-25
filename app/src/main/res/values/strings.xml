@@ -15,6 +15,9 @@
     <string name="report">Report</string>
     <string name="save">Save</string>
 
+    <string name="discard_draft_order">Discard order?</string>
+    <string name="discard">Discard</string>
+
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
