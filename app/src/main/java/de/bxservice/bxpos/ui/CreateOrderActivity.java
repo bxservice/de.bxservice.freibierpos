@@ -121,6 +121,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private void showGuestNumberDialog() {
         // Create an instance of the dialog fragment and show it
         GuestNumberDialogFragment guestDialog = new GuestNumberDialogFragment();
+        guestDialog.setNumberOfGuests(getNumberOfGuests());
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
     }
 

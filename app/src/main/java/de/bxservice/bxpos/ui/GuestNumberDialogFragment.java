@@ -50,6 +50,7 @@ public class GuestNumberDialogFragment extends DialogFragment {
 
         np.setMaxValue(15);
         np.setMinValue(1);
+        np.setValue(getNumberOfGuests());
         np.setWrapSelectorWheel(false);
 
         builder.setTitle(R.string.number_of_guests);
