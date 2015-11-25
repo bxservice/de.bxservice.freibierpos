@@ -35,6 +35,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
     private int numberOfGuests = 0;
     private String selectedTable = "";
+    private String remarkNote = "";
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -153,6 +154,15 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         this.selectedTable = selectedTable;
     }
 
+    public String getRemarkNote() {
+        return remarkNote;
+    }
+
+    public void setRemarkNote(String remarkNote) {
+        System.out.println(remarkNote);
+        this.remarkNote = remarkNote;
+    }
+
     /**
      * Click set on guest number dialog
      * @param dialog
@@ -171,8 +181,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     @Override
     public void onDialogPositiveClick(RemarkDialogFragment dialog) {
         // User touched the dialog's positive button
-        /*int guests = dialog.getNumberOfGuests();
-        setNumberOfGuests(guests);*/
+        String note = dialog.getNote();
+        setRemarkNote(note);
     }
 
 }
