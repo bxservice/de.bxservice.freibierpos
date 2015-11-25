@@ -49,6 +49,7 @@ public class GridOrderViewAdapter extends ArrayAdapter<NewOrderGridItem> {
             holder = new ViewHolder();
             holder.titleTextView = (TextView) row.findViewById(R.id.grid_item_name);
             holder.priceTextView = (TextView) row.findViewById(R.id.grid_item_price);
+            holder.qtyTextView = (TextView) row.findViewById(R.id.qtyOrdered_text);
 
             row.setTag(holder);
         } else {
@@ -58,6 +59,7 @@ public class GridOrderViewAdapter extends ArrayAdapter<NewOrderGridItem> {
         NewOrderGridItem item = mGridData.get(position);
         holder.titleTextView.setText(Html.fromHtml(item.getName()));
         holder.priceTextView.setText(Html.fromHtml(item.getPrice()));
+        holder.qtyTextView.setText(Html.fromHtml(item.getQty()));
 
         return row;
     }
@@ -65,5 +67,6 @@ public class GridOrderViewAdapter extends ArrayAdapter<NewOrderGridItem> {
     static class ViewHolder {
         TextView titleTextView;
         TextView priceTextView;
+        TextView qtyTextView;
     }
 }

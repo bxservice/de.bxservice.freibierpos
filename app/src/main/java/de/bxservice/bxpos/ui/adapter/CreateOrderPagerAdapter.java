@@ -112,12 +112,22 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
             NewOrderGridItem item;
             ProductPrice productPrice;
+            int qtyOrdered;
             for( MProduct product : pc.getProducts() ){
+                qtyOrdered = 0;
                 item = new NewOrderGridItem();
                 item.setName(product.getProductName());
 
                 productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product);
                 item.setPrice(currencyFormat.format(productPrice.getStdPrice()));
+
+                //When you navigate through the tabs it paints again everything - this lets the number stay
+                qtyOrdered = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
+                if( qtyOrdered != 0 )
+                    item.setQty("x"+Integer.toString(qtyOrdered));
+                else
+                    item.setQty("");
+
                 mGridData.add(item);
                 itemProductHashMap.put(item,product);
             }
