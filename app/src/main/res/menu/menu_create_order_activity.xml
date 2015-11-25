@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.bxservice.bxpos.ui.CreateOrderActivity">
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/set_guests"
+        android:title="@string/guests"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/add_note"
+        android:title="@string/note"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
 
     <item android:id="@+id/items_search"
         android:title="@string/search"
