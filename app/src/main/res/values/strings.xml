@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bx POS</string>
+    <string name="app_name">FreiBier POS</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -28,7 +28,7 @@
 
 
     <!-- Activity titles strings -->
-    <string name="login_title">Bx POS</string>
+    <string name="login_title">FreiBier POS</string>
     <string name="title_activity_edit_order">EditOrder</string>
     <string name="title_activity_create_order">New Order</string>
     <string name="title_activity_view_open_orders">Open Orders</string>

@@ -1,7 +1,5 @@
 package de.bxservice.bxpos.logic.webservices;
 
-import android.content.Context;
-
 import org.idempiere.webservice.client.base.LoginRequest;
 import org.idempiere.webservice.client.net.WebServiceClient;
 

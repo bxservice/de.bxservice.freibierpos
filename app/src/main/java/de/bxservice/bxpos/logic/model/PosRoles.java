@@ -1,7 +1,6 @@
 package de.bxservice.bxpos.logic.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Every new role supported by the app must be registered here

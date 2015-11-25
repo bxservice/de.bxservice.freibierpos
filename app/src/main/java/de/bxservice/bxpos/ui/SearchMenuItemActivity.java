@@ -31,8 +31,6 @@ public class SearchMenuItemActivity extends AppCompatActivity implements OnQuery
     private OrderArrayAdapter<String> mAdapter;
     private List items = new ArrayList<Order>();
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,6 @@ public class SearchMenuItemActivity extends AppCompatActivity implements OnQuery
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //mSearchView = (SearchView) findViewById(R.id.search_items_view);
         listView = (ListView) findViewById(R.id.list_search_View);
 
         initItems();
@@ -73,7 +70,7 @@ public class SearchMenuItemActivity extends AppCompatActivity implements OnQuery
         return true;
     }
 
-    public void initItems(){
+    public void initItems() {
 
         ProductPrice productPrice;
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);

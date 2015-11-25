@@ -1,6 +1,5 @@
 package de.bxservice.bxpos.logic;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -83,32 +82,16 @@ public class DataMediator {
         return productCategoryList;
     }
 
-    public void setProductCategoryList(List<ProductCategory> productCategoryList) {
-        this.productCategoryList = productCategoryList;
-    }
-
     public List<TableGroup> getTableGroupList() {
         return tableGroupList;
-    }
-
-    public void setTableGroupList(List<TableGroup> tableGroupList) {
-        this.tableGroupList = tableGroupList;
     }
 
     public List<Product> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
     public List<ProductPrice> getProductPriceList() {
         return productPriceList;
-    }
-
-    public void setProductPriceList(List<ProductPrice> productPriceList) {
-        this.productPriceList = productPriceList;
     }
 
     public boolean isError() {

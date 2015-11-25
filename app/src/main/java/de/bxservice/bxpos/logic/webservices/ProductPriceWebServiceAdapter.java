@@ -1,6 +1,5 @@
 package de.bxservice.bxpos.logic.webservices;
 
-import android.content.Context;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
@@ -101,7 +100,4 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject{
         return productPriceList;
     }
 
-    public void setProductPriceList(List<ProductPrice> productPriceList) {
-        this.productPriceList = productPriceList;
-    }
 }

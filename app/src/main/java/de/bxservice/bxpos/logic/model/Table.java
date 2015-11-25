@@ -1,7 +1,7 @@
 package de.bxservice.bxpos.logic.model;
 
 /**
- * Created by diego on 9/11/15.
+ * Created by Diego Ruiz on 9/11/15.
  */
 public class Table {
 
