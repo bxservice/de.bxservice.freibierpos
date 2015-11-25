@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -29,6 +30,8 @@ public class CreateOrderActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
+    private int numberOfGuests = 0;
+    private String selectedTable = "";
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -44,6 +47,9 @@ public class CreateOrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Get Table # and # of guests
+        getExtras();
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mCreateOrderPagerAdapter = new CreateOrderPagerAdapter(getSupportFragmentManager());
@@ -55,6 +61,9 @@ public class CreateOrderActivity extends AppCompatActivity {
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(mViewPager);
 
+        Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests()) + " " + getSelectedTable(),
+                Toast.LENGTH_SHORT).show();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +74,18 @@ public class CreateOrderActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void getExtras() {
+        Bundle extras = getIntent().getExtras();
+
+        if( extras != null ){
+
+            if( extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE) != null )
+                setSelectedTable(extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE));
+
+             setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
+        }
     }
 
 
@@ -84,7 +105,7 @@ public class CreateOrderActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.set_guests) {
             return true;
         }
         if(id == R.id.items_search){
@@ -96,4 +117,19 @@ public class CreateOrderActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public int getNumberOfGuests() {
+        return numberOfGuests;
+    }
+
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
+    }
+
+    public String getSelectedTable() {
+        return selectedTable;
+    }
+
+    public void setSelectedTable(String selectedTable) {
+        this.selectedTable = selectedTable;
+    }
 }
