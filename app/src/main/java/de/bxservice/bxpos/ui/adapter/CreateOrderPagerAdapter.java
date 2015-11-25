@@ -8,17 +8,21 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.Product;
+import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.model.ProductPrice;
+import de.bxservice.bxpos.ui.CreateOrderActivity;
 
 /**
  * Created by Diego Ruiz on 19/11/15.
@@ -66,10 +70,11 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        GridView grid;
-        ArrayList<NewOrderGridItem> mGridData;
-        GridOrderViewAdapter mGridAdapter;
+        private GridView grid;
+        private ArrayList<NewOrderGridItem> mGridData;
+        private GridOrderViewAdapter mGridAdapter;
         private List<ProductCategory> productCategoryList;
+        private HashMap<NewOrderGridItem, MProduct> itemProductHashMap;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -101,28 +106,45 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
             ProductCategory pc = productCategoryList.get(sectionNumber);
 
             mGridData = new ArrayList<>();
+            itemProductHashMap = new HashMap<NewOrderGridItem, MProduct>();
 
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
             NewOrderGridItem item;
             ProductPrice productPrice;
-            for( Product product : pc.getProducts() ){
+            for( MProduct product : pc.getProducts() ){
                 item = new NewOrderGridItem();
                 item.setName(product.getProductName());
 
                 productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product);
                 item.setPrice(currencyFormat.format(productPrice.getStdPrice()));
                 mGridData.add(item);
+                itemProductHashMap.put(item,product);
             }
 
             grid.setGravity(Gravity.CENTER_HORIZONTAL);
             mGridAdapter = new GridOrderViewAdapter(this.getContext(), R.layout.food_menu_grid_item_layout, mGridData);
 
-
-            /*ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line,list);
-            grid.setAdapter(adp);*/
-
             grid.setAdapter(mGridAdapter);
+
+            grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                    //Get item at position
+                    NewOrderGridItem item = (NewOrderGridItem) parent.getItemAtPosition(position);
+                    TextView qtyOrderedTextView = (TextView) v.findViewById(R.id.qtyOrdered_text);
+
+                    MProduct product = itemProductHashMap.get(item);
+
+                    ((CreateOrderActivity) getActivity()).addOrderItem(product);
+
+                    int productQty = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
+
+                    qtyOrderedTextView.setText("x" + Integer.toString(productQty));
+                }
+            });
 
             return rootView;
         }

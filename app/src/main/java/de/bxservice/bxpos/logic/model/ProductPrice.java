@@ -11,7 +11,7 @@ public class ProductPrice {
 
     private int priceListVersionID;
     private int productPriceID;
-    private Product product;
+    private MProduct product;
     private BigDecimal stdPrice;
     private int productID;
 
@@ -31,11 +31,11 @@ public class ProductPrice {
         this.productPriceID = productPriceID;
     }
 
-    public Product getProduct() {
+    public MProduct getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(MProduct product) {
         this.product = product;
     }
 

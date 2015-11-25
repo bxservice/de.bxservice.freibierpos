@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity  {
             mAuthTask = null;
 
             if (success) {
-                // Read the data needed - Products. Product Category - Table ...
+                // Read the data needed - Products. MProduct Category - Table ...
                 new InitiateData().execute(getBaseContext());
 
             } else {

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import de.bxservice.bxpos.logic.model.Product;
+import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.logic.model.TableGroup;
@@ -30,9 +30,9 @@ public class DataMediator {
 
     private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
     private List<TableGroup> tableGroupList = new ArrayList<TableGroup>();
-    private List<Product> productList = new ArrayList<Product>();
+    private List<MProduct> productList = new ArrayList<MProduct>();
     private List<ProductPrice> productPriceList = new ArrayList<ProductPrice>();
-    private HashMap<Product, ProductPrice> productPriceHashMap = new HashMap<Product, ProductPrice>();
+    private HashMap<MProduct, ProductPrice> productPriceHashMap = new HashMap<MProduct, ProductPrice>();
     private boolean error = false;
 
 
@@ -86,7 +86,7 @@ public class DataMediator {
         return tableGroupList;
     }
 
-    public List<Product> getProductList() {
+    public List<MProduct> getProductList() {
         return productList;
     }
 
@@ -108,7 +108,7 @@ public class DataMediator {
         return false;
     }
 
-    public HashMap<Product, ProductPrice> getProductPriceHashMap() {
+    public HashMap<MProduct, ProductPrice> getProductPriceHashMap() {
         return productPriceHashMap;
     }
 
@@ -126,7 +126,7 @@ public class DataMediator {
             for( ProductCategory pc : productCategoryList ){
 
                 productCategoryId = pc.getProductCategoryID();
-                for( Product p : productList ){
+                for( MProduct p : productList ){
                     childProductCategoryId = p.getProductCategoryId();
                     if( childProductCategoryId == productCategoryId )
                         pc.getProducts().add(p);
@@ -148,7 +148,7 @@ public class DataMediator {
             for( ProductPrice pp : productPriceList ){
 
                 priceProductId = pp.getProductID();
-                for( Product p : productList ){
+                for( MProduct p : productList ){
                     productId = p.getProductID();
                     if( priceProductId == productId ) {
                         pp.setProduct(p);

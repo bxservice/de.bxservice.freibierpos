@@ -12,7 +12,7 @@ public class ProductCategory {
 
     private int productCategoryID;
     private String name;
-    List<Product> products = new ArrayList<Product>();
+    List<MProduct> products = new ArrayList<MProduct>();
 
 
     public ProductCategory(int id, String name){
@@ -37,11 +37,11 @@ public class ProductCategory {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
+    public List<MProduct> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<MProduct> products) {
         this.products = products;
     }
 }

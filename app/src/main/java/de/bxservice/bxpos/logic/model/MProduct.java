@@ -1,9 +1,10 @@
 package de.bxservice.bxpos.logic.model;
 
 /**
- * Created by diego on 9/11/15.
+ * This is the product that is read from iDempiere
+ * Created by Diego Ruiz on 9/11/15.
  */
-public class Product {
+public class MProduct {
 
     public static final String M_Product_ID = "M_Product_ID";
 
