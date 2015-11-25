@@ -18,8 +18,11 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
+import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
+import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
-public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener{
+public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
+        RemarkDialogFragment.RemarkDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -114,8 +117,17 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             startActivity(intent);
             return true;
         }
+        if (id == R.id.add_note) {
+            showRemarkDialog();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showRemarkDialog() {
+        RemarkDialogFragment remarktDialog = new RemarkDialogFragment();
+        remarktDialog.show(getFragmentManager(), "RemarkDialogFragment");
     }
 
     private void showGuestNumberDialog() {
@@ -141,10 +153,26 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         this.selectedTable = selectedTable;
     }
 
+    /**
+     * Click set on guest number dialog
+     * @param dialog
+     */
     @Override
     public void onDialogPositiveClick(GuestNumberDialogFragment dialog) {
         // User touched the dialog's positive button
         int guests = dialog.getNumberOfGuests();
         setNumberOfGuests(guests);
     }
+
+    /**
+     * Click add on add remark dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(RemarkDialogFragment dialog) {
+        // User touched the dialog's positive button
+        /*int guests = dialog.getNumberOfGuests();
+        setNumberOfGuests(guests);*/
+    }
+
 }

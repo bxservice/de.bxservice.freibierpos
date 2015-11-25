@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.ui;
+package de.bxservice.bxpos.ui.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
