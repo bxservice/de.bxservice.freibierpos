@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by diego on 29/10/15.
+ * Created by Diego Ruiz on 29/10/15.
  */
 public class OrderArrayAdapter<T> extends ArrayAdapter<T> {
 

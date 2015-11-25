@@ -7,10 +7,5 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
-
-    <item android:id="@+id/ic_search"
-        android:title="@string/search"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_search" />
+    
 </menu>
