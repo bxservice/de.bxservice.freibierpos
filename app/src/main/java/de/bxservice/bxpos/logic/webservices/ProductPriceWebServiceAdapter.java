@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.model.Product;
+import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 
 /**
@@ -71,7 +71,7 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject{
                             priceListVersionId = Integer.valueOf(field.getValue());
                         else if ( ProductPrice.M_ProductPrice_ID.equalsIgnoreCase(field.getColumn()) )
                             productPriceId = Integer.valueOf(field.getValue());
-                        else if ( Product.M_Product_ID.equalsIgnoreCase(field.getColumn()) )
+                        else if ( MProduct.M_Product_ID.equalsIgnoreCase(field.getColumn()) )
                             productId = Integer.valueOf(field.getValue());
                         else if ( "PriceStd".equalsIgnoreCase(field.getColumn()) )
                             price = new BigDecimal(field.getValue());

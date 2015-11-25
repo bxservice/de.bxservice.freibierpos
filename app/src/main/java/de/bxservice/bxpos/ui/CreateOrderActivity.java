@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.DraftOrder;
+import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
@@ -33,6 +35,9 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
+
+    //order attributes
+    private DraftOrder draftOrder = null;
     private int numberOfGuests = 0;
     private String selectedTable = "";
     private String remarkNote = "";
@@ -159,7 +164,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     }
 
     public void setRemarkNote(String remarkNote) {
-        System.out.println(remarkNote);
         this.remarkNote = remarkNote;
     }
 
@@ -172,6 +176,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         // User touched the dialog's positive button
         int guests = dialog.getNumberOfGuests();
         setNumberOfGuests(guests);
+        updateDraftOrder();
     }
 
     /**
@@ -183,6 +188,38 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         // User touched the dialog's positive button
         String note = dialog.getNote();
         setRemarkNote(note);
+        updateDraftOrder();
+    }
+
+    public void addOrderItem(MProduct product) {
+
+        if( draftOrder == null ){
+            draftOrder = new DraftOrder();
+            draftOrder.setGuestNumber(getNumberOfGuests());
+            draftOrder.setOrderRemark(getRemarkNote());
+        }
+
+        draftOrder.addItem(product);
+
+    }
+
+    public void updateDraftOrder() {
+
+        if( draftOrder!= null ){
+
+            if( !remarkNote.equals(draftOrder.getOrderRemark()) ){
+                draftOrder.setOrderRemark(remarkNote);
+            }
+            if( numberOfGuests != draftOrder.getGuestNumber() ){
+                draftOrder.setGuestNumber(numberOfGuests);
+            }
+
+        }
+
+    }
+
+    public int getProductQtyOrdered(MProduct product) {
+        return draftOrder.getProductQtyOrdered(product);
     }
 
 }
