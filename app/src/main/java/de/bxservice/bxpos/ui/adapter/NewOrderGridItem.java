@@ -10,6 +10,7 @@ public class NewOrderGridItem {
 
     private String name;
     private String price;
+    private String qty;
 
 
     public NewOrderGridItem() {
@@ -32,4 +33,11 @@ public class NewOrderGridItem {
         this.name = name;
     }
 
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
+    }
 }

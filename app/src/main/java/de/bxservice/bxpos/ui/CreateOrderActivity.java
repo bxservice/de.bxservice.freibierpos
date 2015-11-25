@@ -227,6 +227,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     }
 
     public int getProductQtyOrdered(MProduct product) {
+        if( draftOrder == null )
+            return 0;
         return draftOrder.getProductQtyOrdered(product);
     }
 
