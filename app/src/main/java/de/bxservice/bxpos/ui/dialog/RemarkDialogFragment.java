@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import de.bxservice.bxpos.R;
 
@@ -25,15 +26,8 @@ public class RemarkDialogFragment extends DialogFragment {
 
     // Use this instance of the interface to deliver action events
     RemarkDialogListener mListener;
-    int numberOfGuests = 1;
+    private String note;
 
-    public int getNumberOfGuests() {
-        return numberOfGuests;
-    }
-
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -43,14 +37,9 @@ public class RemarkDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.guest_number_dialog, null);
+        View view = inflater.inflate(R.layout.remark_dialog, null);
 
-        /*final NumberPicker np = (NumberPicker) view.findViewById(R.id.number_picker);
-
-        np.setMaxValue(15);
-        np.setMinValue(1);
-        np.setValue(getNumberOfGuests());
-        np.setWrapSelectorWheel(false);*/
+        final EditText remarkNote = (EditText) view.findViewById(R.id.remark_text);
 
         builder.setTitle(R.string.note);
         builder.setView(view)
@@ -58,8 +47,8 @@ public class RemarkDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        /*setNumberOfGuests(np.getValue());
-                        mListener.onDialogPositiveClick(GuestNumberDialogFragment.this);*/
+                        setNote(remarkNote.getText().toString());
+                        mListener.onDialogPositiveClick(RemarkDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -87,4 +76,11 @@ public class RemarkDialogFragment extends DialogFragment {
         }
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }
