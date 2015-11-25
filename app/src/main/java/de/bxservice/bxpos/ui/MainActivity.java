@@ -188,9 +188,6 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
         intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
 
-        Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
-                Toast.LENGTH_SHORT).show();
-
         startActivity(intent);
     }
 
