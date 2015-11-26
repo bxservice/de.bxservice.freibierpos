@@ -268,12 +268,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         //noinspection SimplifiableIfStatement
         if(id == android.R.id.home) {
-            //If the searchview mode is displayed, only go back to the tab
-            if ( listView.isShown() ) {
-                mSearchView.onActionViewCollapsed();
-                showSearchList(false);
-                return true;
-            }
             onBackPressed();
             return true;
         }
@@ -390,7 +384,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     public void onBackPressed() {
 
-        if( draftOrder != null ){
+        //If the searchview mode is displayed, only go back to the tab
+        if ( listView.isShown() ) {
+            mSearchView.onActionViewCollapsed();
+            showSearchList(false);
+        }
+        else if( draftOrder != null ){
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)
