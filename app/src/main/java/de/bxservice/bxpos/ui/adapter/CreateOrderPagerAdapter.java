@@ -114,7 +114,6 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
             ProductPrice productPrice;
             int qtyOrdered;
             for( MProduct product : pc.getProducts() ){
-                qtyOrdered = 0;
                 item = new NewOrderGridItem();
                 item.setName(product.getProductName());
 
