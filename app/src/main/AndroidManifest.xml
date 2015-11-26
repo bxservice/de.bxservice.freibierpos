@@ -71,16 +71,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SearchMenuItemActivity"
-            android:parentActivityName=".ui.CreateOrderActivity"
-            android:label="">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.CreateOrderActivity" />
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
