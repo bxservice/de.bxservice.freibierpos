@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.bxservice.bxpos.ui.EditOrderActivity">
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/set_guests"
+        android:title="@string/guests"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
-    <item android:id="@+id/item_search"
+    <item android:id="@+id/add_note"
+        android:title="@string/note"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/add_item"
         android:title="@string/search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
