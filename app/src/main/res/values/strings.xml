@@ -41,6 +41,8 @@
 
     <!-- Strings related to orders -->
     <string name="empty_order">The order is empty</string>
+    <string name="ordering">ORDERING</string>
+    <string name="ordered">ORDERED</string>
 
     <!-- Strings related to roles -->
     <string name="role">Role</string>
