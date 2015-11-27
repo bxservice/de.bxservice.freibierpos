@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -116,8 +117,11 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if( posOrder == null )
+                    Snackbar.make(view, R.string.empty_order, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                else
+                    openConfirmationActivity();
             }
         });
 
@@ -349,6 +353,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             posOrder = new POSOrder();
             posOrder.setGuestNumber(getNumberOfGuests());
             posOrder.setOrderRemark(getRemarkNote());
+            posOrder.setTable(selectedTable);
             posOrder.setStatus(POSOrder.DRAFT_STATUS);
         }
 
@@ -413,6 +418,17 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         }else{
             return super.onKeyDown(keyCode, event);
         }
+    }
+
+    /**
+     * Opens the confirmation activity passing the draft order
+     * as parameter
+     */
+    public void openConfirmationActivity() {
+        Intent intent = new Intent(this, EditOrderActivity.class);
+        intent.putExtra("draftOrder", posOrder);
+
+        startActivity(intent);
     }
 
 }

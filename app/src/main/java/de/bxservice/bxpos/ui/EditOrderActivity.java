@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.persistence.OrderDataExample;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.OrderArrayAdapter;
@@ -36,6 +38,8 @@ public class EditOrderActivity extends AppCompatActivity {
      */
     private EditPagerAdapter mEditPagerAdapter;
 
+    private POSOrder order;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -50,6 +54,7 @@ public class EditOrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getExtras();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -66,7 +71,7 @@ public class EditOrderActivity extends AppCompatActivity {
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Payment", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, order.getStatus(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -94,6 +99,21 @@ public class EditOrderActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Get extras from the previous activity
+     * - Order
+     */
+    public void getExtras() {
+
+        Intent intent = getIntent();
+
+        if( intent != null ){
+
+            order = (POSOrder)intent.getSerializableExtra("draftOrder");
+
+        }
     }
 
 

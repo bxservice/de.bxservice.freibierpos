@@ -1,11 +1,13 @@
 package de.bxservice.bxpos.logic.model;
 
+import java.io.Serializable;
+
 /**
  * This is the product that is added to the draft orders
  * it has extra attributes that will not be sent to iDempiere
  * Created by Diego Ruiz on 25/11/15.
  */
-public class OrderProduct {
+public class OrderProduct implements Serializable{
 
     private MProduct product;
     private int qty;

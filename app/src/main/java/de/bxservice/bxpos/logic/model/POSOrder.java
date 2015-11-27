@@ -21,6 +21,9 @@ public class POSOrder implements Serializable {
 
     private ArrayList<OrderProduct> preOrderedProducts = new ArrayList<OrderProduct>();
     private String orderRemark;
+
+    //TODO: Change for Table object reference
+    private String table;
     private int guestNumber;
     private String status;
 
@@ -81,6 +84,14 @@ public class POSOrder implements Serializable {
 
     public void setGuestNumber(int guestNumber) {
         this.guestNumber = guestNumber;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
     }
 
     public String getStatus() {

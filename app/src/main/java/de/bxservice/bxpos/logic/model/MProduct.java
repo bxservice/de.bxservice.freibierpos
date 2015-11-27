@@ -1,10 +1,12 @@
 package de.bxservice.bxpos.logic.model;
 
+import java.io.Serializable;
+
 /**
  * This is the product that is read from iDempiere
  * Created by Diego Ruiz on 9/11/15.
  */
-public class MProduct {
+public class MProduct implements Serializable {
 
     public static final String M_Product_ID = "M_Product_ID";
 
