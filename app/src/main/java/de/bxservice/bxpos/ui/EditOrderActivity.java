@@ -1,8 +1,10 @@
 package de.bxservice.bxpos.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -94,6 +97,10 @@ public class EditOrderActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if(id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
         if (id == R.id.action_settings) {
             return true;
         }
@@ -113,6 +120,34 @@ public class EditOrderActivity extends AppCompatActivity {
 
             order = (POSOrder)intent.getSerializableExtra("draftOrder");
 
+        }
+    }
+
+    public void onBackPressed() {
+
+        if( order != null &&
+                !order.getStatus().equals(POSOrder.DRAFT_STATUS) ){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.discard_draft_order)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.discard, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            EditOrderActivity.super.onBackPressed();
+                        }
+                    }).create().show();
+        }
+        else
+            super .onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            onBackPressed();
+            return true;
+        }else{
+            return super.onKeyDown(keyCode, event);
         }
     }
 
