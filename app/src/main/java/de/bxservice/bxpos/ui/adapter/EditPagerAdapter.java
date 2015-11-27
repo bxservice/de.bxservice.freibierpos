@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.Order;
+import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.persistence.OrderDataExample;
 
 /**
@@ -19,15 +25,18 @@ import de.bxservice.bxpos.persistence.OrderDataExample;
  */
 public class EditPagerAdapter extends FragmentPagerAdapter {
 
-    public EditPagerAdapter(FragmentManager fm) {
+    Context context;
+
+    public EditPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
 
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a FoodMenuFragment (defined as a static inner class below).
-        return EditOrderFragment.newInstance(position + 1);
+        return EditOrderFragment.newInstance(position);
     }
 
     @Override
@@ -40,9 +49,9 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "ORDERING";
+                return context.getResources().getString(R.string.ordering);
             case 1:
-                return "ORDERED";
+                return context.getResources().getString(R.string.ordered);
         }
         return null;
     }
@@ -79,6 +88,21 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
 
+            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            if( sectionNumber == 0 ) {
+                listView = (ListView) rootView.findViewById(R.id.lista);
+                List items = new ArrayList<Order>();
+                
+                mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);
+
+
+                listView.setAdapter(mAdapter);
+            }
+            else if ( sectionNumber == 1 ) {
+
+            }
+
             /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText("Caesar Salad  €10");
 
@@ -88,14 +112,6 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
             TextView textView2 = (TextView) rootView.findViewById(R.id.section_label2);
             textView2.setText("Desert €2");*/
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
-
-            listView = (ListView) rootView.findViewById(R.id.lista);
-            mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);
-
-
-            listView.setAdapter(mAdapter);
-
 
             return rootView;
         }
