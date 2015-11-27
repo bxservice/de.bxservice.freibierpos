@@ -32,7 +32,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.DraftOrder;
+import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.Order;
 import de.bxservice.bxpos.logic.model.ProductPrice;
@@ -64,7 +64,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private SearchView mSearchView;
 
     //order attributes
-    private DraftOrder draftOrder = null;
+    private POSOrder posOrder = null;
     private int numberOfGuests = 0;
     private String selectedTable = "";
     private String remarkNote = "";
@@ -345,25 +345,26 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     public void addOrderItem(MProduct product) {
 
-        if( draftOrder == null ){
-            draftOrder = new DraftOrder();
-            draftOrder.setGuestNumber(getNumberOfGuests());
-            draftOrder.setOrderRemark(getRemarkNote());
+        if( posOrder == null ){
+            posOrder = new POSOrder();
+            posOrder.setGuestNumber(getNumberOfGuests());
+            posOrder.setOrderRemark(getRemarkNote());
+            posOrder.setStatus(POSOrder.DRAFT_STATUS);
         }
 
-        draftOrder.addItem(product);
+        posOrder.addItem(product);
 
     }
 
     public void updateDraftOrder() {
 
-        if( draftOrder!= null ){
+        if( posOrder != null ){
 
-            if( !remarkNote.equals(draftOrder.getOrderRemark()) ){
-                draftOrder.setOrderRemark(remarkNote);
+            if( !remarkNote.equals(posOrder.getOrderRemark()) ){
+                posOrder.setOrderRemark(remarkNote);
             }
-            if( numberOfGuests != draftOrder.getGuestNumber() ){
-                draftOrder.setGuestNumber(numberOfGuests);
+            if( numberOfGuests != posOrder.getGuestNumber() ){
+                posOrder.setGuestNumber(numberOfGuests);
             }
 
         }
@@ -371,9 +372,9 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     }
 
     public int getProductQtyOrdered(MProduct product) {
-        if( draftOrder == null )
+        if( posOrder == null )
             return 0;
-        return draftOrder.getProductQtyOrdered(product);
+        return posOrder.getProductQtyOrdered(product);
     }
 
 
@@ -389,7 +390,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             mSearchView.onActionViewCollapsed();
             showSearchList(false);
         }
-        else if( draftOrder != null ){
+        else if( posOrder != null ){
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)

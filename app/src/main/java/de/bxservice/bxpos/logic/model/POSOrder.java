@@ -9,13 +9,19 @@ import java.util.HashMap;
  * the order
  * Created by Diego Ruiz on 25/11/15.
  */
-public class DraftOrder {
+public class POSOrder {
+
+    //Order status
+    public static final String DRAFT_STATUS    = "DRAFT";
+    public static final String SENT_STATUS     = "SENT";
+    public static final String COMPLETE_STATUS = "COMPLETE";
 
     private HashMap<MProduct, OrderProduct> orderProductHashMap = new HashMap<MProduct, OrderProduct>();
 
     private ArrayList<OrderProduct> preOrderedProducts = new ArrayList<OrderProduct>();
     private String orderRemark;
     private int guestNumber;
+    private String status;
 
     public void addItem(MProduct product) {
 
@@ -74,5 +80,18 @@ public class DraftOrder {
 
     public void setGuestNumber(int guestNumber) {
         this.guestNumber = guestNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+
+        if ( status.equals(DRAFT_STATUS) ||
+                status.equals(SENT_STATUS) ||
+                status.equals(COMPLETE_STATUS) )
+        this.status = status;
+
     }
 }
