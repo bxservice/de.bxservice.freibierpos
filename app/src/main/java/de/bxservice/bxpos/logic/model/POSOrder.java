@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.logic.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +10,7 @@ import java.util.HashMap;
  * the order
  * Created by Diego Ruiz on 25/11/15.
  */
-public class POSOrder {
+public class POSOrder implements Serializable {
 
     //Order status
     public static final String DRAFT_STATUS    = "DRAFT";
