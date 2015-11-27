@@ -31,7 +31,6 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_config_server">Data error. Please contact the administrator</string>
 
-
     <!-- Activity titles strings -->
     <string name="login_title">FreiBier POS</string>
     <string name="title_activity_edit_order">EditOrder</string>
@@ -40,6 +39,8 @@
     <string name="title_activity_create_reservation">Reservation</string>
     <string name="title_activity_login">Sign in</string>
 
+    <!-- Strings related to orders -->
+    <string name="empty_order">The order is empty</string>
 
     <!-- Strings related to roles -->
     <string name="role">Role</string>
