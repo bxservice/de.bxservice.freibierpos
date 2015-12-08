@@ -28,11 +28,11 @@ public class DataMediator {
 
     private static volatile DataMediator instance = null;
 
-    private List<ProductCategory> productCategoryList = new ArrayList<ProductCategory>();
-    private List<TableGroup> tableGroupList = new ArrayList<TableGroup>();
-    private List<MProduct> productList = new ArrayList<MProduct>();
-    private List<ProductPrice> productPriceList = new ArrayList<ProductPrice>();
-    private HashMap<MProduct, ProductPrice> productPriceHashMap = new HashMap<MProduct, ProductPrice>();
+    private List<ProductCategory> productCategoryList = new ArrayList<>();
+    private List<TableGroup> tableGroupList = new ArrayList<>();
+    private List<MProduct> productList = new ArrayList<>();
+    private List<ProductPrice> productPriceList = new ArrayList<>();
+    private HashMap<Integer, ProductPrice> productPriceHashMap = new HashMap<>();
     private boolean error = false;
 
 
@@ -108,7 +108,7 @@ public class DataMediator {
         return false;
     }
 
-    public HashMap<MProduct, ProductPrice> getProductPriceHashMap() {
+    public HashMap<Integer, ProductPrice> getProductPriceHashMap() {
         return productPriceHashMap;
     }
 
@@ -123,13 +123,13 @@ public class DataMediator {
 
             int productCategoryId;
             int childProductCategoryId;
-            for( ProductCategory pc : productCategoryList ){
+            for( ProductCategory productCategory : productCategoryList ){
 
-                productCategoryId = pc.getProductCategoryID();
-                for( MProduct p : productList ){
-                    childProductCategoryId = p.getProductCategoryId();
+                productCategoryId = productCategory.getProductCategoryID();
+                for( MProduct product : productList ){
+                    childProductCategoryId = product.getProductCategoryId();
                     if( childProductCategoryId == productCategoryId )
-                        pc.getProducts().add(p);
+                        productCategory.getProducts().add(product);
                 }
             }
         }
@@ -145,14 +145,14 @@ public class DataMediator {
 
             int productId;
             int priceProductId;
-            for( ProductPrice pp : productPriceList ){
+            for( ProductPrice productPrice : productPriceList ){
 
-                priceProductId = pp.getProductID();
-                for( MProduct p : productList ){
-                    productId = p.getProductID();
+                priceProductId = productPrice.getProductID();
+                for( MProduct product : productList ){
+                    productId = product.getProductID();
                     if( priceProductId == productId ) {
-                        pp.setProduct(p);
-                        productPriceHashMap.put(p,pp);
+                        productPrice.setProduct(product);
+                        productPriceHashMap.put(product.getProductID(),productPrice);
                     }
                 }
             }

@@ -74,8 +74,6 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_ORDER          = "related_order";
 
-        ListView listView;
-        //OrderArrayAdapter<String> mAdapter;
         POSOrder order;
 
         private RecyclerView mRecyclerView;
@@ -121,20 +119,16 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-
-                List items = new ArrayList<Order>();
-                ArrayList<String> myDataset = new ArrayList<>();
+                ArrayList<POSOrderLine> myDataset = new ArrayList<>();
 
 
-                for( POSOrderLine product : order.getOrderLines()){
+                for( POSOrderLine orderLine : order.getOrderLines()){
 
                     ProductPrice productPrice;
                     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
-                    if ( product.getLineStatus().equals(POSOrderLine.ORDERING) ) {
-                        productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProduct());
-//                        items.add(new Order(product.getProduct().getProductName(), productPrice.getStdPrice().toString()));
-                        myDataset.add(product.getProduct().getProductName());
+                    if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERING) ) {
+                        myDataset.add(orderLine);
                     }
                 }
 

@@ -138,7 +138,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
         for( MProduct product : DataMediator.getInstance().getProductList() ){
-            productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product);
+            productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProductID());
             items.add(new Order(product.getProductName(), currencyFormat.format(productPrice.getStdPrice())));
         }
     }

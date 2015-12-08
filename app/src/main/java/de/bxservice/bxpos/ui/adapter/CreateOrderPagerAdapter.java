@@ -117,7 +117,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
                 item = new NewOrderGridItem();
                 item.setName(product.getProductName());
 
-                productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product);
+                productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProductID());
                 item.setPrice(currencyFormat.format(productPrice.getStdPrice()));
 
                 //When you navigate through the tabs it paints again everything - this lets the number stay
