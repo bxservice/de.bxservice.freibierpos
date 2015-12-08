@@ -140,7 +140,7 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
             mAdapter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("DemoRecView", "Pulsado el elemento " + mRecyclerView.getChildPosition(v));
+                    Log.i("DemoRecView", "Pulsado el elemento " + mRecyclerView.getChildAdapterPosition(v));
                 }
             });
 
