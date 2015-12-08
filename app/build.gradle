@@ -25,5 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.android.support:recyclerview-v7:+'
     compile files('libs/idempiere_java_webservice_client.jar')
 }

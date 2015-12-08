@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +75,12 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
         private static final String ARG_ORDER          = "related_order";
 
         ListView listView;
-        OrderArrayAdapter<String> mAdapter;
+        //OrderArrayAdapter<String> mAdapter;
         POSOrder order;
+
+        private RecyclerView mRecyclerView;
+        private RecyclerView.Adapter mAdapter;
+        private RecyclerView.LayoutManager mLayoutManager;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -105,8 +111,20 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
             order = (POSOrder) getArguments().getSerializable(ARG_ORDER);
 
             if( sectionNumber == 0 ) {
-                listView = (ListView) rootView.findViewById(R.id.order_list);
+
+                mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+                // use a linear layout manager
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+                mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+
                 List items = new ArrayList<Order>();
+                ArrayList<String> myDataset = new ArrayList<>();
+
 
                 for( POSOrderLine product : order.getOrderLines()){
 
@@ -115,28 +133,18 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
 
                     if ( product.getLineStatus().equals(POSOrderLine.ORDERING) ) {
                         productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProduct());
-                        items.add(new Order(product.getProduct().getProductName(), productPrice.getStdPrice().toString()));
+//                        items.add(new Order(product.getProduct().getProductName(), productPrice.getStdPrice().toString()));
+                        myDataset.add(product.getProduct().getProductName());
                     }
                 }
 
-                mAdapter = new OrderArrayAdapter<>(this.getContext(), items);
-
-
-                listView.setAdapter(mAdapter);
+                // specify an adapter (see also next example)
+                mAdapter = new OrderLineAdapter(myDataset);
+                mRecyclerView.setAdapter(mAdapter);
             }
             else if ( sectionNumber == 1 ) {
 
             }
-
-            /*TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText("Caesar Salad  €10");
-
-            TextView textView1 = (TextView) rootView.findViewById(R.id.section_label1);
-            textView1.setText("Africola  €3");
-
-            TextView textView2 = (TextView) rootView.findViewById(R.id.section_label2);
-            textView2.setText("Desert €2");*/
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             return rootView;
         }
