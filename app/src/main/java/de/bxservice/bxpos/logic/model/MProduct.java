@@ -1,6 +1,9 @@
 package de.bxservice.bxpos.logic.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
+import de.bxservice.bxpos.logic.DataMediator;
 
 /**
  * This is the product that is read from iDempiere
@@ -37,4 +40,10 @@ public class MProduct implements Serializable {
     public void setProductCategoryId(int productCategoryId) {
         this.productCategoryId = productCategoryId;
     }
+
+    public BigDecimal getProductPrice() {
+        ProductPrice productPrice = DataMediator.getInstance().getProductPriceHashMap().get(this);
+        return productPrice.getStdPrice();
+    }
+
 }

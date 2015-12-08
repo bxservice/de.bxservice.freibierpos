@@ -10,13 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.Order;
+import de.bxservice.bxpos.logic.model.POSOrderLine;
+import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.ProductPrice;
-import de.bxservice.bxpos.persistence.OrderDataExample;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -26,17 +29,19 @@ import de.bxservice.bxpos.persistence.OrderDataExample;
 public class EditPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
+    POSOrder order;
 
-    public EditPagerAdapter(FragmentManager fm, Context context) {
+    public EditPagerAdapter(FragmentManager fm, Context context, POSOrder order) {
         super(fm);
         this.context = context;
+        this.order = order;
     }
 
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a FoodMenuFragment (defined as a static inner class below).
-        return EditOrderFragment.newInstance(position);
+        return EditOrderFragment.newInstance(position, order);
     }
 
     @Override
@@ -65,17 +70,23 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_ORDER          = "related_order";
+
         ListView listView;
         OrderArrayAdapter<String> mAdapter;
+        POSOrder order;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static EditOrderFragment newInstance(int sectionNumber) {
+        public static EditOrderFragment newInstance(int sectionNumber, POSOrder order) {
             EditOrderFragment fragment = new EditOrderFragment();
             Bundle args = new Bundle();
+
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putSerializable(ARG_ORDER, order);
+
             fragment.setArguments(args);
             return fragment;
         }
@@ -88,13 +99,27 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
 
+
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
+            order = (POSOrder) getArguments().getSerializable(ARG_ORDER);
+
             if( sectionNumber == 0 ) {
-                listView = (ListView) rootView.findViewById(R.id.lista);
+                listView = (ListView) rootView.findViewById(R.id.order_list);
                 List items = new ArrayList<Order>();
 
-                mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);
+                for( POSOrderLine product : order.getOrderLines()){
+
+                    ProductPrice productPrice;
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+
+                    if ( product.getLineStatus().equals(POSOrderLine.ORDERING) ) {
+                        productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProduct());
+                        items.add(new Order(product.getProduct().getProductName(), productPrice.getStdPrice().toString()));
+                    }
+                }
+
+                mAdapter = new OrderArrayAdapter<>(this.getContext(), items);
 
 
                 listView.setAdapter(mAdapter);

@@ -17,9 +17,9 @@ public class POSOrder implements Serializable {
     public static final String SENT_STATUS     = "SENT";
     public static final String COMPLETE_STATUS = "COMPLETE";
 
-    private HashMap<MProduct, OrderProduct> orderProductHashMap = new HashMap<MProduct, OrderProduct>();
+    private HashMap<MProduct, POSOrderLine> orderlineProductHashMap = new HashMap<MProduct, POSOrderLine>();
 
-    private ArrayList<OrderProduct> preOrderedProducts = new ArrayList<OrderProduct>();
+    private ArrayList<POSOrderLine> orderLines = new ArrayList<POSOrderLine>();
     private String orderRemark;
 
     //TODO: Change for Table object reference
@@ -32,11 +32,11 @@ public class POSOrder implements Serializable {
         boolean newItem = true;
 
         //Check if the product was ordered before
-        if ( !orderProductHashMap.isEmpty() ){
+        if ( !orderlineProductHashMap.isEmpty() ){
 
-            OrderProduct orderProduct = orderProductHashMap.get(product);
-            if( orderProduct != null ){
-                orderProduct.setQty( orderProduct.getQty() + 1 ); //add 1 to the qty previously ordered
+            POSOrderLine POSOrderLine = orderlineProductHashMap.get(product);
+            if( POSOrderLine != null ){
+                POSOrderLine.setQtyOrdered(POSOrderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
                 newItem = false;
             }
 
@@ -44,30 +44,32 @@ public class POSOrder implements Serializable {
 
         if( newItem ){
 
-            OrderProduct orderProduct = new OrderProduct();
-            orderProduct.setProduct(product);
-            orderProduct.setQty(1); //If new item - is the first item that is added
+            POSOrderLine posOrderLine = new POSOrderLine();
+            posOrderLine.setOrder(this);
+            posOrderLine.setProduct(product);
+            posOrderLine.setQtyOrdered(1); //If new item - is the first item that is added
+            posOrderLine.setLineStatus(posOrderLine.ORDERING);
 
-            preOrderedProducts.add(orderProduct);
-            orderProductHashMap.put(product, orderProduct);
+            orderLines.add(posOrderLine);
+            orderlineProductHashMap.put(product, posOrderLine);
         }
 
     }
 
     public int getProductQtyOrdered(MProduct product) {
 
-        if ( orderProductHashMap.get(product) != null )
-            return orderProductHashMap.get(product).getQty();
+        if ( orderlineProductHashMap.get(product) != null )
+            return orderlineProductHashMap.get(product).getQtyOrdered();
 
         return 0;
     }
 
-    public ArrayList<OrderProduct> getPreOrderedProducts() {
-        return preOrderedProducts;
+    public ArrayList<POSOrderLine> getOrderLines() {
+        return orderLines;
     }
 
-    public void setPreOrderedProducts(ArrayList<OrderProduct> preOrderedProducts) {
-        this.preOrderedProducts = preOrderedProducts;
+    public void setOrderLines(ArrayList<POSOrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 
     public String getOrderRemark() {
