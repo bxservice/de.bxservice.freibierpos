@@ -9,10 +9,15 @@ import java.io.Serializable;
  */
 public class OrderProduct implements Serializable{
 
+    //Order status
+    public static final String ORDERING    = "ORDERING";
+    public static final String ORDERED     = "ORDERED";
+
     private MProduct product;
     private int qty;
     private String productRemark;
     private boolean marked = false;
+    private String productStatus;
 
     public MProduct getProduct() {
         return product;
@@ -44,5 +49,13 @@ public class OrderProduct implements Serializable{
 
     public void setMarked(boolean marked) {
         this.marked = marked;
+    }
+
+    public String getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(String productStatus) {
+        this.productStatus = productStatus;
     }
 }

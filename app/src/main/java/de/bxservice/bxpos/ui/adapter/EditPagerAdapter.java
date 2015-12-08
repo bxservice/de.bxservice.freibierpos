@@ -93,7 +93,7 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
             if( sectionNumber == 0 ) {
                 listView = (ListView) rootView.findViewById(R.id.lista);
                 List items = new ArrayList<Order>();
-                
+
                 mAdapter = new OrderArrayAdapter<>(this.getContext(), OrderDataExample.ORDERS);
 
 
