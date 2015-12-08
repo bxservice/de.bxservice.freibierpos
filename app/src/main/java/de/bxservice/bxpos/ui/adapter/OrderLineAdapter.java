@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.POSOrderLine;
 
 /**
  * Created by Diego Ruiz on 8/12/15.
@@ -16,24 +17,35 @@ import de.bxservice.bxpos.R;
 
 public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.OrderLineViewHolder> {
 
-    private ArrayList<String> mDataset;
+    private ArrayList<POSOrderLine> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class OrderLineViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTextView;
+        public TextView txtQty;
+        public TextView txtProductName;
+        public TextView txtPtice;
 
         public OrderLineViewHolder(View v) {
             super(v);
 
-            mTextView = (TextView)itemView.findViewById(R.id.lblListItem);
+            txtQty         = (TextView) itemView.findViewById(R.id.lblQty);
+            txtProductName = (TextView) itemView.findViewById(R.id.lblName);
+            txtPtice       = (TextView) itemView.findViewById(R.id.lblpriceline);
+
+        }
+
+        public void bindOrderLine(POSOrderLine orderLine) {
+            txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
+            txtProductName.setText(orderLine.getProduct().getProductName());
+            txtPtice.setText(orderLine.getLineNetAmt().toString()); //TODO; add currency format
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public OrderLineAdapter(ArrayList<String> myDataset) {
+    public OrderLineAdapter(ArrayList<POSOrderLine> myDataset) {
         mDataset = myDataset;
     }
 
@@ -41,11 +53,10 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.Orde
     @Override
     public OrderLineViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
-        // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.ordering_items, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        //...
+
         OrderLineViewHolder vh = new OrderLineViewHolder(v);
         return vh;
     }
@@ -53,10 +64,9 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.Orde
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(OrderLineViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset.get(position));
+        POSOrderLine orderLine = mDataset.get(position);
 
+        holder.bindOrderLine(orderLine);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
