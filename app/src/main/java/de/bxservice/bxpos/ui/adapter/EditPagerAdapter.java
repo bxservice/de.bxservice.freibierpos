@@ -10,18 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.Order;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.logic.model.POSOrder;
-import de.bxservice.bxpos.logic.model.ProductPrice;
+
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -108,37 +102,40 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
 
             order = (POSOrder) getArguments().getSerializable(ARG_ORDER);
 
+            mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(true);
+
+            // use a linear layout manager
+            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            ArrayList<POSOrderLine> myDataset = new ArrayList<>();
+
             if( sectionNumber == 0 ) {
 
-                mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-                // use a linear layout manager
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
-                mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-                mRecyclerView.setLayoutManager(mLayoutManager);
-
-
-                ArrayList<POSOrderLine> myDataset = new ArrayList<>();
-
-
                 for( POSOrderLine orderLine : order.getOrderLines()){
-
-                    ProductPrice productPrice;
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
                     if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERING) ) {
                         myDataset.add(orderLine);
                     }
                 }
 
-                // specify an adapter (see also next example)
-                mAdapter = new OrderLineAdapter(myDataset);
-                mRecyclerView.setAdapter(mAdapter);
             }
             else if ( sectionNumber == 1 ) {
 
+                for( POSOrderLine orderLine : order.getOrderLines()){
+
+                    if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERED) ) {
+                        myDataset.add(orderLine);
+                    }
+                }
             }
+
+            // specify an adapter (see also next example)
+            mAdapter = new OrderLineAdapter(myDataset);
+            mRecyclerView.setAdapter(mAdapter);
 
             return rootView;
         }
