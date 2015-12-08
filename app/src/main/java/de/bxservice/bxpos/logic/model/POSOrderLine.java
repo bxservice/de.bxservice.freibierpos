@@ -2,6 +2,9 @@ package de.bxservice.bxpos.logic.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+
+import de.bxservice.bxpos.logic.DataMediator;
 
 /**
  * This is the product that is added to the draft orders
@@ -71,6 +74,12 @@ public class POSOrderLine implements Serializable{
             lineNetAmt = product.getProductPrice().multiply(BigDecimal.valueOf(qtyOrdered));
 
         return lineNetAmt;
+    }
+
+    public String getLineTotalAmt() {
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+        return currencyFormat.format(getLineNetAmt());
     }
 
     public POSOrder getOrder() {

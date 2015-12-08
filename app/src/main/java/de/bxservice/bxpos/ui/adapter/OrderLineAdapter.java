@@ -40,7 +40,7 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.Orde
         public void bindOrderLine(POSOrderLine orderLine) {
             txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
             txtProductName.setText(orderLine.getProduct().getProductName());
-            txtPtice.setText(orderLine.getLineNetAmt().toString()); //TODO; add currency format
+            txtPtice.setText(orderLine.getLineTotalAmt());
         }
     }
 
