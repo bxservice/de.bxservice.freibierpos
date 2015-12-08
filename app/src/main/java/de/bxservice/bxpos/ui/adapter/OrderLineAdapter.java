@@ -15,7 +15,8 @@ import de.bxservice.bxpos.logic.model.POSOrderLine;
  * Created by Diego Ruiz on 8/12/15.
  */
 
-public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.OrderLineViewHolder> {
+public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.OrderLineViewHolder>
+        implements View.OnClickListener {
 
     private ArrayList<POSOrderLine> mDataset;
 
@@ -49,6 +50,8 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.Orde
         mDataset = myDataset;
     }
 
+    private View.OnClickListener listener;
+
     // Create new views (invoked by the layout manager)
     @Override
     public OrderLineViewHolder onCreateViewHolder(ViewGroup parent,
@@ -57,8 +60,20 @@ public class OrderLineAdapter extends RecyclerView.Adapter<OrderLineAdapter.Orde
                 .inflate(R.layout.ordering_items, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
+        v.setOnClickListener(this);
+
         OrderLineViewHolder vh = new OrderLineViewHolder(v);
         return vh;
+    }
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(listener != null)
+            listener.onClick(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,8 +72,8 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
         POSOrder order;
 
         private RecyclerView mRecyclerView;
-        private RecyclerView.Adapter mAdapter;
-        private RecyclerView.LayoutManager mLayoutManager;
+        private OrderLineAdapter mAdapter;
+        private LinearLayoutManager mLayoutManager;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -106,7 +107,7 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
             mRecyclerView.setHasFixedSize(true);
 
             // use a linear layout manager
-            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+            mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
             mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
             mRecyclerView.setLayoutManager(mLayoutManager);
@@ -133,8 +134,16 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
                 }
             }
 
-            // specify an adapter (see also next example)
+            // specify an adapter (and its listener)
             mAdapter = new OrderLineAdapter(myDataset);
+
+            mAdapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("DemoRecView", "Pulsado el elemento " + mRecyclerView.getChildPosition(v));
+                }
+            });
+
             mRecyclerView.setAdapter(mAdapter);
 
             return rootView;
