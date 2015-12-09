@@ -173,10 +173,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         SearchItemAdapter adapter = (SearchItemAdapter) recyclerView.getAdapter();
 
         if ( TextUtils.isEmpty(newText) ) {
-            //adapter.getFilter().filter(null);
+            adapter.getFilter().filter("");
         } else {
             showSearchList(true);
-            //adapter.getFilter().filter(newText);
+            adapter.getFilter().filter(newText);
         }
         return true;
     }
