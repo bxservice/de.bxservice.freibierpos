@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.ui.adapter;
+package de.bxservice.bxpos.logic.model;
 
 /**
  * This represents every Food Menu GridItem

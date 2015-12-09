@@ -11,6 +11,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
@@ -33,12 +35,14 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.Order;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.OrderArrayAdapter;
+import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
@@ -59,9 +63,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private View mTabFormView;
 
     //ListView attributes for search functionality
-    private ListView listView;
-    private OrderArrayAdapter<String> mAdapter;
-    private List items = new ArrayList<Order>();
+    private RecyclerView recyclerView;
+    private SearchItemAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private ArrayList<NewOrderGridItem> items = new ArrayList<>();
     private SearchView mSearchView;
 
     //order attributes
@@ -96,14 +101,22 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         mViewPager.setAdapter(mCreateOrderPagerAdapter);
 
 
-        listView = (ListView) findViewById(R.id.list_search_View2);
+        recyclerView = (RecyclerView) findViewById(R.id.search_item_view);
 
         initSearchListItems();
 
-        mAdapter = new OrderArrayAdapter<>(this, items);
+        recyclerView.setHasFixedSize(true);
 
-        listView.setAdapter(mAdapter);
-        listView.setVisibility(View.GONE);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new SearchItemAdapter(items);
+
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setVisibility(View.GONE);
 
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -113,11 +126,11 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 Toast.LENGTH_SHORT).show();
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton sendActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        sendActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( posOrder == null )
+                if (posOrder == null)
                     Snackbar.make(view, R.string.empty_order, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else
@@ -137,9 +150,16 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         ProductPrice productPrice;
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
+        NewOrderGridItem gridItem;
+
         for( MProduct product : DataMediator.getInstance().getProductList() ){
+            gridItem = new NewOrderGridItem();
             productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProductID());
-            items.add(new Order(product.getProductName(), currencyFormat.format(productPrice.getStdPrice())));
+
+            gridItem.setName(product.getProductName());
+            gridItem.setPrice(currencyFormat.format(productPrice.getStdPrice()));
+
+            items.add(gridItem);
         }
     }
 
@@ -150,13 +170,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * @return
      */
     public boolean onQueryTextChange(String newText) {
-        OrderArrayAdapter adapter = (OrderArrayAdapter)listView.getAdapter();
+        SearchItemAdapter adapter = (SearchItemAdapter) recyclerView.getAdapter();
 
         if ( TextUtils.isEmpty(newText) ) {
-            adapter.getFilter().filter(null);
+            //adapter.getFilter().filter(null);
         } else {
             showSearchList(true);
-            adapter.getFilter().filter(newText);
+            //adapter.getFilter().filter(newText);
         }
         return true;
     }
@@ -195,18 +215,18 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 }
             });
 
-            listView.setVisibility(show ? View.VISIBLE : View.GONE);
-            listView.animate().setDuration(shortAnimTime).alpha(
+            recyclerView.setVisibility(show ? View.VISIBLE : View.GONE);
+            recyclerView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    listView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    recyclerView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
-            listView.setVisibility(show ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(show ? View.VISIBLE : View.GONE);
             mTabFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             tabs.setVisibility(show ? View.GONE : View.VISIBLE);
         }
@@ -391,7 +411,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void onBackPressed() {
 
         //If the searchview mode is displayed, only go back to the tab
-        if ( listView.isShown() ) {
+        if ( recyclerView.isShown() ) {
             mSearchView.onActionViewCollapsed();
             showSearchList(false);
         }
