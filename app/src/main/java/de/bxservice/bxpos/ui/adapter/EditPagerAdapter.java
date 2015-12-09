@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.logic.model.POSOrder;
+import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
 
 /**
@@ -145,6 +146,8 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
             });
 
             mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
+
 
             return rootView;
         }
