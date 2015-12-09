@@ -4,9 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.NewOrderGridItem;
@@ -14,9 +17,11 @@ import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 /**
  * Created by Diego Ruiz on 9/12/15.
  */
-public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.SearchItemViewHolder> implements View.OnClickListener {
+public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.SearchItemViewHolder> implements View.OnClickListener, Filterable {
 
     private ArrayList<NewOrderGridItem> mDataset;
+    private ArrayList<NewOrderGridItem> orig;
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -30,7 +35,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
             super(v);
 
             txtProductName = (TextView) itemView.findViewById(android.R.id.text1);
-            txtPtice       = (TextView) itemView.findViewById(android.R.id.text2);
+            txtPtice = (TextView) itemView.findViewById(android.R.id.text2);
 
         }
 
@@ -50,7 +55,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
     // Create new views (invoked by the layout manager)
     @Override
     public SearchItemViewHolder onCreateViewHolder(ViewGroup parent,
-                                                  int viewType) {
+                                                   int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(android.R.layout.two_line_list_item, parent, false);
         // set the view's size, margins, paddings and layout parameters
@@ -67,7 +72,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
 
     @Override
     public void onClick(View view) {
-        if(listener != null)
+        if (listener != null)
             listener.onClick(view);
     }
 
@@ -83,6 +88,41 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public Filter getFilter() {
+
+        return new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<NewOrderGridItem> results = new ArrayList<NewOrderGridItem>();
+
+                if ( orig == null )
+                    orig = mDataset;
+
+                if ( constraint != null ) {
+                    if ( orig != null & orig.size() > 0 ) {
+                        for ( final NewOrderGridItem g : orig ) {
+                            if ( g.getName().toLowerCase().contains(constraint.toString()) )
+                                results.add(g);
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mDataset = (ArrayList<NewOrderGridItem>) results.values;
+                notifyDataSetChanged();
+
+            }
+        };
+
     }
 
 }
