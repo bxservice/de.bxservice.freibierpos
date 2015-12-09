@@ -395,12 +395,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         }
 
         posOrder.addItem(product);
-
-        View v = mViewPager.getChildAt(0); //position = index of view in pager
-        qtyOrderedTextView  = (TextView) v.findViewById(R.id.qtyOrdered_text);
-
-        qtyOrderedTextView.setText("x" + Integer.toString(getProductQtyOrdered(product)));
-
     }
 
     public void updateDraftOrder() {
