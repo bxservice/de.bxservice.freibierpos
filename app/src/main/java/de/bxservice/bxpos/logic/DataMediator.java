@@ -3,6 +3,8 @@ package de.bxservice.bxpos.logic;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -117,6 +119,8 @@ public class DataMediator {
      */
     private void setProductRelations(){
 
+        Collections.sort(productList, new ProductComparator());
+
         //Relation between product category and product
         if( productCategoryList != null && !productCategoryList.isEmpty() &&
                 productList != null && !productList.isEmpty() ){
@@ -162,6 +166,13 @@ public class DataMediator {
             error = true;
         }
 
+    }
+
+    public class ProductComparator implements Comparator<MProduct> {
+        @Override
+        public int compare(MProduct o1, MProduct o2) {
+            return o1.getProductName().compareTo(o2.getProductName());
+        }
     }
 
 }
