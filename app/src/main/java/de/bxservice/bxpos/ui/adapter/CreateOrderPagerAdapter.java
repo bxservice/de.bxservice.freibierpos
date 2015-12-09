@@ -20,6 +20,7 @@ import java.util.List;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.MProduct;
+import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.ProductCategory;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.ui.CreateOrderActivity;
