@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 
 /**
@@ -32,8 +33,8 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
         public SearchItemViewHolder(View v) {
             super(v);
 
-            txtProductName = (TextView) itemView.findViewById(android.R.id.text1);
-            txtPtice = (TextView) itemView.findViewById(android.R.id.text2);
+            txtProductName = (TextView) itemView.findViewById(R.id.search_name);
+            txtPtice = (TextView) itemView.findViewById(R.id.search_price);
 
         }
 
@@ -55,7 +56,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
     public SearchItemViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.two_line_list_item, parent, false);
+                .inflate(R.layout.search_items, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
         v.setOnClickListener(this);
