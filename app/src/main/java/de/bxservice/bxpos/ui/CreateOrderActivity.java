@@ -20,28 +20,26 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.MProduct;
-import de.bxservice.bxpos.logic.model.Order;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
-import de.bxservice.bxpos.ui.adapter.OrderArrayAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
@@ -62,11 +60,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private PagerSlidingTabStrip tabs;
     private View mTabFormView;
 
-    //ListView attributes for search functionality
+    //REcyclerView attributes for search functionality
     private RecyclerView recyclerView;
     private SearchItemAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ArrayList<NewOrderGridItem> items = new ArrayList<>();
+    private HashMap<NewOrderGridItem, MProduct> itemProductHashMap;
     private SearchView mSearchView;
 
     //order attributes
@@ -112,6 +111,17 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         recyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new SearchItemAdapter(items);
+        mAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int position = recyclerView.getChildAdapterPosition(v);
+                NewOrderGridItem a =  mAdapter.getSelectedItem(position);
+                addOrderItem(itemProductHashMap.get(a));
+                Log.i("DemoRecView", "Pulsado el elemento " + recyclerView.getChildAdapterPosition(v));
+                Log.i("DemoRecViewa", "Pulsado el elemento " + a.getName());
+            }
+        });
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setVisibility(View.GONE);
@@ -149,6 +159,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
 
         NewOrderGridItem gridItem;
+        itemProductHashMap = new HashMap<>();
 
         for( MProduct product : DataMediator.getInstance().getProductList() ){
             gridItem = new NewOrderGridItem();
@@ -158,6 +169,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             gridItem.setPrice(currencyFormat.format(productPrice.getStdPrice()));
 
             items.add(gridItem);
+            itemProductHashMap.put(gridItem, product);
         }
     }
 

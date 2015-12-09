@@ -9,9 +9,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 
 /**
@@ -82,6 +80,10 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
         NewOrderGridItem orderLine = mDataset.get(position);
 
         holder.bindSearchItem(orderLine);
+    }
+
+    public NewOrderGridItem getSelectedItem(int position) {
+        return mDataset.get(position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
