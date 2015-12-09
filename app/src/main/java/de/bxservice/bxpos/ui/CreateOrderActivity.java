@@ -61,8 +61,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     private PagerSlidingTabStrip tabs;
     private View mTabFormView;
-    private TextView qtyOrderedTextView;
-
 
     //RecyclerView attributes for search functionality
     private RecyclerView recyclerView;
@@ -120,11 +118,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             public void onClick(View v) {
 
                 int position = recyclerView.getChildAdapterPosition(v);
-                NewOrderGridItem a = mAdapter.getSelectedItem(position);
-                addOrderItem(itemProductHashMap.get(a));
+
+                NewOrderGridItem selectedItem = mAdapter.getSelectedItem(position);
+                addOrderItem(itemProductHashMap.get(selectedItem));
+
+                mCreateOrderPagerAdapter.updateQty(getSupportFragmentManager(), selectedItem, getProductQtyOrdered(itemProductHashMap.get(selectedItem)) );
                 onBackPressed();
-                Log.i("DemoRecView", "Pulsado el elemento " + recyclerView.getChildAdapterPosition(v));
-                Log.i("DemoRecViewa", "Pulsado el elemento " + a.getName());
+
             }
         });
 

@@ -61,6 +61,35 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
         return dataProvider.getProductCategoryList().get(position).getName();
     }
 
+    /**
+     * Updates the quantity when the item is selected from the search list
+     * @param fm
+     * @param selectedItem
+     * @param quantity
+     */
+    public void updateQty (FragmentManager fm, NewOrderGridItem selectedItem, int quantity) {
+
+        List<Fragment> allFragments = fm.getFragments();
+        boolean found = false;
+
+        for( Fragment fragment : allFragments ) {
+
+            if( fragment instanceof  FoodMenuFragment && !found ) {
+                FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
+
+                for( NewOrderGridItem item : menuFragment.mGridData ) {
+
+                    if ( item.getName().equals(selectedItem.getName()) ) {
+                        menuFragment.updateQtyOnClick(menuFragment.mGridData.indexOf(item), quantity);
+                        found = true;
+                    }
+                }
+
+            }
+
+        }
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.
