@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -60,6 +61,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     private PagerSlidingTabStrip tabs;
     private View mTabFormView;
+    private TextView qtyOrderedTextView;
+
 
     //RecyclerView attributes for search functionality
     private RecyclerView recyclerView;
@@ -119,6 +122,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 int position = recyclerView.getChildAdapterPosition(v);
                 NewOrderGridItem a = mAdapter.getSelectedItem(position);
                 addOrderItem(itemProductHashMap.get(a));
+                onBackPressed();
                 Log.i("DemoRecView", "Pulsado el elemento " + recyclerView.getChildAdapterPosition(v));
                 Log.i("DemoRecViewa", "Pulsado el elemento " + a.getName());
             }
@@ -391,6 +395,11 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         }
 
         posOrder.addItem(product);
+
+        View v = mViewPager.getChildAt(0); //position = index of view in pager
+        qtyOrderedTextView  = (TextView) v.findViewById(R.id.qtyOrdered_text);
+
+        qtyOrderedTextView.setText("x" + Integer.toString(getProductQtyOrdered(product)));
 
     }
 

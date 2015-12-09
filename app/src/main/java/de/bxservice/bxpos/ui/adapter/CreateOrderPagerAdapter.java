@@ -152,11 +152,16 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
                     int productQty = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
 
-                    qtyOrderedTextView.setText("x" + Integer.toString(productQty));
+                    updateQtyOnClick(position, productQty);
                 }
             });
 
             return rootView;
+        }
+
+        public void updateQtyOnClick(int position, int quantity) {
+            mGridData.get(position).setQty("x"+Integer.toString(quantity));
+            mGridAdapter.setGridData(mGridData);
         }
     }
 
