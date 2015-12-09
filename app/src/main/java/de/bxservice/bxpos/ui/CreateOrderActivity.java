@@ -41,6 +41,7 @@ import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
+import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
@@ -60,7 +61,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private PagerSlidingTabStrip tabs;
     private View mTabFormView;
 
-    //REcyclerView attributes for search functionality
+    //RecyclerView attributes for search functionality
     private RecyclerView recyclerView;
     private SearchItemAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -116,7 +117,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             public void onClick(View v) {
 
                 int position = recyclerView.getChildAdapterPosition(v);
-                NewOrderGridItem a =  mAdapter.getSelectedItem(position);
+                NewOrderGridItem a = mAdapter.getSelectedItem(position);
                 addOrderItem(itemProductHashMap.get(a));
                 Log.i("DemoRecView", "Pulsado el elemento " + recyclerView.getChildAdapterPosition(v));
                 Log.i("DemoRecViewa", "Pulsado el elemento " + a.getName());
@@ -125,6 +126,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setVisibility(View.GONE);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
