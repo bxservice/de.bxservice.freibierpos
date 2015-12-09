@@ -105,8 +105,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         initSearchListItems();
 
-        recyclerView.setHasFixedSize(true);
-
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
