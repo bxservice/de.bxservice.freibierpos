@@ -7,7 +7,7 @@
     android:background="@android:color/holo_red_light">
 
     <TextView
-        android:id="@+id/lblQty"
+        android:id="@+id/lblQty2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
@@ -17,7 +17,7 @@
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
     <TextView
-        android:id="@+id/lblName"
+        android:id="@+id/lblName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"
@@ -27,7 +27,7 @@
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
     <TextView
-        android:id="@+id/lblpriceline"
+        android:id="@+id/lblpriceline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17sp"

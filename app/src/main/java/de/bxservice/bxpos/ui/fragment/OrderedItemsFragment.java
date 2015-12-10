@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
-import de.bxservice.bxpos.ui.adapter.OrderLineAdapter;
+import de.bxservice.bxpos.ui.adapter.OrderedLineAdapter;
+import de.bxservice.bxpos.ui.adapter.OrderingLineAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
 /**
@@ -27,7 +28,7 @@ public class OrderedItemsFragment extends Fragment {
     private POSOrder order;
 
     private RecyclerView mRecyclerView;
-    private OrderLineAdapter mAdapter;
+    private OrderedLineAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
     /**
@@ -76,7 +77,7 @@ public class OrderedItemsFragment extends Fragment {
 
 
         // specify an adapter (and its listener)
-        mAdapter = new OrderLineAdapter(myDataset);
+        mAdapter = new OrderedLineAdapter(myDataset);
 
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
