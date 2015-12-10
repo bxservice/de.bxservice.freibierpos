@@ -17,9 +17,21 @@ public class POSOrder implements Serializable {
     public static final String SENT_STATUS     = "SENT";
     public static final String COMPLETE_STATUS = "COMPLETE";
 
-    private HashMap<MProduct, POSOrderLine> orderlineProductHashMap = new HashMap<MProduct, POSOrderLine>();
+    /**
+     * Boolean that defines if the lines are shown as individual always
+     * or as sum up lines. e.g. 2 Apples - instead of w lines with 1 apple
+     *
+     * By default it will always be single line, but this is left here for
+     * future customization if wanted
+     */
+    private boolean isAlwaysOneLine = true;
 
-    private ArrayList<POSOrderLine> orderLines = new ArrayList<POSOrderLine>();
+    //Checks if the product was ordered before
+    private HashMap<MProduct, POSOrderLine> orderlineProductHashMap = new HashMap<>();
+    //Checks how many times a product has been ordered
+    private HashMap<MProduct, Integer> orderlineProductQtyHashMap = new HashMap<>();
+
+    private ArrayList<POSOrderLine> orderLines = new ArrayList<>();
     private String orderRemark;
 
     //TODO: Change for Table object reference
@@ -31,15 +43,18 @@ public class POSOrder implements Serializable {
 
         boolean newItem = true;
 
-        //Check if the product was ordered before
-        if ( !orderlineProductHashMap.isEmpty() ){
+        if ( !isAlwaysOneLine ) {
 
-            POSOrderLine POSOrderLine = orderlineProductHashMap.get(product);
-            if( POSOrderLine != null ){
-                POSOrderLine.setQtyOrdered(POSOrderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
-                newItem = false;
+            //Check if the product was ordered before
+            if ( !orderlineProductHashMap.isEmpty() ){
+
+                POSOrderLine POSOrderLine = orderlineProductHashMap.get(product);
+                if( POSOrderLine != null ){
+                    POSOrderLine.setQtyOrdered(POSOrderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
+                    newItem = false;
+                }
+
             }
-
         }
 
         if( newItem ){
@@ -51,14 +66,30 @@ public class POSOrder implements Serializable {
             posOrderLine.setLineStatus(posOrderLine.ORDERING);
 
             orderLines.add(posOrderLine);
-            orderlineProductHashMap.put(product, posOrderLine);
+
+            if( isAlwaysOneLine ) {
+
+                //If the list is empty - is the first time the product is ordered
+                if ( orderlineProductQtyHashMap.isEmpty() || orderlineProductQtyHashMap.get(product) == null ) {
+                    orderlineProductQtyHashMap.put(product, 1);
+                } else {
+                     orderlineProductQtyHashMap.put(product, orderlineProductQtyHashMap.get(product) + 1 );
+                }
+
+            }else {
+                orderlineProductHashMap.put(product, posOrderLine);
+            }
         }
 
     }
 
     public int getProductQtyOrdered(MProduct product) {
 
-        if ( orderlineProductHashMap.get(product) != null )
+        if ( isAlwaysOneLine && orderlineProductQtyHashMap.get(product)!= null ) {
+            return orderlineProductQtyHashMap.get(product);
+
+        }
+        else if ( orderlineProductHashMap.get(product) != null )
             return orderlineProductHashMap.get(product).getQtyOrdered();
 
         return 0;
@@ -66,10 +97,6 @@ public class POSOrder implements Serializable {
 
     public ArrayList<POSOrderLine> getOrderLines() {
         return orderLines;
-    }
-
-    public void setOrderLines(ArrayList<POSOrderLine> orderLines) {
-        this.orderLines = orderLines;
     }
 
     public String getOrderRemark() {
