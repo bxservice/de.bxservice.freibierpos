@@ -32,13 +32,13 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
 
             case 0:
-                return OrderingItemsFragment.newInstance(position, order);
+                return OrderingItemsFragment.newInstance(order);
 
             case 1:
-                return OrderedItemsFragment.newInstance(position, order);
+                return OrderedItemsFragment.newInstance(order);
 
             default:
-                return OrderedItemsFragment.newInstance(position, order);
+                return OrderedItemsFragment.newInstance(order);
         }
 
     }

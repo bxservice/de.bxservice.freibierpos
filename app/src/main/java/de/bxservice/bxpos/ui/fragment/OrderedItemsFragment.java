@@ -22,14 +22,9 @@ import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
  */
 public class OrderedItemsFragment extends Fragment {
 
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-    private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String ARG_ORDER          = "related_order";
 
-    POSOrder order;
+    private POSOrder order;
 
     private RecyclerView mRecyclerView;
     private OrderLineAdapter mAdapter;
@@ -39,11 +34,10 @@ public class OrderedItemsFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static OrderedItemsFragment newInstance(int sectionNumber, POSOrder order) {
+    public static OrderedItemsFragment newInstance(POSOrder order) {
         OrderedItemsFragment fragment = new OrderedItemsFragment();
         Bundle args = new Bundle();
 
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         args.putSerializable(ARG_ORDER, order);
 
         fragment.setArguments(args);
@@ -59,9 +53,6 @@ public class OrderedItemsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_edit_order, container, false);
 
-
-        int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-
         order = (POSOrder) getArguments().getSerializable(ARG_ORDER);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
@@ -75,25 +66,14 @@ public class OrderedItemsFragment extends Fragment {
 
         ArrayList<POSOrderLine> myDataset = new ArrayList<>();
 
-        if( sectionNumber == 0 ) {
 
-            for( POSOrderLine orderLine : order.getOrderLines()){
+        for( POSOrderLine orderLine : order.getOrderLines()){
 
-                if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERING) ) {
-                    myDataset.add(orderLine);
-                }
-            }
-
-        }
-        else if ( sectionNumber == 1 ) {
-
-            for( POSOrderLine orderLine : order.getOrderLines()){
-
-                if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERED) ) {
-                    myDataset.add(orderLine);
-                }
+            if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERED) ) {
+                myDataset.add(orderLine);
             }
         }
+
 
         // specify an adapter (and its listener)
         mAdapter = new OrderLineAdapter(myDataset);
