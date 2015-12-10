@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,9 @@ public class EditOrderActivity extends AppCompatActivity {
 
     private POSOrder order;
 
+    FloatingActionButton sendButton;
+    FloatingActionButton payButton;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -71,7 +75,16 @@ public class EditOrderActivity extends AppCompatActivity {
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.openOrderTabs);
         tabs.setViewPager(mViewPager);
 
-        FloatingActionButton payButton = (FloatingActionButton) findViewById(R.id.fab);
+        sendButton = (FloatingActionButton) findViewById(R.id.fabSend);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, order.getStatus(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        payButton = (FloatingActionButton) findViewById(R.id.fabPay);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +92,27 @@ public class EditOrderActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        payButton.hide();
+
+        //Listen to tab swipes
+        ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                animateFab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
+
+        mViewPager.addOnPageChangeListener(onPageChangeListener);
 
     }
 
@@ -151,5 +185,29 @@ public class EditOrderActivity extends AppCompatActivity {
             return super.onKeyDown(keyCode, event);
         }
     }
+
+    /**
+     * Fab options to hide and show on each tab
+     * @param position
+     */
+    private void animateFab(int position) {
+        switch (position) {
+            case 0:
+                sendButton.show();
+                payButton.hide();
+                break;
+            case 1:
+                payButton.show();
+                sendButton.hide();
+                break;
+
+            default:
+                sendButton.show();
+                payButton.hide();
+                break;
+        }
+    }
+
+
 
 }
