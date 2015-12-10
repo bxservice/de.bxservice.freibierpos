@@ -119,7 +119,8 @@ public class DataMediator {
      */
     private void setProductRelations(){
 
-        Collections.sort(productList, new ProductComparator());
+        if( productList!= null )
+            Collections.sort(productList, new ProductComparator());
 
         //Relation between product category and product
         if( productCategoryList != null && !productCategoryList.isEmpty() &&
