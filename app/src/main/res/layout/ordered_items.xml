@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum = "4">
+    android:weightSum = "4"
+    android:background="@android:color/holo_red_light">
 
     <TextView
         android:id="@+id/lblQty"
