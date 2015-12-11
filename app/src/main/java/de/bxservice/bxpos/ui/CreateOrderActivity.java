@@ -335,6 +335,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     private void showRemarkDialog() {
         RemarkDialogFragment remarktDialog = new RemarkDialogFragment();
+        remarktDialog.setNote(getRemarkNote());
         remarktDialog.show(getFragmentManager(), "RemarkDialogFragment");
     }
 
