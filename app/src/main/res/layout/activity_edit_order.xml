@@ -83,20 +83,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quantity:9"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
+            android:textColor="#ffffff"
             android:id="@+id/qty_textView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quantity:9"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
-            android:id="@+id/total_textView" />
+            android:id="@+id/total_textView"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 
