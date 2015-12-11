@@ -50,6 +50,7 @@ public class EditOrderActivity extends AppCompatActivity {
     private EditPagerAdapter mEditPagerAdapter;
 
     private POSOrder order;
+    private String   caller; //Indicates the activity that called it
 
     private FloatingActionButton sendButton;
     private FloatingActionButton payButton;
@@ -151,8 +152,15 @@ public class EditOrderActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.add_item) {
+            if( caller.equals("CreateOrderActivity") ) {
+                onBackPressed();
+                return true;
+            }else {
+                //TODO: add the logic to call the interface when it is call from somewhere else
+
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -169,6 +177,7 @@ public class EditOrderActivity extends AppCompatActivity {
         if( intent != null ){
 
             order = (POSOrder)intent.getSerializableExtra("draftOrder");
+            caller = intent.getStringExtra("caller");
 
         }
     }
