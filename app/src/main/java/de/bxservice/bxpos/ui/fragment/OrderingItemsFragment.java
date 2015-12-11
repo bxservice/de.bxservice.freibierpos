@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
+import de.bxservice.bxpos.ui.RecyclerOrderingItemsListener;
 import de.bxservice.bxpos.ui.adapter.OrderingLineAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
@@ -77,15 +78,20 @@ public class OrderingItemsFragment extends Fragment {
         // specify an adapter (and its listener)
         mAdapter = new OrderingLineAdapter(myDataset);
 
-        mAdapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("DemoRecView", "Pulsado el elemento " + mRecyclerView.getChildAdapterPosition(v));
-            }
-        });
-
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerOrderingItemsListener(getActivity().getBaseContext(), new RecyclerOrderingItemsListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+                        POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
+
+                        System.out.println("clicked" + selectedItem.getProduct().getProductName());
+                    }
+                })
+        );
 
 
         return rootView;

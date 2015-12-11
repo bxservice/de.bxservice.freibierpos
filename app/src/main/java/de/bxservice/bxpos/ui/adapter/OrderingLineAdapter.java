@@ -50,6 +50,10 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         mDataset = myDataset;
     }
 
+    public POSOrderLine getSelectedItem(int position) {
+        return mDataset.get(position);
+    }
+
     private View.OnClickListener listener;
 
     // Create new views (invoked by the layout manager)
