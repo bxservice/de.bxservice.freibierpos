@@ -87,10 +87,11 @@
             android:fontFamily="sans-serif"
             android:textSize="16sp"
             android:textColor="#ffffff"
-            android:id="@+id/qty_textView" />
+            android:id="@+id/qty_textView"
+            android:layout_marginLeft="24dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
@@ -98,7 +99,8 @@
             android:id="@+id/total_textView"
             android:gravity="right"
             android:layout_gravity="right"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_marginRight="24dp" />
 
     </LinearLayout>
 
