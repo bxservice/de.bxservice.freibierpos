@@ -34,6 +34,7 @@
         android:layout_weight = "0.5"
         android:paddingTop="16dp"
         android:paddingBottom="20dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+        android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:gravity="right" />
 
 </LinearLayout>
