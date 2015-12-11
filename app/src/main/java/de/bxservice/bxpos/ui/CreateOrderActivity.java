@@ -472,6 +472,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void openConfirmationActivity() {
         Intent intent = new Intent(this, EditOrderActivity.class);
         intent.putExtra("draftOrder", posOrder);
+        intent.putExtra("caller","CreateOrderActivity");
 
         startActivity(intent);
     }
