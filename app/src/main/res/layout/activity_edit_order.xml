@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    >
+
+<android.support.design.widget.CoordinatorLayout
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
     tools:context="de.bxservice.bxpos.ui.EditOrderActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -45,6 +51,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
+        app:layout_behavior="de.bxservice.bxpos.ui.ScrollAwareFABBehavior"
         android:id="@+id/fabSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,3 +68,27 @@
         android:src="@drawable/euro30" />
 
 </android.support.design.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/summaryLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="bottom">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity:9"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:id="@+id/textView1" />
+
+    </LinearLayout>
+
+</RelativeLayout>
