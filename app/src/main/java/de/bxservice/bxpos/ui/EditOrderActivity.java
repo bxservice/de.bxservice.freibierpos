@@ -26,7 +26,12 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+
+import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.POSOrder;
+import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.persistence.OrderDataExample;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
@@ -108,6 +113,7 @@ public class EditOrderActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 animateFab(position);
+                updateSummary(position);
             }
 
             @Override
@@ -120,6 +126,8 @@ public class EditOrderActivity extends AppCompatActivity {
 
         qtyTextView   = (TextView) findViewById(R.id.qty_textView);
         totalTextView = (TextView) findViewById(R.id.total_textView);
+
+        updateSummary(0);
 
     }
 
@@ -218,25 +226,91 @@ public class EditOrderActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays the qty and the total in each tab
+     * @param position
+     */
     private void updateSummary(int position) {
 
         switch (position) {
 
             case EditPagerAdapter.ORDERING_POSITION:
-
+                qtyTextView.setText(getTotalQuantity(POSOrderLine.ORDERING));
+                totalTextView.setText(getTotalAmount(POSOrderLine.ORDERING));
                 break;
 
             case EditPagerAdapter.ORDERED_POSITION:
-
+                qtyTextView.setText(getTotalQuantity(POSOrderLine.ORDERED));
+                totalTextView.setText(getTotalAmount(POSOrderLine.ORDERED));
                 break;
 
             default:
-
+                qtyTextView.setText(getTotalQuantity(POSOrderLine.ORDERING));
+                totalTextView.setText(getTotalAmount(POSOrderLine.ORDERING));
                 break;
         }
 
     }
 
+    /**
+     * Returns total amount of items depending
+     * on the tab focus
+     * @param status
+     * @return
+     */
+    public String getTotalQuantity(String status) {
 
+        if ( order == null )
+            return "";
+
+        StringBuilder totalQtyString = new StringBuilder( getString(R.string.quantity) + ": " );
+        int totalQty = 0;
+
+        for( POSOrderLine orderLine : order.getOrderLines() ) {
+
+            if ( status.equals( orderLine.getLineStatus() ) ) {
+                totalQty = totalQty + orderLine.getQtyOrdered();
+            }
+        }
+
+        totalQtyString.append(totalQty);
+
+        return totalQtyString.toString();
+    }
+
+    /**
+     * Returns total amount to pay depending
+     * on the tab focus
+     * @param status
+     * @return
+     */
+    public String getTotalAmount(String status) {
+
+        if ( order == null )
+            return "";
+
+        StringBuilder totalString = new StringBuilder();
+        BigDecimal total = BigDecimal.ZERO;
+
+        if ( status. equals(POSOrderLine.ORDERING) )
+            totalString.append(getString(R.string.subtotal));
+        else if ( status.equals(POSOrderLine.ORDERED) )
+            totalString.append(getString(R.string.total));
+
+        totalString.append(": ");
+
+        for( POSOrderLine orderLine : order.getOrderLines() ) {
+
+            if ( status.equals( orderLine.getLineStatus() ) ) {
+                total = total.add(orderLine.getLineNetAmt());
+            }
+        }
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+        totalString.append(currencyFormat.format(total));
+
+        return totalString.toString();
+
+    }
 
 }
