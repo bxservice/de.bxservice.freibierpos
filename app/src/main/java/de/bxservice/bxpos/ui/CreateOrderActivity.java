@@ -73,6 +73,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private int numberOfGuests = 0;
     private String selectedTable = "";
     private String remarkNote = "";
+    private FloatingActionButton sendActionButton;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -139,7 +140,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 Toast.LENGTH_SHORT).show();
 
 
-        FloatingActionButton sendActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        sendActionButton = (FloatingActionButton) findViewById(R.id.fab);
         sendActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,12 +239,22 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                     recyclerView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+
+            if (sendActionButton.getVisibility() == View.VISIBLE)
+                sendActionButton.hide();
+            else
+                sendActionButton.show();
+
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             recyclerView.setVisibility(show ? View.VISIBLE : View.GONE);
             mTabFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             tabs.setVisibility(show ? View.GONE : View.VISIBLE);
+            if (sendActionButton.getVisibility() == View.VISIBLE)
+                sendActionButton.hide();
+            else
+                sendActionButton.show();
         }
     }//showSearchList
 
