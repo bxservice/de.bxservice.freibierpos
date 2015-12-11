@@ -26,7 +26,7 @@ public class RemarkDialogFragment extends DialogFragment {
 
     // Use this instance of the interface to deliver action events
     RemarkDialogListener mListener;
-    private String note;
+    private String note = "";
 
 
     @Override
@@ -40,6 +40,8 @@ public class RemarkDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.remark_dialog, null);
 
         final EditText remarkNote = (EditText) view.findViewById(R.id.remark_text);
+
+        remarkNote.setText(note);
 
         builder.setTitle(R.string.note);
         builder.setView(view)

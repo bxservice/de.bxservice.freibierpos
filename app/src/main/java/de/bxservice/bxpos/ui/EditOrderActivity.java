@@ -36,8 +36,11 @@ import de.bxservice.bxpos.persistence.OrderDataExample;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.OrderArrayAdapter;
+import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
+import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
-public class EditOrderActivity extends AppCompatActivity {
+public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
+        RemarkDialogFragment.RemarkDialogListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -158,12 +161,54 @@ public class EditOrderActivity extends AppCompatActivity {
                 return true;
             }else {
                 //TODO: add the logic to call the interface when it is call from somewhere else
-
                 return true;
             }
         }
+        if (id == R.id.set_guests) {
+            showGuestNumberDialog();
+            return true;
+        }
+        if (id == R.id.add_note) {
+            showRemarkDialog();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showRemarkDialog() {
+        RemarkDialogFragment remarktDialog = new RemarkDialogFragment();
+        remarktDialog.setNote(order.getOrderRemark());
+        remarktDialog.show(getFragmentManager(), "RemarkDialogFragment");
+    }
+
+    private void showGuestNumberDialog() {
+        // Create an instance of the dialog fragment and show it
+        GuestNumberDialogFragment guestDialog = new GuestNumberDialogFragment();
+        guestDialog.setNumberOfGuests(order.getGuestNumber());
+        guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
+    }
+
+    /**
+     * Click set on guest number dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(GuestNumberDialogFragment dialog) {
+        // User touched the dialog's positive button
+        int guests = dialog.getNumberOfGuests();
+        order.setGuestNumber(guests);
+    }
+
+    /**
+     * Click add on add remark dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(RemarkDialogFragment dialog) {
+        // User touched the dialog's positive button
+        String note = dialog.getNote();
+        order.setOrderRemark(note);
     }
 
     /**
