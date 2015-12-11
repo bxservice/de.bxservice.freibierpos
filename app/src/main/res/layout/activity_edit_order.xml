@@ -80,14 +80,23 @@
         android:layout_alignParentEnd="true"
         android:gravity="bottom">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantity:9"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:textSize="16sp"
-        android:id="@+id/textView1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity:9"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:id="@+id/qty_textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity:9"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:id="@+id/total_textView" />
 
     </LinearLayout>
 

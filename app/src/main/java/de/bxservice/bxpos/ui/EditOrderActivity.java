@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -45,8 +46,11 @@ public class EditOrderActivity extends AppCompatActivity {
 
     private POSOrder order;
 
-    FloatingActionButton sendButton;
-    FloatingActionButton payButton;
+    private FloatingActionButton sendButton;
+    private FloatingActionButton payButton;
+
+    private TextView qtyTextView;
+    private TextView totalTextView;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -113,6 +117,9 @@ public class EditOrderActivity extends AppCompatActivity {
         };
 
         mViewPager.addOnPageChangeListener(onPageChangeListener);
+
+        qtyTextView   = (TextView) findViewById(R.id.qty_textView);
+        totalTextView = (TextView) findViewById(R.id.total_textView);
 
     }
 
@@ -191,12 +198,15 @@ public class EditOrderActivity extends AppCompatActivity {
      * @param position
      */
     private void animateFab(int position) {
+
         switch (position) {
-            case 0:
+
+            case EditPagerAdapter.ORDERING_POSITION:
                 sendButton.show();
                 payButton.hide();
                 break;
-            case 1:
+
+            case EditPagerAdapter.ORDERED_POSITION:
                 payButton.show();
                 sendButton.hide();
                 break;
@@ -206,6 +216,25 @@ public class EditOrderActivity extends AppCompatActivity {
                 payButton.hide();
                 break;
         }
+    }
+
+    private void updateSummary(int position) {
+
+        switch (position) {
+
+            case EditPagerAdapter.ORDERING_POSITION:
+
+                break;
+
+            case EditPagerAdapter.ORDERED_POSITION:
+
+                break;
+
+            default:
+
+                break;
+        }
+
     }
 
 

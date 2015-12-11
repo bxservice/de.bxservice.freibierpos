@@ -17,8 +17,11 @@ import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
  */
 public class EditPagerAdapter extends FragmentPagerAdapter {
 
-    Context context;
-    POSOrder order;
+    public static final int ORDERING_POSITION = 0;
+    public static final int ORDERED_POSITION  = 1;
+
+    private Context context;
+    private POSOrder order;
 
     public EditPagerAdapter(FragmentManager fm, Context context, POSOrder order) {
         super(fm);
@@ -31,10 +34,10 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
 
-            case 0:
+            case ORDERING_POSITION:
                 return OrderingItemsFragment.newInstance(order);
 
-            case 1:
+            case ORDERED_POSITION:
                 return OrderedItemsFragment.newInstance(order);
 
             default:
@@ -52,10 +55,13 @@ public class EditPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case 0:
+
+            case ORDERING_POSITION:
                 return context.getResources().getString(R.string.ordering);
-            case 1:
+
+            case ORDERED_POSITION:
                 return context.getResources().getString(R.string.ordered);
+
         }
         return null;
     }
