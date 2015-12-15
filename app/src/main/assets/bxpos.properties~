@@ -5,4 +5,4 @@ orgId=0
 attemtpsno=3
 timeout=2000
 attemptsTimeout=2000
-urlBase=https://diego-u24e:8443
+urlBase=https://192.168.2.4:8443
