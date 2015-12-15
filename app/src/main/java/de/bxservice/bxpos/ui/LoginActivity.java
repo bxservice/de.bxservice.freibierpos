@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     private void createDummyUser() {
 
-        if (!db.getUser(1).getUsername().equals("FreiBierAdmin")) {
+        if (getOfflineUser() != null && !getOfflineUser().getUsername().equals("FreiBierAdmin")) {
             POSUser dummyUser = new POSUser();
             dummyUser.setUsername("FreiBierAdmin");
             dummyUser.setPassword("FreiBierAdmin");
@@ -121,6 +121,10 @@ public class LoginActivity extends AppCompatActivity  {
             Log.e("Dummy user exists", "FreiBierAdmin");
         }
         db.closeDB();
+    }
+
+    private POSUser getOfflineUser() {
+        return db.getUser(1);
     }
 
     /**
@@ -190,7 +194,14 @@ public class LoginActivity extends AppCompatActivity  {
             focusView.requestFocus();
         } else {
 
-
+            // If the credentials are the offline user - show the corresponding activity
+            POSUser offlineUser = getOfflineUser();
+            if(username.equals(offlineUser.getUsername())) {
+                Intent intent = new Intent(getBaseContext(), ViewOpenOrdersActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
             //Check if network connection is available
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
