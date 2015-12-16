@@ -5,13 +5,13 @@ import android.content.Context;
 import java.util.Properties;
 
 import de.bxservice.bxpos.logic.AssetsPropertyReader;
+import de.bxservice.bxpos.logic.PosProperties;
 
 /**
  * Created by Diego Ruiz on 6/11/15.
  */
 public class WebServiceRequestData {
 
-    private static final String PROPERTIES_FILE = "bxpos.properties";
     private static volatile WebServiceRequestData instance = null;
 
     private String username        = null;
@@ -34,14 +34,6 @@ public class WebServiceRequestData {
 
     }
 
-    /*public static synchronized WebServiceRequestData getInstance() {
-        if (instance == null) {
-            instance = new WebServiceRequestData();
-        }
-
-        return instance;
-    }*/
-
     public static synchronized WebServiceRequestData getInstance() {
         if (instance == null) {
             instance = new WebServiceRequestData();
@@ -50,27 +42,27 @@ public class WebServiceRequestData {
         return instance;
     }
 
-    public void readValues(Context context){
+    public void readValues(Context context) {
 
         assetsPropertyReader = new AssetsPropertyReader(context);
-        properties = assetsPropertyReader.getProperties(PROPERTIES_FILE);
+        properties = assetsPropertyReader.getProperties(PosProperties.PROPERTIES_FILE);
 
-        clientId        = properties.getProperty("clientId");
+        clientId        = properties.getProperty(PosProperties.CLIENT_PROPERTY);
         roleId          = properties.getProperty(role);
-        orgId           = properties.getProperty("orgId");
-        attemptsNo      = properties.getProperty("attemtpsno");
-        timeout         = properties.getProperty("timeout");
-        attemptsTimeout = properties.getProperty("attemptsTimeout");
-        urlBase         = properties.getProperty("urlBase");
+        orgId           = properties.getProperty(PosProperties.ORG_PROPERTY);
+        attemptsNo      = properties.getProperty(PosProperties.ATTEMPS_PROPERTY);
+        timeout         = properties.getProperty(PosProperties.TIMEOUT_PROPERTY);
+        attemptsTimeout = properties.getProperty(PosProperties.ATTEMPTS_TIMEOUT_PROPERTY);
+        urlBase         = properties.getProperty(PosProperties.URL_BASE_PROPERTY);
 
     }
 
     public boolean isDataComplete() {
-        if ( username != null && password != null &&
+        if (username != null && password != null &&
                 clientId != null && roleId != null &&
                 orgId != null && attemptsNo != null &&
                 attemptsNo != null && timeout != null &&
-                attemptsTimeout != null && urlBase != null )
+                attemptsTimeout != null && urlBase != null)
             return true;
 
         return false;
