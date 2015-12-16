@@ -42,8 +42,8 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
 
-            if ( response.getStatus() == Enums.WebServiceResponseStatus.Error ) {
-                System.out.println(response.getErrorMessage());
+            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
+                Log.e("Error ws response", response.getErrorMessage());
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
@@ -61,14 +61,14 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
-                        if( "Name".equalsIgnoreCase(field.getColumn()) )
+                        if("Name".equalsIgnoreCase(field.getColumn()))
                             categoryName = field.getValue();
-                        else if ( ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()) )
+                        else if (ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()))
                             categoryID = Integer.valueOf(field.getValue());
 
                     }
 
-                    if( categoryName != null &&  categoryID!= 0 ){
+                    if(categoryName != null &&  categoryID!= 0){
                         ProductCategory p = new ProductCategory(categoryID, categoryName);
                         productCategoryList.add(p);
                     }

@@ -68,9 +68,9 @@ public class OrderedItemsFragment extends Fragment {
         ArrayList<POSOrderLine> myDataset = new ArrayList<>();
 
 
-        for( POSOrderLine orderLine : order.getOrderLines()){
+        for(POSOrderLine orderLine : order.getOrderLines()) {
 
-            if ( orderLine.getLineStatus().equals(POSOrderLine.ORDERED) ) {
+            if (orderLine.getLineStatus().equals(POSOrderLine.ORDERED)) {
                 myDataset.add(orderLine);
             }
         }

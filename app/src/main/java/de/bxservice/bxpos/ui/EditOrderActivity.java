@@ -219,7 +219,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         Intent intent = getIntent();
 
-        if( intent != null ){
+        if(intent != null) {
 
             order = (POSOrder)intent.getSerializableExtra("draftOrder");
             caller = intent.getStringExtra("caller");
@@ -229,8 +229,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     public void onBackPressed() {
 
-        if( order != null &&
-                !order.getStatus().equals(POSOrder.DRAFT_STATUS) ){
+        if(order != null &&
+                !order.getStatus().equals(POSOrder.DRAFT_STATUS)) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)
@@ -314,15 +314,15 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     public String getTotalQuantity(String status) {
 
-        if ( order == null )
+        if (order == null)
             return "";
 
         StringBuilder totalQtyString = new StringBuilder( getString(R.string.quantity) + ": " );
         int totalQty = 0;
 
-        for( POSOrderLine orderLine : order.getOrderLines() ) {
+        for(POSOrderLine orderLine : order.getOrderLines()) {
 
-            if ( status.equals( orderLine.getLineStatus() ) ) {
+            if (status.equals(orderLine.getLineStatus())) {
                 totalQty = totalQty + orderLine.getQtyOrdered();
             }
         }
@@ -340,22 +340,22 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     public String getTotalAmount(String status) {
 
-        if ( order == null )
+        if (order == null)
             return "";
 
         StringBuilder totalString = new StringBuilder();
         BigDecimal total = BigDecimal.ZERO;
 
-        if ( status. equals(POSOrderLine.ORDERING) )
+        if (status. equals(POSOrderLine.ORDERING))
             totalString.append(getString(R.string.subtotal));
-        else if ( status.equals(POSOrderLine.ORDERED) )
+        else if (status.equals(POSOrderLine.ORDERED))
             totalString.append(getString(R.string.total));
 
         totalString.append(": ");
 
-        for( POSOrderLine orderLine : order.getOrderLines() ) {
+        for(POSOrderLine orderLine : order.getOrderLines()) {
 
-            if ( status.equals( orderLine.getLineStatus() ) ) {
+            if (status.equals( orderLine.getLineStatus())) {
                 total = total.add(orderLine.getLineNetAmt());
             }
         }

@@ -35,7 +35,7 @@ public class AuthenticationWebService extends AbstractWSObject{
         try {
             CompositeResponse response = client.sendRequest(compositeOperation);
 
-            if ( response.getStatus() == Enums.WebServiceResponseStatus.Error ) {
+            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 Log.i("Error: ", response.getErrorMessage());
                 success = false;
             } else {

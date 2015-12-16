@@ -18,7 +18,7 @@ public abstract class AbstractWSObject {
 
         wsData = WebServiceRequestData.getInstance();
 
-        if ( wsData.isDataComplete()  ){
+        if (wsData.isDataComplete()) {
             initLogin();
             initClient();
             runWebService();
@@ -29,7 +29,7 @@ public abstract class AbstractWSObject {
 
         wsData = WebServiceRequestData.getInstance();
 
-        if ( wsData.isDataComplete()  ){
+        if (wsData.isDataComplete()) {
             initLogin();
             initClient();
             setParameter(parameter);

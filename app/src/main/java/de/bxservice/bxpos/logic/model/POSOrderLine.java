@@ -70,7 +70,7 @@ public class POSOrderLine implements Serializable{
 
     public BigDecimal getLineNetAmt() {
 
-        if( product != null )
+        if(product != null)
             lineNetAmt = product.getProductPrice().multiply(BigDecimal.valueOf(qtyOrdered));
 
         return lineNetAmt;

@@ -43,13 +43,13 @@ public class POSOrder implements Serializable {
 
         boolean newItem = true;
 
-        if ( !isAlwaysOneLine ) {
+        if (!isAlwaysOneLine) {
 
             //Check if the product was ordered before
-            if ( !orderlineProductHashMap.isEmpty() ){
+            if (!orderlineProductHashMap.isEmpty()) {
 
                 POSOrderLine POSOrderLine = orderlineProductHashMap.get(product);
-                if( POSOrderLine != null ){
+                if(POSOrderLine != null){
                     POSOrderLine.setQtyOrdered(POSOrderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
                     newItem = false;
                 }
@@ -57,7 +57,7 @@ public class POSOrder implements Serializable {
             }
         }
 
-        if( newItem ){
+        if(newItem) {
 
             POSOrderLine posOrderLine = new POSOrderLine();
             posOrderLine.setOrder(this);
@@ -67,13 +67,13 @@ public class POSOrder implements Serializable {
 
             orderLines.add(posOrderLine);
 
-            if( isAlwaysOneLine ) {
+            if(isAlwaysOneLine) {
 
                 //If the list is empty - is the first time the product is ordered
-                if ( orderlineProductQtyHashMap.isEmpty() || orderlineProductQtyHashMap.get(product) == null ) {
+                if (orderlineProductQtyHashMap.isEmpty() || orderlineProductQtyHashMap.get(product) == null) {
                     orderlineProductQtyHashMap.put(product, 1);
                 } else {
-                     orderlineProductQtyHashMap.put(product, orderlineProductQtyHashMap.get(product) + 1 );
+                     orderlineProductQtyHashMap.put(product, orderlineProductQtyHashMap.get(product) + 1);
                 }
 
             }else {
@@ -85,11 +85,11 @@ public class POSOrder implements Serializable {
 
     public int getProductQtyOrdered(MProduct product) {
 
-        if ( isAlwaysOneLine && orderlineProductQtyHashMap.get(product)!= null ) {
+        if (isAlwaysOneLine && orderlineProductQtyHashMap.get(product)!= null) {
             return orderlineProductQtyHashMap.get(product);
 
         }
-        else if ( orderlineProductHashMap.get(product) != null )
+        else if (orderlineProductHashMap.get(product) != null)
             return orderlineProductHashMap.get(product).getQtyOrdered();
 
         return 0;
@@ -129,9 +129,9 @@ public class POSOrder implements Serializable {
 
     public void setStatus(String status) {
 
-        if ( status.equals(DRAFT_STATUS) ||
+        if (status.equals(DRAFT_STATUS) ||
                 status.equals(SENT_STATUS) ||
-                status.equals(COMPLETE_STATUS) )
+                status.equals(COMPLETE_STATUS))
         this.status = status;
 
     }

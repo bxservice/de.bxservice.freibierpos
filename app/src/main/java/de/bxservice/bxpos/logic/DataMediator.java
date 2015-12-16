@@ -101,10 +101,10 @@ public class DataMediator {
     }
 
     public boolean isDataComplete(){
-        if( productCategoryList  != null && !productCategoryList.isEmpty() &&
+        if(productCategoryList  != null && !productCategoryList.isEmpty() &&
                 productList      != null && !productList.isEmpty() &&
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
-                productPriceList != null && !productPriceList.isEmpty() )
+                productPriceList != null && !productPriceList.isEmpty())
             return true;
 
         return false;
@@ -119,21 +119,21 @@ public class DataMediator {
      */
     private void setProductRelations(){
 
-        if( productList!= null )
+        if(productList!= null)
             Collections.sort(productList, new ProductComparator());
 
         //Relation between product category and product
-        if( productCategoryList != null && !productCategoryList.isEmpty() &&
-                productList != null && !productList.isEmpty() ){
+        if(productCategoryList != null && !productCategoryList.isEmpty() &&
+                productList != null && !productList.isEmpty()) {
 
             int productCategoryId;
             int childProductCategoryId;
-            for( ProductCategory productCategory : productCategoryList ){
+            for(ProductCategory productCategory : productCategoryList) {
 
                 productCategoryId = productCategory.getProductCategoryID();
-                for( MProduct product : productList ){
+                for(MProduct product : productList) {
                     childProductCategoryId = product.getProductCategoryId();
-                    if( childProductCategoryId == productCategoryId )
+                    if(childProductCategoryId == productCategoryId)
                         productCategory.getProducts().add(product);
                 }
             }
@@ -150,12 +150,12 @@ public class DataMediator {
 
             int productId;
             int priceProductId;
-            for( ProductPrice productPrice : productPriceList ){
+            for(ProductPrice productPrice : productPriceList) {
 
                 priceProductId = productPrice.getProductID();
-                for( MProduct product : productList ){
+                for(MProduct product : productList) {
                     productId = product.getProductID();
-                    if( priceProductId == productId ) {
+                    if(priceProductId == productId) {
                         productPrice.setProduct(product);
                         productPriceHashMap.put(product.getProductID(),productPrice);
                     }
@@ -163,7 +163,7 @@ public class DataMediator {
             }
         }
         else {
-            Log.i("Error: ", "missing price products");
+            Log.e("Error: ", "missing price products");
             error = true;
         }
 
