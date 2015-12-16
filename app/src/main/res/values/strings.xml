@@ -52,5 +52,36 @@
     <string name="role">Role</string>
     <string name="waiter_role">Server</string>
     <string name="supervisor_role">Supervisor</string>
+    <string name="title_activity_admin_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">Server</string>
+
+    <string name="pref_title_display_name">Server URL</string>
+    <string name="pref_default_display_name">URL</string>
+
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>Once a day</item>
+        <item>Always (Every transaction)</item>
+        <item>Never (Update manually)</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>480</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
 
 </resources>
