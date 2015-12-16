@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity  {
             // If the credentials are the offline user - show the corresponding activity
             POSUser offlineUser = getOfflineUser();
             if(username.equals(offlineUser.getUsername())) {
-                Intent intent = new Intent(getBaseContext(), ViewOpenOrdersActivity.class);
+                Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
                 startActivity(intent);
                 finish();
                 return;
