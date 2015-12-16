@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity  {
      * Sets the role name in the corresponding language
      * set the hashmap for inner references
      */
-    private void getRoleNames(){
+    private void getRoleNames() {
         roles = new ArrayList<String>();
         roleCodes = new HashMap<String, String>();
 
@@ -306,7 +306,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             AuthenticationWebService auth = new AuthenticationWebService();
 
-            if ( auth.isSuccess() )
+            if (auth.isSuccess())
                 return true;
 
             return false;
@@ -344,7 +344,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             DataMediator data = DataMediator.getInstance();
 
-            if( data.isDataComplete() && !data.isError() )
+            if(data.isDataComplete() && !data.isError())
                 return true;
 
             return false;
