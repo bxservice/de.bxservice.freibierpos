@@ -25,6 +25,9 @@ import de.bxservice.bxpos.R;
  */
 public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
 
+    public static final String KEY_PREF_URL = "pref_serverurl";
+    public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

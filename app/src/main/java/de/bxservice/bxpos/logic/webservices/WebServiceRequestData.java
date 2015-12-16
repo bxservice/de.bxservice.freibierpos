@@ -53,7 +53,6 @@ public class WebServiceRequestData {
         attemptsNo      = properties.getProperty(PosProperties.ATTEMPS_PROPERTY);
         timeout         = properties.getProperty(PosProperties.TIMEOUT_PROPERTY);
         attemptsTimeout = properties.getProperty(PosProperties.ATTEMPTS_TIMEOUT_PROPERTY);
-        urlBase         = properties.getProperty(PosProperties.URL_BASE_PROPERTY);
 
     }
 
