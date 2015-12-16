@@ -5,9 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
@@ -289,11 +291,15 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Void... params) {
 
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
+
             // Sets the data to create a ws request to iDempiere
             WebServiceRequestData wsData = WebServiceRequestData.getInstance();
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
             wsData.setRole(mRole);
+            wsData.setUrlBase(syncConnPref);
 
             wsData.readValues(getBaseContext());
 
