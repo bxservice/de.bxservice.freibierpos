@@ -167,7 +167,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
 
-        for( MProduct product : DataMediator.getInstance().getProductList() ){
+        for(MProduct product : DataMediator.getInstance().getProductList()) {
             gridItem = new NewOrderGridItem();
             productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProductID());
 
@@ -188,7 +188,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public boolean onQueryTextChange(String newText) {
         SearchItemAdapter adapter = (SearchItemAdapter) recyclerView.getAdapter();
 
-        if ( TextUtils.isEmpty(newText) ) {
+        if (TextUtils.isEmpty(newText)) {
             adapter.getFilter().filter("");
         } else {
             showSearchList(true);
@@ -266,9 +266,9 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void getExtras() {
         Bundle extras = getIntent().getExtras();
 
-        if( extras != null ){
+        if(extras != null) {
 
-            if( extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE) != null )
+            if(extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
                 setSelectedTable(extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE));
 
              setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
@@ -396,7 +396,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     public void addOrderItem(MProduct product) {
 
-        if( posOrder == null ){
+        if(posOrder == null) {
             posOrder = new POSOrder();
             posOrder.setGuestNumber(getNumberOfGuests());
             posOrder.setOrderRemark(getRemarkNote());
@@ -409,12 +409,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     public void updateDraftOrder() {
 
-        if( posOrder != null ){
+        if(posOrder != null) {
 
-            if( !remarkNote.equals(posOrder.getOrderRemark()) ){
+            if(!remarkNote.equals(posOrder.getOrderRemark())) {
                 posOrder.setOrderRemark(remarkNote);
             }
-            if( numberOfGuests != posOrder.getGuestNumber() ){
+            if(numberOfGuests != posOrder.getGuestNumber()) {
                 posOrder.setGuestNumber(numberOfGuests);
             }
 
@@ -423,7 +423,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     }
 
     public int getProductQtyOrdered(MProduct product) {
-        if( posOrder == null )
+        if(posOrder == null)
             return 0;
         return posOrder.getProductQtyOrdered(product);
     }
@@ -437,11 +437,11 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void onBackPressed() {
 
         //If the searchview mode is displayed, only go back to the tab
-        if ( recyclerView.isShown() ) {
+        if (recyclerView.isShown()) {
             mSearchView.onActionViewCollapsed();
             showSearchList(false);
         }
-        else if( posOrder != null ){
+        else if(posOrder != null) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)

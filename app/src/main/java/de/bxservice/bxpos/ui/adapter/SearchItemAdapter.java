@@ -103,13 +103,13 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
                 final FilterResults oReturn = new FilterResults();
                 final ArrayList<NewOrderGridItem> results = new ArrayList<NewOrderGridItem>();
 
-                if ( orig == null )
+                if (orig == null)
                     orig = mDataset;
 
-                if ( constraint != null ) {
-                    if ( orig != null & orig.size() > 0 ) {
-                        for ( final NewOrderGridItem g : orig ) {
-                            if ( g.getName().toLowerCase().contains(constraint.toString()) )
+                if (constraint != null) {
+                    if (orig != null & orig.size() > 0) {
+                        for (final NewOrderGridItem g : orig) {
+                            if (g.getName().toLowerCase().contains(constraint.toString()))
                                 results.add(g);
                         }
                     }

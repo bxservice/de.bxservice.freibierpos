@@ -45,8 +45,8 @@ public class TableWebServiceAdapter extends AbstractWSObject{
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
 
-            if ( response.getStatus() == Enums.WebServiceResponseStatus.Error ) {
-                System.out.println(response.getErrorMessage());
+            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
+                Log.e("Error ws response", response.getErrorMessage());
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
@@ -68,22 +68,22 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
-                        if( "Name".equalsIgnoreCase(field.getColumn()) )
+                        if("Name".equalsIgnoreCase(field.getColumn()))
                             name = field.getValue();
-                        else if ( Table.BAY_Table_ID.equalsIgnoreCase(field.getColumn()) )
+                        else if (Table.BAY_Table_ID.equalsIgnoreCase(field.getColumn()))
                             tableId = Integer.valueOf(field.getValue());
-                        else if ( "IsSummary".equalsIgnoreCase(field.getColumn()) ){
+                        else if ("IsSummary".equalsIgnoreCase(field.getColumn())) {
                             if("Y".equalsIgnoreCase(field.getValue()))
                                 isSummary = true;
                         }
-                        else if ( "Value".equalsIgnoreCase(field.getColumn()) )
+                        else if ("Value".equalsIgnoreCase(field.getColumn()))
                             value = field.getValue();
 
                     }
 
-                    if( name != null &&  tableId!= 0 && value != null ){
+                    if(name != null &&  tableId!= 0 && value != null) {
                         // If isSummary is a table group else is a table
-                        if(isSummary){
+                        if(isSummary) {
                             TableGroup tableGroup =  new TableGroup();
                             tableGroup.setValue(value);
                             tableGroup.setName(name);

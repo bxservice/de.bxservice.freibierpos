@@ -95,7 +95,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             mGridData = new ArrayList<>();
 
             TableGridItem item;
-            for ( Table table : tableGroup.getTables() ){
+            for (Table table : tableGroup.getTables()) {
                 item = new TableGridItem();
                 item.setTitle(table.getTableName());
                 //item.setImage(R.drawable.ic_local_dining_white_24dp);

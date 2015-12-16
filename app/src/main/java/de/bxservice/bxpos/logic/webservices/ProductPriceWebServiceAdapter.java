@@ -44,8 +44,8 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject{
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
 
-            if ( response.getStatus() == Enums.WebServiceResponseStatus.Error ) {
-                System.out.println(response.getErrorMessage());
+            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
+                Log.e("Error ws response", response.getErrorMessage());
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
@@ -67,19 +67,19 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject{
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
-                        if( "M_PriceList_Version_ID".equalsIgnoreCase(field.getColumn()) )
+                        if("M_PriceList_Version_ID".equalsIgnoreCase(field.getColumn()))
                             priceListVersionId = Integer.valueOf(field.getValue());
-                        else if ( ProductPrice.M_ProductPrice_ID.equalsIgnoreCase(field.getColumn()) )
+                        else if (ProductPrice.M_ProductPrice_ID.equalsIgnoreCase(field.getColumn()))
                             productPriceId = Integer.valueOf(field.getValue());
-                        else if ( MProduct.M_Product_ID.equalsIgnoreCase(field.getColumn()) )
+                        else if (MProduct.M_Product_ID.equalsIgnoreCase(field.getColumn()))
                             productId = Integer.valueOf(field.getValue());
-                        else if ( "PriceStd".equalsIgnoreCase(field.getColumn()) )
+                        else if ("PriceStd".equalsIgnoreCase(field.getColumn()))
                             price = new BigDecimal(field.getValue());
 
                     }
 
-                    if( priceListVersionId != 0 &&  productPriceId!= 0 &&
-                            productId != 0 && price != null ){
+                    if(priceListVersionId != 0 &&  productPriceId!= 0 &&
+                            productId != 0 && price != null) {
                         ProductPrice p = new ProductPrice();
                         p.setProductID(productId);
                         p.setPriceListVersionID(priceListVersionId);
