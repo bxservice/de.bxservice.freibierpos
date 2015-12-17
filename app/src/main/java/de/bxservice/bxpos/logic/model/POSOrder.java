@@ -83,6 +83,44 @@ public class POSOrder implements Serializable {
 
     }
 
+    /**
+     * Removes an item from the list
+     * @param position
+     */
+    public void removeItem (int position) {
+
+        POSOrderLine orderLine = orderLines.get(position);
+        MProduct product = orderLine.getProduct();
+
+        if (isAlwaysOneLine) {
+            orderlineProductQtyHashMap.remove(product);
+        } else {
+            orderlineProductHashMap.remove(product);
+        }
+
+        orderLines.remove(position);
+
+    }
+
+    /**
+     * Called when undo deleting
+     * @param position
+     * @param orderLine
+     */
+    public void addItem (int position, POSOrderLine orderLine) {
+
+        MProduct product = orderLine.getProduct();
+
+        orderLines.add(position, orderLine);
+
+        if (isAlwaysOneLine) {
+            orderlineProductQtyHashMap.put(product, orderLine.getQtyOrdered());
+        } else {
+            orderlineProductHashMap.put(product, orderLine);
+        }
+
+    }
+
     public int getProductQtyOrdered(MProduct product) {
 
         if (isAlwaysOneLine && orderlineProductQtyHashMap.get(product)!= null) {

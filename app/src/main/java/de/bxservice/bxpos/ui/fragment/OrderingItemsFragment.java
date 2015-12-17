@@ -103,7 +103,16 @@ public class OrderingItemsFragment extends Fragment {
 
         mAdapter.setOnDataChangeListener(new OnDataChangeListener() {
             public void onDataChanged(int position) {
-                //((EditOrderActivity) getActivity()).updateOrderLines(myDataset);
+            }
+
+            @Override
+            public void onItemDeleted(int position) {
+                ((EditOrderActivity) getActivity()).removeItem(position);
+            }
+
+            @Override
+            public void onItemAdded(int position, Object object) {
+                ((EditOrderActivity) getActivity()).addItem(position, (POSOrderLine) object);
             }
         });
 
