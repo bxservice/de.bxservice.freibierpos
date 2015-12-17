@@ -28,6 +28,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.POSOrder;
@@ -52,6 +53,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private EditPagerAdapter mEditPagerAdapter;
 
+    private View mainView;
     private POSOrder order;
     private String   caller; //Indicates the activity that called it
 
@@ -77,6 +79,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         getExtras();
 
+        mainView = findViewById(R.id.main_layout);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mEditPagerAdapter = new EditPagerAdapter(getSupportFragmentManager(), getBaseContext(), order);
@@ -92,8 +96,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, order.getStatus(), Snackbar.LENGTH_LONG)
+                Snackbar.make(mainView, order.getStatus(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                System.out.println("Numero de items: " + order.getOrderLines().size());
             }
         });
 
@@ -364,6 +369,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         totalString.append(currencyFormat.format(total));
 
         return totalString.toString();
+
+    }
+
+    public void updateOrderLines(ArrayList<POSOrderLine> newOrderLines) {
+
+        System.out.println(order.getOrderLines().size());
+
+        //order.setOr
 
     }
 
