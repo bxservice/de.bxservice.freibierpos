@@ -67,6 +67,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private boolean addNewItemsOnBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +163,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
         if (id == R.id.add_item) {
             if( caller.equals("CreateOrderActivity") ) {
+                addNewItemsOnBack = true;
                 onBackPressed();
                 return true;
             }else {
@@ -379,5 +381,20 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         //order.setOr
 
     }
+
+    @Override
+    public void finish() {
+        //When new items want to be added - persist the changes in guests and notes
+        if (caller.equals("CreateOrderActivity") && addNewItemsOnBack) {
+
+            Intent data = new Intent();
+            data.putExtra("remark",order.getOrderRemark());
+            data.putExtra("guests", order.getGuestNumber());
+            setResult(RESULT_OK, data);
+
+        }
+        super.finish();
+    }
+
 
 }

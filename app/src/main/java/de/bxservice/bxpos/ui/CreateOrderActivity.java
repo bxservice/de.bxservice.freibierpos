@@ -56,6 +56,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
+    static final int PICK_CONFIRMATION_REQUEST = 1;  // The request code
+
 
     private PagerSlidingTabStrip tabs;
     private View mTabFormView;
@@ -475,7 +477,22 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         intent.putExtra("draftOrder", posOrder);
         intent.putExtra("caller","CreateOrderActivity");
 
-        startActivity(intent);
+        startActivityForResult(intent, PICK_CONFIRMATION_REQUEST);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == PICK_CONFIRMATION_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+                setRemarkNote(data.getExtras().get("remark").toString());
+                setNumberOfGuests((Integer) data.getExtras().get("guests"));
+
+                updateDraftOrder();
+
+            }
+        }
     }
 
 }
