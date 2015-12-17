@@ -103,7 +103,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        if (fromPosition < toPosition) {
+        /*if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(mDataset, i, i + 1);
             }
@@ -112,6 +112,6 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
                 Collections.swap(mDataset, i, i - 1);
             }
         }
-        notifyItemMoved(fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);*/
     }
 }
