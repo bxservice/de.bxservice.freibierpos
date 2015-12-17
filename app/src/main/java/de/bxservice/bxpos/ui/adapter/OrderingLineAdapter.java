@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
@@ -16,7 +17,7 @@ import de.bxservice.bxpos.logic.model.POSOrderLine;
  */
 
 public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapter.OrderingLineViewHolder>
-        implements View.OnClickListener {
+        implements View.OnClickListener, ItemTouchHelperAdapter {
 
     private ArrayList<POSOrderLine> mDataset;
 
@@ -92,5 +93,25 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        mDataset.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mDataset, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mDataset, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
     }
 }
