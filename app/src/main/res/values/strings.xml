@@ -18,6 +18,8 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="note">Add remark</string>
+    <string name="undo">UNDO</string>
+    <string name="item_removed">Item removed</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>

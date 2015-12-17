@@ -1,6 +1,7 @@
 package de.bxservice.bxpos.ui.adapter;
 
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         implements View.OnClickListener, ItemTouchHelperAdapter {
 
     private ArrayList<POSOrderLine> mDataset;
+    View mainLayout;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -78,6 +80,8 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
         v.setOnClickListener(this);
 
+        mainLayout = (View) parent.getParent().getParent().getParent();
+
         OrderingLineViewHolder vh = new OrderingLineViewHolder(v);
         return vh;
     }
@@ -107,9 +111,31 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
     }
 
     @Override
-    public void onItemDismiss(int position) {
+    public void onItemDismiss(final int position) {
+
+        final POSOrderLine orderLine = mDataset.get(position);
+        Snackbar snackbar = Snackbar
+                .make(mainLayout, mainLayout.getResources().getString(R.string.item_removed), Snackbar.LENGTH_LONG)
+                .setAction(mainLayout.getResources().getString(R.string.undo), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDataset.add(position, orderLine);
+                        notifyItemInserted(position);
+                    }
+                });
+
+        // Changing message text color
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
+
+
         mDataset.remove(position);
         notifyItemRemoved(position);
+
+        /*if(mOnDataChangeListener != null){
+            mOnDataChangeListener.onDataChanged(position);
+        }*/
+
     }
 
     @Override
@@ -124,5 +150,11 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
             }
         }
         notifyItemMoved(fromPosition, toPosition);*/
+    }
+
+    OnDataChangeListener mOnDataChangeListener;
+
+    public void setOnDataChangeListener(OnDataChangeListener onDataChangeListener){
+        mOnDataChangeListener = onDataChangeListener;
     }
 }
