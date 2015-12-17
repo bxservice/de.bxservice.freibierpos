@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.ui.RecyclerOrderingItemsListener;
 import de.bxservice.bxpos.ui.adapter.OrderingLineAdapter;
+import de.bxservice.bxpos.ui.adapter.SimpleItemTouchHelperCallback;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
 /**
@@ -92,6 +94,10 @@ public class OrderingItemsFragment extends Fragment {
                     }
                 })
         );
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
 
 
         return rootView;
