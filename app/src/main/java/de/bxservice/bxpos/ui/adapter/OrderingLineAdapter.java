@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class OrderingLineViewHolder extends RecyclerView.ViewHolder {
+    public static class OrderingLineViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         // each data item is just a string in this case
         public TextView txtQty;
         public TextView txtProductName;
@@ -43,6 +44,16 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
             txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
             txtProductName.setText(orderLine.getProduct().getProductName());
             txtPtice.setText(orderLine.getLineTotalAmt());
+        }
+
+        @Override
+        public void onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY);
+        }
+
+        @Override
+        public void onItemClear() {
+            itemView.setBackgroundColor(Color.WHITE);
         }
     }
 
