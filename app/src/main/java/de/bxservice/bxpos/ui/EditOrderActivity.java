@@ -374,12 +374,24 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     }
 
-    public void updateOrderLines(ArrayList<POSOrderLine> newOrderLines) {
+    /**
+     * Removes an item when swipe in the list view
+     * updates the qty and subtotal
+     * @param position
+     */
+    public void removeItem(int  position) {
+        order.removeItem(position);
+        updateSummary(0);
+    }
 
-        System.out.println(order.getOrderLines().size());
-
-        //order.setOr
-
+    /**
+     * Undo the delete
+     * @param position
+     * @param orderLine
+     */
+    public void addItem(int  position, POSOrderLine orderLine) {
+        order.addItem(position, orderLine);
+        updateSummary(0);
     }
 
     @Override

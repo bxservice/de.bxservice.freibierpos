@@ -5,4 +5,7 @@ package de.bxservice.bxpos.ui.adapter;
  */
 public interface OnDataChangeListener{
     void onDataChanged(int position);
+    void onItemDeleted(int position);
+    void onItemAdded(int position, Object object);
+
 }

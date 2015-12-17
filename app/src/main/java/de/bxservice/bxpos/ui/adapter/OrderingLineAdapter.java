@@ -121,6 +121,9 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
                     public void onClick(View view) {
                         mDataset.add(position, orderLine);
                         notifyItemInserted(position);
+                        if(mOnDataChangeListener != null){
+                            mOnDataChangeListener.onItemAdded(position, orderLine);
+                        }
                     }
                 });
 
@@ -128,13 +131,12 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         snackbar.setActionTextColor(Color.YELLOW);
         snackbar.show();
 
-
         mDataset.remove(position);
         notifyItemRemoved(position);
 
-        /*if(mOnDataChangeListener != null){
-            mOnDataChangeListener.onDataChanged(position);
-        }*/
+        if(mOnDataChangeListener != null){
+            mOnDataChangeListener.onItemDeleted(position);
+        }
 
     }
 
