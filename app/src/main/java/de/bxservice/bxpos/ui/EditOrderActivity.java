@@ -4,39 +4,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
-import de.bxservice.bxpos.persistence.OrderDataExample;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
-import de.bxservice.bxpos.ui.adapter.OrderArrayAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
@@ -99,7 +90,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             public void onClick(View view) {
                 Snackbar.make(mainView, order.getStatus(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                System.out.println("Numero de items: " + order.getOrderLines().size());
             }
         });
 
