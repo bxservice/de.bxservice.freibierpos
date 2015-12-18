@@ -483,6 +483,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     public void updateOrderLines(ArrayList<POSOrderLine> orderLines) {
         posOrder.recreateOrderLines(orderLines);
+        mCreateOrderPagerAdapter.refreshAllQty(getSupportFragmentManager());
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
