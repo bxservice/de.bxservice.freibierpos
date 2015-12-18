@@ -98,6 +98,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             for (Table table : tableGroup.getTables()) {
                 item = new TableGridItem();
                 item.setTitle(table.getTableName());
+                item.setTable(table);
                 //item.setImage(R.drawable.ic_local_dining_white_24dp);
                 mGridData.add(item);
             }
@@ -117,7 +118,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                     //Get item at position
                     TableGridItem item = (TableGridItem) parent.getItemAtPosition(position);
 
-                    ((MainActivity)getActivity()).setSelectedTable(item.getTitle());
+                    ((MainActivity)getActivity()).setSelectedTable(item.getTable());
                     ((MainActivity)getActivity()).showGuestNumberDialog();
                 }
             });
