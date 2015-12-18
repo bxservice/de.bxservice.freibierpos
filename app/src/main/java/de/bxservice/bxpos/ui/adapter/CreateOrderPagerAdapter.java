@@ -74,5 +74,22 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    /**
+     * Refresh the quantity when some items have been deleted
+     * @param fm
+     */
+    public void refreshAllQty (FragmentManager fm) {
+
+        List<Fragment> allFragments = fm.getFragments();
+
+        for (Fragment fragment : allFragments) {
+
+            if (fragment instanceof FoodMenuFragment) {
+                FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
+                menuFragment.refreshAllQty();
+            }
+        }
+    }
+
 }
 

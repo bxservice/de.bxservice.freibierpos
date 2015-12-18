@@ -130,4 +130,20 @@ public class FoodMenuFragment extends Fragment {
         mGridData.get(position).setQty("x"+Integer.toString(quantity));
         mGridAdapter.setGridData(mGridData);
     }
+
+    /**
+     * Refresh the quantity in the orderItems
+     */
+    public void refreshAllQty() {
+        for (int i = 0; i < mGridData.size(); i++) {
+            MProduct product = itemProductHashMap.get(mGridData.get(i));
+            int productQty = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
+            if (productQty != 0)
+                mGridData.get(i).setQty("x"+Integer.toString(productQty));
+            else
+                mGridData.get(i).setQty("");
+        }
+        mGridAdapter.setGridData(mGridData);
+    }
+
 }
