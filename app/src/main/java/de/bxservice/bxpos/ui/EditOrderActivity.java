@@ -392,6 +392,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             Intent data = new Intent();
             data.putExtra("remark",order.getOrderRemark());
             data.putExtra("guests", order.getGuestNumber());
+            data.putExtra("orderLines", order.getOrderLines());
             setResult(RESULT_OK, data);
 
         }
