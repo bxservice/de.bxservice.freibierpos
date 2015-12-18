@@ -498,11 +498,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
 
                 if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != posOrder.getOrderLines().size()) {
-                    System.out.println("Diferentes lineas: Before - " + posOrder.getOrderLines().size());
                     updateOrderLines(orderLines);
-                    System.out.println("Diferentes lineas: After - " + posOrder.getOrderLines().size());
-                } else {
-                    System.out.println("iguales lineas");
                 }
 
                 updateDraftOrder();
