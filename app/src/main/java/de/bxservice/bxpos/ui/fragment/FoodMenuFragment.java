@@ -111,8 +111,6 @@ public class FoodMenuFragment extends Fragment {
 
                 //Get item at position
                 NewOrderGridItem item = (NewOrderGridItem) parent.getItemAtPosition(position);
-                TextView qtyOrderedTextView = (TextView) v.findViewById(R.id.qtyOrdered_text);
-
                 MProduct product = itemProductHashMap.get(item);
 
                 ((CreateOrderActivity) getActivity()).addOrderItem(product);
