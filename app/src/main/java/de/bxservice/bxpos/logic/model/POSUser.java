@@ -1,5 +1,7 @@
 package de.bxservice.bxpos.logic.model;
 
+import de.bxservice.bxpos.persistence.dbcontract.UserContract;
+
 /**
  * Created by Diego Ruiz on 15/12/15.
  */
