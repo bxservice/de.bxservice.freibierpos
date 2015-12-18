@@ -37,6 +37,7 @@ import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.MProduct;
+import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.logic.model.ProductPrice;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
@@ -123,7 +124,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 NewOrderGridItem selectedItem = mAdapter.getSelectedItem(position);
                 addOrderItem(itemProductHashMap.get(selectedItem));
 
-                mCreateOrderPagerAdapter.updateQty(getSupportFragmentManager(), selectedItem, getProductQtyOrdered(itemProductHashMap.get(selectedItem)) );
+                mCreateOrderPagerAdapter.updateQty(getSupportFragmentManager(), selectedItem, getProductQtyOrdered(itemProductHashMap.get(selectedItem)));
                 onBackPressed();
 
             }
@@ -480,6 +481,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         startActivityForResult(intent, PICK_CONFIRMATION_REQUEST);
     }
 
+    public void updateOrderLines(ArrayList<POSOrderLine> orderLines) {
+        posOrder.recreateOrderLines(orderLines);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == PICK_CONFIRMATION_REQUEST) {
@@ -488,6 +493,16 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
                 setRemarkNote(data.getExtras().get("remark").toString());
                 setNumberOfGuests((Integer) data.getExtras().get("guests"));
+
+                ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
+
+                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != posOrder.getOrderLines().size()) {
+                    System.out.println("Diferentes lineas: Before - " + posOrder.getOrderLines().size());
+                    updateOrderLines(orderLines);
+                    System.out.println("Diferentes lineas: After - " + posOrder.getOrderLines().size());
+                } else {
+                    System.out.println("iguales lineas");
+                }
 
                 updateDraftOrder();
 
