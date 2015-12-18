@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.POSUser;
-import de.bxservice.bxpos.logic.model.UserContract;
+import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
  * contains all the methods to perform database operations
@@ -184,7 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Updating a user
     */
-    public int updateToDo(POSUser user) {
+    public int updateUser(POSUser user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
