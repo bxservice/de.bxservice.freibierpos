@@ -35,7 +35,7 @@ public class POSOrder implements Serializable {
     private String orderRemark;
 
     //TODO: Change for Table object reference
-    private String table;
+    private Table table;
     private int guestNumber;
     private String status;
 
@@ -164,11 +164,11 @@ public class POSOrder implements Serializable {
         this.guestNumber = guestNumber;
     }
 
-    public String getTable() {
+    public Table getTable() {
         return table;
     }
 
-    public void setTable(String table) {
+    public void setTable(Table table) {
         this.table = table;
     }
 

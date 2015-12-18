@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager mViewPager;
 
     private int numberOfGuests = 0;
-    private String selectedTable = "";
+    private Table selectedTable = null;
 
     DataMediator dataProvider;
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                            /* Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
                         Toast.LENGTH_SHORT).show();*/
                 setNumberOfGuests(0);
-                setSelectedTable("");
+                setSelectedTable(null);
                 createOrder();
             }
         });
@@ -162,11 +163,11 @@ public class MainActivity extends AppCompatActivity
         this.numberOfGuests = numberOfGuests;
     }
 
-    public String getSelectedTable() {
+    public Table getSelectedTable() {
         return selectedTable;
     }
 
-    public void setSelectedTable(String selectedTable) {
+    public void setSelectedTable(Table selectedTable) {
         this.selectedTable = selectedTable;
     }
 

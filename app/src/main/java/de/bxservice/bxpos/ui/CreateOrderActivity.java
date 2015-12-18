@@ -39,6 +39,7 @@ import de.bxservice.bxpos.logic.model.POSOrder;
 import de.bxservice.bxpos.logic.model.MProduct;
 import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.logic.model.ProductPrice;
+import de.bxservice.bxpos.logic.model.Table;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
@@ -74,7 +75,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     //order attributes
     private POSOrder posOrder = null;
     private int numberOfGuests = 0;
-    private String selectedTable = "";
+    private Table selectedTable = null;
     private String remarkNote = "";
     private FloatingActionButton sendActionButton;
 
@@ -272,7 +273,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         if(extras != null) {
 
             if(extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
-                setSelectedTable(extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE));
+                setSelectedTable((Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE));
 
              setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
         }
@@ -357,11 +358,11 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         this.numberOfGuests = numberOfGuests;
     }
 
-    public String getSelectedTable() {
+    public Table getSelectedTable() {
         return selectedTable;
     }
 
-    public void setSelectedTable(String selectedTable) {
+    public void setSelectedTable(Table selectedTable) {
         this.selectedTable = selectedTable;
     }
 

@@ -1,5 +1,7 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import de.bxservice.bxpos.logic.model.Table;
+
 /**
  * This represents every TableGridItem
  * it is written like this to allow future images of tables
@@ -8,6 +10,7 @@ package de.bxservice.bxpos.ui.adapter;
  */
 public class TableGridItem {
 
+    private Table table;
     private String title;
     private String image;
 
@@ -30,5 +33,13 @@ public class TableGridItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
     }
 }

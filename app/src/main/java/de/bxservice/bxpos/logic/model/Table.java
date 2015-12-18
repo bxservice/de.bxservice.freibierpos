@@ -1,9 +1,11 @@
 package de.bxservice.bxpos.logic.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Diego Ruiz on 9/11/15.
  */
-public class Table {
+public class Table implements Serializable {
 
     public static final String BAY_Table_ID = "BAY_Table_ID";
 
