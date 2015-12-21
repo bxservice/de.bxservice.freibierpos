@@ -8,9 +8,10 @@ import java.util.List;
  */
 public class TableGroup {
 
-    String value;
-    String name;
-    List<Table> tables = new ArrayList<Table>();
+    private int tableGroupID;
+    private String value;
+    private String name;
+    private List<Table> tables = new ArrayList<Table>();
 
     public String getValue() {
         return value;
@@ -34,5 +35,13 @@ public class TableGroup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTableGroupID() {
+        return tableGroupID;
+    }
+
+    public void setTableGroupID(int tableGroupID) {
+        this.tableGroupID = tableGroupID;
     }
 }

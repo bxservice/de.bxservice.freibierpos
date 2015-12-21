@@ -14,6 +14,7 @@ public class Table implements Serializable {
 
     public static final String BAY_Table_ID = "BAY_Table_ID";
 
+    private TableGroup belongingGroup;
     private int tableID;
     private String tableName;
     private String value;
@@ -52,5 +53,13 @@ public class Table implements Serializable {
                 status.equals(BUSY_STATUS) ||
                 status.equals(RESERVED_STATUS))
             this.status = status;
+    }
+
+    public TableGroup getBelongingGroup() {
+        return belongingGroup;
+    }
+
+    public void setBelongingGroup(TableGroup belongingGroup) {
+        this.belongingGroup = belongingGroup;
     }
 }
