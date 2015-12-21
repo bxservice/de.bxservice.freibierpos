@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "(" +
                     UserColumns.USER_ID + " INTEGER PRIMARY KEY" +
                     ", " +
-                    UserColumns.USERNAME + " VARCHAR(64) NOT NULL" +
+                    UserColumns.USERNAME + " VARCHAR(64) NOT NULL UNIQUE" +
                     ", " +
                     UserColumns.PASSWORD + " VARCHAR(64) NOT NULL" +
                     ")";

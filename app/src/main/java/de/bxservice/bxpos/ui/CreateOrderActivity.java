@@ -272,7 +272,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         if(extras != null) {
 
-            if(extras.getString(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
+            if(getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
                 setSelectedTable((Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE));
 
              setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
