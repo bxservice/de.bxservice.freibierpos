@@ -63,9 +63,9 @@ public class GridTableViewAdapter extends ArrayAdapter<TableGridItem> {
 
         TableGridItem item = mGridData.get(position);
         if (Table.BUSY_STATUS.equals(item.getTable().getStatus())) {
-            row.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
-            holder.imageView.setImageResource(R.drawable.cutlery23_blank);
-            holder.titleTextView.setTextColor(Color.WHITE);
+            row.setBackgroundColor(Color.parseColor("#FFFB980D"));
+            //holder.imageView.setImageResource(R.drawable.cutlery23_blank);
+            //holder.titleTextView.setTextColor(Color.WHITE);
         }
 
         holder.titleTextView.setText(Html.fromHtml(item.getTitle()));

@@ -85,6 +85,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                         // If isSummary is a table group else is a table
                         if(isSummary) {
                             TableGroup tableGroup =  new TableGroup();
+                            tableGroup.setTableGroupID(tableId);
                             tableGroup.setValue(value);
                             tableGroup.setName(name);
                             tableGroupList.add(tableGroup);
@@ -116,7 +117,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
      */
     public void associateGroupsAndTables(){
 
-        if ( tableList != null && !tableList.isEmpty() ){
+        if (tableList != null && !tableList.isEmpty()) {
             //If there are no table groups - create a default one
             if ( tableGroupList.isEmpty() ){
                 TableGroup tableGroup =  new TableGroup();
@@ -132,14 +133,15 @@ public class TableWebServiceAdapter extends AbstractWSObject{
 
                 String groupValue;
                 String tableValue;
-                for ( TableGroup tg : tableGroupList){
+                for ( TableGroup tableGroup : tableGroupList){
 
-                    groupValue = tg.getValue();
+                    groupValue = tableGroup.getValue();
                     for ( Table table : tableList ){
 
                         tableValue = table.getValue().substring(0,2);
                         if (tableValue.equals(groupValue)){
-                            tg.getTables().add(table);
+                            tableGroup.getTables().add(table);
+                            table.setBelongingGroup(tableGroup);
                         }
                     }
                 }

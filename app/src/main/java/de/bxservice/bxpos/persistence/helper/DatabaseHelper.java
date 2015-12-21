@@ -7,7 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import de.bxservice.bxpos.logic.model.POSOrderLine;
 import de.bxservice.bxpos.logic.model.POSUser;
+import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
+import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
+import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
+import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
@@ -24,7 +29,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table Names
     public interface Tables {
-        String TABLE_USER = UserContract.User.TABLE_NAME;
+        String TABLE_USER          = UserContract.User.TABLE_NAME;
+        String TABLE_TABLE         = TableContract.TableDB.TABLE_NAME;
+        String TABLE_TABLE_GROUP   = GroupTableContract.GroupTableDB.TABLE_NAME;
+        String TABLE_POSORDER      = PosOrderContract.POSOrderDB.TABLE_NAME;
+        String TABLE_POSORDER_LINE = PosOrderLineContract.POSOrderLineDB.TABLE_NAME;
+
 
     }
 
@@ -37,15 +47,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+
     // Table Create Statements
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE " + Tables.TABLE_USER +
                     "(" +
-                    UserColumns.USER_ID + " INTEGER PRIMARY KEY" +
+                    UserContract.User.COLUMN_NAME_USER_ID + " INTEGER PRIMARY KEY" +
                     ", " +
-                    UserColumns.USERNAME + " VARCHAR(64) NOT NULL UNIQUE" +
+                    UserContract.User.COLUMN_NAME_USERNAME + " VARCHAR(64) NOT NULL UNIQUE" +
                     ", " +
-                    UserColumns.PASSWORD + " VARCHAR(64) NOT NULL" +
+                    UserContract.User.COLUMN_NAME_PASSWORD + " VARCHAR(64) NOT NULL" +
+                    ")";
+
+    private static final String CREATE_TABLE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_TABLE +
+                    "(" +
+                    TableContract.TableDB.COLUMN_NAME_TABLE_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    TableContract.TableDB.COLUMN_NAME_TABLE_NAME + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    TableContract.TableDB.COLUMN_NAME_TABLE_STATUS + " VARCHAR(64)" +
+                    ", " +
+                    TableContract.TableDB.COLUMN_NAME_VALUE + " VARCHAR(64)" +
+                    ", " +
+                    TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID + " INTEGER" +
+                    ")";
+
+    private static final String CREATE_GROUPTABLE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_TABLE_GROUP +
+                    "(" +
+                    GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE + " VARCHAR(64)" +
+                    ")";
+
+    private static final String CREATE_POSORDER_TABLE =
+            "CREATE TABLE " + Tables.TABLE_POSORDER +
+                    "(" +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK + " VARCHAR(64)" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64)" + //TODO:FK to users
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT + " TEXT" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " INTEGER" + //TODO: FK to table
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS + " INTEGER" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES + " NUMERIC" +
+                    ")";
+
+    private static final String CREATE_POSORDER_LINE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_POSORDER_LINE +
+                    "(" +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO: FK
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK + " VARCHAR(64)" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " VARCHAR(64)" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT + " TEXT" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " INTEGER" + //TODO: FK to table
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID + " INTEGER" + //TODO: FK To table
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY + " NUMERIC" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO + " INTEGER" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT + " NUMERIC" +
                     ")";
 
 
