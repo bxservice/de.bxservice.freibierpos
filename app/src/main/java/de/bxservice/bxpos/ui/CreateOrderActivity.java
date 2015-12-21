@@ -140,7 +140,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(mViewPager);
 
-        Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests()) + " " + getSelectedTable(),
+        String tableName = "";
+
+        if (getSelectedTable() != null)
+            tableName = getSelectedTable().getTableName();
+
+        Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests()) + " " + tableName,
                 Toast.LENGTH_SHORT).show();
 
 
