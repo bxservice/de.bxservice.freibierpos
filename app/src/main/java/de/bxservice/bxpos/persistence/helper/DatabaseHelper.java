@@ -47,8 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
-
     // Table Create Statements
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE " + Tables.TABLE_USER +
@@ -207,11 +205,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void dropTables(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER_LINE);
 
     }
 
     private void bootstrapDB(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_TABLE_TABLE);
+        db.execSQL(CREATE_GROUPTABLE_TABLE);
+        db.execSQL(CREATE_POSORDER_TABLE);
+        db.execSQL(CREATE_POSORDER_LINE_TABLE);
 
         Log.i(TAG, "Bootstrapped database");
     }
