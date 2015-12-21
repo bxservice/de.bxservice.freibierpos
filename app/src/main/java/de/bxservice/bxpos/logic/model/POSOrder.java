@@ -34,7 +34,6 @@ public class POSOrder implements Serializable {
     private ArrayList<POSOrderLine> orderLines = new ArrayList<>();
     private String orderRemark;
 
-    //TODO: Change for Table object reference
     private Table table;
     private int guestNumber;
     private String status;
