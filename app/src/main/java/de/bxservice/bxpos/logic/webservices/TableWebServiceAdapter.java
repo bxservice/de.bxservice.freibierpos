@@ -94,6 +94,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                             table.setTableID(tableId);
                             table.setTableName(name);
                             table.setValue(value);
+                            table.setStatus(Table.FREE_STATUS);
                             tableList.add(table);
                         }
                     }

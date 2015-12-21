@@ -2,17 +2,21 @@ package de.bxservice.bxpos.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.Table;
 
 /**
  * Created by Diego Ruiz on 18/11/15.
@@ -58,6 +62,12 @@ public class GridTableViewAdapter extends ArrayAdapter<TableGridItem> {
         }
 
         TableGridItem item = mGridData.get(position);
+        if (Table.BUSY_STATUS.equals(item.getTable().getStatus())) {
+            row.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            holder.imageView.setImageResource(R.drawable.cutlery23_blank);
+            holder.titleTextView.setTextColor(Color.WHITE);
+        }
+
         holder.titleTextView.setText(Html.fromHtml(item.getTitle()));
 
         return row;
