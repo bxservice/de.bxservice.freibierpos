@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.persistence.helper.DatabaseHelper;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
@@ -59,6 +61,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private ViewPager mViewPager;
     private boolean addNewItemsOnBack = false;
+    private DatabaseHelper db;
+
+    private long a = 0; //TODO: DElete
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +94,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(mainView, order.getStatus(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (sendOrder())
+                    Snackbar.make(mainView, "Order created" + a, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                else
+                    Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
             }
         });
 
@@ -129,8 +139,35 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         updateSummary(0);
 
+        db = DatabaseHelper.getInstance(getApplicationContext());
+
     }
 
+    public boolean sendOrder () {
+
+        boolean result = true;
+
+        if (order != null) {
+            long orderId = db.createOrder(order);
+            if (orderId != -1) {
+                Log.e("Order created", String.valueOf(orderId));
+                a = orderId;
+                result = true;
+            }
+            else {
+                Log.e("Error creating order", "");
+                result = false;
+            }
+        }
+        else {
+            Log.e("Error creating order", "");
+            result = false;
+        }
+
+        db.closeDB();
+        return result;
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
