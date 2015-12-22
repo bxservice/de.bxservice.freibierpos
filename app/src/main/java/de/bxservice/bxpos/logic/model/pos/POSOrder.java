@@ -1,6 +1,7 @@
 package de.bxservice.bxpos.logic.model.pos;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,6 +43,7 @@ public class POSOrder implements Serializable {
     private Table table;
     private int guestNumber;
     private String status;
+    private BigDecimal totallines = BigDecimal.ZERO;
 
     public void addItem(MProduct product) {
 
@@ -217,5 +219,44 @@ public class POSOrder implements Serializable {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    /**
+     * Returns the total sum of the order lines
+     * @return
+     */
+    public BigDecimal getTotallines() {
+        for (POSOrderLine orderLine : getOrderLines()) {
+            totallines = orderLine.getLineNetAmt().add(totallines);
+        }
+        return totallines;
+    }
+
+    /**
+     * Returns the total sum of the order lines
+     * in an integer to be save in the database
+     * @return
+     */
+    public Integer getTotallinesInteger() {
+        Integer total;
+        total = Integer.valueOf(getTotallines().multiply(BigDecimal.valueOf(100)).toString()); //total * 100
+
+        return total;
+    }
+
+    public void setTotallines(BigDecimal totallines) {
+        this.totallines = totallines;
+    }
+
+    /**
+     * Gets an integer value from the db and converts it to a BigDecimal
+     * last two digits are decimals
+     * @param total
+     */
+    public void setTotalFromInt(Integer total) {
+        //TODO
+        setTotallines(BigDecimal.valueOf(total / 100));
+        System.out.println(totallines);
+        //this.totallines = totallines;
     }
 }
