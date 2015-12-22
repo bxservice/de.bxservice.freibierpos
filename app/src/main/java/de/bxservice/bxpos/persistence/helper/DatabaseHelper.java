@@ -647,6 +647,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // insert row
         long orderId = db.insert(Tables.TABLE_POSORDER, null, values);
 
+        for (POSOrderLine orderLine: order.getOrderLines())
+            createOrderLine(orderLine, orderId);
+
         return orderId;
     }
 
@@ -697,7 +700,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Creating a pos Order line
     */
-    public long createOrderLine (POSOrderLine orderLine) {
+    public long createOrderLine (POSOrderLine orderLine, long orderlineId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -706,18 +709,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, dateFormat.format(date));
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY, ""); //TODO: Get current user
-        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderLine.getOrder().getOrderId());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderlineId);
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS, orderLine.getLineStatus());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID, orderLine.getProduct().getProductID());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY, orderLine.getQtyOrdered());
-        //values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO, orderLine.getLineNo()); //TODO:Create method
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO, orderLine.getLineNo());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK, orderLine.getProductRemark());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT, orderLine.getLineNetAmt().toString());
 
         // insert row
-        long orderId = db.insert(Tables.TABLE_POSORDER_LINE, null, values);
+        long orderLineId = db.insert(Tables.TABLE_POSORDER_LINE, null, values);
 
-        return orderId;
+        return orderLineId;
     }
 
     /*
