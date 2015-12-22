@@ -17,6 +17,4 @@ public interface PosProperties {
 
     public static final String ATTEMPTS_TIMEOUT_PROPERTY = "attemptsTimeout";
 
-    public static final String URL_BASE_PROPERTY = "urlBase";
-
 }
