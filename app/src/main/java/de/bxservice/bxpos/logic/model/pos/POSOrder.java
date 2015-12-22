@@ -37,6 +37,7 @@ public class POSOrder implements Serializable {
     private ArrayList<POSOrderLine> orderLines = new ArrayList<>();
     private String orderRemark;
 
+    private int currentLineNo = 10;
     private int orderId;
     private Table table;
     private int guestNumber;
@@ -67,6 +68,7 @@ public class POSOrder implements Serializable {
             posOrderLine.setProduct(product);
             posOrderLine.setQtyOrdered(1); //If new item - is the first item that is added
             posOrderLine.setLineStatus(posOrderLine.ORDERING);
+            posOrderLine.setLineNo(currentLineNo);
 
             orderLines.add(posOrderLine);
 
@@ -82,6 +84,8 @@ public class POSOrder implements Serializable {
             }else {
                 orderlineProductHashMap.put(product, posOrderLine);
             }
+
+            currentLineNo += 10; //Sets the lineNo 10 by 10 like in iDempiere
         }
 
     }
