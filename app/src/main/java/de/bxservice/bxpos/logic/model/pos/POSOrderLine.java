@@ -1,10 +1,11 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.pos;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 
 /**
  * This is the product that is added to the draft orders

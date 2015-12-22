@@ -36,8 +36,8 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.POSUser;
-import de.bxservice.bxpos.logic.model.PosRoles;
+import de.bxservice.bxpos.logic.model.pos.PosUser;
+import de.bxservice.bxpos.logic.model.pos.PosRoles;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.helper.DatabaseHelper;
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity  {
     private void createDummyUser() {
 
         if (getOfflineUser() != null && !getOfflineUser().getUsername().equals("FreiBierAdmin")) {
-            POSUser dummyUser = new POSUser();
+            PosUser dummyUser = new PosUser();
             dummyUser.setUsername("FreiBierAdmin");
             dummyUser.setPassword("FreiBierAdmin");
 
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity  {
         db.closeDB();
     }
 
-    private POSUser getOfflineUser() {
+    private PosUser getOfflineUser() {
         return db.getUser(1);
     }
 
@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity  {
         } else {
 
             // If the credentials are the offline user - show the corresponding activity
-            POSUser offlineUser = getOfflineUser();
+            PosUser offlineUser = getOfflineUser();
             if(username.equals(offlineUser.getUsername())) {
                 Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
                 startActivity(intent);

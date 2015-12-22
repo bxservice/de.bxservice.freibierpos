@@ -24,8 +24,8 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.POSOrder;
-import de.bxservice.bxpos.logic.model.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;

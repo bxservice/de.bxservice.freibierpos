@@ -1,11 +1,11 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.pos;
 
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
  * Created by Diego Ruiz on 15/12/15.
  */
-public class POSUser extends UserContract.User {
+public class PosUser extends UserContract.User {
 
     int id;
     String username;

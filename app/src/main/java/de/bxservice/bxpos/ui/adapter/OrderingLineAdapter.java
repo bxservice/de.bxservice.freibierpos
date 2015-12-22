@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
  * Created by Diego Ruiz on 8/12/15.

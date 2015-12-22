@@ -11,7 +11,7 @@ import org.idempiere.webservice.client.response.WindowTabDataResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.model.ProductCategory;
+import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 
 /**
  * This class brings the product category data from iDempiere

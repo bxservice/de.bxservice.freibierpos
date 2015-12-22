@@ -1,6 +1,6 @@
 package de.bxservice.bxpos.ui.adapter;
 
-import de.bxservice.bxpos.logic.model.Table;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 
 /**
  * This represents every TableGridItem

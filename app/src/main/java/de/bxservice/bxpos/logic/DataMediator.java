@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import de.bxservice.bxpos.logic.model.MProduct;
-import de.bxservice.bxpos.logic.model.ProductCategory;
-import de.bxservice.bxpos.logic.model.ProductPrice;
-import de.bxservice.bxpos.logic.model.TableGroup;
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
+import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;

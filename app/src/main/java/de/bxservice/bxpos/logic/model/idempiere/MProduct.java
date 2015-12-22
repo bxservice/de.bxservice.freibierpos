@@ -1,9 +1,10 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.idempiere;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 
 /**
  * This is the product that is read from iDempiere

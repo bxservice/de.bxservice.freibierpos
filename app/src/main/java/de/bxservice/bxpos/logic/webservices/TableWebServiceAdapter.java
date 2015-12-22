@@ -11,8 +11,8 @@ import org.idempiere.webservice.client.response.WindowTabDataResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.model.Table;
-import de.bxservice.bxpos.logic.model.TableGroup;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 
 /**
  * Created by Diego Ruiz on 9/11/15.

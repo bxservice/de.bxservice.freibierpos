@@ -1,12 +1,13 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.idempiere;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Diego Ruiz on 13/11/15.
  */
-public class TableGroup {
+public class TableGroup implements Serializable {
 
     private int tableGroupID;
     private String value;
