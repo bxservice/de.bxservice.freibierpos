@@ -22,6 +22,7 @@ public class POSOrderLine implements Serializable{
     private POSOrder order;
 
     private int orderLineId;
+    private int lineNo;
     private MProduct product;
     private int qtyOrdered;
     private String productRemark;
@@ -98,5 +99,13 @@ public class POSOrderLine implements Serializable{
 
     public void setOrderLineId(int orderLineId) {
         this.orderLineId = orderLineId;
+    }
+
+    public int getLineNo() {
+        return lineNo;
+    }
+
+    public void setLineNo(int lineNo) {
+        this.lineNo = lineNo;
     }
 }
