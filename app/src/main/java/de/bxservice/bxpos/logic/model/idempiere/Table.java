@@ -62,4 +62,8 @@ public class Table implements Serializable {
     public void setBelongingGroup(TableGroup belongingGroup) {
         this.belongingGroup = belongingGroup;
     }
+
+    public void setTableGroup(int tableGroup) {
+        //this.tableGroup = tableGroup;
+    }
 }
