@@ -7,8 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
@@ -146,8 +155,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " INTEGER PRIMARY KEY" +
                     ", " +
                     ProductContract.ProductDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
-                    ", " +
-                    ProductContract.ProductDB.COLUMN_NAME_VALUE + " VARCHAR(64)" +
                     ", " +
                     ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER" + //TODO: FK to table
                     ")";
@@ -392,7 +399,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(TableContract.TableDB.COLUMN_NAME_VALUE, table.getValue());
 
         // updating row
-        return db.update(Tables.TABLE_USER, values, UserColumns.USER_ID + " = ?",
+        return db.update(Tables.TABLE_TABLE, values, TableContract.TableDB.COLUMN_NAME_TABLE_ID + " = ?",
                 new String[] { String.valueOf(table.getTableID()) });
     }
 
@@ -428,11 +435,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (c != null)
             c.moveToFirst();
-        /**
-         * GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID, tableGroup.getTableGroupID());
-         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME, tableGroup.getName());
-         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
-         */
 
         TableGroup tableGroup = new TableGroup();
         tableGroup.setTableGroupID(c.getInt(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID)));
@@ -454,8 +456,316 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
 
         // updating row
-        return db.update(Tables.TABLE_USER, values, UserColumns.USER_ID + " = ?",
+        return db.update(Tables.TABLE_TABLE_GROUP, values, GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + " = ?",
                 new String[] { String.valueOf(tableGroup.getTableGroupID()) });
+    }
+
+    /*
+    * Creating a product category
+    */
+    public long createProductCategory (ProductCategory productCategory) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, productCategory.getProductCategoryID());
+        values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME, productCategory.getName());
+
+        // insert row
+        long productCategoryId = db.insert(Tables.TABLE_PRODUCT_CATEGORY, null, values);
+
+        return productCategoryId;
+    }
+
+    /*
+    * get single product category
+    */
+    public ProductCategory getProductCategory (long productCategory_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_CATEGORY + " WHERE "
+                + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " = " + productCategory_id;
+
+        Log.e(TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        ProductCategory productCategory = new ProductCategory(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)),
+                c.getString(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME)));
+
+        return productCategory;
+    }
+
+    /*
+    * Updating a product category
+    */
+    public int updateProductCategory (ProductCategory productCategory) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME, productCategory.getName());
+
+        // updating row
+        return db.update(Tables.TABLE_PRODUCT_CATEGORY, values, ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " = ?",
+                new String[] { String.valueOf(productCategory.getProductCategoryID()) });
+    }
+
+    /*
+    * Creating a product price
+    */
+    public long createProductPrice (ProductPrice productPrice) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID, productPrice.getProductPriceID());
+        values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID, productPrice.getProductID());
+        values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID, productPrice.getPriceListVersionID());
+        values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE, productPrice.getStdPrice().toString()); //TODO: check sql lite price
+
+        // insert row
+        long productPriceId = db.insert(Tables.TABLE_PRODUCT_PRICE, null, values);
+
+        return productPriceId;
+    }
+
+    /*
+    * get single product price
+    */
+    public ProductPrice getProductPrice (long productPrice_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_PRICE + " WHERE "
+                + ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " = " + productPrice_id;
+
+        Log.e(TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        ProductPrice productPrice = new ProductPrice();
+        productPrice.setProductPriceID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID)));
+        productPrice.setProductID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID)));
+        productPrice.setPriceListVersionID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID)));
+        //productPrice.setStdPrice(); // TODO: SOLVE THIS AND SET PRODUCT????
+
+        return productPrice;
+    }
+
+    /*
+    * Updating a product price
+    */
+    public int updateProductPrice (ProductPrice productPrice) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID, productPrice.getPriceListVersionID());
+        values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE, productPrice.getStdPrice().toString());
+
+        // updating row
+        return db.update(Tables.TABLE_PRODUCT_PRICE, values, ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " = ?",
+                new String[] { String.valueOf(productPrice.getProductPriceID()) });
+    }
+
+    /*
+    * Creating a product
+    */
+    public long createProduct (MProduct product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID, product.getProductID());
+        values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, product.getProductCategoryId());
+        values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
+
+        // insert row
+        long productId = db.insert(Tables.TABLE_PRODUCT, null, values);
+
+        return productId;
+    }
+
+    /*
+    * get single product
+    */
+    public MProduct getProduct (long product_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " WHERE "
+                + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = " + product_id;
+
+        Log.e(TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        MProduct product = new MProduct();
+        product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
+        product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
+        product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
+
+        return product;
+    }
+
+    /*
+    * Updating a product
+    */
+    public int updateProduct (MProduct product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, product.getProductCategoryId());
+        values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
+
+        // updating row
+        return db.update(Tables.TABLE_PRODUCT, values, ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = ?",
+                new String[] { String.valueOf(product.getProductID()) });
+    }
+
+    /*
+    * Creating a pos Order
+    */
+    public long createOrder (POSOrder order) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+
+        ContentValues values = new ContentValues();
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT, dateFormat.format(date));
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY, ""); //TODO: Get current user
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS, order.getStatus());
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID, order.getTable().getTableID());
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS, order.getGuestNumber());
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK, order.getOrderRemark());
+        //values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES, order.getTotalLines()); //TODO: Create method to get the total
+
+        // insert row
+        long orderId = db.insert(Tables.TABLE_POSORDER, null, values);
+
+        return orderId;
+    }
+
+    /*
+    * get single order
+    */
+    public POSOrder getOrder (long order_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER + " WHERE "
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " = " + order_id;
+
+        Log.e(TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        POSOrder order = new POSOrder();
+        order.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID)));
+        order.setStatus(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS)));
+        order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
+        order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
+        //order.setTableId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID))); //TODO; table ID set table
+
+        return order;
+    }
+
+    /*
+    * Updating an order
+    */
+    public int updateOrder (POSOrder order) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS, order.getStatus());
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID, order.getTable().getTableID());
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS, order.getGuestNumber());
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK, order.getOrderRemark());
+        //values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES, order.getTotalLines()); //TODO: Create method to get the total
+
+        // updating row
+        return db.update(Tables.TABLE_POSORDER, values, PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " = ?",
+                new String[] { String.valueOf(order.getOrderId()) });
+    }
+
+    /*
+    * Creating a pos Order line
+    */
+    public long createOrderLine (POSOrderLine orderLine) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+
+        ContentValues values = new ContentValues();
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, dateFormat.format(date));
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY, ""); //TODO: Get current user
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderLine.getOrder().getOrderId());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS, orderLine.getLineStatus());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID, orderLine.getProduct().getProductID());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY, orderLine.getQtyOrdered());
+        //values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO, orderLine.getLineNo()); //TODO:Create method
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK, orderLine.getProductRemark());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT, orderLine.getLineNetAmt().toString());
+
+        // insert row
+        long orderId = db.insert(Tables.TABLE_POSORDER_LINE, null, values);
+
+        return orderId;
+    }
+
+    /*
+    * get single order line
+    */
+    public POSOrderLine getOrderLine (long orderline_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " WHERE "
+                + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = " + orderline_id;
+
+        Log.e(TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        POSOrderLine orderLine = new POSOrderLine();
+        orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
+        //orderLine.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID))); //TODO: Create method
+        orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
+        orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
+        orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
+        //orderLine.setTotalLine(); //TODO: create
+        //orderLine.setProductId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID))); //TODO: Create method
+
+        return orderLine;
+    }
+
+    /*
+    * Updating a order line
+    */
+    public int updateOrderLine (POSOrderLine orderLine) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderLine.getOrder().getOrderId());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS, orderLine.getLineStatus());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID, orderLine.getProduct().getProductID());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY, orderLine.getQtyOrdered());
+        //values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO, orderLine.getLineNo()); //TODO:Create method
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK, orderLine.getProductRemark());
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT, orderLine.getLineNetAmt().toString());
+
+        // updating row
+        return db.update(Tables.TABLE_POSORDER_LINE, values,PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?",
+                new String[] { String.valueOf(orderLine.getOrderLineId()) });
     }
 
     // closing database
