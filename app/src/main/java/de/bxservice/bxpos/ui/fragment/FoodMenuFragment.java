@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -17,10 +16,10 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.MProduct;
-import de.bxservice.bxpos.logic.model.NewOrderGridItem;
-import de.bxservice.bxpos.logic.model.ProductCategory;
-import de.bxservice.bxpos.logic.model.ProductPrice;
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
+import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.ui.CreateOrderActivity;
 import de.bxservice.bxpos.ui.adapter.GridOrderViewAdapter;
 

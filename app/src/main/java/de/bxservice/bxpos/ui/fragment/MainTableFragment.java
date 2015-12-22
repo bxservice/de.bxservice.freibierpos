@@ -14,8 +14,8 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.Table;
-import de.bxservice.bxpos.logic.model.TableGroup;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.ui.MainActivity;
 import de.bxservice.bxpos.ui.adapter.GridTableViewAdapter;
 import de.bxservice.bxpos.ui.adapter.TableGridItem;

@@ -18,7 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.Table;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 

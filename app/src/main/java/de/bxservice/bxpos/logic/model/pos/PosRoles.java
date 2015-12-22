@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.pos;
 
 import java.util.ArrayList;
 

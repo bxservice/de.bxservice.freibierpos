@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.fragment.OrderedItemsFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 

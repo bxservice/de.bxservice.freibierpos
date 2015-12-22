@@ -1,8 +1,11 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.pos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 
 /**
  * This represents the draft order - contains

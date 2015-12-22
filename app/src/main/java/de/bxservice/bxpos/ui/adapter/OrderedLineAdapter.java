@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
  * Created by Diego Ruiz on 10/12/15.

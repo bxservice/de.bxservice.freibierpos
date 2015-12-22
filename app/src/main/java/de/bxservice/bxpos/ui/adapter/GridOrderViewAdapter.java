@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.NewOrderGridItem;
+import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 
 /**
  * Created by Diego Ruiz on 19/11/15.

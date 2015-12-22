@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.logic.model;
+package de.bxservice.bxpos.logic.model.idempiere;
 
 import java.util.ArrayList;
 import java.util.List;

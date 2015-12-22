@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import de.bxservice.bxpos.logic.model.POSOrderLine;
-import de.bxservice.bxpos.logic.model.POSUser;
+import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
@@ -230,7 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Creating a user
     */
-    public long createUser (POSUser user) {
+    public long createUser (PosUser user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -246,7 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * get single user
     */
-    public POSUser getUser(long todo_id) {
+    public PosUser getUser(long todo_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_USER + " WHERE "
@@ -259,7 +258,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c != null)
             c.moveToFirst();
 
-        POSUser td = new POSUser();
+        PosUser td = new PosUser();
         td.setId(c.getInt(c.getColumnIndex(UserColumns.USER_ID)));
         td.setUsername((c.getString(c.getColumnIndex(UserColumns.USERNAME))));
         td.setPassword(c.getString(c.getColumnIndex(UserColumns.PASSWORD)));
@@ -270,7 +269,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Updating a user
     */
-    public int updateUser(POSUser user) {
+    public int updateUser(PosUser user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

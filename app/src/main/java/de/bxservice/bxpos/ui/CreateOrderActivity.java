@@ -34,12 +34,12 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
-import de.bxservice.bxpos.logic.model.NewOrderGridItem;
-import de.bxservice.bxpos.logic.model.POSOrder;
-import de.bxservice.bxpos.logic.model.MProduct;
-import de.bxservice.bxpos.logic.model.POSOrderLine;
-import de.bxservice.bxpos.logic.model.ProductPrice;
-import de.bxservice.bxpos.logic.model.Table;
+import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;

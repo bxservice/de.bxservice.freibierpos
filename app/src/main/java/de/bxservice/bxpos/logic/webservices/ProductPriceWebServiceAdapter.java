@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.model.MProduct;
-import de.bxservice.bxpos.logic.model.ProductPrice;
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 
 /**
  * Created by Diego Ruiz on 9/11/15.
