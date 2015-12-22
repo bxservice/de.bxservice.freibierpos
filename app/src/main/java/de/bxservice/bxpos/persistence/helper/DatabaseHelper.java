@@ -11,6 +11,9 @@ import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
+import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
+import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
+import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
@@ -28,12 +31,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table Names
     public interface Tables {
+        //Access tables
         String TABLE_USER          = UserContract.User.TABLE_NAME;
+
+        //Physical space tables
         String TABLE_TABLE         = TableContract.TableDB.TABLE_NAME;
         String TABLE_TABLE_GROUP   = GroupTableContract.GroupTableDB.TABLE_NAME;
+
+        //Order management tables
         String TABLE_POSORDER      = PosOrderContract.POSOrderDB.TABLE_NAME;
         String TABLE_POSORDER_LINE = PosOrderLineContract.POSOrderLineDB.TABLE_NAME;
 
+        //Product management tables
+        String TABLE_PRODUCT = ProductContract.ProductDB.TABLE_NAME;
+        String TABLE_PRODUCT_CATEGORY = ProductCategoryContract.ProductCategoryDB.TABLE_NAME;
+        String TABLE_PRODUCT_PRICE = ProductPriceContract.ProductPriceDB.TABLE_NAME;
 
     }
 
@@ -125,6 +137,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT + " NUMERIC" +
                     ")";
 
+    private static final String CREATE_PRODUCT_TABLE =
+            "CREATE TABLE " + Tables.TABLE_PRODUCT +
+                    "(" +
+                    ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_NAME_VALUE + " VARCHAR(64)" +
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER" + //TODO: FK to table
+                    ")";
+
+    private static final String CREATE_PRODUCT_CATEGORY_TABLE =
+            "CREATE TABLE " + Tables.TABLE_PRODUCT_CATEGORY +
+                    "(" +
+                    ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
+                    ")";
+
+    private static final String CREATE_PRODUCT_PRICE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_PRODUCT_PRICE +
+                    "(" +
+                    ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID + " INTEGER NOT NULL" + //TODO: FK
+                    ", " +
+                    ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID + " INTEGER NOT NULL" +
+                    ", " +
+                    ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE + " NUMERIC" +
+                    ")";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -208,6 +252,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER_LINE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_CATEGORY);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_PRICE);
 
     }
 
@@ -217,6 +264,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_GROUPTABLE_TABLE);
         db.execSQL(CREATE_POSORDER_TABLE);
         db.execSQL(CREATE_POSORDER_LINE_TABLE);
+        db.execSQL(CREATE_PRODUCT_CATEGORY_TABLE);
+        db.execSQL(CREATE_PRODUCT_PRICE_TABLE);
+        db.execSQL(CREATE_PRODUCT_TABLE);
 
         Log.i(TAG, "Bootstrapped database");
     }
