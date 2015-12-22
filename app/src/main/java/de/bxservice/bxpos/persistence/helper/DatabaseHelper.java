@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
@@ -17,6 +18,7 @@ import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
+import de.bxservice.bxpos.ui.adapter.TableGridItem;
 
 /**
  * contains all the methods to perform database operations
@@ -392,6 +394,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating row
         return db.update(Tables.TABLE_USER, values, UserColumns.USER_ID + " = ?",
                 new String[] { String.valueOf(table.getTableID()) });
+    }
+
+    /*
+    * Creating a table group
+    */
+    public long createTableGroup (TableGroup tableGroup) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID, tableGroup.getTableGroupID());
+        values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME, tableGroup.getName());
+        values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
+
+        // insert row
+        long tablegroupId = db.insert(Tables.TABLE_TABLE_GROUP, null, values);
+
+        return tablegroupId;
+    }
+
+    /*
+    * get single table group
+    */
+    public TableGroup getTableGroup(long tablegroup_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE_GROUP + " WHERE "
+                + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + " = " + tablegroup_id;
+
+        Log.e(TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+        /**
+         * GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID, tableGroup.getTableGroupID());
+         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME, tableGroup.getName());
+         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
+         */
+
+        TableGroup tableGroup = new TableGroup();
+        tableGroup.setTableGroupID(c.getInt(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID)));
+        tableGroup.setValue((c.getString(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE))));
+        tableGroup.setName(c.getString(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME)));
+
+        return tableGroup;
+    }
+
+    /*
+    * Updating a table group
+    */
+    public int updateTableGroup (TableGroup tableGroup) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID, tableGroup.getTableGroupID());
+        values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME, tableGroup.getName());
+        values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
+
+        // updating row
+        return db.update(Tables.TABLE_USER, values, UserColumns.USER_ID + " = ?",
+                new String[] { String.valueOf(tableGroup.getTableGroupID()) });
     }
 
     // closing database
