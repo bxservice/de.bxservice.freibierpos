@@ -79,6 +79,34 @@ public class POSOrderLine implements Serializable{
         return lineNetAmt;
     }
 
+    /**
+     * Returns the total amt of the line
+     * in an integer to be save in the database
+     * @return
+     */
+    public Integer getLineNetAmtInteger() {
+        Integer total;
+        total = Integer.valueOf(getLineNetAmt().multiply(BigDecimal.valueOf(100)).toString()); //total * 100
+
+        return total;
+    }
+
+    /**
+     * Gets an integer value from the db and converts it to a BigDecimal
+     * last two digits are decimals
+     * @param total
+     */
+    public void setLineTotalFromInt(Integer total) {
+        //TODO
+        setLineNetAmt(BigDecimal.valueOf(total / 100));
+        System.out.println(lineNetAmt);
+        //this.totallines = totallines;
+    }
+
+    public void setLineNetAmt(BigDecimal lineNetAmt) {
+        this.lineNetAmt = lineNetAmt;
+    }
+
     public String getLineTotalAmt() {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
