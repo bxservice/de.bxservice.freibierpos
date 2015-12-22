@@ -18,6 +18,5 @@ public class ProductContract {
         public static final String COLUMN_NAME_PRODUCT_ID = "productid";
         public static final String COLUMN_NAME_PRODUCT_CATEGORY_ID = "productcategoryid";
         public static final String COLUMN_NAME_NAME = "name";
-        public static final String COLUMN_NAME_VALUE = "value";
     }
 }

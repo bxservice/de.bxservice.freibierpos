@@ -37,6 +37,7 @@ public class POSOrder implements Serializable {
     private ArrayList<POSOrderLine> orderLines = new ArrayList<>();
     private String orderRemark;
 
+    private int orderId;
     private Table table;
     private int guestNumber;
     private String status;
@@ -206,4 +207,11 @@ public class POSOrder implements Serializable {
         orderlineProductHashMap.clear();
     }
 
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 }

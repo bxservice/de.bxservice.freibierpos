@@ -19,8 +19,9 @@ public class POSOrderLine implements Serializable{
     public static final String ORDERED     = "ORDERED";
 
     //Order that the line belongs to
-    POSOrder order;
+    private POSOrder order;
 
+    private int orderLineId;
     private MProduct product;
     private int qtyOrdered;
     private String productRemark;
@@ -89,5 +90,13 @@ public class POSOrderLine implements Serializable{
 
     public void setOrder(POSOrder order) {
         this.order = order;
+    }
+
+    public int getOrderLineId() {
+        return orderLineId;
+    }
+
+    public void setOrderLineId(int orderLineId) {
+        this.orderLineId = orderLineId;
     }
 }
