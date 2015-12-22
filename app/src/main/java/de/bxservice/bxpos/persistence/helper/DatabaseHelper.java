@@ -114,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK + " VARCHAR(64)" +
                     ", " +
-                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64)" + //TODO:FK to users
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO:FK to users
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT + " TEXT" +
                     ", " +
