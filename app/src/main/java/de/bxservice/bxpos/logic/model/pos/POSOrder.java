@@ -1,5 +1,8 @@
 package de.bxservice.bxpos.logic.model.pos;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,6 +10,7 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.persistence.helper.DatabaseHelper;
 
 /**
  * This represents the draft order - contains
@@ -39,7 +43,7 @@ public class POSOrder implements Serializable {
     private String orderRemark;
 
     private int currentLineNo = 10;
-    private int orderId;
+    private long orderId;
     private Table table;
     private int guestNumber;
     private String status;
@@ -213,11 +217,11 @@ public class POSOrder implements Serializable {
         orderlineProductHashMap.clear();
     }
 
-    public int getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
@@ -239,7 +243,7 @@ public class POSOrder implements Serializable {
      */
     public Integer getTotallinesInteger() {
         Integer total;
-        total = Integer.valueOf(getTotallines().multiply(BigDecimal.valueOf(100)).toString()); //total * 100
+        total = Integer.valueOf(getTotallines().multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
 
         return total;
     }
@@ -259,4 +263,43 @@ public class POSOrder implements Serializable {
         System.out.println(totallines);
         //this.totallines = totallines;
     }
+
+    public boolean sendOrder (Context ctx) {
+        DatabaseHelper db = DatabaseHelper.getInstance(ctx);
+
+        boolean result = true;
+
+        completeOrder();
+
+        long orderId = db.createOrder(this);
+        if (orderId != -1) {
+            setOrderId(orderId);
+            Log.e("Order created", String.valueOf(orderId));
+            result = true;
+        }
+        else {
+            uncompleteOrder();
+            Log.e("Error creating order", "");
+            result = false;
+        }
+
+        db.closeDB();
+        return result;
+
+    }
+
+    public void completeOrder() {
+        setStatus(SENT_STATUS);
+        for (POSOrderLine orderLine : getOrderLines()) {
+            orderLine.setLineStatus(POSOrderLine.ORDERED);
+        }
+    }
+
+    public void uncompleteOrder() {
+        setStatus(DRAFT_STATUS);
+        for (POSOrderLine orderLine : getOrderLines()) {
+            orderLine.setLineStatus(POSOrderLine.ORDERING);
+        }
+    }
+
 }

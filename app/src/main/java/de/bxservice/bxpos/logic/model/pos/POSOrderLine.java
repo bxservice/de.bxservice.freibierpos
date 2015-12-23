@@ -86,7 +86,7 @@ public class POSOrderLine implements Serializable{
      */
     public Integer getLineNetAmtInteger() {
         Integer total;
-        total = Integer.valueOf(getLineNetAmt().multiply(BigDecimal.valueOf(100)).toString()); //total * 100
+        total = Integer.valueOf(getLineNetAmt().multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
 
         return total;
     }
