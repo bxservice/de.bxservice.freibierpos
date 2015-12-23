@@ -40,7 +40,7 @@ import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
-import de.bxservice.bxpos.persistence.helper.DatabaseHelper;
+import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
 /**
  * A login screen that offers login via username/password.
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity  {
     // Reference to the role code in the properties file
     private HashMap<String, String> roleCodes;
 
-    private DatabaseHelper db;
+    private PosDatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity  {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        db = DatabaseHelper.getInstance(getApplicationContext());
+        db = PosDatabaseHelper.getInstance(getApplicationContext());
         createDummyUser();
 
     }

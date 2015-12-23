@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,43 +27,21 @@ import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
-import de.bxservice.bxpos.ui.adapter.TableGridItem;
+import de.bxservice.bxpos.persistence.definition.Tables;
 
 /**
  * contains all the methods to perform database operations
  * Created by Diego Ruiz on 15/12/15.
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class PosDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "PosDatabaseHelper";
 
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
+    // Database Version - change this value when you change the database model
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
-    // Table Names
-    public interface Tables {
 
-        //Controls the database version
-        String TABLE_META_INDEX = "meta_index";
-
-        //Access tables
-        String TABLE_USER          = UserContract.User.TABLE_NAME;
-
-        //Physical space tables
-        String TABLE_TABLE         = TableContract.TableDB.TABLE_NAME;
-        String TABLE_TABLE_GROUP   = GroupTableContract.GroupTableDB.TABLE_NAME;
-
-        //Order management tables
-        String TABLE_POSORDER      = PosOrderContract.POSOrderDB.TABLE_NAME;
-        String TABLE_POSORDER_LINE = PosOrderLineContract.POSOrderLineDB.TABLE_NAME;
-
-        //Product management tables
-        String TABLE_PRODUCT = ProductContract.ProductDB.TABLE_NAME;
-        String TABLE_PRODUCT_CATEGORY = ProductCategoryContract.ProductCategoryDB.TABLE_NAME;
-        String TABLE_PRODUCT_PRICE = ProductPriceContract.ProductPriceDB.TABLE_NAME;
-
-    }
 
     public interface UserColumns {
 
@@ -204,15 +181,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "SELECT " + MetaColumns.BUILD + " FROM " + Tables.TABLE_META_INDEX + " LIMIT 1;";
 
 
-    public DatabaseHelper(Context context) {
+    public PosDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    private static DatabaseHelper sSingleton;
+    private static PosDatabaseHelper sSingleton;
 
-    public static synchronized DatabaseHelper getInstance(Context context) {
+    public static synchronized PosDatabaseHelper getInstance(Context context) {
         if (sSingleton == null) {
-            sSingleton = new DatabaseHelper(context);
+            sSingleton = new PosDatabaseHelper(context);
         }
         return sSingleton;
     }
@@ -240,14 +217,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /*@Override
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < DATABASE_VERSION) {
-            Log.w(TAG, "Detected schema version '" +  oldVersion + "'. " +
+            Log.w(TAG, "Detected schema version '" + oldVersion + "'. " +
                     "Index needs to be rebuilt for schema version '" + newVersion + "'.");
             // We need to drop the tables and recreate them
             reconstruct(db);
-        }*/
+        }
+    }
 
     private String getBuildVersion(SQLiteDatabase db) {
         String version = null;
@@ -279,10 +257,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }*/
 
-    @Override
+    /*@Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         reconstruct(db);
-    }
+    }*/
 
     private void dropTables(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_META_INDEX);
@@ -662,7 +640,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Creating a pos Order
     */
-    public long createOrder (POSOrder order) {
+    /*public long createOrder (POSOrder order) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -684,7 +662,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             createOrderLine(orderLine, orderId);
 
         return orderId;
-    }
+    }*/
 
     /*
     * get single order
@@ -734,7 +712,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     * Creating a pos Order line
     */
-    public long createOrderLine (POSOrderLine orderLine, long orderlineId) {
+    /*public long createOrderLine (POSOrderLine orderLine, long orderlineId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -755,7 +733,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long orderLineId = db.insert(Tables.TABLE_POSORDER_LINE, null, values);
 
         return orderLineId;
-    }
+    }*/
 
     /*
     * get single order line

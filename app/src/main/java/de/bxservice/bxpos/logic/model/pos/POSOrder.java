@@ -8,9 +8,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.bxservice.bxpos.logic.daomanager.POSOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
-import de.bxservice.bxpos.persistence.helper.DatabaseHelper;
+import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
 /**
  * This represents the draft order - contains
@@ -20,6 +21,8 @@ import de.bxservice.bxpos.persistence.helper.DatabaseHelper;
  */
 public class POSOrder implements Serializable {
 
+    //Manager in charge to communicate with the database - not mixing the model and db layers
+    private POSOrderManagement orderManager;
     //Order status
     public static final String DRAFT_STATUS    = "DRAFT";
     public static final String SENT_STATUS     = "SENT";
@@ -265,25 +268,17 @@ public class POSOrder implements Serializable {
     }
 
     public boolean sendOrder (Context ctx) {
-        DatabaseHelper db = DatabaseHelper.getInstance(ctx);
 
-        boolean result = true;
+        orderManager = new POSOrderManagement(ctx);
+        boolean result;
 
         completeOrder();
 
-        long orderId = db.createOrder(this);
-        if (orderId != -1) {
-            setOrderId(orderId);
-            Log.e("Order created", String.valueOf(orderId));
-            result = true;
-        }
-        else {
-            uncompleteOrder();
-            Log.e("Error creating order", "");
-            result = false;
-        }
+        result = orderManager.create(this);
 
-        db.closeDB();
+        if(!result)
+            uncompleteOrder();
+
         return result;
 
     }
