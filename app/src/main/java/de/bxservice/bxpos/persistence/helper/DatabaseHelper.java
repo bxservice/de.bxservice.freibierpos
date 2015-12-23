@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
 import java.math.BigDecimal;
@@ -43,6 +44,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table Names
     public interface Tables {
+
+        //Controls the database version
+        String TABLE_META_INDEX = "meta_index";
+
         //Access tables
         String TABLE_USER          = UserContract.User.TABLE_NAME;
 
@@ -70,7 +75,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public interface MetaColumns {
+        public static final String BUILD = "build";
+    }
+
     // Table Create Statements
+
+    private static final String CREATE_META_TABLE =
+            "CREATE TABLE " + Tables.TABLE_META_INDEX +
+                    "(" +
+                    MetaColumns.BUILD + " VARCHAR(32) NOT NULL" +
+                    ")";
+
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE " + Tables.TABLE_USER +
                     "(" +
@@ -179,6 +195,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE + " NUMERIC" +
                     ")";
 
+    //Control database version
+    private static final String INSERT_BUILD_VERSION =
+            "INSERT INTO " + Tables.TABLE_META_INDEX +
+                    " VALUES ('" + Build.VERSION.INCREMENTAL + "');";
+
+    private static final String SELECT_BUILD_VERSION =
+            "SELECT " + MetaColumns.BUILD + " FROM " + Tables.TABLE_META_INDEX + " LIMIT 1;";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -198,7 +222,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         bootstrapDB(db);
     }
 
-    /*@Override
+    /**
+     * When open the database and the version changed, recreate it
+     * @param db
+     */
+    @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
         Log.i(TAG, "Using schema version: " + db.getVersion());
@@ -210,7 +238,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             Log.i(TAG, "Tables are fine");
         }
-    }*/
+    }
 
     /*@Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -219,7 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "Index needs to be rebuilt for schema version '" + newVersion + "'.");
             // We need to drop the tables and recreate them
             reconstruct(db);
-        }
+        }*/
 
     private String getBuildVersion(SQLiteDatabase db) {
         String version = null;
@@ -241,7 +269,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return version;
     }
 
-        @Override
+    /*    @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "Detected schema version '" +  oldVersion + "'. " +
                 "Index needs to be rebuilt for schema version '" + newVersion + "'.");
@@ -257,6 +285,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void dropTables(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_META_INDEX);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
@@ -269,6 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void bootstrapDB(SQLiteDatabase db) {
+        db.execSQL(CREATE_META_TABLE);
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_TABLE_TABLE);
         db.execSQL(CREATE_GROUPTABLE_TABLE);
@@ -277,6 +307,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PRODUCT_CATEGORY_TABLE);
         db.execSQL(CREATE_PRODUCT_PRICE_TABLE);
         db.execSQL(CREATE_PRODUCT_TABLE);
+        db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");
     }
@@ -315,8 +346,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else
+            return null;
 
         PosUser td = new PosUser();
         td.setId(c.getInt(c.getColumnIndex(UserColumns.USER_ID)));

@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     private void createDummyUser() {
 
-        if (getOfflineUser() != null && !getOfflineUser().getUsername().equals("FreiBierAdmin")) {
+        if (getOfflineUser() == null /*&& !getOfflineUser().getUsername().equals("FreiBierAdmin")*/) {
             PosUser dummyUser = new PosUser();
             dummyUser.setUsername("FreiBierAdmin");
             dummyUser.setPassword("FreiBierAdmin");

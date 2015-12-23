@@ -61,9 +61,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private ViewPager mViewPager;
     private boolean addNewItemsOnBack = false;
-    private DatabaseHelper db;
-
-    private long a = 0; //TODO: DElete
 
 
     @Override
@@ -94,8 +91,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sendOrder())
-                    Snackbar.make(mainView, "Order created" + a, Snackbar.LENGTH_LONG)
+                if (order.sendOrder(getApplicationContext()))
+                    Snackbar.make(mainView, "Order created", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 else
                     Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
@@ -138,34 +135,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         totalTextView = (TextView) findViewById(R.id.total_textView);
 
         updateSummary(0);
-
-        db = DatabaseHelper.getInstance(getApplicationContext());
-
-    }
-
-    public boolean sendOrder () {
-
-        boolean result = true;
-
-        if (order != null) {
-            long orderId = db.createOrder(order);
-            if (orderId != -1) {
-                Log.e("Order created", String.valueOf(orderId));
-                a = orderId;
-                result = true;
-            }
-            else {
-                Log.e("Error creating order", "");
-                result = false;
-            }
-        }
-        else {
-            Log.e("Error creating order", "");
-            result = false;
-        }
-
-        db.closeDB();
-        return result;
 
     }
 
