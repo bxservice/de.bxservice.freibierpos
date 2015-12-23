@@ -5,8 +5,10 @@ import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
+import de.bxservice.bxpos.persistence.helper.PosUserHelper;
 
 /**
  * This class is used to map the data into the database
@@ -29,14 +31,21 @@ public class DataMapper {
      */
     public boolean save(Object object) {
 
+        if(object instanceof PosUser)
+            success = createPosUser((PosUser) object);
         if(object instanceof POSOrder)
             success = createPosOrder((POSOrder) object);
+        if(object instanceof POSOrderLine)
+            success = createPosOrderLine((POSOrderLine) object);
 
         return success;
     }
 
 
-
+    public PosUser getUser(long id) {
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+        return posUserHelper.getUser(id);
+    }
 
     private boolean createPosOrder(POSOrder order) {
 
@@ -74,5 +83,20 @@ public class DataMapper {
         orderLineHelper.closeDB();
         return true;
     }
+
+    private boolean createPosUser(PosUser user) {
+
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+
+        if (posUserHelper.createUser(user) == -1) {
+            Log.e("Error: ", "Cannot create user " + user.getUsername());
+            posUserHelper.closeDB();
+            return false;
+        }
+        Log.i("OrderLine: ", user.getUsername() + " created");
+        posUserHelper.closeDB();
+        return true;
+    }
+
 
 }

@@ -36,11 +36,11 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
-import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
 /**
  * A login screen that offers login via username/password.
@@ -63,8 +63,6 @@ public class LoginActivity extends AppCompatActivity  {
 
     // Reference to the role code in the properties file
     private HashMap<String, String> roleCodes;
-
-    private PosDatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +102,6 @@ public class LoginActivity extends AppCompatActivity  {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        db = PosDatabaseHelper.getInstance(getApplicationContext());
         createDummyUser();
 
     }
@@ -115,18 +112,16 @@ public class LoginActivity extends AppCompatActivity  {
             PosUser dummyUser = new PosUser();
             dummyUser.setUsername("FreiBierAdmin");
             dummyUser.setPassword("FreiBierAdmin");
-
-            db.createUser(dummyUser);
-            Log.e("Dummy user created", dummyUser.getUsername());
+            dummyUser.createUser(getApplicationContext());
         }
         else {
             Log.e("Dummy user exists", "FreiBierAdmin");
         }
-        db.closeDB();
     }
 
     private PosUser getOfflineUser() {
-        return db.getUser(1);
+        PosUserManagement userManager = new PosUserManagement(getApplicationContext());
+        return userManager.get(1);
     }
 
     /**

@@ -1,5 +1,8 @@
 package de.bxservice.bxpos.logic.model.pos;
 
+import android.content.Context;
+
+import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
@@ -7,9 +10,10 @@ import de.bxservice.bxpos.persistence.dbcontract.UserContract;
  */
 public class PosUser extends UserContract.User {
 
-    int id;
-    String username;
-    String password;
+    private int id;
+    private String username;
+    private String password;
+    private PosUserManagement userManager;
 
     public int getId() {
         return id;
@@ -33,5 +37,21 @@ public class PosUser extends UserContract.User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Communicates with the manager to create the user in the database
+     * @param ctx
+     * @return
+     */
+    public boolean createUser(Context ctx) {
+
+        userManager = new PosUserManagement(ctx);
+        boolean result;
+
+        result = userManager.create(this);
+
+        return result;
+
     }
 }
