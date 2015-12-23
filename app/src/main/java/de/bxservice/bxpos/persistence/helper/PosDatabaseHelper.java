@@ -298,7 +298,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     /*
     * Creating a user
     */
-    public long createUser (PosUser user) {
+    /*public long createUser (PosUser user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -309,12 +309,12 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         long todo_id = db.insert(Tables.TABLE_USER, null, values);
 
         return todo_id;
-    }
+    }*/
 
     /*
     * get single user
     */
-    public PosUser getUser(long todo_id) {
+    /*public PosUser getUser(long todo_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_USER + " WHERE "
@@ -335,7 +335,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         td.setPassword(c.getString(c.getColumnIndex(UserColumns.PASSWORD)));
 
         return td;
-    }
+    }*/
 
     /*
     * Updating a user
