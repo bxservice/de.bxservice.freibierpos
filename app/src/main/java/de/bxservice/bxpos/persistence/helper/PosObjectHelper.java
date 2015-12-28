@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public abstract class PosObjectHelper {
 
-    static final String LOG_TAG = "Index";
+    static final String LOG_TAG = "Object Helper";
     Context mContext;
 
     PosObjectHelper (Context mContext) {

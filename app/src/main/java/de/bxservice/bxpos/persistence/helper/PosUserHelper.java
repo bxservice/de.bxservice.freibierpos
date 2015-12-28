@@ -15,6 +15,8 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosUserHelper extends PosObjectHelper {
 
+    static final String LOG_TAG = "User Helper";
+
     public PosUserHelper(Context mContext) {
         super(mContext);
     }
@@ -36,12 +38,12 @@ public class PosUserHelper extends PosObjectHelper {
     * get single user
     */
     public PosUser getUser(long todo_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_USER + " WHERE "
                 + UserContract.User.COLUMN_NAME_USER_ID + " = " + todo_id;
 
-        Log.e(/*TAG*/"", selectQuery);
+        Log.e(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -56,6 +58,21 @@ public class PosUserHelper extends PosObjectHelper {
         td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD)));
 
         return td;
+    }
+
+    /*
+    * Updating a user
+    */
+    public int updateUser(PosUser user) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(UserContract.User.COLUMN_NAME_USERNAME, user.getUsername());
+        values.put(UserContract.User.COLUMN_NAME_PASSWORD, user.getPassword());
+
+        // updating row
+        return db.update(Tables.TABLE_USER, values, UserContract.User.COLUMN_NAME_USER_ID + " = ?",
+                new String[] { String.valueOf(user.getId()) });
     }
 
 }
