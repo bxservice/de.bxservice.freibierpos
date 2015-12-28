@@ -56,9 +56,11 @@ public class PosTableHelper extends PosObjectHelper {
         if (c != null)
             c.moveToFirst();
 
+        PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
+
         Table table = new Table();
         table.setTableID(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_ID)));
-        table.setTableGroup(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID)));
+        table.setBelongingGroup(tableGroupHelper.getTableGroup(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID))));
         table.setStatus((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS))));
         table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
         table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));

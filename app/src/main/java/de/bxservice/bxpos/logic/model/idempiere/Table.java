@@ -68,11 +68,6 @@ public class Table implements Serializable {
         this.belongingGroup = belongingGroup;
     }
 
-    //TODO: Set table group by id
-    public void setTableGroup(int tableGroup) {
-        //this.tableGroup = tableGroup;
-    }
-
     public boolean createTable(Context ctx) {
         tableManager = new PosTableManagement(ctx);
         return tableManager.create(this);
