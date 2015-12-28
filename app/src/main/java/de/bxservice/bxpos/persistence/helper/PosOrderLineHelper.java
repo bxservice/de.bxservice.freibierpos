@@ -14,7 +14,7 @@ import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
 /**
- * Created by diego on 23/12/15.
+ * Created by Diego Ruiz on 23/12/15.
  */
 public class PosOrderLineHelper extends PosObjectHelper {
 
