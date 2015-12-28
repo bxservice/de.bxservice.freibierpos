@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
@@ -69,6 +71,9 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
         //order.setTableId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID))); //TODO; table ID set table
 
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        order.setOrderLines(orderLineHelper.getAllOrderLines(order.getOrderId()));
+
         return order;
     }
 
@@ -90,4 +95,36 @@ public class PosOrderHelper extends PosObjectHelper {
                 new String[] { String.valueOf(order.getOrderId()) });
     }
 
+    /**
+     * Getting all orders
+     */
+    public List<POSOrder> getAllOrders() {
+        List<POSOrder> orders = new ArrayList<POSOrder>();
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER;
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+            do {
+                POSOrder order = new POSOrder();
+                order.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID)));
+                order.setStatus(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS)));
+                order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
+                order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
+                order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
+                //order.setTableId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID))); //TODO; table ID set table
+                order.setOrderLines(orderLineHelper.getAllOrderLines(order.getOrderId()));
+
+                // adding to todo list
+                orders.add(order);
+            } while (c.moveToNext());
+        }
+
+        return orders;
+    }
 }

@@ -162,6 +162,10 @@ public class POSOrder implements Serializable {
         return orderLines;
     }
 
+    public void setOrderLines(ArrayList<POSOrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
+
     public String getOrderRemark() {
         return orderRemark;
     }
