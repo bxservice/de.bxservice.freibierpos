@@ -11,7 +11,7 @@ import de.bxservice.bxpos.logic.daomanager.PosOrderLineManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 
 /**
- * This is the product that is added to the draft orders
+ * This is the line that is added to the orders
  * it has extra attributes that will not be sent to iDempiere
  * Created by Diego Ruiz on 25/11/15.
  */
