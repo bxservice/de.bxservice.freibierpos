@@ -1,9 +1,12 @@
 package de.bxservice.bxpos.logic.model.idempiere;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 
 /**
@@ -17,6 +20,7 @@ public class MProduct implements Serializable {
     private int productID;
     private String productName;
     private int productCategoryId;
+    private PosProductManagement productManager;
 
     public int getProductID() {
         return productID;
@@ -45,6 +49,16 @@ public class MProduct implements Serializable {
     public BigDecimal getProductPrice() {
         ProductPrice productPrice = DataMediator.getInstance().getProductPriceHashMap().get(productID);
         return productPrice.getStdPrice();
+    }
+
+    /**
+     * Communicates with the manager to create the product in the database
+     * @param ctx
+     * @return
+     */
+    public boolean createProduct(Context ctx) {
+        productManager = new PosProductManagement(ctx);
+        return productManager.create(this);
     }
 
 }

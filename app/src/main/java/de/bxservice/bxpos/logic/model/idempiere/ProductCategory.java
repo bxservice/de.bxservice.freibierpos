@@ -1,7 +1,11 @@
 package de.bxservice.bxpos.logic.model.idempiere;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import de.bxservice.bxpos.logic.daomanager.PosProductCategoryManagement;
 
 /**
  * Created by diego on 5/11/15.
@@ -12,8 +16,8 @@ public class ProductCategory {
 
     private int productCategoryID;
     private String name;
-    List<MProduct> products = new ArrayList<MProduct>();
-
+    private List<MProduct> products = new ArrayList<MProduct>();
+    private PosProductCategoryManagement productCategoryManager;
 
     public ProductCategory(int id, String name){
         productCategoryID = id;
@@ -43,5 +47,10 @@ public class ProductCategory {
 
     public void setProducts(List<MProduct> products) {
         this.products = products;
+    }
+
+    public boolean createProductCategory(Context ctx) {
+        productCategoryManager = new PosProductCategoryManagement(ctx);
+        return productCategoryManager.create(this);
     }
 }

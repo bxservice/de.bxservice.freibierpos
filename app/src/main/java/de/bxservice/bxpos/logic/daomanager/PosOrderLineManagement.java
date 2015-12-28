@@ -1,8 +1,11 @@
 package de.bxservice.bxpos.logic.daomanager;
 
+import android.content.Context;
+
 import java.io.Serializable;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * This is class is used to control the read and write from the database
@@ -10,6 +13,12 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
  * Created by Diego Ruiz on 23/12/15.
  */
 public class PosOrderLineManagement implements ObjectManagement, Serializable {
+
+    private DataMapper dataMapper;
+
+    public PosOrderLineManagement(Context ctx) {
+        dataMapper = new DataMapper(ctx);
+    }
 
     @Override
     public boolean update(Object object) {

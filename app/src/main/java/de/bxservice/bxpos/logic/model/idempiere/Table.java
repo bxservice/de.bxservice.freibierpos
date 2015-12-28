@@ -1,6 +1,10 @@
 package de.bxservice.bxpos.logic.model.idempiere;
 
+import android.content.Context;
+
 import java.io.Serializable;
+
+import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
 
 /**
  * Created by Diego Ruiz on 9/11/15.
@@ -14,6 +18,7 @@ public class Table implements Serializable {
 
     public static final String BAY_Table_ID = "BAY_Table_ID";
 
+    private PosTableManagement tableManager;
     private TableGroup belongingGroup;
     private int tableID;
     private String tableName;
@@ -66,5 +71,10 @@ public class Table implements Serializable {
     //TODO: Set table group by id
     public void setTableGroup(int tableGroup) {
         //this.tableGroup = tableGroup;
+    }
+
+    public boolean createTable(Context ctx) {
+        tableManager = new PosTableManagement(ctx);
+        return tableManager.create(this);
     }
 }
