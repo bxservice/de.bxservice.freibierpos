@@ -69,7 +69,7 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
         order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
         order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
-        //order.setTableId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID))); //TODO; table ID set table
+        order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
         order.setOrderLines(orderLineHelper.getAllOrderLines(order.getOrderId()));
@@ -117,10 +117,10 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
                 order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
-                //order.setTableId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID))); //TODO; table ID set table
+                order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
                 order.setOrderLines(orderLineHelper.getAllOrderLines(order.getOrderId()));
 
-                // adding to todo list
+                // adding to orders list
                 orders.add(order);
             } while (c.moveToNext());
         }

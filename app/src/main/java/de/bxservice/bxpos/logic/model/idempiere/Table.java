@@ -20,16 +20,16 @@ public class Table implements Serializable {
 
     private PosTableManagement tableManager;
     private TableGroup belongingGroup;
-    private int tableID;
+    private long tableID;
     private String tableName;
     private String value;
     private String status;
 
-    public int getTableID() {
+    public long getTableID() {
         return tableID;
     }
 
-    public void setTableID(int tableID) {
+    public void setTableID(long tableID) {
         this.tableID = tableID;
     }
 
