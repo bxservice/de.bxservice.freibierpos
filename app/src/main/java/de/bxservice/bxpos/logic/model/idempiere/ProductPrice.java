@@ -60,6 +60,30 @@ public class ProductPrice {
         this.productID = productID;
     }
 
+    /**
+     * Returns the std price of the product
+     * in an integer to be save in the database
+     * @return
+     */
+    public Integer getIntegerStdPrice() {
+        Integer total;
+        total = Integer.valueOf(getStdPrice().multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
+
+        return total;
+    }
+
+    /**
+     * Gets an integer value from the db and converts it to a BigDecimal
+     * last two digits are decimals
+     * @param total
+     */
+    public void setStdPriceFromInt(Integer total) {
+        //TODO CHECK
+        setStdPrice(BigDecimal.valueOf(total / 100));
+        System.out.println(stdPrice);
+        //this.totallines = totallines;
+    }
+
     public boolean createProductPrice(Context ctx) {
         productPriceManager = new PosProductPriceManagement(ctx);
         return productPriceManager.create(this);
