@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
@@ -98,15 +99,15 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
     /**
      * Getting all lines belonging to an order
-     * @param order_id
+     * @param order
      * @return
      */
-    public ArrayList<POSOrderLine> getAllOrderLines(long order_id) {
+    public ArrayList<POSOrderLine> getAllOrderLines(POSOrder order) {
         ArrayList<POSOrderLine> lines = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " orderline " +
                 " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID
-                + " = '" + order_id;
+                + " = '" + order.getOrderId();
 
         Log.e(LOG_TAG, selectQuery);
 
@@ -118,7 +119,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
             do {
                 POSOrderLine orderLine = new POSOrderLine();
                 orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
-                //orderLine.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID))); //TODO: Create method
+                orderLine.setOrder(order);
                 orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
                 orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
                 orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
