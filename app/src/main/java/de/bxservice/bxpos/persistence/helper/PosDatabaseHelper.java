@@ -194,6 +194,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
+        db.setForeignKeyConstraintsEnabled(true);
         Log.i(TAG, "Using schema version: " + db.getVersion());
 
         if (!Build.VERSION.INCREMENTAL.equals(getBuildVersion(db))) {
