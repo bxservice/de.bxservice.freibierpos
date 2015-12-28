@@ -10,12 +10,12 @@ import de.bxservice.bxpos.persistence.DataMapper;
 /**
  * Created by Diego Ruiz on 23/12/15.
  */
-public class POSOrderManagement implements ObjectManagement, Serializable {
+public class PosOrderManagement implements ObjectManagement, Serializable {
 
     //Object that writes to the db
     private DataMapper dataMapper;
 
-    public POSOrderManagement(Context ctx) {
+    public PosOrderManagement(Context ctx) {
         dataMapper = new DataMapper(ctx);
     }
 

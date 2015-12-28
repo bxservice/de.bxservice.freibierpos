@@ -1,17 +1,15 @@
 package de.bxservice.bxpos.logic.model.pos;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.bxservice.bxpos.logic.daomanager.POSOrderManagement;
+import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
-import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
 /**
  * This represents the draft order - contains
@@ -22,7 +20,7 @@ import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 public class POSOrder implements Serializable {
 
     //Manager in charge to communicate with the database - not mixing the model and db layers
-    private POSOrderManagement orderManager;
+    private PosOrderManagement orderManager;
     //Order status
     public static final String DRAFT_STATUS    = "DRAFT";
     public static final String SENT_STATUS     = "SENT";
@@ -269,7 +267,7 @@ public class POSOrder implements Serializable {
 
     public boolean sendOrder (Context ctx) {
 
-        orderManager = new POSOrderManagement(ctx);
+        orderManager = new PosOrderManagement(ctx);
         boolean result;
 
         completeOrder();

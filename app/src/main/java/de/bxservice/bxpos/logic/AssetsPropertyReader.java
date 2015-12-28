@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Created by diego on 6/11/15.
+ * Created by Diego Ruiz on 6/11/15.
  */
 public class AssetsPropertyReader {
 
