@@ -72,7 +72,7 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
-        order.setOrderLines(orderLineHelper.getAllOrderLines(order.getOrderId()));
+        order.setOrderLines(orderLineHelper.getAllOrderLines(order));
 
         return order;
     }
@@ -118,7 +118,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
                 order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
-                order.setOrderLines(orderLineHelper.getAllOrderLines(order.getOrderId()));
+                order.setOrderLines(orderLineHelper.getAllOrderLines(order));
 
                 // adding to orders list
                 orders.add(order);
