@@ -1,6 +1,10 @@
 package de.bxservice.bxpos.logic.model.idempiere;
 
+import android.content.Context;
+
 import java.math.BigDecimal;
+
+import de.bxservice.bxpos.logic.daomanager.PosProductPriceManagement;
 
 /**
  * Created by Diego Ruiz on 9/11/15.
@@ -14,6 +18,7 @@ public class ProductPrice {
     private MProduct product;
     private BigDecimal stdPrice;
     private int productID;
+    private PosProductPriceManagement productPriceManager;
 
     public int getPriceListVersionID() {
         return priceListVersionID;
@@ -53,5 +58,10 @@ public class ProductPrice {
 
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    public boolean createProductPrice(Context ctx) {
+        productPriceManager = new PosProductPriceManagement(ctx);
+        return productPriceManager.create(this);
     }
 }

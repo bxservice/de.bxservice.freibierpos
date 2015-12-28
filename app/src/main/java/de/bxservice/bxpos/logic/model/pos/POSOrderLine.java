@@ -1,10 +1,13 @@
 package de.bxservice.bxpos.logic.model.pos;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.daomanager.PosOrderLineManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 
 /**
@@ -18,6 +21,7 @@ public class POSOrderLine implements Serializable{
     public static final String ORDERING    = "ORDERING";
     public static final String ORDERED     = "ORDERED";
 
+    private PosOrderLineManagement lineManager;
     //Order that the line belongs to
     private POSOrder order;
 
@@ -135,5 +139,29 @@ public class POSOrderLine implements Serializable{
 
     public void setLineNo(int lineNo) {
         this.lineNo = lineNo;
+    }
+
+    public boolean sendOrder (Context ctx) {
+
+        lineManager = new PosOrderLineManagement(ctx);
+        boolean result;
+
+        completeLine();
+
+        result = lineManager.create(this);
+
+        if(!result)
+            uncompleteLine();
+
+        return result;
+
+    }
+
+    public void completeLine() {
+        setLineStatus(POSOrderLine.ORDERED);
+    }
+
+    public void uncompleteLine() {
+        setLineStatus(POSOrderLine.ORDERING);
     }
 }
