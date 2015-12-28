@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -188,6 +189,27 @@ public class POSOrder implements Serializable {
 
     public void setTable(Table table) {
         this.table = table;
+    }
+
+    /**
+     * Set table from Id
+     * @param tableId
+     */
+    public void setTable(long tableId) {
+        if(DataMediator.getInstance().getTableGroupList() != null) {
+
+            for(int i = 0; i < DataMediator.getInstance().getTableGroupList().size() ; i++ ) {
+
+                for (Table table : DataMediator.getInstance().getTableGroupList().get(i).getTables()) {
+                    if (table.getTableID() == tableId) {
+                        setTable(table);
+                        return;
+                    }
+                }
+
+            }
+        }
+
     }
 
     public String getStatus() {
