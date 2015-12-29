@@ -21,7 +21,7 @@ public class PosUserManagement implements ObjectManagement, Serializable {
 
     @Override
     public boolean update(Object object) {
-        return true;
+        return dataMapper.update(object);
     }
 
     @Override

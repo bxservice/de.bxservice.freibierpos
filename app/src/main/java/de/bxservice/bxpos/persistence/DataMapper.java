@@ -71,8 +71,8 @@ public class DataMapper {
      */
     public boolean update(Object object) {
 
-        /*if(object instanceof PosUser)
-            success = createPosUser((PosUser) object);*/
+        if(object instanceof PosUser)
+            success = updatePosUser((PosUser) object);
         if(object instanceof POSOrder)
             success = updatePosOrder((POSOrder) object);
         /*if(object instanceof POSOrderLine)
@@ -246,6 +246,20 @@ public class DataMapper {
         }
 
         orderHelper.closeDB();
+        return true;
+    }
+
+    private boolean updatePosUser(PosUser user) {
+
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+
+        if (posUserHelper.updateUser(user) == -1) {
+            Log.e(LOG_TAG, "Cannot update user " + user.getUsername());
+            posUserHelper.closeDB();
+            return false;
+        }
+        Log.i(LOG_TAG, user.getUsername() + " updated");
+        posUserHelper.closeDB();
         return true;
     }
 

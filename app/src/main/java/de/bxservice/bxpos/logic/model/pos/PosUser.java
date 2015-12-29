@@ -54,4 +54,15 @@ public class PosUser extends UserContract.User {
         return result;
 
     }
+
+    public boolean changePassword(String password, Context ctx) {
+        setPassword(password);
+        return updateUser(ctx);
+    }
+
+    public boolean updateUser(Context ctx) {
+        userManager = new PosUserManagement(ctx);
+        return userManager.update(this);
+    }
+
 }
