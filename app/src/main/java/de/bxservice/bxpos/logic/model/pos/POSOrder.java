@@ -302,6 +302,10 @@ public class POSOrder implements Serializable {
 
         if(!result)
             uncompleteOrder();
+        else {
+            if(table != null)
+                table.occupyTable(ctx);
+        }
 
         return result;
 

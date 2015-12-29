@@ -72,4 +72,24 @@ public class Table implements Serializable {
         tableManager = new PosTableManagement(ctx);
         return tableManager.create(this);
     }
+
+    public boolean occupyTable(Context ctx) {
+        setStatus(BUSY_STATUS);
+        return updateTable(ctx);
+    }
+
+    public boolean freeTable(Context ctx) {
+        setStatus(FREE_STATUS);
+        return updateTable(ctx);
+    }
+
+    public boolean reserveTable(Context ctx) {
+        setStatus(RESERVED_STATUS);
+        return updateTable(ctx);
+    }
+
+    public boolean updateTable(Context ctx) {
+        tableManager = new PosTableManagement(ctx);
+        return tableManager.update(this);
+    }
 }
