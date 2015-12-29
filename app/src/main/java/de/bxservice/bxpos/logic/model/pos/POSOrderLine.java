@@ -164,4 +164,11 @@ public class POSOrderLine implements Serializable{
     public void uncompleteLine() {
         setLineStatus(POSOrderLine.ORDERING);
     }
+
+    public boolean updateLine(Context ctx) {
+
+        lineManager = new PosOrderLineManagement(ctx);
+        return lineManager.update(this);
+
+    }
 }
