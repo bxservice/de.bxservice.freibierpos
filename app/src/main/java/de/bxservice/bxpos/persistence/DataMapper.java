@@ -63,6 +63,34 @@ public class DataMapper {
         return success;
     }
 
+    /**
+     * Generic method that receives all the requests to save data
+     * and manage it to redirect it to the corresponding method
+     * @param object
+     * @return
+     */
+    public boolean update(Object object) {
+
+        /*if(object instanceof PosUser)
+            success = createPosUser((PosUser) object);
+        if(object instanceof POSOrder)
+            success = createPosOrder((POSOrder) object);
+        if(object instanceof POSOrderLine)
+            success = createPosOrderLine((POSOrderLine) object);*/
+        if(object instanceof Table)
+            success = updateTable((Table) object);
+        /*if(object instanceof TableGroup)
+            success = createTableGroup((TableGroup) object);
+        if(object instanceof ProductCategory)
+            success = createProductCategory((ProductCategory) object);
+        if(object instanceof ProductPrice)
+            success = createProductPrice((ProductPrice) object);
+        if(object instanceof MProduct)
+            success = createProduct((MProduct) object);*/
+
+        return success;
+    }
+
 
     public PosUser getUser(long id) {
         PosUserHelper posUserHelper = new PosUserHelper(mContext);
@@ -187,6 +215,20 @@ public class DataMapper {
         }
         Log.i(LOG_TAG, product.getProductName() + " created");
         productHelper.closeDB();
+        return true;
+    }
+
+    private boolean updateTable(Table table) {
+
+        PosTableHelper tableHelper = new PosTableHelper(mContext);
+
+        if (tableHelper.updateTable(table) == -1) {
+            Log.e(LOG_TAG, "Cannot update " + table.getTableName());
+            tableHelper.closeDB();
+            return false;
+        }
+        Log.i(LOG_TAG, table.getTableName() + " updated");
+        tableHelper.closeDB();
         return true;
     }
 

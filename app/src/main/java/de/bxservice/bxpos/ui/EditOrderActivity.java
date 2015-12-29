@@ -89,9 +89,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (order.sendOrder(getApplicationContext()))
+                if (order.sendOrder(getApplicationContext())) {
                     Snackbar.make(mainView, "Order created", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                }
                 else
                     Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
