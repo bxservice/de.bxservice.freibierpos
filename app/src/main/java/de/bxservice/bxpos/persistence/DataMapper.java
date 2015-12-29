@@ -75,8 +75,8 @@ public class DataMapper {
             success = updatePosUser((PosUser) object);
         if(object instanceof POSOrder)
             success = updatePosOrder((POSOrder) object);
-        /*if(object instanceof POSOrderLine)
-            success = createPosOrderLine((POSOrderLine) object);*/
+        if(object instanceof POSOrderLine)
+            success = updatePosOrderLine((POSOrderLine) object);
         if(object instanceof Table)
             success = updateTable((Table) object);
         /*if(object instanceof TableGroup)
@@ -260,6 +260,20 @@ public class DataMapper {
         }
         Log.i(LOG_TAG, user.getUsername() + " updated");
         posUserHelper.closeDB();
+        return true;
+    }
+
+    private boolean updatePosOrderLine(POSOrderLine orderLine) {
+
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+
+        if (orderLineHelper.updateOrderLine(orderLine) == -1) {
+            Log.e(LOG_TAG, "Cannot update order line");
+            orderLineHelper.closeDB();
+            return false;
+        }
+        Log.i(LOG_TAG, "order line updated");
+        orderLineHelper.closeDB();
         return true;
     }
 
