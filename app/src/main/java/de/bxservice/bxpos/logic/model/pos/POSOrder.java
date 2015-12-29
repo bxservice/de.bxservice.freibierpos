@@ -311,6 +311,11 @@ public class POSOrder implements Serializable {
 
     }
 
+    public boolean updateOrder (Context ctx) {
+        orderManager = new PosOrderManagement(ctx);
+        return orderManager.update(this);
+    }
+
     public void completeOrder() {
         setStatus(SENT_STATUS);
         for (POSOrderLine orderLine : getOrderLines()) {
