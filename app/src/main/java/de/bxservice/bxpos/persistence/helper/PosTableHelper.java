@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
@@ -83,6 +86,38 @@ public class PosTableHelper extends PosObjectHelper {
         // updating row
         return db.update(Tables.TABLE_TABLE, values, TableContract.TableDB.COLUMN_NAME_TABLE_ID + " = ?",
                 new String[] { String.valueOf(table.getTableID()) });
+    }
+
+    /**
+     * Getting all orders
+     */
+    public List<Table> getAllOrders() {
+        List<Table> tables = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE;
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
+
+            do {
+                Table table = new Table();
+                table.setTableID(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_ID)));
+                table.setBelongingGroup(tableGroupHelper.getTableGroup(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID))));
+                table.setStatus((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS))));
+                table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
+                table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
+
+                // adding to orders list
+                tables.add(table);
+            } while (c.moveToNext());
+        }
+
+        return tables;
     }
 
 }
