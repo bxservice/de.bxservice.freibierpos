@@ -13,6 +13,8 @@ import java.util.Properties;
  */
 public class AssetsPropertyReader {
 
+    static final String LOG_TAG = "AssetsPropertyReader";
+
     private Context context;
     private Properties properties;
 
@@ -43,7 +45,7 @@ public class AssetsPropertyReader {
             properties.load(inputStream);
 
         } catch (IOException e) {
-            Log.e("AssetsPropertyReader", e.toString());
+            Log.e(LOG_TAG, e.toString());
         }
         return properties;
 

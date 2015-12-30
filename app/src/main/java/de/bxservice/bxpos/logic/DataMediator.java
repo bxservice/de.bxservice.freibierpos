@@ -26,6 +26,8 @@ import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
  */
 public class DataMediator {
 
+    static final String LOG_TAG = "Data Mediator";
+
     public static final Locale LOCALE = Locale.GERMANY;
 
     private static volatile DataMediator instance = null;
@@ -139,7 +141,7 @@ public class DataMediator {
             }
         }
         else {
-            Log.i("Error: ", "missing products");
+            Log.i(LOG_TAG, "missing products");
             error = true;
         }
 
@@ -163,7 +165,7 @@ public class DataMediator {
             }
         }
         else {
-            Log.e("Error: ", "missing price products");
+            Log.e(LOG_TAG, "missing price products");
             error = true;
         }
 

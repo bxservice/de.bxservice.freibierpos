@@ -47,6 +47,7 @@ import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
  */
 public class LoginActivity extends AppCompatActivity  {
 
+    static final String LOG_TAG = "Login Activity";
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -115,7 +116,7 @@ public class LoginActivity extends AppCompatActivity  {
             dummyUser.createUser(getApplicationContext());
         }
         else {
-            Log.e("Dummy user exists", "FreiBierAdmin");
+            Log.e(LOG_TAG, "Dummy user exists FreiBierAdmin");
         }
     }
 
@@ -144,7 +145,7 @@ public class LoginActivity extends AppCompatActivity  {
             }
         }
         catch (Exception e) {
-            Log.e("MyTag", "Failure to get drawable id.", e);
+            Log.e(LOG_TAG, "Failure to get drawable id.", e);
         }
     }
 
