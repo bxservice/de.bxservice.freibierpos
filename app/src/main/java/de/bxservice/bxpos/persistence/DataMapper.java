@@ -303,4 +303,9 @@ public class DataMapper implements Serializable {
         return tableGroups;
     }
 
+    public Table getTable(long id) {
+        PosTableHelper tableHelper = new PosTableHelper(mContext);
+        return tableHelper.getTable(id);
+    }
+
 }

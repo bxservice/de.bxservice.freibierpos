@@ -112,10 +112,6 @@ public class DataMediator {
         return productCategoryList;
     }
 
-    public List<TableGroup> getTableGroupList() {
-        return tableGroupList;
-    }
-
     public List<MProduct> getProductList() {
         return productList;
     }
