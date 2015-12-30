@@ -109,7 +109,8 @@ public class DataMapper implements Serializable {
             Log.i(LOG_TAG, "order created");
             for (POSOrderLine orderLine: order.getOrderLines()) {
                 orderLine.getOrder().setOrderId(orderId);
-                createPosOrderLine(orderLine);
+                if(!createPosOrderLine(orderLine))
+                    return false;
             }
         }
         else {
