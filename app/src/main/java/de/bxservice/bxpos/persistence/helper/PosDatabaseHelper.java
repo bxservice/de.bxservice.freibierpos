@@ -29,17 +29,6 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
-
-
-    public interface UserColumns {
-
-        //User Table
-        String USER_ID = UserContract.User.COLUMN_NAME_USER_ID;
-        String USERNAME = UserContract.User.COLUMN_NAME_USERNAME;
-        String PASSWORD = UserContract.User.COLUMN_NAME_PASSWORD;
-
-    }
-
     public interface MetaColumns {
         public static final String BUILD = "build";
     }
