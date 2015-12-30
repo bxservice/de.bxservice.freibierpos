@@ -125,6 +125,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                 tableGroup.setName("default");
 
                 for ( Table table : tableList ){
+                    table.setBelongingGroup(tableGroup);
                     tableGroup.getTables().add(table);
                 }
 

@@ -31,7 +31,7 @@ public class DataMapper implements Serializable {
     static final String LOG_TAG = "Data Mapper";
 
     private boolean success = false;
-    private Context mContext;
+    private transient Context mContext;
 
     public DataMapper(Context mContext) {
         this.mContext = mContext;
