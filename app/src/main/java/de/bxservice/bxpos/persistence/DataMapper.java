@@ -285,7 +285,7 @@ public class DataMapper implements Serializable {
         PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
 
         long numRows = tableGroupHelper.getTotalTableGroups();
-        if (tableGroupHelper.getTotalTableGroups() == -1) {
+        if (numRows == -1) {
             Log.e(LOG_TAG, "No group tables found");
             tableGroupHelper.closeDB();
             return 0;
@@ -305,6 +305,27 @@ public class DataMapper implements Serializable {
     public Table getTable(long id) {
         PosTableHelper tableHelper = new PosTableHelper(mContext);
         return tableHelper.getTable(id);
+    }
+
+    public long getTotalCategories() {
+        PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
+
+        long numRows = productCategoryHelper.getTotalCategories();
+        if (numRows == -1) {
+            Log.e(LOG_TAG, "No product categories found");
+            productCategoryHelper.closeDB();
+            return 0;
+        }
+        Log.i(LOG_TAG, numRows + " product categories found");
+        productCategoryHelper.closeDB();
+        return numRows;
+    }
+
+    public List<ProductCategory> getAllCategories() {
+        PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
+        List<ProductCategory> productCategories = productCategoryHelper.getAllProductCategories();
+        productCategoryHelper.closeDB();
+        return productCategories;
     }
 
 }
