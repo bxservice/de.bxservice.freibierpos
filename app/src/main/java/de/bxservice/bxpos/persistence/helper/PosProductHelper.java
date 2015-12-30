@@ -90,12 +90,12 @@ public class PosProductHelper extends PosObjectHelper {
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " product " +
                 " WHERE product." + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID
-                + " = '" + productCategory.getProductCategoryID();
+                + " = ?";
 
         Log.e(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(productCategory.getProductCategoryID())});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {

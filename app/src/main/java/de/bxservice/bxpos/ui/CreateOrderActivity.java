@@ -98,7 +98,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mCreateOrderPagerAdapter = new CreateOrderPagerAdapter(getSupportFragmentManager());
+        mCreateOrderPagerAdapter = new CreateOrderPagerAdapter(getSupportFragmentManager(), getBaseContext());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.createOrderContainer);

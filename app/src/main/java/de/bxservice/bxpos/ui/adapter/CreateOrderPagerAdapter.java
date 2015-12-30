@@ -1,11 +1,13 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.ui.fragment.FoodMenuFragment;
 
@@ -14,10 +16,13 @@ import de.bxservice.bxpos.ui.fragment.FoodMenuFragment;
  */
 public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
-    DataMediator dataProvider = DataMediator.getInstance();
+    private Context mContext;
+    DataProvider dataProvider;
 
-    public CreateOrderPagerAdapter(FragmentManager fm) {
+    public CreateOrderPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        mContext = context;
+        dataProvider = new DataProvider(mContext);
     }
 
     @Override
@@ -33,7 +38,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
      */
     public int getCount() {
 
-        return dataProvider.getProductCategoryList().size();
+        return (int) dataProvider.getTotalCategories();
     }
 
     @Override
@@ -42,7 +47,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
      */
     public CharSequence getPageTitle(int position) {
 
-        return dataProvider.getProductCategoryList().get(position).getName();
+        return dataProvider.getAllCategories().get(position).getName();
     }
 
     /**

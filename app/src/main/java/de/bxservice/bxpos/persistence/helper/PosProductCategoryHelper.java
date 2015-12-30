@@ -3,6 +3,7 @@ package de.bxservice.bxpos.persistence.helper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -79,7 +80,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
     /**
      * Getting all product category
      */
-    public List<ProductCategory> getAllProductCategory() {
+    public List<ProductCategory> getAllProductCategories() {
         List<ProductCategory> productCategories = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_CATEGORY;
 
@@ -105,6 +106,12 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         return productCategories;
     }
 
-
+    /**
+     * getting total of rows in the table product category
+     */
+    public long getTotalCategories() {
+        SQLiteDatabase db = getReadableDatabase();
+        return DatabaseUtils.queryNumEntries(db, Tables.TABLE_PRODUCT_CATEGORY);
+    }
 
 }
