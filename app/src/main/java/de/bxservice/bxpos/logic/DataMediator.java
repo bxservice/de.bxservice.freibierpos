@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.logic;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Locale;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
@@ -38,9 +40,13 @@ public class DataMediator {
     private List<ProductPrice> productPriceList = new ArrayList<>();
     private HashMap<Integer, ProductPrice> productPriceHashMap = new HashMap<>();
     private boolean error = false;
+    private Context mContext;
 
 
-    private DataMediator() {
+    private DataMediator(Context ctx) {
+
+        mContext = ctx;
+
         Thread productCategoryThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -65,18 +71,38 @@ public class DataMediator {
             public void run() {
                 TableWebServiceAdapter tableWS = new TableWebServiceAdapter();
                 tableGroupList = tableWS.getTableGroupList();
-
             }
         });
 
         tableThread.run();
 
+        persistTables();
+    }
+
+    /**
+     * Save tables in the database
+     */
+    public void persistTables() {
+        for(TableGroup tg : tableGroupList) {
+            tg.createTableGroup(mContext);
+            for(Table table : tg.getTables()) {
+                table.createTable(mContext);
+            }
+        }
     }
 
 
     public static synchronized DataMediator getInstance() {
         if (instance == null) {
-            instance = new DataMediator();
+            instance = new DataMediator(null);
+        }
+
+        return instance;
+    }
+
+    public static synchronized DataMediator getInstance(Context ctx) {
+        if (instance == null) {
+            instance = new DataMediator(ctx);
         }
 
         return instance;

@@ -338,7 +338,7 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Context... contexts) {
 
-            DataMediator data = DataMediator.getInstance();
+            DataMediator data = DataMediator.getInstance(getBaseContext());
 
             if(data.isDataComplete() && !data.isError())
                 return true;
