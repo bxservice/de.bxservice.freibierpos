@@ -82,7 +82,7 @@ public class PosTableGroupHelper extends PosObjectHelper {
     }
 
     /**
-     * Getting all orders
+     * Getting all table groups
      */
     public List<TableGroup> getAllTableGroups() {
         List<TableGroup> tableGroups = new ArrayList<>();

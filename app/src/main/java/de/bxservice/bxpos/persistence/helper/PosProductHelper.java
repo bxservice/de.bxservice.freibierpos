@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -75,6 +78,38 @@ public class PosProductHelper extends PosObjectHelper {
         // updating row
         return db.update(Tables.TABLE_PRODUCT, values, ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = ?",
                 new String[] { String.valueOf(product.getProductID()) });
+    }
+
+    /**
+     * Get products from a product category
+     * @param productCategory
+     * @return
+     */
+    public ArrayList<MProduct> getAllProducts(ProductCategory productCategory) {
+        ArrayList<MProduct> products = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " product " +
+                " WHERE product." + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID
+                + " = '" + productCategory.getProductCategoryID();
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                MProduct product = new MProduct();
+                product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
+                product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
+                product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
+
+                products.add(product);
+            } while (c.moveToNext());
+        }
+
+        return products;
     }
 
 }
