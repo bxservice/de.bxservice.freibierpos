@@ -3,6 +3,8 @@ package de.bxservice.bxpos.persistence;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.Serializable;
+
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
@@ -24,7 +26,7 @@ import de.bxservice.bxpos.persistence.helper.PosUserHelper;
  * This class is used to map the data into the database
  * Created by Diego Ruiz on 23/12/15.
  */
-public class DataMapper {
+public class DataMapper implements Serializable {
 
     static final String LOG_TAG = "Data Mapper";
 
