@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.ui.fragment.MainTableFragment;
 

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
