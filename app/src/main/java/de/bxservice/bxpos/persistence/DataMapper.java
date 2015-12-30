@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
