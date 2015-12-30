@@ -14,6 +14,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.ui.MainActivity;
@@ -33,6 +34,7 @@ public class MainTableFragment extends Fragment {
     private GridView grid;
     private GridTableViewAdapter mGridAdapter;
     private ArrayList<TableGridItem> mGridData;
+    private DataProvider dataProvider;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -59,7 +61,9 @@ public class MainTableFragment extends Fragment {
 
         grid = (GridView) rootView.findViewById(R.id.tableView);
 
-        List<TableGroup> tableGroupList = DataMediator.getInstance().getTableGroupList();
+        dataProvider = new DataProvider(getActivity().getBaseContext());
+
+        List<TableGroup> tableGroupList = dataProvider.getAllTableGroups();
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
         mGridData = new ArrayList<>();
