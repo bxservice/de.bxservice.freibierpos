@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.Serializable;
 
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.DataMapper;
 
@@ -37,6 +38,10 @@ public class PosOrderManagement implements ObjectManagement, Serializable {
     @Override
     public boolean remove(Object object) {
         return true;
+    }
+
+    public Table getTable(long id){
+        return dataMapper.getTable(id);
     }
 
 }

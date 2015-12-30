@@ -196,20 +196,10 @@ public class POSOrder implements Serializable {
      * @param tableId
      */
     public void setTable(long tableId) {
-        if(DataMediator.getInstance().getTableGroupList() != null) {
 
-            for(int i = 0; i < DataMediator.getInstance().getTableGroupList().size() ; i++ ) {
-
-                for (Table table : DataMediator.getInstance().getTableGroupList().get(i).getTables()) {
-                    if (table.getTableID() == tableId) {
-                        setTable(table);
-                        return;
-                    }
-                }
-
-            }
-        }
-
+        Table table = orderManager.getTable(tableId);
+        if (table != null)
+            setTable(table);
     }
 
     public String getStatus() {

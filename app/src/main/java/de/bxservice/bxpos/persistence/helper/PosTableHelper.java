@@ -51,11 +51,11 @@ public class PosTableHelper extends PosObjectHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE + " WHERE "
-                + TableContract.TableDB.COLUMN_NAME_TABLE_ID + " = " + table_id;
+                + TableContract.TableDB.COLUMN_NAME_TABLE_ID + " = ?";
 
         Log.e(LOG_TAG, selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table_id)});
 
         if (c != null)
             c.moveToFirst();
