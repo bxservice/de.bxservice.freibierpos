@@ -19,6 +19,9 @@ public class ProductCategory {
     private List<MProduct> products = new ArrayList<MProduct>();
     private PosProductCategoryManagement productCategoryManager;
 
+    public ProductCategory(){
+    }
+
     public ProductCategory(int id, String name){
         productCategoryID = id;
         this.name = name;
