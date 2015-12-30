@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -91,7 +92,7 @@ public class PosTableHelper extends PosObjectHelper {
     /**
      * Getting all orders
      */
-    public List<Table> getAllOrders() {
+    public List<Table> getAllTables() {
         List<Table> tables = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE;
 
@@ -103,7 +104,6 @@ public class PosTableHelper extends PosObjectHelper {
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
-
             do {
                 Table table = new Table();
                 table.setTableID(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_ID)));
@@ -113,6 +113,41 @@ public class PosTableHelper extends PosObjectHelper {
                 table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
 
                 // adding to orders list
+                tables.add(table);
+            } while (c.moveToNext());
+        }
+
+        return tables;
+    }
+
+    /**
+     * Getting all tables belonging to a group
+     * @param tableGroup
+     * @return
+     */
+    public ArrayList<Table> getAllTables(TableGroup tableGroup) {
+        ArrayList<Table> tables = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE + " table " +
+                " WHERE table." + TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID
+                + " = '" + tableGroup.getTableGroupID();
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosProductHelper productHelper = new PosProductHelper(mContext);
+            do {
+                Table table = new Table();
+                table.setTableID(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_ID)));
+                table.setBelongingGroup(tableGroup);
+                table.setStatus((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS))));
+                table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
+                table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
+
                 tables.add(table);
             } while (c.moveToNext());
         }
