@@ -15,7 +15,7 @@ import de.bxservice.bxpos.logic.model.idempiere.MProduct;
  * it has extra attributes that will not be sent to iDempiere
  * Created by Diego Ruiz on 25/11/15.
  */
-public class POSOrderLine implements Serializable{
+public class POSOrderLine implements Serializable {
 
     //Order Line status
     public static final String ORDERING    = "ORDERING";
