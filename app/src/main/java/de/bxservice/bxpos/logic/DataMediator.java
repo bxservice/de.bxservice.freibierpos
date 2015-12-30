@@ -61,7 +61,7 @@ public class DataMediator {
                 productPriceList = productPriceWS.getProductPriceList();
 
                 setProductRelations();
-
+                persistProductAttributes();
             }
         });
 
@@ -72,12 +72,12 @@ public class DataMediator {
             public void run() {
                 TableWebServiceAdapter tableWS = new TableWebServiceAdapter();
                 tableGroupList = tableWS.getTableGroupList();
+                persistTables();
             }
         });
 
         tableThread.run();
 
-        persistTables();
     }
 
     /**
@@ -90,6 +90,20 @@ public class DataMediator {
                 table.createTable(mContext);
             }
         }
+    }
+
+    /**
+     * Save product attributes in the database
+     */
+    public void persistProductAttributes() {
+        for(ProductCategory pc : productCategoryList)
+            pc.createProductCategory(mContext);
+
+        for(MProduct p : productList)
+            p.createProduct(mContext);
+
+        for(ProductPrice pp: productPriceList)
+            pp.createProductPrice(mContext);
     }
 
     public static synchronized DataMediator getInstance() {
