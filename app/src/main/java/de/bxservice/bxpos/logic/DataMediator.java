@@ -19,6 +19,7 @@ import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
+import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * Class in charge of work as the mediator between the data and the UI
@@ -90,7 +91,6 @@ public class DataMediator {
             }
         }
     }
-
 
     public static synchronized DataMediator getInstance() {
         if (instance == null) {

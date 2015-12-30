@@ -3,6 +3,7 @@ package de.bxservice.bxpos.persistence.helper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -109,6 +110,14 @@ public class PosTableGroupHelper extends PosObjectHelper {
         }
 
         return tableGroups;
+    }
+
+    /**
+     * getting total of rows in the table groups table
+     */
+    public long getTotalTableGroups() {
+        SQLiteDatabase db = getReadableDatabase();
+        return DatabaseUtils.queryNumEntries(db, Tables.TABLE_TABLE_GROUP);
     }
 
 }
