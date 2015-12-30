@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
@@ -278,6 +280,27 @@ public class DataMapper implements Serializable {
         Log.i(LOG_TAG, "order line updated");
         orderLineHelper.closeDB();
         return true;
+    }
+
+    public long getTotalTableGroups() {
+        PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
+
+        long numRows = tableGroupHelper.getTotalTableGroups();
+        if (tableGroupHelper.getTotalTableGroups() == -1) {
+            Log.e(LOG_TAG, "No group tables found");
+            tableGroupHelper.closeDB();
+            return 0;
+        }
+        Log.i(LOG_TAG, numRows + " table group found");
+        tableGroupHelper.closeDB();
+        return numRows;
+    }
+
+    public List<TableGroup> getAllTableGroups() {
+        PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
+        List<TableGroup> tableGroups = tableGroupHelper.getAllTableGroups();
+        tableGroupHelper.closeDB();
+        return tableGroups;
     }
 
 }

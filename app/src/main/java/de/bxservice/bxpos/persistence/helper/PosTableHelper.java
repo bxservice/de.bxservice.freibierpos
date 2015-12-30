@@ -128,14 +128,14 @@ public class PosTableHelper extends PosObjectHelper {
     public ArrayList<Table> getAllTables(TableGroup tableGroup) {
         ArrayList<Table> tables = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE + " table " +
-                " WHERE table." + TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID
-                + " = '" + tableGroup.getTableGroupID();
+        String selectQuery = "SELECT * FROM " + Tables.TABLE_TABLE +
+                " WHERE " + TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID
+                + " = ?";
 
         Log.e(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(tableGroup.getTableGroupID())});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {

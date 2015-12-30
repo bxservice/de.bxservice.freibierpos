@@ -1,9 +1,11 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.ui.fragment.MainTableFragment;
 
 /**
@@ -13,10 +15,13 @@ import de.bxservice.bxpos.ui.fragment.MainTableFragment;
  */
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    DataMediator dataProvider = DataMediator.getInstance();
+    private Context mContext;
+    DataProvider dataProvider;
 
-    public MainPagerAdapter(FragmentManager fm) {
+    public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        mContext = context;
+        dataProvider = new DataProvider(mContext);
     }
 
     @Override
@@ -28,12 +33,12 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return dataProvider.getTableGroupList().size();
+        return (int) dataProvider.getTotalTableGroups();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return dataProvider.getTableGroupList().get(position).getName();
+        return dataProvider.getAllTableGroups().get(position).getName();
     }
 
 }
