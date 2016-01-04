@@ -78,10 +78,8 @@ public class ProductPrice {
      * @param total
      */
     public void setStdPriceFromInt(Integer total) {
-        //TODO CHECK
-        setStdPrice(BigDecimal.valueOf(total / 100));
-        System.out.println(stdPrice);
-        //this.totallines = totallines;
+        double doubleValue = (double) total / 100;
+        setStdPrice(BigDecimal.valueOf(doubleValue));
     }
 
     public boolean createProductPrice(Context ctx) {

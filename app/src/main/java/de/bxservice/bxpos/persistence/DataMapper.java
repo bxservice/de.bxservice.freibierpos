@@ -328,4 +328,11 @@ public class DataMapper implements Serializable {
         return productCategories;
     }
 
+    public ProductPrice getProductPriceByProduct(MProduct product) {
+        PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
+        ProductPrice productPrice = productPriceHelper.getProductPriceByProduct(product);
+        productPriceHelper.closeDB();
+        return productPrice;
+    }
+
 }
