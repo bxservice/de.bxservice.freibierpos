@@ -116,11 +116,9 @@ public class DataMapper implements Serializable {
         }
         else {
             Log.e(LOG_TAG, "Cannot create order");
-            orderHelper.closeDB();
             return false;
         }
 
-        orderHelper.closeDB();
         return true;
     }
 

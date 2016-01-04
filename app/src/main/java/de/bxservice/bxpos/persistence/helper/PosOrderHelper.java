@@ -47,6 +47,8 @@ public class PosOrderHelper extends PosObjectHelper {
         // insert row
         long orderId = database.insert(Tables.TABLE_POSORDER, null, values);
 
+        order.setOrderId(orderId);
+
         return orderId;
     }
 

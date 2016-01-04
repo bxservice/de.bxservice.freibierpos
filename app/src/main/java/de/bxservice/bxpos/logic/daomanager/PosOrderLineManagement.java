@@ -27,7 +27,7 @@ public class PosOrderLineManagement implements ObjectManagement, Serializable {
 
     @Override
     public boolean create(Object object) {
-        return true;
+        return dataMapper.save(object);
     }
 
     @Override

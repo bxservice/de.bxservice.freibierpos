@@ -50,7 +50,7 @@ public class POSOrder implements Serializable {
     private String status;
     private BigDecimal totallines = BigDecimal.ZERO;
 
-    public void addItem(MProduct product) {
+    public void addItem(MProduct product, Context ctx) {
 
         boolean newItem = true;
 
@@ -59,10 +59,11 @@ public class POSOrder implements Serializable {
             //Check if the product was ordered before
             if (!orderlineProductHashMap.isEmpty()) {
 
-                POSOrderLine POSOrderLine = orderlineProductHashMap.get(product);
-                if(POSOrderLine != null){
-                    POSOrderLine.setQtyOrdered(POSOrderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
+                POSOrderLine orderLine = orderlineProductHashMap.get(product);
+                if(orderLine != null){
+                    orderLine.setQtyOrdered(orderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
                     newItem = false;
+                    orderLine.createLine(ctx);
                 }
 
             }
@@ -78,6 +79,7 @@ public class POSOrder implements Serializable {
             posOrderLine.setLineNo(currentLineNo);
 
             orderLines.add(posOrderLine);
+            posOrderLine.createLine(ctx);
 
             if(isAlwaysOneLine) {
 
@@ -220,7 +222,7 @@ public class POSOrder implements Serializable {
     public void recreateOrderLines(ArrayList<POSOrderLine> newOrderLines) {
         clearOrderLines();
         for (POSOrderLine orderLine: newOrderLines) {
-            addItem(orderLine.getProduct());
+            addItem(orderLine.getProduct(), null);
         }
     }
 
@@ -298,6 +300,11 @@ public class POSOrder implements Serializable {
 
         return result;
 
+    }
+
+    public boolean createOrder (Context ctx) {
+        orderManager = new PosOrderManagement(ctx);
+        return orderManager.create(this);
     }
 
     public boolean updateOrder (Context ctx) {
