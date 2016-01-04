@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
@@ -38,8 +37,6 @@ public class MainActivity extends AppCompatActivity
     private int numberOfGuests = 0;
     private Table selectedTable = null;
 
-    DataMediator dataProvider;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +44,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
-        dataProvider = DataMediator.getInstance();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
