@@ -95,14 +95,14 @@ public class DataMediator {
      * Save product attributes in the database
      */
     public void persistProductAttributes() {
-        for(ProductCategory pc : productCategoryList)
-            pc.createProductCategory(mContext);
+        for(ProductCategory productCategory : productCategoryList)
+            productCategory.createProductCategory(mContext);
 
-        for(MProduct p : productList)
-            p.createProduct(mContext);
+        for(MProduct product : productList)
+            product.createProduct(mContext);
 
-        for(ProductPrice pp: productPriceList)
-            pp.createProductPrice(mContext);
+        for(ProductPrice productPrice : productPriceList)
+            productPrice.createProductPrice(mContext);
     }
 
     public static synchronized DataMediator getInstance() {
@@ -119,10 +119,6 @@ public class DataMediator {
         }
 
         return instance;
-    }
-
-    public List<MProduct> getProductList() {
-        return productList;
     }
 
     public boolean isError() {
@@ -147,9 +143,6 @@ public class DataMediator {
      * Set the relation between product category and its respective products
      */
     private void setProductRelations(){
-
-        if(productList!= null)
-            Collections.sort(productList, new ProductComparator());
 
         //Relation between product category and product
         if(productCategoryList != null && !productCategoryList.isEmpty() &&
@@ -197,12 +190,4 @@ public class DataMediator {
         }
 
     }
-
-    public class ProductComparator implements Comparator<MProduct> {
-        @Override
-        public int compare(MProduct o1, MProduct o2) {
-            return o1.getProductName().compareTo(o2.getProductName());
-        }
-    }
-
 }
