@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
-import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataReader;
 import de.bxservice.bxpos.logic.daomanager.PosOrderLineManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 
@@ -113,7 +113,7 @@ public class POSOrderLine implements Serializable {
 
     public String getLineTotalAmt() {
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataReader.LOCALE);
         return currencyFormat.format(getLineNetAmt());
     }
 

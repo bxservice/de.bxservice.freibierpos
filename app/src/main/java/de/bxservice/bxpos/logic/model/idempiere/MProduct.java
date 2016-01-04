@@ -5,7 +5,6 @@ import android.content.Context;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
 
 /**
