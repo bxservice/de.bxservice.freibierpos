@@ -119,7 +119,8 @@ public class PosProductHelper extends PosObjectHelper {
     public ArrayList<MProduct> getAllProducts() {
         ArrayList<MProduct> products = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT;
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT +
+                " ORDER BY " + ProductContract.ProductDB.COLUMN_NAME_NAME;
 
         Log.e(LOG_TAG, selectQuery);
 
