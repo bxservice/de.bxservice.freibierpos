@@ -46,7 +46,7 @@ public class MProduct implements Serializable {
     }
 
     public BigDecimal getProductPriceValue() {
-        ProductPrice productPrice = DataMediator.getInstance().getProductPriceHashMap().get(productID);
+        ProductPrice productPrice = getProductPrice(null);
         return productPrice.getStdPrice();
     }
 
