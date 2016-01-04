@@ -414,9 +414,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             posOrder.setOrderRemark(getRemarkNote());
             posOrder.setTable(selectedTable);
             posOrder.setStatus(POSOrder.DRAFT_STATUS);
+            posOrder.createOrder(getBaseContext());
         }
 
-        posOrder.addItem(product);
+        posOrder.addItem(product, getBaseContext());
     }
 
     public void updateDraftOrder() {
