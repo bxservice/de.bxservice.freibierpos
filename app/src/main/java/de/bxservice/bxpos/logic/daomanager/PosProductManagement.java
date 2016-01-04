@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.Serializable;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
@@ -37,5 +38,9 @@ public class PosProductManagement implements ObjectManagement, Serializable {
     @Override
     public boolean remove(Object object) {
         return true;
+    }
+
+    public ProductPrice getProductPrice(MProduct product) {
+        return dataMapper.getProductPriceByProduct(product);
     }
 }

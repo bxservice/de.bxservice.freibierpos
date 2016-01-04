@@ -19,7 +19,6 @@ import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
-import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * Class in charge of work as the mediator between the data and the UI
@@ -122,16 +121,8 @@ public class DataMediator {
         return instance;
     }
 
-    public List<ProductCategory> getProductCategoryList() {
-        return productCategoryList;
-    }
-
     public List<MProduct> getProductList() {
         return productList;
-    }
-
-    public List<ProductPrice> getProductPriceList() {
-        return productPriceList;
     }
 
     public boolean isError() {

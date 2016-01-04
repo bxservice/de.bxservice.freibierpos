@@ -46,9 +46,14 @@ public class MProduct implements Serializable {
         this.productCategoryId = productCategoryId;
     }
 
-    public BigDecimal getProductPrice() {
+    public BigDecimal getProductPriceValue() {
         ProductPrice productPrice = DataMediator.getInstance().getProductPriceHashMap().get(productID);
         return productPrice.getStdPrice();
+    }
+
+    public ProductPrice getProductPrice(Context ctx) {
+        productManager = new PosProductManagement(ctx);
+        return productManager.getProductPrice(this);
     }
 
     /**
