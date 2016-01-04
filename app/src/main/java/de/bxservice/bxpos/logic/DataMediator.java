@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +36,6 @@ public class DataMediator {
     private List<TableGroup> tableGroupList = new ArrayList<>();
     private List<MProduct> productList = new ArrayList<>();
     private List<ProductPrice> productPriceList = new ArrayList<>();
-    private HashMap<Integer, ProductPrice> productPriceHashMap = new HashMap<>();
     private boolean error = false;
     private Context mContext;
 
@@ -135,10 +132,6 @@ public class DataMediator {
         return false;
     }
 
-    public HashMap<Integer, ProductPrice> getProductPriceHashMap() {
-        return productPriceHashMap;
-    }
-
     /**
      * Set the relation between product category and its respective products
      */
@@ -179,7 +172,6 @@ public class DataMediator {
                     productId = product.getProductID();
                     if(priceProductId == productId) {
                         productPrice.setProduct(product);
-                        productPriceHashMap.put(product.getProductID(),productPrice);
                     }
                 }
             }
