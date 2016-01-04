@@ -112,4 +112,33 @@ public class PosProductHelper extends PosObjectHelper {
         return products;
     }
 
+    /**
+     * Get all products
+     * @return
+     */
+    public ArrayList<MProduct> getAllProducts() {
+        ArrayList<MProduct> products = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT;
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                MProduct product = new MProduct();
+                product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
+                product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
+                product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
+
+                products.add(product);
+            } while (c.moveToNext());
+        }
+
+        return products;
+    }
+
 }

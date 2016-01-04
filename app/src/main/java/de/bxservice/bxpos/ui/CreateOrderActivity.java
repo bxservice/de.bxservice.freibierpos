@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
@@ -63,6 +63,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     private PagerSlidingTabStrip tabs;
     private View mTabFormView;
+    private DataProvider dataProvider;
 
     //RecyclerView attributes for search functionality
     private RecyclerView recyclerView;
@@ -171,14 +172,16 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void initSearchListItems() {
 
         ProductPrice productPrice;
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+
+        dataProvider = new DataProvider(getBaseContext());
 
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
 
-        for(MProduct product : DataMediator.getInstance().getProductList()) {
+        for(MProduct product : dataProvider.getAllProducts()) {
             gridItem = new NewOrderGridItem();
-            productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProductID());
+            productPrice = product.getProductPrice(getBaseContext());
 
             gridItem.setName(product.getProductName());
             gridItem.setPrice(currencyFormat.format(productPrice.getStdPrice()));
