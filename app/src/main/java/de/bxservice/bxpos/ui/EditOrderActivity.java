@@ -23,7 +23,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
-import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
@@ -362,7 +362,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             }
         }
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
         totalString.append(currencyFormat.format(total));
 
         return totalString.toString();
