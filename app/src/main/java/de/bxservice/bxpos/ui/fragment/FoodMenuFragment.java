@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
@@ -38,6 +38,7 @@ public class FoodMenuFragment extends Fragment {
     private GridOrderViewAdapter mGridAdapter;
     private List<ProductCategory> productCategoryList;
     private HashMap<NewOrderGridItem, MProduct> itemProductHashMap;
+    private DataProvider dataProvider;
 
     public ArrayList<NewOrderGridItem> getmGridData() {
         return mGridData;
@@ -68,23 +69,25 @@ public class FoodMenuFragment extends Fragment {
 
         grid = (GridView) rootView.findViewById(R.id.create_order_gridview);
 
-        productCategoryList = DataMediator.getInstance().getProductCategoryList();
+        dataProvider = new DataProvider(getActivity().getBaseContext());
 
-        ProductCategory pc = productCategoryList.get(sectionNumber);
+        productCategoryList = dataProvider.getAllCategories();
+
+        ProductCategory productCategory = productCategoryList.get(sectionNumber);
 
         mGridData = new ArrayList<>();
-        itemProductHashMap = new HashMap<NewOrderGridItem, MProduct>();
+        itemProductHashMap = new HashMap<>();
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataMediator.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         NewOrderGridItem item;
         ProductPrice productPrice;
         int qtyOrdered;
-        for(MProduct product : pc.getProducts()) {
+        for(MProduct product : productCategory.getProducts()) {
             item = new NewOrderGridItem();
             item.setName(product.getProductName());
 
-            productPrice = DataMediator.getInstance().getProductPriceHashMap().get(product.getProductID());
+            productPrice = dataProvider.getProductPrice(product);
             item.setPrice(currencyFormat.format(productPrice.getStdPrice()));
 
             //When you navigate through the tabs it paints again everything - this lets the number stay

@@ -3,8 +3,11 @@ package de.bxservice.bxpos.logic;
 import android.content.Context;
 
 import java.util.List;
+import java.util.Locale;
 
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
+import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.persistence.DataMapper;
 
@@ -17,6 +20,7 @@ public class DataProvider {
 
     private DataMapper dataMapper;
     private Context mContext;
+    public static final Locale LOCALE = Locale.GERMANY;
 
     public DataProvider(Context ctx) {
         mContext = ctx;
@@ -37,5 +41,9 @@ public class DataProvider {
 
     public List<ProductCategory> getAllCategories() {
         return dataMapper.getAllCategories();
+    }
+
+    public ProductPrice getProductPrice(MProduct product) {
+        return dataMapper.getProductPriceByProduct(product);
     }
 }
