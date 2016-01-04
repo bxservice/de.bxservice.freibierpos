@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,18 +18,17 @@ import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
 
 /**
- * Class in charge of work as the mediator between the data and the UI
- * it uses a singleton pattern to create the instance to secure that
- * the same object is references across the app
+ * Class that reads from iDempiere the data and call the necessary methods
+ * to persist it in the database
  * Created by Diego Ruiz on 6/11/15.
  */
-public class DataMediator {
+public class DataReader {
 
     static final String LOG_TAG = "Data Mediator";
 
     public static final Locale LOCALE = Locale.GERMANY;
 
-    private static volatile DataMediator instance = null;
+    private static volatile DataReader instance = null;
 
     private List<ProductCategory> productCategoryList = new ArrayList<>();
     private List<TableGroup> tableGroupList = new ArrayList<>();
@@ -40,7 +38,7 @@ public class DataMediator {
     private Context mContext;
 
 
-    private DataMediator(Context ctx) {
+    private DataReader(Context ctx) {
 
         mContext = ctx;
 
@@ -102,17 +100,9 @@ public class DataMediator {
             productPrice.createProductPrice(mContext);
     }
 
-    public static synchronized DataMediator getInstance() {
+    public static synchronized DataReader getInstance(Context ctx) {
         if (instance == null) {
-            instance = new DataMediator(null);
-        }
-
-        return instance;
-    }
-
-    public static synchronized DataMediator getInstance(Context ctx) {
-        if (instance == null) {
-            instance = new DataMediator(ctx);
+            instance = new DataReader(ctx);
         }
 
         return instance;

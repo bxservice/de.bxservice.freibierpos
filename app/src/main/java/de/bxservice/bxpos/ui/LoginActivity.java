@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataMediator;
+import de.bxservice.bxpos.logic.DataReader;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
@@ -338,7 +338,7 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Context... contexts) {
 
-            DataMediator data = DataMediator.getInstance(getBaseContext());
+            DataReader data = DataReader.getInstance(getBaseContext());
 
             if(data.isDataComplete() && !data.isError())
                 return true;
