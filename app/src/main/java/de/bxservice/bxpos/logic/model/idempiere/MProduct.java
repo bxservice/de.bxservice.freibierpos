@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 import de.bxservice.bxpos.logic.DataMediator;
 import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
-import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 
 /**
  * This is the product that is read from iDempiere

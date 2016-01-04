@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 import java.util.Locale;
 
+import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.persistence.DataMapper;
@@ -39,5 +40,9 @@ public class DataProvider {
 
     public List<ProductCategory> getAllCategories() {
         return dataMapper.getAllCategories();
+    }
+
+    public List<MProduct> getAllProducts() {
+        return dataMapper.getAllProducts();
     }
 }
