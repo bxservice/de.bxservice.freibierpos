@@ -516,6 +516,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 updateDraftOrder();
 
             }
+            //Everything ok - the order was created and the create Activity should be closed
+            if (resultCode == 2) {
+                finish();
+            }
         }
     }
 

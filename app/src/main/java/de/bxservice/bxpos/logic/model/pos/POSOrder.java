@@ -287,7 +287,7 @@ public class POSOrder implements Serializable {
 
         completeOrder();
 
-        result = orderManager.create(this);
+        result = orderManager.update(this);
 
         if(!result)
             uncompleteOrder();
@@ -314,6 +314,7 @@ public class POSOrder implements Serializable {
         setStatus(SENT_STATUS);
         for (POSOrderLine orderLine : getOrderLines()) {
             orderLine.completeLine();
+            orderLine.updateLine(null);
         }
     }
 
@@ -321,6 +322,7 @@ public class POSOrder implements Serializable {
         setStatus(DRAFT_STATUS);
         for (POSOrderLine orderLine : getOrderLines()) {
             orderLine.uncompleteLine();
+            orderLine.updateLine(null);
         }
     }
 
