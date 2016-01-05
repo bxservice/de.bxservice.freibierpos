@@ -518,6 +518,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             }
             //Everything ok - the order was created and the create Activity should be closed
             if (resultCode == 2) {
+                setResult(RESULT_OK);
                 finish();
             }
         }

@@ -29,6 +29,7 @@ import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
 
+    static final int NEW_ORDER_REQUEST = 1;  // The request code
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
 
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
         intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
 
-        startActivity(intent);
+        startActivityForResult(intent, NEW_ORDER_REQUEST);
     }
 
     /**
@@ -196,4 +197,15 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         PosObjectHelper.closeDB(getBaseContext());
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == NEW_ORDER_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                this.recreate();
+            }
+        }
+    }
+
 }
