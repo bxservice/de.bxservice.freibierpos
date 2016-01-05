@@ -121,7 +121,7 @@ public class POSOrder implements Serializable {
         }
 
         orderLines.remove(position);
-
+        orderLine.remove(null);
     }
 
     /**

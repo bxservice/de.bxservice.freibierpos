@@ -37,7 +37,7 @@ public class PosOrderLineManagement implements ObjectManagement, Serializable {
 
     @Override
     public boolean remove(Object object) {
-        return true;
+        return dataMapper.remove(object);
     }
 
 }

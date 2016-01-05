@@ -176,4 +176,9 @@ public class POSOrderLine implements Serializable {
         lineManager = new PosOrderLineManagement(ctx);
         return lineManager.create(this);
     }
+
+    public boolean remove(Context ctx) {
+        lineManager = new PosOrderLineManagement(ctx);
+        return lineManager.remove(this);
+    }
 }
