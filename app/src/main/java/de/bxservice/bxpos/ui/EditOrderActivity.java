@@ -90,8 +90,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             @Override
             public void onClick(View view) {
                 if (order.sendOrder(getApplicationContext())) {
-                    Snackbar.make(mainView, "Order created", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    /*Snackbar.make(mainView, "Order created", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();*/
+                    addNewItemsOnBack = false;
+                    finish();
                 }
                 else
                     Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
@@ -394,14 +396,17 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     @Override
     public void finish() {
         //When new items want to be added - persist the changes in guests and notes
-        if (caller.equals("CreateOrderActivity") && addNewItemsOnBack) {
+        if (caller.equals("CreateOrderActivity")) {
 
-            Intent data = new Intent();
-            data.putExtra("remark",order.getOrderRemark());
-            data.putExtra("guests", order.getGuestNumber());
-            data.putExtra("orderLines", order.getOrderLines());
-            setResult(RESULT_OK, data);
-
+            if(addNewItemsOnBack) {
+                Intent data = new Intent();
+                data.putExtra("remark",order.getOrderRemark());
+                data.putExtra("guests", order.getGuestNumber());
+                data.putExtra("orderLines", order.getOrderLines());
+                setResult(RESULT_OK, data);
+            } else {
+                setResult(2); //Everything ok - the order was created and the create Activity should be closed
+            }
         }
         super.finish();
     }
