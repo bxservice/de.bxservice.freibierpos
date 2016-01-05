@@ -154,10 +154,13 @@ public class DataMapper implements Serializable {
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
 
-        if (orderLineHelper.createOrderLine(orderLine) == -1) {
+        long orderLineId = orderLineHelper.createOrderLine(orderLine);
+
+        if (orderLineId == -1) {
             Log.e(LOG_TAG, "Cannot create order line");
             return false;
         }
+        orderLine.setOrderLineId((int) orderLineId);
         Log.i(LOG_TAG, "order line created");
         return true;
     }
@@ -343,8 +346,7 @@ public class DataMapper implements Serializable {
 
         if (orderHelper.deleteOrder(order) != -1) {
             Log.i(LOG_TAG, "order deleted " + order.getOrderId());
-        }
-        else {
+        } else {
             Log.e(LOG_TAG, "Cannot delete order");
             return false;
         }

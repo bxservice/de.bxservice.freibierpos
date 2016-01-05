@@ -431,6 +431,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 posOrder.setGuestNumber(numberOfGuests);
             }
 
+            posOrder.updateOrder(getBaseContext());
         }
 
     }
