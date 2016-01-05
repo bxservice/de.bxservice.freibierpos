@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 
@@ -187,4 +188,12 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    /**
+     * On destroy closes the db connection
+     */
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        PosObjectHelper.closeDB(getBaseContext());
+    }
 }

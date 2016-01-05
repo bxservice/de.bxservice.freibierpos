@@ -30,8 +30,8 @@ public abstract class PosObjectHelper {
     }
 
     // closing database
-    public void closeDB() {
-        /*PosDatabaseHelper.getInstance(mContext).closeDB();*/
+    public static void closeDB(Context mContext) {
+        PosDatabaseHelper.getInstance(mContext).closeDB();
     }
 
 }

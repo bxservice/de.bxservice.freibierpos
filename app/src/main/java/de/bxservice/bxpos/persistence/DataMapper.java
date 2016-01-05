@@ -128,11 +128,9 @@ public class DataMapper implements Serializable {
 
         if (orderLineHelper.createOrderLine(orderLine) == -1) {
             Log.e(LOG_TAG, "Cannot create order line");
-            orderLineHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, "order line created");
-        orderLineHelper.closeDB();
         return true;
     }
 
@@ -142,11 +140,9 @@ public class DataMapper implements Serializable {
 
         if (posUserHelper.createUser(user) == -1) {
             Log.e(LOG_TAG, "Cannot create user " + user.getUsername());
-            posUserHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, user.getUsername() + " created");
-        posUserHelper.closeDB();
         return true;
     }
 
@@ -156,11 +152,9 @@ public class DataMapper implements Serializable {
 
         if (tableHelper.createTable(table) == -1) {
             Log.e(LOG_TAG, "Cannot create table " + table.getTableName());
-            tableHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, table.getTableName() + " created");
-        tableHelper.closeDB();
         return true;
     }
 
@@ -170,11 +164,9 @@ public class DataMapper implements Serializable {
 
         if (tableGroupHelper.createTableGroup(tableGroup) == -1) {
             Log.e(LOG_TAG, "Cannot create table group " + tableGroup.getName());
-            tableGroupHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, tableGroup.getName() + " created");
-        tableGroupHelper.closeDB();
         return true;
     }
 
@@ -184,11 +176,9 @@ public class DataMapper implements Serializable {
 
         if (productCategoryHelper.createProductCategory(productCategory) == -1) {
             Log.e(LOG_TAG, "Cannot create category " + productCategory.getName());
-            productCategoryHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, productCategory.getName() + " created");
-        productCategoryHelper.closeDB();
         return true;
     }
 
@@ -198,11 +188,9 @@ public class DataMapper implements Serializable {
 
         if (productPriceHelper.createProductPrice(productPrice) == -1) {
             Log.e(LOG_TAG, "Cannot create price for " + productPrice.getProduct().getProductName());
-            productPriceHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, productPrice.getProduct().getProductName() + " price created");
-        productPriceHelper.closeDB();
         return true;
     }
 
@@ -212,11 +200,9 @@ public class DataMapper implements Serializable {
 
         if (productHelper.createProduct(product) == -1) {
             Log.e(LOG_TAG, "Cannot create product " + product.getProductName());
-            productHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, product.getProductName() + " created");
-        productHelper.closeDB();
         return true;
     }
 
@@ -226,11 +212,9 @@ public class DataMapper implements Serializable {
 
         if (tableHelper.updateTable(table) == -1) {
             Log.e(LOG_TAG, "Cannot update " + table.getTableName());
-            tableHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, table.getTableName() + " updated");
-        tableHelper.closeDB();
         return true;
     }
 
@@ -243,11 +227,9 @@ public class DataMapper implements Serializable {
         }
         else {
             Log.e(LOG_TAG, "Cannot update order");
-            orderHelper.closeDB();
             return false;
         }
 
-        orderHelper.closeDB();
         return true;
     }
 
@@ -257,11 +239,9 @@ public class DataMapper implements Serializable {
 
         if (posUserHelper.updateUser(user) == -1) {
             Log.e(LOG_TAG, "Cannot update user " + user.getUsername());
-            posUserHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, user.getUsername() + " updated");
-        posUserHelper.closeDB();
         return true;
     }
 
@@ -271,11 +251,9 @@ public class DataMapper implements Serializable {
 
         if (orderLineHelper.updateOrderLine(orderLine) == -1) {
             Log.e(LOG_TAG, "Cannot update order line");
-            orderLineHelper.closeDB();
             return false;
         }
         Log.i(LOG_TAG, "order line updated");
-        orderLineHelper.closeDB();
         return true;
     }
 
@@ -285,18 +263,15 @@ public class DataMapper implements Serializable {
         long numRows = tableGroupHelper.getTotalTableGroups();
         if (numRows == -1) {
             Log.e(LOG_TAG, "No group tables found");
-            tableGroupHelper.closeDB();
             return 0;
         }
         Log.i(LOG_TAG, numRows + " table group found");
-        tableGroupHelper.closeDB();
         return numRows;
     }
 
     public List<TableGroup> getAllTableGroups() {
         PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
         List<TableGroup> tableGroups = tableGroupHelper.getAllTableGroups();
-        tableGroupHelper.closeDB();
         return tableGroups;
     }
 
@@ -311,32 +286,27 @@ public class DataMapper implements Serializable {
         long numRows = productCategoryHelper.getTotalCategories();
         if (numRows == -1) {
             Log.e(LOG_TAG, "No product categories found");
-            productCategoryHelper.closeDB();
             return 0;
         }
         Log.i(LOG_TAG, numRows + " product categories found");
-        productCategoryHelper.closeDB();
         return numRows;
     }
 
     public List<ProductCategory> getAllCategories() {
         PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
         List<ProductCategory> productCategories = productCategoryHelper.getAllProductCategories();
-        productCategoryHelper.closeDB();
         return productCategories;
     }
 
     public List<MProduct> getAllProducts() {
         PosProductHelper productHelper = new PosProductHelper(mContext);
         List<MProduct> products = productHelper.getAllProducts();
-        productHelper.closeDB();
         return products;
     }
 
     public ProductPrice getProductPriceByProduct(MProduct product) {
         PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
         ProductPrice productPrice = productPriceHelper.getProductPriceByProduct(product);
-        productPriceHelper.closeDB();
         return productPrice;
     }
 
