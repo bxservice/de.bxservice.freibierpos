@@ -461,7 +461,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                     .setPositiveButton(R.string.discard, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            CreateOrderActivity.super.onBackPressed();
+                            if(posOrder.remove(getBaseContext()))
+                                CreateOrderActivity.super.onBackPressed();
                         }
                     }).create().show();
         }

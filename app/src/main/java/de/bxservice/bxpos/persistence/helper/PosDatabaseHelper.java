@@ -26,7 +26,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -111,7 +111,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT + " TEXT" +
                     ", " +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " INTEGER REFERENCES "
-                        + Tables.TABLE_POSORDER + "(" + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + ") " +  //FK to the order
+                        + Tables.TABLE_POSORDER + "(" + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + ") ON DELETE CASCADE" +  //FK to the order
                     ", " +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID + " INTEGER REFERENCES "
                     + Tables.TABLE_PRODUCT + "(" + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + ") " +  //FK to the product

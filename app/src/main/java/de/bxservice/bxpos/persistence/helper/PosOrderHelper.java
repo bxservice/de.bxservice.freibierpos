@@ -132,4 +132,10 @@ public class PosOrderHelper extends PosObjectHelper {
 
         return orders;
     }
+
+    public int deleteOrder(POSOrder order) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        return db.delete(Tables.TABLE_POSORDER, PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " = ?", new String[] { String.valueOf(order.getOrderId()) });
+    }
 }
