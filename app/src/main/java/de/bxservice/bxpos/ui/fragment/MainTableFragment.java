@@ -72,10 +72,6 @@ public class MainTableFragment extends Fragment {
         for (Table table : tableGroup.getTables()) {
             item = new TableGridItem();
             item.setTitle(table.getTableName());
-            if( i%2 == 0)
-                table.setStatus(Table.FREE_STATUS);
-            else
-                table.setStatus(Table.BUSY_STATUS);
             item.setTable(table);
             i++;
             //item.setImage(R.drawable.ic_local_dining_white_24dp);

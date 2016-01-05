@@ -139,7 +139,6 @@ public class PosTableHelper extends PosObjectHelper {
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
-            PosProductHelper productHelper = new PosProductHelper(mContext);
             do {
                 Table table = new Table();
                 table.setTableID(c.getInt(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_ID)));
