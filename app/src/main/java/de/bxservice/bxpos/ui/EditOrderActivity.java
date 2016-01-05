@@ -200,6 +200,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         // User touched the dialog's positive button
         int guests = dialog.getNumberOfGuests();
         order.setGuestNumber(guests);
+        order.updateOrder(getBaseContext());
     }
 
     /**
@@ -211,6 +212,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         // User touched the dialog's positive button
         String note = dialog.getNote();
         order.setOrderRemark(note);
+        order.updateOrder(getBaseContext());
     }
 
     /**

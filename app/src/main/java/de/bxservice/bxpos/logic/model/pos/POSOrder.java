@@ -276,9 +276,7 @@ public class POSOrder implements Serializable {
      * @param total
      */
     public void setTotalFromInt(Integer total) {
-        //TODO
         setTotallines(BigDecimal.valueOf(total / 100));
-        System.out.println(totallines);
         //this.totallines = totallines;
     }
 
