@@ -326,4 +326,9 @@ public class POSOrder implements Serializable {
         }
     }
 
+    public boolean remove(Context ctx) {
+        orderManager = new PosOrderManagement(ctx);
+        return orderManager.remove(this);
+    }
+
 }

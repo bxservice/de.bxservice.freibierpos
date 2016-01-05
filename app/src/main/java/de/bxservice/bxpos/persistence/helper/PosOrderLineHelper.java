@@ -135,4 +135,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
         return lines;
     }
 
+    public int deleteOrderLine(POSOrderLine orderLine)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(Tables.TABLE_POSORDER_LINE, PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?", new String[] { String.valueOf(orderLine.getOrderLineId()) });
+    }
+
 }

@@ -94,6 +94,34 @@ public class DataMapper implements Serializable {
         return success;
     }
 
+    /**
+     * Generic method that receives all the requests to save data
+     * and manage it to redirect it to the corresponding method
+     * @param object
+     * @return
+     */
+    public boolean remove(Object object) {
+
+        /*if(object instanceof PosUser)
+            success = createPosUser((PosUser) object);*/
+        if(object instanceof POSOrder)
+            success = removePosOrder((POSOrder) object);
+        if(object instanceof POSOrderLine)
+            success = removePosOrderLine((POSOrderLine) object);
+        /*if(object instanceof Table)
+            success = createTable((Table) object);
+        if(object instanceof TableGroup)
+            success = createTableGroup((TableGroup) object);
+        if(object instanceof ProductCategory)
+            success = createProductCategory((ProductCategory) object);
+        if(object instanceof ProductPrice)
+            success = createProductPrice((ProductPrice) object);
+        if(object instanceof MProduct)
+            success = createProduct((MProduct) object);*/
+
+        return success;
+    }
+
 
     public PosUser getUser(long id) {
         PosUserHelper posUserHelper = new PosUserHelper(mContext);
@@ -308,6 +336,31 @@ public class DataMapper implements Serializable {
         PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
         ProductPrice productPrice = productPriceHelper.getProductPriceByProduct(product);
         return productPrice;
+    }
+
+    private boolean removePosOrder(POSOrder order) {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+
+        if (orderHelper.deleteOrder(order) != -1) {
+            Log.i(LOG_TAG, "order deleted " + order.getOrderId());
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot delete order");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean removePosOrderLine(POSOrderLine orderLine) {
+
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+
+        if (orderLineHelper.deleteOrderLine(orderLine) == -1) {
+            Log.e(LOG_TAG, "Cannot delete order line");
+            return false;
+        }
+        Log.i(LOG_TAG, "order line deleted " + orderLine.getOrderLineId());
+        return true;
     }
 
 }
