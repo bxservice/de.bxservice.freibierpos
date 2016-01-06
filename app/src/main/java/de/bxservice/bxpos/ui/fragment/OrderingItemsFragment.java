@@ -85,13 +85,23 @@ public class OrderingItemsFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
 
         mRecyclerView.addOnItemTouchListener(
-                new RecyclerOrderingItemsListener(getActivity().getBaseContext(), new RecyclerOrderingItemsListener.OnItemClickListener() {
+                new RecyclerOrderingItemsListener(getActivity().getBaseContext(), mRecyclerView, new RecyclerOrderingItemsListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         // TODO Handle item click
                         POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
 
                         System.out.println("clicked" + selectedItem.getProduct().getProductName());
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position)
+                    {
+
+                        POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
+
+                        System.out.println("Long clicked" + selectedItem.getProduct().getProductName());
+
                     }
                 })
         );
