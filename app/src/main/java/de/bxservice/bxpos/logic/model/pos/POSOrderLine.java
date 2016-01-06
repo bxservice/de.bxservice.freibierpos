@@ -101,10 +101,8 @@ public class POSOrderLine implements Serializable {
      * @param total
      */
     public void setLineTotalFromInt(Integer total) {
-        //TODO
-        setLineNetAmt(BigDecimal.valueOf(total / 100));
-        System.out.println(lineNetAmt);
-        //this.totallines = totallines;
+        double doubleValue = (double) total / 100;
+        setLineNetAmt(BigDecimal.valueOf(doubleValue));
     }
 
     public void setLineNetAmt(BigDecimal lineNetAmt) {
