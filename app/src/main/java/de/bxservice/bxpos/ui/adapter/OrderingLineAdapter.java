@@ -3,6 +3,7 @@ package de.bxservice.bxpos.ui.adapter;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,9 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
         @Override
         public void onItemClear() {
-            itemView.setBackgroundColor(Color.WHITE);
+            TypedValue outValue = new TypedValue();
+            itemView.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            itemView.setBackgroundResource(outValue.resourceId);
         }
     }
 
