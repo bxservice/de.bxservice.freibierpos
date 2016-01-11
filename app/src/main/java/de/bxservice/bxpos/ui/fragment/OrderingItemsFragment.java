@@ -99,7 +99,7 @@ public class OrderingItemsFragment extends Fragment {
                     {
                         //TODO Handle Long click item
                         POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
-
+                        ((EditOrderActivity) getActivity()).onLongPressed();
                         System.out.println("Long clicked" + selectedItem.getProduct().getProductName());
 
                     }

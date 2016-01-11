@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.FragmentPagerAdapter;
@@ -61,6 +62,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private boolean addNewItemsOnBack = false;
     private boolean orderSent = false;
 
+    private ActionMode mActionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -408,6 +410,50 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             setResult(2); //Everything ok - the order was created and the create Activity should be closed
 
         super.finish();
+    }
+
+    public void onLongPressed(){
+        mActionMode = EditOrderActivity.this.startSupportActionMode(new ActionBarCallBack());
+
+    }
+
+    class ActionBarCallBack implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // TODO Auto-generated method stub
+            mode.getMenuInflater().inflate(R.menu.contextual_ordering_menu, menu);
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.ctx_item_delete:
+                    //shareCurrentItem();
+                    System.out.println("Clicked delete");
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // TODO Auto-generated method stub
+
+            mode.setTitle("CheckBox is Checked");
+            return false;
+        }
+
     }
 
 
