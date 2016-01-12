@@ -450,7 +450,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // TODO Auto-generated method stub
 
-            mode.setTitle("CheckBox is Checked");
+            mode.setTitle("");
             return false;
         }
 

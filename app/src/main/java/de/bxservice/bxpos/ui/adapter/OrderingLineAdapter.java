@@ -22,7 +22,8 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         implements View.OnClickListener, ItemTouchHelperAdapter {
 
     private ArrayList<POSOrderLine> mDataset;
-    View mainLayout;
+    private View mainLayout;
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and

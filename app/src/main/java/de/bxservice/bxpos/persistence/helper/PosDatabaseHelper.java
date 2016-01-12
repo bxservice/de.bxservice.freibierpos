@@ -63,7 +63,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     TableContract.TableDB.COLUMN_NAME_VALUE + " VARCHAR(64)" +
                     ", " +
                     TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID + " INTEGER REFERENCES "
-                        + Tables.TABLE_TABLE_GROUP + "(" + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + ") " +  //FK to the group
+                        + Tables.TABLE_TABLE_GROUP + "(" + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + ") ON DELETE CASCADE" +  //FK to the group
                     ")";
 
     private static final String CREATE_GROUPTABLE_TABLE =
@@ -90,7 +90,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT + " TEXT" +
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " INTEGER REFERENCES "
-                        + Tables.TABLE_TABLE + "(" + TableContract.TableDB.COLUMN_NAME_TABLE_ID + ") " +  //FK to the table
+                        + Tables.TABLE_TABLE + "(" + TableContract.TableDB.COLUMN_NAME_TABLE_ID + ") ON DELETE CASCADE" +  //FK to the table
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS + " INTEGER" +
                     ", " +
@@ -131,7 +131,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ProductContract.ProductDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
                     ", " +
                     ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER REFERENCES "
-                        + Tables.TABLE_PRODUCT_CATEGORY + "(" + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + ") " +  //FK to the product category
+                        + Tables.TABLE_PRODUCT_CATEGORY + "(" + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + ") ON DELETE CASCADE" +  //FK to the product category
                     ")";
 
     private static final String CREATE_PRODUCT_CATEGORY_TABLE =
@@ -148,7 +148,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " INTEGER PRIMARY KEY" +
                     ", " +
                     ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID + " INTEGER NOT NULL REFERENCES "
-                    + Tables.TABLE_PRODUCT + "(" + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + ") " +  //FK to the product
+                    + Tables.TABLE_PRODUCT + "(" + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + ") ON DELETE CASCADE" +  //FK to the product
                     ", " +
                     ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID + " INTEGER NOT NULL" +
                     ", " +
@@ -242,13 +242,13 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private void dropTables(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_META_INDEX);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER_LINE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_PRICE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
 
     }
 
