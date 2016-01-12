@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:weightSum = "4"
     android:background="?android:attr/selectableItemBackground"
+    android:focusable="true"
+
     >
 
     <TextView
