@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -31,6 +32,7 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
+import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener{
@@ -412,16 +414,57 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         super.finish();
     }
 
-    public void onLongPressed(){
+    /**
+     * When Long click - shows the CAB and perform the corresponding action
+     * @param idx
+     */
+    public void onLongPressed(int idx){
+        if(mActionMode != null) {
+            myToggleSelection(idx);
+            return;
+        }
         mActionMode = EditOrderActivity.this.startSupportActionMode(new ActionBarCallBack());
-
+        myToggleSelection(idx);
     }
 
+    /**
+     * Only works when long click was performed previosuly
+     * @param idx
+     */
+    public void onClickPressed(int idx){
+        if(mActionMode != null) {
+            myToggleSelection(idx);
+            return;
+        }
+    }
+
+    private void myToggleSelection(int idx) {
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+
+        itemsFragment.getmAdapter().toggleSelection(idx);
+        String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
+        mActionMode.setTitle(title);
+    }
+
+    private void clearSelections() {
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+
+        itemsFragment.getmAdapter().clearSelections();
+    }
+
+    public Fragment getFragment(int position) {
+        return getSupportFragmentManager().findFragmentByTag(
+                "android:switcher:" + mViewPager.getId() + ":"
+                        + position);
+    }
+
+    /**
+     * Class in charge of the CAB
+     */
     class ActionBarCallBack implements ActionMode.Callback {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // TODO Auto-generated method stub
             mode.getMenuInflater().inflate(R.menu.contextual_ordering_menu, menu);
             return true;
         }
@@ -429,6 +472,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
+            clearSelections();
         }
 
         // Called when the user selects a contextual menu item
@@ -440,6 +484,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     System.out.println("Clicked delete");
                     mode.finish(); // Action picked, so close the CAB
                     return true;
+                case R.id.ctx_item_copy:
+                    //shareCurrentItem();
+                    System.out.println("Clicked copy");
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                case R.id.ctx_item_note:
+                    //shareCurrentItem();
+                    System.out.println("Clicked add note");
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
                 default:
                     return false;
             }
@@ -448,9 +502,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            // TODO Auto-generated method stub
-
-            mode.setTitle("");
             return false;
         }
 

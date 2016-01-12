@@ -22,6 +22,7 @@
     <string name="item_removed">Item removed</string>
     <string name="delete">Delete</string>
     <string name="copy">Copy</string>
+    <string name="selected_count">%1$s selected</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
