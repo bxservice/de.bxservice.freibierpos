@@ -3,6 +3,7 @@ package de.bxservice.bxpos.ui.adapter;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -23,6 +25,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
     private ArrayList<POSOrderLine> mDataset;
     private View mainLayout;
+    private SparseBooleanArray selectedItems;
 
 
     // Provide a reference to the views for each data item
@@ -32,21 +35,21 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         // each data item is just a string in this case
         public TextView txtQty;
         public TextView txtProductName;
-        public TextView txtPtice;
+        public TextView txtPrice;
 
         public OrderingLineViewHolder(View v) {
             super(v);
 
             txtQty         = (TextView) itemView.findViewById(R.id.lblQty);
             txtProductName = (TextView) itemView.findViewById(R.id.lblName);
-            txtPtice       = (TextView) itemView.findViewById(R.id.lblpriceline);
+            txtPrice = (TextView) itemView.findViewById(R.id.lblpriceline);
 
         }
 
         public void bindOrderLine(POSOrderLine orderLine) {
             txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
             txtProductName.setText(orderLine.getProduct().getProductName());
-            txtPtice.setText(orderLine.getLineTotalAmt());
+            txtPrice.setText(orderLine.getLineTotalAmt());
         }
 
         @Override
@@ -62,9 +65,42 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         }
     }
 
+    /**
+     * An item changes its selection state
+     * @param pos
+     */
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        }
+        else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items =
+                new ArrayList<Integer>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
     public OrderingLineAdapter(ArrayList<POSOrderLine> myDataset) {
         mDataset = myDataset;
+        selectedItems = new SparseBooleanArray();
     }
 
     public POSOrderLine getSelectedItem(int position) {

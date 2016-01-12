@@ -33,6 +33,7 @@ public class OrderingItemsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private OrderingLineAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
+    private boolean longPressed = false;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -88,10 +89,8 @@ public class OrderingItemsFragment extends Fragment {
                 new RecyclerOrderingItemsListener(getActivity().getBaseContext(), mRecyclerView, new RecyclerOrderingItemsListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        // TODO Handle item click
-                        POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
-
-                        System.out.println("clicked" + selectedItem.getProduct().getProductName());
+                        int idx = mRecyclerView.getChildAdapterPosition(view);
+                        ((EditOrderActivity) getActivity()).onClickPressed(idx);
                     }
 
                     @Override
@@ -99,9 +98,11 @@ public class OrderingItemsFragment extends Fragment {
                     {
                         //TODO Handle Long click item
                         POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
-                        ((EditOrderActivity) getActivity()).onLongPressed();
-                        System.out.println("Long clicked" + selectedItem.getProduct().getProductName());
-
+                        int idx = mRecyclerView.getChildAdapterPosition(view);
+                        //myToggleSelection(idx);
+                        int noItems = mAdapter.getSelectedItemCount();
+                        ((EditOrderActivity) getActivity()).onLongPressed(noItems);
+                        longPressed = true;
                     }
                 })
         );
@@ -128,4 +129,7 @@ public class OrderingItemsFragment extends Fragment {
         return rootView;
     }
 
+    public OrderingLineAdapter getmAdapter() {
+        return mAdapter;
+    }
 }
