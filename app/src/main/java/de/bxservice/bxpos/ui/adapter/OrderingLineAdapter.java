@@ -186,6 +186,16 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         }
     }
 
+    /**
+     * Delete selected items
+     */
+    public void removeSelectedItems() {
+        List<Integer> selectedItemPositions = getSelectedItems();
+        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+            removeData(selectedItemPositions.get(i));
+        }
+    }
+
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         /*if (fromPosition < toPosition) {

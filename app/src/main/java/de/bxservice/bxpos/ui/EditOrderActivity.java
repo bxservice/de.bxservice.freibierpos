@@ -441,15 +441,25 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private void myToggleSelection(int idx) {
         OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
 
-        itemsFragment.getmAdapter().toggleSelection(idx);
-        String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
-        mActionMode.setTitle(title);
+        if(itemsFragment != null) {
+            itemsFragment.getmAdapter().toggleSelection(idx);
+            String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
+            mActionMode.setTitle(title);
+        }
     }
 
     private void clearSelections() {
         OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+        if(itemsFragment != null)
+            itemsFragment.getmAdapter().clearSelections();
+    }
 
-        itemsFragment.getmAdapter().clearSelections();
+    private void deleteSelectedItems() {
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+
+        if(itemsFragment != null) {
+            itemsFragment.getmAdapter().removeSelectedItems();
+        }
     }
 
     public Fragment getFragment(int position) {
@@ -482,6 +492,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 case R.id.ctx_item_delete:
                     //shareCurrentItem();
                     System.out.println("Clicked delete");
+                    deleteSelectedItems();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.ctx_item_copy:
