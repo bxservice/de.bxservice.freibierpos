@@ -42,7 +42,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
             txtQty         = (TextView) itemView.findViewById(R.id.lblQty);
             txtProductName = (TextView) itemView.findViewById(R.id.lblName);
-            txtPrice = (TextView) itemView.findViewById(R.id.lblpriceline);
+            txtPrice       = (TextView) itemView.findViewById(R.id.lblpriceline);
 
         }
 
@@ -141,6 +141,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         POSOrderLine orderLine = mDataset.get(position);
 
         holder.bindOrderLine(orderLine);
+        holder.itemView.setActivated(selectedItems.get(position, false));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

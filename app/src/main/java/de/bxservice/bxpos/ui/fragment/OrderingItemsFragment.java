@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,7 +34,6 @@ public class OrderingItemsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private OrderingLineAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
-    private boolean longPressed = false;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -96,13 +96,9 @@ public class OrderingItemsFragment extends Fragment {
                     @Override
                     public void onItemLongClick(View view, int position)
                     {
-                        //TODO Handle Long click item
-                        POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
+                        //POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
                         int idx = mRecyclerView.getChildAdapterPosition(view);
-                        //myToggleSelection(idx);
-                        int noItems = mAdapter.getSelectedItemCount();
-                        ((EditOrderActivity) getActivity()).onLongPressed(noItems);
-                        longPressed = true;
+                        ((EditOrderActivity) getActivity()).onLongPressed(idx);
                     }
                 })
         );
