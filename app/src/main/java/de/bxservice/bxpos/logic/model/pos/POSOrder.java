@@ -131,6 +131,12 @@ public class POSOrder implements Serializable {
      */
     public void addItem (int position, POSOrderLine orderLine) {
 
+        //Copy the orderLine
+        if(orderLines.contains(orderLine)) {
+            addItem(orderLine.getProduct(), null);
+            return;
+        }
+
         MProduct product = orderLine.getProduct();
 
         orderLines.add(position, orderLine);

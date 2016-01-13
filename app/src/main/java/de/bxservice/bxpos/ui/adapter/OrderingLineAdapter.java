@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -187,12 +188,35 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
     }
 
     /**
+     * Remove items that is at the passed position
+     * @param position
+     */
+    public void copyData(int position) {
+        POSOrderLine orderLine = mDataset.get(position);
+        mDataset.add(orderLine);
+        notifyItemInserted(position);
+        if(mOnDataChangeListener != null){
+            mOnDataChangeListener.onItemAdded(position, orderLine);
+        }
+    }
+
+    /**
      * Delete selected items
      */
     public void removeSelectedItems() {
         List<Integer> selectedItemPositions = getSelectedItems();
         for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
             removeData(selectedItemPositions.get(i));
+        }
+    }
+
+    /**
+     * Copy selected items
+     */
+    public void copySelectedItems() {
+        List<Integer> selectedItemPositions = getSelectedItems();
+        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+            copyData(selectedItemPositions.get(i));
         }
     }
 

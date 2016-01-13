@@ -462,6 +462,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
+    private void copySelectedItems() {
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+
+        if(itemsFragment != null) {
+            itemsFragment.getmAdapter().copySelectedItems();
+        }
+    }
+
     public Fragment getFragment(int position) {
         return getSupportFragmentManager().findFragmentByTag(
                 "android:switcher:" + mViewPager.getId() + ":"
@@ -490,13 +498,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.ctx_item_delete:
-                    //shareCurrentItem();
-                    System.out.println("Clicked delete");
                     deleteSelectedItems();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.ctx_item_copy:
                     //shareCurrentItem();
+                    copySelectedItems();
                     System.out.println("Clicked copy");
                     mode.finish(); // Action picked, so close the CAB
                     return true;
