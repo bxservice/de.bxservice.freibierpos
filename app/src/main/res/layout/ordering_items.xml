@@ -6,7 +6,6 @@
     android:weightSum = "4"
     android:background="@drawable/statelist_item_background"
     android:focusable="true"
-
     >
 
     <TextView

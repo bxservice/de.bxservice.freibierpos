@@ -140,7 +140,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         qtyTextView   = (TextView) findViewById(R.id.qty_textView);
         totalTextView = (TextView) findViewById(R.id.total_textView);
 
-        updateSummary(0);
+        updateSummary(EditPagerAdapter.ORDERING_POSITION);
 
     }
 
@@ -385,7 +385,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     public void removeItem(int  position) {
         order.removeItem(position);
-        updateSummary(0);
+        updateSummary(EditPagerAdapter.ORDERING_POSITION);
     }
 
     /**
@@ -395,7 +395,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     public void addItem(int  position, POSOrderLine orderLine) {
         order.addItem(position, orderLine);
-        updateSummary(0);
+        updateSummary(EditPagerAdapter.ORDERING_POSITION);
     }
 
     @Override

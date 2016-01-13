@@ -171,13 +171,19 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         snackbar.setActionTextColor(Color.YELLOW);
         snackbar.show();
 
+        removeData(position);
+    }
+
+    /**
+     * Remove items that is at the passed position
+     * @param position
+     */
+    public void removeData(int position) {
         mDataset.remove(position);
         notifyItemRemoved(position);
-
         if(mOnDataChangeListener != null){
             mOnDataChangeListener.onItemDeleted(position);
         }
-
     }
 
     @Override
