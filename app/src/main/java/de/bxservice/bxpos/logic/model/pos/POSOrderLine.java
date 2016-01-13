@@ -179,4 +179,10 @@ public class POSOrderLine implements Serializable {
         lineManager = new PosOrderLineManagement(ctx);
         return lineManager.remove(this);
     }
+
+    public POSOrderLine clone() {
+        POSOrderLine newLine = this;
+
+        return newLine;
+    }
 }
