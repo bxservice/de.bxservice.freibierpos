@@ -296,6 +296,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 posOrder = (POSOrder) getIntent().getSerializableExtra(EditOrderActivity.EXTRA_ORDER);
                 setSelectedTable(posOrder.getTable());
                 setNumberOfGuests(posOrder.getGuestNumber());
+                posOrder.getOrderLines().clear();
             }
 
         }
@@ -500,11 +501,15 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * as parameter
      */
     public void openConfirmationActivity() {
-        Intent intent = new Intent(this, EditOrderActivity.class);
-        intent.putExtra("draftOrder", posOrder);
-        intent.putExtra("caller","CreateOrderActivity");
-
-        startActivityForResult(intent, PICK_CONFIRMATION_REQUEST);
+        if("MainActivity".equals(caller)) {
+            Intent intent = new Intent(this, EditOrderActivity.class);
+            intent.putExtra("draftOrder", posOrder);
+            intent.putExtra("caller","CreateOrderActivity");
+            startActivityForResult(intent, PICK_CONFIRMATION_REQUEST);
+        }
+        else if ("EditOrderActivity".equals(caller)) {
+            onBackPressed();
+        }
     }
 
     public void updateOrderLines(ArrayList<POSOrderLine> orderLines) {
@@ -536,6 +541,16 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 finish();
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        if (caller.equals("EditOrderActivity")) {
+            Intent data = new Intent();
+            data.putExtra("orderLines", posOrder.getOrderLines());
+            setResult(RESULT_OK, data);
+        }
+        super.finish();
     }
 
 }
