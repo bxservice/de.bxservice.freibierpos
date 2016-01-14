@@ -24,6 +24,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -201,9 +202,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void showKithenNoteDialog() {
         KitchenNoteDialogFragment kitchenNoteDialog = new KitchenNoteDialogFragment();
-        //kitchenNoteDialog.setOrderLine(orderLine);
-        //kitchenNoteDialog.setNote(orderLine.getProductRemark());
-        kitchenNoteDialog.show(getFragmentManager(), "KitchenDialogFragment");
+        List<Integer> selectedItemPositions = getSelectedItems();
+        if(selectedItemPositions != null && selectedItemPositions.size() == 1) {
+            POSOrderLine orderLine = order.getOrderLines().get(selectedItemPositions.get(0));
+            kitchenNoteDialog.setOrderLine(orderLine);
+            kitchenNoteDialog.setNote(orderLine.getProductRemark());
+            kitchenNoteDialog.show(getFragmentManager(), "KitchenDialogFragment");
+        }
     }
 
     /**
@@ -488,6 +493,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if(itemsFragment != null) {
             itemsFragment.getmAdapter().copySelectedItems();
         }
+    }
+
+    private List<Integer> getSelectedItems() {
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+
+        if(itemsFragment != null) {
+            return itemsFragment.getmAdapter().getSelectedItems();
+        }
+
+        return null;
     }
 
     public Fragment getFragment(int position) {
