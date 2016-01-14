@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
@@ -29,7 +30,9 @@ import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
 
-    static final int NEW_ORDER_REQUEST = 1;  // The request code
+    static final int NEW_ORDER_REQUEST  = 1;  // The request code
+    static final int EDIT_ORDER_REQUEST = 2;  // The request code
+
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
 
@@ -187,6 +190,17 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
 
         startActivityForResult(intent, NEW_ORDER_REQUEST);
+    }
+
+    public void editOrder(POSOrder order){
+        if (order != null) {
+            Intent intent = new Intent(this, EditOrderActivity.class);
+            intent.putExtra("caller","MainActivity");
+            intent.putExtra("draftOrder", order);
+            startActivityForResult(intent, EDIT_ORDER_REQUEST);
+        }
+        else
+            createOrder();
     }
 
     /**

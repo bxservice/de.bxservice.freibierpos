@@ -108,12 +108,12 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " orderline " +
                 " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID
-                + " = '" + order.getOrderId();
+                + " = ?";
 
         Log.e(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId())});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {

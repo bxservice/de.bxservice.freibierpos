@@ -365,4 +365,10 @@ public class DataMapper implements Serializable {
         return true;
     }
 
+    public POSOrder getOpenPosOrder(Table table) {
+
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getOrder(table);
+    }
+
 }

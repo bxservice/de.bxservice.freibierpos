@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
@@ -139,5 +140,36 @@ public class PosOrderHelper extends PosObjectHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         return db.delete(Tables.TABLE_POSORDER, PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " = ?", new String[] { String.valueOf(order.getOrderId()) });
+    }
+
+    /*
+    * get single order by table
+    */
+    public POSOrder getOrder (Table table) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER + " WHERE "
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " = ? AND "
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? ";
+
+        Log.e(LOG_TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table.getTableID()), POSOrder.SENT_STATUS});
+
+        if (c != null)
+            c.moveToFirst();
+
+        POSOrder order = new POSOrder();
+        order.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID)));
+        order.setStatus(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS)));
+        order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
+        order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
+        order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
+        order.setTable(table);
+
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        order.setOrderLines(orderLineHelper.getAllOrderLines(order));
+
+        return order;
     }
 }
