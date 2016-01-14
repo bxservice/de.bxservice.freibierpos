@@ -7,7 +7,9 @@ import java.util.Locale;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
@@ -44,5 +46,9 @@ public class DataProvider {
 
     public List<MProduct> getAllProducts() {
         return dataMapper.getAllProducts();
+    }
+
+    public POSOrder getPosOrder(Table table) {
+        return dataMapper.getOpenPosOrder(table);
     }
 }

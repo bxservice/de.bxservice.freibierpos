@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum = "4"
-    android:background="@android:color/holo_red_light">
+    android:background="@drawable/statelist_item_background"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/lblQty2"

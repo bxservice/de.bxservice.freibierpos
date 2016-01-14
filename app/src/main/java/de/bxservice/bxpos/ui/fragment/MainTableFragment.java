@@ -93,8 +93,13 @@ public class MainTableFragment extends Fragment {
                 //Get item at position
                 TableGridItem item = (TableGridItem) parent.getItemAtPosition(position);
 
-                ((MainActivity)getActivity()).setSelectedTable(item.getTable());
-                ((MainActivity)getActivity()).showGuestNumberDialog();
+                ((MainActivity) getActivity()).setSelectedTable(item.getTable());
+
+                if (item.getTable().getStatus().equals(Table.FREE_STATUS))
+                    ((MainActivity) getActivity()).showGuestNumberDialog();
+                else if (item.getTable().getStatus().equals(Table.BUSY_STATUS)) {
+                    ((MainActivity) getActivity()).editOrder(dataProvider.getPosOrder(item.getTable()));
+                }
             }
         });
 
