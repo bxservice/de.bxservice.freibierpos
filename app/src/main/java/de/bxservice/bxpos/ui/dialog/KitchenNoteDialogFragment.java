@@ -11,22 +11,24 @@ import android.view.View;
 import android.widget.EditText;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
- * Created by Diego Ruiz on 25/11/15.
+ * Created by Diego Ruiz on 13/01/16.
  */
-public class RemarkDialogFragment extends DialogFragment {
+public class KitchenNoteDialogFragment extends DialogFragment {
 
     /* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
-    public interface RemarkDialogListener {
-        void onDialogPositiveClick(RemarkDialogFragment dialog);
+    public interface KitchenDialogListener {
+        void onDialogPositiveClick(KitchenNoteDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
-    RemarkDialogListener mListener;
+    KitchenDialogListener mListener;
     private String note = "";
+    private POSOrderLine orderLine;
 
 
     @Override
@@ -37,25 +39,25 @@ public class RemarkDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.remark_dialog, null);
+        View view = inflater.inflate(R.layout.kitchen_note_dialog, null);
 
-        final EditText remarkNote = (EditText) view.findViewById(R.id.remark_text);
+        final EditText remarkNote = (EditText) view.findViewById(R.id.kitchen_note);
 
         remarkNote.setText(note);
 
-        builder.setTitle(R.string.note);
+        builder.setTitle(R.string.kitchen_note);
         builder.setView(view)
                 // Add action buttons
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         setNote(remarkNote.getText().toString());
-                        mListener.onDialogPositiveClick(RemarkDialogFragment.this);
+                        mListener.onDialogPositiveClick(KitchenNoteDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        RemarkDialogFragment.this.getDialog().cancel();
+                        KitchenNoteDialogFragment.this.getDialog().cancel();
                     }
                 });
 
@@ -70,11 +72,11 @@ public class RemarkDialogFragment extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (RemarkDialogListener) activity;
+            mListener = (KitchenDialogListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement RemarkDialogListener");
+                    + " must implement KitchenDialogListener");
         }
     }
 
@@ -84,5 +86,13 @@ public class RemarkDialogFragment extends DialogFragment {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public POSOrderLine getOrderLine() {
+        return orderLine;
+    }
+
+    public void setOrderLine(POSOrderLine orderLine) {
+        this.orderLine = orderLine;
     }
 }
