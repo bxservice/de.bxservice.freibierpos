@@ -15,14 +15,14 @@
     <TextView
         android:layout_width="116dp"
         android:layout_height="44dp"
-        android:text="Bx POS"
+        android:text="@string/bx_pos"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/colorAccent"
         android:gravity="center_vertical|center_horizontal"
         android:textStyle="bold"
         android:visibility="visible"
-        android:textSize="32dp"/>
+        android:textSize="32sp"/>
 
     <ImageView
         android:layout_width="207dp"
@@ -33,7 +33,7 @@
 
     <ScrollView android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
