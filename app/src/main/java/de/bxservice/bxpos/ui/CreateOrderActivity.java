@@ -80,6 +80,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private String remarkNote = "";
     private FloatingActionButton sendActionButton;
 
+    private String caller;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -96,6 +98,9 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         //Get Table # and # of guests
         getExtras();
+
+        if("EditOrderActivity".equals(caller))
+            setTitle(R.string.title_activity_add_items);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -280,10 +285,19 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         if(extras != null) {
 
-            if(getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
-                setSelectedTable((Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE));
+            caller = getIntent().getStringExtra("caller");
 
-             setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
+            if (caller.equals("MainActivity")) {
+                if(getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
+                    setSelectedTable((Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE));
+
+                setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
+            } else if (caller.equals("EditOrderActivity")) {
+                posOrder = (POSOrder) getIntent().getSerializableExtra(EditOrderActivity.EXTRA_ORDER);
+                setSelectedTable(posOrder.getTable());
+                setNumberOfGuests(posOrder.getGuestNumber());
+            }
+
         }
     }
 
@@ -455,7 +469,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             mSearchView.onActionViewCollapsed();
             showSearchList(false);
         }
-        else if(posOrder != null) {
+        else if(posOrder != null && caller.equals("MainActivity")) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)

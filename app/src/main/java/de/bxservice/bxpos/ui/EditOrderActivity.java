@@ -49,6 +49,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private EditPagerAdapter mEditPagerAdapter;
 
+    public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
+    static final int ADD_ITEMS_REQUEST  = 1;  // The request code
+
     private View mainView;
     private POSOrder order;
     private String   caller; //Indicates the activity that called it
@@ -166,12 +169,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             return true;
         }
         if (id == R.id.add_item) {
-            if( caller.equals("CreateOrderActivity") ) {
+            if(caller.equals("CreateOrderActivity")) {
                 addNewItemsOnBack = true;
                 onBackPressed();
                 return true;
-            }else {
-                //TODO: add the logic to call the interface when it is call from somewhere else
+            }else if (caller.equals("MainActivity")) {
+                openAddItemsActivity();
                 return true;
             }
         }
@@ -266,7 +269,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onBackPressed() {
 
         if(order != null &&
-                !order.getStatus().equals(POSOrder.DRAFT_STATUS)) {
+                !order.getStatus().equals(POSOrder.DRAFT_STATUS) &&
+                caller.equals("CreateOrderActivity")) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)
@@ -437,6 +441,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             setResult(2); //Everything ok - the order was created and the create Activity should be closed
 
         super.finish();
+    }
+
+    public void openAddItemsActivity() {
+        Intent intent = new Intent(this, CreateOrderActivity.class);
+        intent.putExtra("caller","EditOrderActivity");
+        intent.putExtra(EXTRA_ORDER, order);
+
+        startActivityForResult(intent, ADD_ITEMS_REQUEST);
     }
 
     /**
