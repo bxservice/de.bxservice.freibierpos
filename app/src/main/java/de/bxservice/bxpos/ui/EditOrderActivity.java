@@ -24,6 +24,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.DataProvider;
@@ -449,6 +450,34 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         intent.putExtra(EXTRA_ORDER, order);
 
         startActivityForResult(intent, ADD_ITEMS_REQUEST);
+    }
+
+    /**
+     * When it comes back from the create order Activity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == ADD_ITEMS_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+                ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
+
+                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderLines().size()) {
+                    addnewOrderLines(orderLines);
+                }
+                this.recreate();
+
+            }
+        }
+    }
+
+    public void addnewOrderLines(ArrayList<POSOrderLine> orderLines) {
+        for(POSOrderLine line : orderLines)
+            order.getOrderLines().add(line);
     }
 
     /**
