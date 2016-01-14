@@ -31,11 +31,12 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
+import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
-        RemarkDialogFragment.RemarkDialogListener{
+        RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -186,9 +187,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void showRemarkDialog() {
-        RemarkDialogFragment remarktDialog = new RemarkDialogFragment();
-        remarktDialog.setNote(order.getOrderRemark());
-        remarktDialog.show(getFragmentManager(), "RemarkDialogFragment");
+        RemarkDialogFragment remarkDialog = new RemarkDialogFragment();
+        remarkDialog.setNote(order.getOrderRemark());
+        remarkDialog.show(getFragmentManager(), "RemarkDialogFragment");
     }
 
     private void showGuestNumberDialog() {
@@ -196,6 +197,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         GuestNumberDialogFragment guestDialog = new GuestNumberDialogFragment();
         guestDialog.setNumberOfGuests(order.getGuestNumber());
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
+    }
+
+    private void showKithenNoteDialog() {
+        KitchenNoteDialogFragment kitchenNoteDialog = new KitchenNoteDialogFragment();
+        //kitchenNoteDialog.setOrderLine(orderLine);
+        //kitchenNoteDialog.setNote(orderLine.getProductRemark());
+        kitchenNoteDialog.show(getFragmentManager(), "KitchenDialogFragment");
     }
 
     /**
@@ -220,6 +228,18 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         String note = dialog.getNote();
         order.setOrderRemark(note);
         order.updateOrder(getBaseContext());
+    }
+
+    /**
+     * Click add on add kitchen note
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(KitchenNoteDialogFragment dialog) {
+        // User touched the dialog's positive button
+        String note = dialog.getNote();
+        dialog.getOrderLine().setProductRemark(note);
+        dialog.getOrderLine().updateLine(getBaseContext());
     }
 
     /**
@@ -502,13 +522,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.ctx_item_copy:
-                    //shareCurrentItem();
                     copySelectedItems();
-                    System.out.println("Clicked copy");
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.ctx_item_note:
                     //shareCurrentItem();
+                    showKithenNoteDialog();
                     System.out.println("Clicked add note");
                     mode.finish(); // Action picked, so close the CAB
                     return true;
