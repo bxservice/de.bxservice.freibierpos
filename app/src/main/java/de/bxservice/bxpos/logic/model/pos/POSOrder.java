@@ -108,9 +108,9 @@ public class POSOrder implements Serializable {
         POSOrderLine orderLine = orderLines.get(position);
         MProduct product = orderLine.getProduct();
 
-        if (isAlwaysOneLine) {
+        if (isAlwaysOneLine && orderlineProductQtyHashMap.get(product.getProductID()) != null) {
             //If there was one product - remove it
-            if (orderlineProductQtyHashMap.get(product.getProductID()) == 1 ) {
+            if (orderlineProductQtyHashMap.get(product.getProductID()) == 1) {
                 orderlineProductQtyHashMap.remove(product.getProductID());
             } else {
                 orderlineProductQtyHashMap.put(product.getProductID(), orderlineProductQtyHashMap.get(product.getProductID()) - 1);
