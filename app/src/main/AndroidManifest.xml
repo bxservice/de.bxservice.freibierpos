@@ -16,7 +16,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.ViewOpenOrdersActivity"
             android:label="@string/title_activity_view_open_orders"
@@ -78,6 +78,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.bxservice.bxpos.ui.LoginActivity" />
+        </activity>
+        <activity android:name=".ui.PaymentActivity"
+            android:parentActivityName=".ui.EditOrderActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.bxservice.bxpos.ui.EditOrderActivity" />
         </activity>
     </application>
 
