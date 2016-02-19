@@ -25,12 +25,15 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.DataWritter;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
@@ -56,6 +59,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private View mainView;
     private POSOrder order;
     private String   caller; //Indicates the activity that called it
+    private static HashMap<FloatingActionButton, Boolean> fabVisible = new HashMap<>();
 
     private FloatingActionButton sendButton;
     private FloatingActionButton payButton;
@@ -105,22 +109,27 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                             .setAction("Action", null).show();*/
                     orderSent = true;
                     finish();
-                }
-                else
+                } else
                     Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
             }
         });
 
+        fabVisible.put(sendButton, true);
+
         payButton = (FloatingActionButton) findViewById(R.id.fabPay);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                DataWritter aaa = new DataWritter(getBaseContext());
                 Snackbar.make(view, order.getStatus(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
         payButton.hide();
+        fabVisible.put(payButton, false);
+
 
         //Listen to tab swipes
         ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -305,11 +314,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         switch (position) {
 
             case EditPagerAdapter.ORDERING_POSITION:
+                //TODO: Create two flags static to check??? to fix the wrong behavbior when scrolling up and down?
+                fabVisible.put(sendButton, true);
+                fabVisible.put(payButton, false);
                 sendButton.show();
                 payButton.hide();
                 break;
 
             case EditPagerAdapter.ORDERED_POSITION:
+                fabVisible.put(sendButton, false);
+                fabVisible.put(payButton, true);
                 payButton.show();
                 sendButton.hide();
                 break;
@@ -319,6 +333,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 payButton.hide();
                 break;
         }
+    }
+
+    public static Boolean isFabVisible(FloatingActionButton child) {
+        return fabVisible.get(child);
     }
 
     /**

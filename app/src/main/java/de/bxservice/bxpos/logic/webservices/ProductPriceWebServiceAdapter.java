@@ -18,7 +18,7 @@ import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 /**
  * Created by Diego Ruiz on 9/11/15.
  */
-public class ProductPriceWebServiceAdapter extends AbstractWSObject{
+public class ProductPriceWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryProductPrice";

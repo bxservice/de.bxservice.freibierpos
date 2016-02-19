@@ -36,7 +36,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
 
         if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
             child.hide();
-        } else if (dyConsumed < 0 && child.getVisibility() != View.VISIBLE) {
+        } else if (dyConsumed < 0 && child.getVisibility() != View.VISIBLE && EditOrderActivity.isFabVisible(child)) {
             child.show();
         }
     }
