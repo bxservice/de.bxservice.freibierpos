@@ -24,7 +24,7 @@ import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
  */
 public class DataReader {
 
-    static final String LOG_TAG = "Data Mediator";
+    static final String LOG_TAG = "Data Reader";
 
     public static final Locale LOCALE = Locale.GERMANY;
 
