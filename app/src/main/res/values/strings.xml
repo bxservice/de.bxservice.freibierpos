@@ -64,14 +64,14 @@
 
     <!-- Strings related to Settings -->
 
-    <!-- Example General settings -->
+    <!-- General settings -->
     <string name="pref_header_general">Server</string>
 
     <string name="pref_title_display_name">Server URL</string>
     <string name="pref_default_display_name">URL</string>
 
 
-    <!-- Example settings for Data & Sync -->
+    <!-- Strings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
@@ -91,5 +91,17 @@
         <item>0</item>
         <item>-1</item>
     </string-array>
+
+    <!-- Strings for payment activity -->
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
 
 </resources>

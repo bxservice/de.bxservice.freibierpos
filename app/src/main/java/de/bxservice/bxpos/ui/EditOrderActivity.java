@@ -122,9 +122,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             @Override
             public void onClick(View view) {
 
-                DataWritter aaa = new DataWritter(getBaseContext());
+                openPaymentActivity();
+
+                /*DataWritter aaa = new DataWritter(getBaseContext());
                 Snackbar.make(view, order.getStatus(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setAction("Action", null).show();*/
             }
         });
         payButton.hide();
@@ -616,6 +618,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             return false;
         }
 
+    }
+
+    private void openPaymentActivity() {
+        Intent intent = new Intent(this, PaymentActivity.class);
+        startActivity(intent);
     }
 
 
