@@ -73,7 +73,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         paidTextView = (TextView) findViewById(R.id.paid_textview);
         changeTextView = (TextView) findViewById(R.id.change_textView);
         discountTextView = (TextView) findViewById(R.id.discount_textview);
-        
+
         deleteButton = findViewById(R.id.del);
 
         quickPayButton = findViewById(R.id.quickPay);
@@ -158,7 +158,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 //onClear();
                 break;
             case R.id.pay:
-                //onClear();
+                onPay();
                 break;
             default:
                 payAmount.append(((Button) view).getText().toString());
@@ -446,6 +446,11 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         updateChangeField();
     }
 
+    public void updatePaidField() {
+        paidTextView.setText(getPaidAmountText());
+        updateChangeField();
+    }
+
     public void updateChangeField() {
         changeTextView.setText(getChangeText());
     }
@@ -469,6 +474,18 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             payAmount.delete(payAmount.length() - 1, payAmount.length());
             updatePayField();
         }
+    }
+
+    private void onPay() {
+
+        paidAmount = paidAmount.add(getAmountToPay());
+
+        //Paid amount not bigger than the total
+        if(paidAmount.compareTo(getTotal()) == -1) {
+            onClear();
+            updatePaidField();
+        }
+
     }
 
 }
