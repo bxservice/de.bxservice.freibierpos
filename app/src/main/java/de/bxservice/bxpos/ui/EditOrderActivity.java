@@ -55,6 +55,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
     static final int ADD_ITEMS_REQUEST  = 1;  // The request code
+    static final int PAY_REQUEST = 2;  // The request code
 
     private View mainView;
     private POSOrder order;
@@ -105,8 +106,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             @Override
             public void onClick(View view) {
                 if (order.sendOrder(getApplicationContext())) {
-                    /*Snackbar.make(mainView, "Order created", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();*/
                     orderSent = true;
                     finish();
                 } else
@@ -121,12 +120,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 openPaymentActivity();
-
-                /*DataWritter aaa = new DataWritter(getBaseContext());
-                Snackbar.make(view, order.getStatus(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
         payButton.hide();
@@ -623,7 +617,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private void openPaymentActivity() {
         Intent intent = new Intent(this, PayOrderActivity.class);
         intent.putExtra("completedOrder", order);
-        startActivity(intent);
+        startActivityForResult(intent, PAY_REQUEST);
     }
 
 

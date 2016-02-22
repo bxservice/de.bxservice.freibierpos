@@ -7,6 +7,10 @@ import org.idempiere.webservice.client.request.CompositeOperationRequest;
 import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
+import org.idempiere.webservice.client.response.StandardResponse;
+
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
  * Created by Diego Ruiz on 12/02/16.
@@ -17,6 +21,13 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
+    private static final String DOCUMENT_NO_PREFIX = "POS";
+    private boolean success;
+    private POSOrder order;
+
+    public CreateOrderWebServiceAdapter(POSOrder order) {
+        super(order);
+    }
 
 
     @Override
@@ -27,83 +38,111 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     @Override
     public void queryPerformed() {
 
+        order = (POSOrder) getParameter();
+        int C_Order_ID = 0;
+
+        CreateDataRequest createOrder = new CreateDataRequest();
+        createOrder.setLogin(getLogin());
+        createOrder.setServiceType("CreateSalesOrder");
+
+        DataRow data = new DataRow();
+        //TODO: get the real data
+        data.addField("C_BPartner_ID", "121"); //TODO: Change
+        data.addField("M_Warehouse_ID", "103");
+        data.addField("AD_Org_ID", "11");
+        data.addField("C_Currency_ID", "102"); //Burned €
+        data.addField("C_DocTypeTarget_ID", "135"); //PosOrder
+        data.addField("C_DocType_ID", "135"); //PosOrder
+        data.addField("Description", order.getOrderRemark());
+        data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
+        data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
+        data.addField("PaymentRule", "B"); //Cash
+        data.addField("M_PriceList_ID", "101"); //TODO: Get the real one
+        data.addField("SalesRep_ID", "101"); //TODO: USerName
+        createOrder.setDataRow(data);
+
+        WebServiceClient client = getClient();
+
+        try {
+            StandardResponse response = client.sendRequest(createOrder);
+
+            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
+                System.out.println(response.getErrorMessage());
+                success=false;
+                return;
+            } else {
+
+                System.out.println("RecordID: " + response.getRecordID());
+                System.out.println();
+
+                for (int i = 0; i < response.getOutputFields().getFieldsCount(); i++) {
+                    C_Order_ID = Integer.parseInt(response.getOutputFields().getField(i).getValue());
+                    System.out.println("Column" + (i + 1) + ": " + response.getOutputFields().getField(i).getColumn() + " = " + response.getOutputFields().getField(i).getValue());
+                }
+                System.out.println();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            success=false;
+            return;
+        }
+
         CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
         compositeOperation.setLogin(getLogin());
         compositeOperation.setServiceType(SERVICE_TYPE);
 
-        CreateDataRequest createOrder = new CreateDataRequest();
-        createOrder.setServiceType("CreateSalesOrder");
-        DataRow data = new DataRow();
-        //TODO: get the real data
-        data.addField("AD_Org_ID", "");
-        //C_BPartner_ID -
-        //C_Currency_ID if needed burn €
-        /**
-         * C_DocType_ID
-         * Description - might be remark
-         * DocumentNo - ???
-         * TotalLines - ??? needed
-         * IsSOTrx - Y always
-         * M_PriceList_ID
-         * SalesRep_ID ---> logged user
-         *
-         */
-        data.addField("C_BPartner_ID", "121"); //TODO: Change
-        data.addField("AD_Org_ID", "11");
-        data.addField("C_DocTypeTarget_ID", "135"); //PosOrder
-        data.addField("C_DocType_ID", "135"); //PosOrder
-        data.addField("Description", "Test");
-        data.addField("DocumentNo", "Android Test");
-        data.addField("Totallines", "");
-        data.addField("IsSOTrx", "Y");
-        data.addField("M_PriceList_ID", "101");
-        data.addField("SalesRep_ID", "101");
+        for(POSOrderLine orderLine : order.getOrderLines()) {
+            CreateDataRequest createOrderLine = new CreateDataRequest();
+            createOrderLine.setServiceType("CreateSalesOrderLine");
+            DataRow dataLine = new DataRow();
+            dataLine.addField("AD_Org_ID", "11");
+            dataLine.addField("C_Order_ID", String.valueOf(C_Order_ID));
+            dataLine.addField("M_Product_ID", String.valueOf(orderLine.getProduct().getProductID()));
+            dataLine.addField("Description", orderLine.getProductRemark());
+            dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
+            dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
+            createOrderLine.setDataRow(dataLine);
+
+            compositeOperation.addOperation(createOrderLine);
+        }
 
 
-        createOrder.setDataRow(data);
-
-        /*CreateDataRequest createOrderLine = new CreateDataRequest();
-        createOrderLine.setServiceType("CreateMovementLineTest");
-        DataRow dataLine = new DataRow();
-        dataLine.addField("M_Movement_ID", "@M_Movement.M_Movement_ID");
-        dataLine.addField("M_Product_ID", "138");
-        dataLine.addField("MovementQty", "1");
-        dataLine.addField("M_Locator_ID", "50001");
-        dataLine.addField("M_LocatorTo_ID", "50000");
-        dataLine.addField("AD_Org_ID", "11");
-        createOrderLine.setDataRow(dataLine);
-
-        SetDocActionRequest docAction = new SetDocActionRequest();
+/*        SetDocActionRequest docAction = new SetDocActionRequest();
         docAction.setDocAction(Enums.DocAction.Complete);
-        docAction.setServiceType("DocActionMovementTest");
-        docAction.setRecordIDVariable("@M_Movement.M_Movement_ID");*/
+        docAction.setServiceType("DocActionOrderPOS");
+        docAction.setRecordIDVariable("@M_Movement.M_Movement_ID");
 
-        compositeOperation.addOperation(createOrder);
-        /*compositeOperation.addOperation(createOrderLine);
         compositeOperation.addOperation(docAction);*/
 
-        WebServiceClient client = getClient();
 
         try {
             CompositeResponse response = client.sendRequest(compositeOperation);
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 System.out.println(response.getErrorMessage());
+                success = false;
             } else {
                 for (int i = 0; i < response.getResponsesCount(); i++) {
                     if (response.getResponse(i).getStatus() == Enums.WebServiceResponseStatus.Error) {
                         System.out.println(response.getResponse(i).getErrorMessage());
                     } else {
-                        System.out.println("Response: " + response.getResponse(i).getStatus());
-                        System.out.println("Request: " + response.getResponse(i).getWebServiceResponseType());
+                        System.out.println("order line created succesfully");
                     }
                     System.out.println();
                 }
+                success = true;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            success=false;
         }
 
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
 }

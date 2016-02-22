@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic;
 import android.content.Context;
 import android.util.Log;
 
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.webservices.CreateOrderWebServiceAdapter;
 
 /**
@@ -15,11 +16,11 @@ public class DataWritter {
 
     static final String LOG_TAG = "Data Writter";
 
-    private boolean error = false;
+    private boolean success = false;
     private Context mContext;
 
 
-    public DataWritter(Context ctx) {
+    public DataWritter(Context ctx, final POSOrder order) {
 
         Log.i(LOG_TAG, "Data Writter accessed");
 
@@ -28,7 +29,8 @@ public class DataWritter {
         Thread createOrderThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter();
+                CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(order);
+                success = createOrderWS.isSuccess();
 
             }
         });
@@ -37,8 +39,7 @@ public class DataWritter {
 
     }
 
-    public boolean isError() {
-        return error;
+    public boolean isSuccess() {
+        return success;
     }
-
 }

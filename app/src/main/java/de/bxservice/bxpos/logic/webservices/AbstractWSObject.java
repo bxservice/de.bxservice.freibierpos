@@ -13,6 +13,7 @@ public abstract class AbstractWSObject {
     private LoginRequest login;
     private WebServiceClient client;
     private WebServiceRequestData wsData;
+    private Object parameter;
 
     public AbstractWSObject() {
 
@@ -25,7 +26,7 @@ public abstract class AbstractWSObject {
         }
     }
 
-    public AbstractWSObject(String parameter) {
+    public AbstractWSObject(Object parameter) {
 
         wsData = WebServiceRequestData.getInstance();
 
@@ -77,6 +78,12 @@ public abstract class AbstractWSObject {
 
     public abstract void queryPerformed();
 
-    public void setParameter(String parameter) {};
+    public void setParameter(Object parameter) {
+        this.parameter = parameter;
+    }
+
+    public Object getParameter() {
+        return parameter;
+    }
 
 }
