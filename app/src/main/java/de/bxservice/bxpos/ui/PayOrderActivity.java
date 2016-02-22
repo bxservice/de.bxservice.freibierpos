@@ -1,6 +1,7 @@
 package de.bxservice.bxpos.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import java.text.NumberFormat;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.DataWritter;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
@@ -47,9 +49,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     //Numeric pad buttons
     private View deleteButton;
 
-    //Operation pad button
-    private View quickPayButton;
-    private View payButton;
+    private CreateOrderTask createOrderTask;
 
 
 
@@ -76,9 +76,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         discountTextView = (TextView) findViewById(R.id.discount_textview);
 
         deleteButton = findViewById(R.id.del);
-
-        quickPayButton = findViewById(R.id.quickPay);
-        payButton = findViewById(R.id.pay);
 
         deleteButton.setOnLongClickListener(this);
 
@@ -518,7 +515,43 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     @Override
     public void onDialogPositiveClick(PaymentCompletedDialogFragment dialog) {
         // User touched the dialog's positive button
+        createOrderTask = new CreateOrderTask(order);
+        createOrderTask.execute((Void) null);
+    }
 
+    /**
+     * Represents an asynchronous creating task used to send
+     * the order to iDempiere
+     */
+    public class CreateOrderTask extends AsyncTask<Void, Void, Boolean> {
+
+
+        private POSOrder order;
+
+        CreateOrderTask(POSOrder order) {
+            this.order = order;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            DataWritter write = new DataWritter(getBaseContext(), order);
+
+            if (write.isSuccess())
+                return true;
+
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if (success) {
+                // Read the data needed - Products. MProduct Category - Table ...
+
+            } else {
+            }
+
+        }
     }
 
 }
