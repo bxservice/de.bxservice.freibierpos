@@ -35,6 +35,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private BigDecimal subtotal;
     private BigDecimal surcharge;
     private BigDecimal discount;
+    private BigDecimal paidAmount;
+    private BigDecimal amountToPay;
+    private BigDecimal changeAmount;
+
 
     private String discountReason;
 
@@ -66,6 +70,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         subtotal = order.getTotallines();
         surcharge = BigDecimal.ZERO;
         discount = BigDecimal.ZERO;
+        paidAmount = BigDecimal.ZERO;
+        amountToPay = getAmountToPay();
+        changeAmount = getChange();
     }
 
     /**
@@ -126,9 +133,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         surchargeTextView.setText(getSurchargeText());
         totalTextView.setText(getTotal());
         discountTextView.setText(getDiscountText());
-        payTextView.setText("");
-        paidTextView.setText("");
-        changeTextView.setText("");
+        payTextView.setText(getAmountToPayText());
+        paidTextView.setText(getPaidAmountText());
+        changeTextView.setText(getChangeText());
     }
 
     /**
@@ -148,6 +155,25 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         subTotalString.append(currencyFormat.format(total));
 
         return subTotalString.toString();
+    }
+
+    /**
+     * Fill amount to Pay text view with the current amount
+     * to pay
+     * @return
+     */
+    public String getAmountToPayText() {
+
+        StringBuilder amountString = new StringBuilder();
+        amountString.append(getString(R.string.to_pay));
+        amountString.append(": ");
+
+        BigDecimal total = getAmountToPay();
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        amountString.append(currencyFormat.format(total));
+
+        return amountString.toString();
     }
 
     /**
@@ -188,6 +214,44 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         return discountString.toString();
     }
 
+    /**
+     * Fill change text view with the amount
+     * that has to be given back to the customer
+     * @return
+     */
+    public String getChangeText() {
+
+        StringBuilder changeString = new StringBuilder();
+        changeString.append(getString(R.string.change));
+        changeString.append(": ");
+
+        BigDecimal total = getChange();
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        changeString.append(currencyFormat.format(total));
+
+        return changeString.toString();
+    }
+
+    /**
+     * Fill change text view with the amount
+     * that has to be given back to the customer
+     * @return
+     */
+    public String getPaidAmountText() {
+
+        StringBuilder paidString = new StringBuilder();
+        paidString.append(getString(R.string.paid));
+        paidString.append(": ");
+
+        BigDecimal total = getPaidAmount();
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        paidString.append(currencyFormat.format(total));
+
+        return paidString.toString();
+    }
+
     public BigDecimal getSubtotal() {
         return subtotal;
     }
@@ -198,6 +262,19 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
     public BigDecimal getSurcharge() {
         return surcharge;
+    }
+
+    public BigDecimal getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(BigDecimal paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+
+    public BigDecimal getChange() {
+        changeAmount = subtotal.subtract(paidAmount);
+        return changeAmount;
     }
 
     public void setSurcharge(BigDecimal surcharge) {
@@ -223,14 +300,16 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         totalString.append(getString(R.string.total));
         totalString.append(": ");
 
-        BigDecimal total = getSurcharge().add(order.getTotallines());
-
-        total = total.subtract(getDiscount());
+        BigDecimal total = getAmountToPay();
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
         totalString.append(currencyFormat.format(total));
 
         return totalString.toString();
+    }
+
+    public BigDecimal getAmountToPay() {
+        return amountToPay;
     }
 
     private void showRemarkDialog() {
