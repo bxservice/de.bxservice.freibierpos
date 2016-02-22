@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -20,7 +22,8 @@ import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
 
 public class PayOrderActivity extends AppCompatActivity implements RemarkDialogFragment.RemarkDialogListener,
-        CourtesyDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener {
+        CourtesyDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener,
+        View.OnLongClickListener {
 
     private POSOrder order;
 
@@ -33,14 +36,35 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private TextView changeTextView;
 
     private BigDecimal subtotal;
+    private BigDecimal total;
     private BigDecimal surcharge;
     private BigDecimal discount;
     private BigDecimal paidAmount;
     private BigDecimal amountToPay;
     private BigDecimal changeAmount;
 
+    //Numeric pad buttons
+    private View oneButton;
+    private View twoButton;
+    private View threeButton;
+    private View fourButton;
+    private View fiveButton;
+    private View sixButton;
+    private View sevenButton;
+    private View eightButton;
+    private View nineButton;
+    private View zeroButton;
+    private View pointButton;
+    private View deleteButton;
+
+    //Operation pad button
+    private View quickPayButton;
+    private View payButton;
+
+
 
     private String discountReason;
+    private StringBuilder payAmount = new StringBuilder("");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +85,24 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         changeTextView = (TextView) findViewById(R.id.change_textView);
         discountTextView = (TextView) findViewById(R.id.discount_textview);
 
+        oneButton = findViewById(R.id.one);
+        twoButton = findViewById(R.id.two);
+        threeButton = findViewById(R.id.three);
+        fourButton = findViewById(R.id.four);
+        fiveButton = findViewById(R.id.five);
+        sixButton = findViewById(R.id.six);
+        sevenButton = findViewById(R.id.seven);
+        eightButton = findViewById(R.id.eight);
+        nineButton = findViewById(R.id.nine);
+        zeroButton = findViewById(R.id.zero);
+        pointButton = findViewById(R.id.dec);
+        deleteButton = findViewById(R.id.del);
+
+        quickPayButton = findViewById(R.id.quickPay);
+        payButton = findViewById(R.id.pay);
+
+        deleteButton.setOnLongClickListener(this);
+
         initAmounts();
         fillPaymentDisplay();
 
@@ -72,6 +114,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         discount = BigDecimal.ZERO;
         paidAmount = BigDecimal.ZERO;
         amountToPay = getAmountToPay();
+        total = getTotal();
         changeAmount = getChange();
     }
 
@@ -124,6 +167,29 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     /**
+     * On Button listener defined in the xml file
+     * @param view
+     */
+    public void onButtonClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.del:
+                onDelete();
+                break;
+            case R.id.quickPay:
+                //onClear();
+                break;
+            case R.id.pay:
+                //onClear();
+                break;
+            default:
+                payAmount.append(((Button) view).getText().toString());
+                updatePayField();
+                break;
+        }
+    }
+
+    /**
      * Fill the parameters of the payment display
      * with the info of the order
      */
@@ -131,7 +197,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         subTotalTextView.setText(getSubtotalText());
         surchargeTextView.setText(getSurchargeText());
-        totalTextView.setText(getTotal());
+        totalTextView.setText(getTotalText());
         discountTextView.setText(getDiscountText());
         payTextView.setText(getAmountToPayText());
         paidTextView.setText(getPaidAmountText());
@@ -273,7 +339,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     public BigDecimal getChange() {
-        changeAmount = subtotal.subtract(paidAmount);
+        changeAmount = total.subtract(paidAmount);
+        changeAmount = changeAmount.subtract(amountToPay);
         return changeAmount;
     }
 
@@ -294,21 +361,30 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * of the order
      * @return
      */
-    public String getTotal() {
+    public String getTotalText() {
 
         StringBuilder totalString = new StringBuilder();
         totalString.append(getString(R.string.total));
         totalString.append(": ");
 
-        BigDecimal total = getAmountToPay();
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        totalString.append(currencyFormat.format(total));
+        totalString.append(currencyFormat.format(getTotal()));
 
         return totalString.toString();
     }
 
+    public BigDecimal getTotal() {
+        total = subtotal.add(getSurcharge());
+        total = total.subtract(getDiscount());
+        return total;
+    }
+
     public BigDecimal getAmountToPay() {
+        if(payAmount.toString().equals(""))
+            amountToPay = BigDecimal.ZERO;
+        else {
+            amountToPay = new BigDecimal(payAmount.toString());
+        }
         return amountToPay;
     }
 
@@ -348,7 +424,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         //order.setSurcharge(); //TODO Create
         //order.updateOrder(getBaseContext());
         updateSurchargeField();
-        updateTotalField();
     }
 
     private void showDiscountDialog() {
@@ -371,20 +446,51 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         //order.setSurcharge(); //TODO Create
         //order.updateOrder(getBaseContext());
         updateDiscountField();
-        updateTotalField();
     }
 
     public void updateSurchargeField() {
         surchargeTextView.setText(getSurchargeText());
+        updateTotalField();
     }
 
     public void updateTotalField() {
-        totalTextView.setText(getTotal());
+        totalTextView.setText(getTotalText());
+        updateChangeField();
     }
 
     public void updateDiscountField() {
         discountTextView.setText(getDiscountText());
+        updateTotalField();
     }
 
+    public void updatePayField() {
+        payTextView.setText(getAmountToPayText());
+        updateChangeField();
+    }
+
+    public void updateChangeField() {
+        changeTextView.setText(getChangeText());
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        if (view.getId() == R.id.del) {
+            onClear();
+            return true;
+        }
+        return false;
+    }
+
+    private void onClear() {
+        payAmount = new StringBuilder("");
+        updatePayField();
+    }
+
+    private void onDelete() {
+        if(payAmount.length() > 0) {
+            payAmount.delete(payAmount.length() - 1, payAmount.length());
+            updatePayField();
+        }
+    }
 
 }
