@@ -18,12 +18,13 @@ import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
+import de.bxservice.bxpos.ui.dialog.PaymentCompletedDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
 
 public class PayOrderActivity extends AppCompatActivity implements RemarkDialogFragment.RemarkDialogListener,
         CourtesyDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener,
-        View.OnLongClickListener {
+        PaymentCompletedDialogFragment.PaymentCompletedListener, View.OnLongClickListener {
 
     private POSOrder order;
 
@@ -155,7 +156,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 onDelete();
                 break;
             case R.id.quickPay:
-                //onClear();
+                onQuickPay();
                 break;
             case R.id.pay:
                 onPay();
@@ -319,7 +320,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     public BigDecimal getChange() {
         changeAmount = total.subtract(paidAmount);
         changeAmount = changeAmount.subtract(amountToPay);
-        return changeAmount;
+        return changeAmount.negate();
     }
 
     public void setSurcharge(BigDecimal surcharge) {
@@ -388,7 +389,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         CourtesyDialogFragment courtesyDialog = new CourtesyDialogFragment();
         courtesyDialog.setSubtotal(subtotal);
         courtesyDialog.setSurchargeAmount(surcharge);
-        courtesyDialog.show(getFragmentManager(), "RemarkDialogFragment");
+        courtesyDialog.show(getFragmentManager(), "CourtesyDialogFragment");
     }
 
     /**
@@ -409,7 +410,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         courtesyDialog.setSubtotal(subtotal);
         courtesyDialog.setDiscountAmount(discount);
         courtesyDialog.setReason(discountReason);
-        courtesyDialog.show(getFragmentManager(), "RemarkDialogFragment");
+        courtesyDialog.show(getFragmentManager(), "DiscountDialogFragment");
     }
 
     /**
@@ -476,15 +477,47 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         }
     }
 
+    private void onQuickPay() {
+        paidAmount = getTotal();
+        onClear();
+        completePayment();
+    }
+
     private void onPay() {
 
         paidAmount = paidAmount.add(getAmountToPay());
 
         //Paid amount not bigger than the total
-        if(paidAmount.compareTo(getTotal()) == -1) {
+        if (paidAmount.compareTo(getTotal()) == -1) {
             onClear();
             updatePaidField();
         }
+        //Paid amount bigger than the total or same as total
+        if (paidAmount.compareTo(getTotal()) == 1 || paidAmount.compareTo(getTotal()) == 0) {
+            onClear();
+            completePayment();
+        }
+    }
+
+    private void completePayment() {
+        showPaymentDialog();
+    }
+
+    private void showPaymentDialog() {
+        PaymentCompletedDialogFragment paymentDialog = new PaymentCompletedDialogFragment();
+        paymentDialog.setTotal(getTotal());
+        paymentDialog.setPaidAmount(getPaidAmount());
+        paymentDialog.setChangeAmount(getChange());
+        paymentDialog.show(getFragmentManager(), "PaymentDialogFragment");
+    }
+
+    /**
+     * Click add on add remark dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(PaymentCompletedDialogFragment dialog) {
+        // User touched the dialog's positive button
 
     }
 
