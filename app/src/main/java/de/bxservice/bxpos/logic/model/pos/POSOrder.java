@@ -254,6 +254,7 @@ public class POSOrder implements Serializable {
      * @return
      */
     public BigDecimal getTotallines() {
+        totallines = BigDecimal.ZERO;
         for (POSOrderLine orderLine : getOrderLines()) {
             totallines = orderLine.getLineNetAmt().add(totallines);
         }

@@ -622,6 +622,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void openPaymentActivity() {
         Intent intent = new Intent(this, PayOrderActivity.class);
+        intent.putExtra("completedOrder", order);
         startActivity(intent);
     }
 
