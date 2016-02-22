@@ -44,17 +44,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private BigDecimal changeAmount;
 
     //Numeric pad buttons
-    private View oneButton;
-    private View twoButton;
-    private View threeButton;
-    private View fourButton;
-    private View fiveButton;
-    private View sixButton;
-    private View sevenButton;
-    private View eightButton;
-    private View nineButton;
-    private View zeroButton;
-    private View pointButton;
     private View deleteButton;
 
     //Operation pad button
@@ -84,18 +73,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         paidTextView = (TextView) findViewById(R.id.paid_textview);
         changeTextView = (TextView) findViewById(R.id.change_textView);
         discountTextView = (TextView) findViewById(R.id.discount_textview);
-
-        oneButton = findViewById(R.id.one);
-        twoButton = findViewById(R.id.two);
-        threeButton = findViewById(R.id.three);
-        fourButton = findViewById(R.id.four);
-        fiveButton = findViewById(R.id.five);
-        sixButton = findViewById(R.id.six);
-        sevenButton = findViewById(R.id.seven);
-        eightButton = findViewById(R.id.eight);
-        nineButton = findViewById(R.id.nine);
-        zeroButton = findViewById(R.id.zero);
-        pointButton = findViewById(R.id.dec);
+        
         deleteButton = findViewById(R.id.del);
 
         quickPayButton = findViewById(R.id.quickPay);
