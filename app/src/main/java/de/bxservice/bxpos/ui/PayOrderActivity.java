@@ -15,16 +15,18 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
+import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
 
 public class PayOrderActivity extends AppCompatActivity implements RemarkDialogFragment.RemarkDialogListener,
-        CourtesyDialogFragment.CourtesyDialogListener {
+        CourtesyDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener {
 
     private POSOrder order;
 
     private TextView subTotalTextView;
     private TextView surchargeTextView;
+    private TextView discountTextView;
     private TextView totalTextView;
     private TextView payTextView;
     private TextView paidTextView;
@@ -33,6 +35,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private BigDecimal subtotal;
     private BigDecimal surcharge;
     private BigDecimal discount;
+
+    private String discountReason;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         payTextView = (TextView) findViewById(R.id.pay_textView);
         paidTextView = (TextView) findViewById(R.id.paid_textview);
         changeTextView = (TextView) findViewById(R.id.change_textView);
+        discountTextView = (TextView) findViewById(R.id.discount_textview);
 
         initAmounts();
         fillPaymentDisplay();
@@ -104,7 +109,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             return true;
         }
         if (id == R.id.add_discount) {
-
+            showDiscountDialog();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -119,6 +125,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         subTotalTextView.setText(getSubtotalText());
         surchargeTextView.setText(getSurchargeText());
         totalTextView.setText(getTotal());
+        discountTextView.setText(getDiscountText());
         payTextView.setText("");
         paidTextView.setText("");
         changeTextView.setText("");
@@ -162,6 +169,25 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         return surchargeString.toString();
     }
 
+    /**
+     * Fill surcharge text view with the assigned surcharge
+     * of the order
+     * @return
+     */
+    public String getDiscountText() {
+
+        StringBuilder discountString = new StringBuilder();
+        discountString.append(getString(R.string.add_discount));
+        discountString.append(": ");
+
+        BigDecimal total = getDiscount().negate();
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        discountString.append(currencyFormat.format(total));
+
+        return discountString.toString();
+    }
+
     public BigDecimal getSubtotal() {
         return subtotal;
     }
@@ -198,6 +224,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         totalString.append(": ");
 
         BigDecimal total = getSurcharge().add(order.getTotallines());
+
+        total = total.subtract(getDiscount());
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
         totalString.append(currencyFormat.format(total));
@@ -244,6 +272,29 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         updateTotalField();
     }
 
+    private void showDiscountDialog() {
+        DiscountDialogFragment courtesyDialog = new DiscountDialogFragment();
+        courtesyDialog.setSubtotal(subtotal);
+        courtesyDialog.setDiscountAmount(discount);
+        courtesyDialog.setReason(discountReason);
+        courtesyDialog.show(getFragmentManager(), "RemarkDialogFragment");
+    }
+
+    /**
+     * Click add on add remark dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(DiscountDialogFragment dialog) {
+        // User touched the dialog's positive button
+        discount = dialog.getDiscountAmount();
+        discountReason = dialog.getReason();
+        //order.setSurcharge(); //TODO Create
+        //order.updateOrder(getBaseContext());
+        updateDiscountField();
+        updateTotalField();
+    }
+
     public void updateSurchargeField() {
         surchargeTextView.setText(getSurchargeText());
     }
@@ -251,5 +302,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     public void updateTotalField() {
         totalTextView.setText(getTotal());
     }
+
+    public void updateDiscountField() {
+        discountTextView.setText(getDiscountText());
+    }
+
 
 }
