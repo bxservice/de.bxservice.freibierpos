@@ -39,10 +39,12 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     public void queryPerformed() {
 
         order = (POSOrder) getParameter();
-        int C_Order_ID = 0;
+
+        CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
+        compositeOperation.setLogin(getLogin());
+        compositeOperation.setServiceType(SERVICE_TYPE);
 
         CreateDataRequest createOrder = new CreateDataRequest();
-        createOrder.setLogin(getLogin());
         createOrder.setServiceType("CreateSalesOrder");
 
         DataRow data = new DataRow();
@@ -61,43 +63,15 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("SalesRep_ID", "101"); //TODO: USerName
         createOrder.setDataRow(data);
 
-        WebServiceClient client = getClient();
+        compositeOperation.addOperation(createOrder);
 
-        try {
-            StandardResponse response = client.sendRequest(createOrder);
-
-            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
-                System.out.println(response.getErrorMessage());
-                success=false;
-                return;
-            } else {
-
-                System.out.println("RecordID: " + response.getRecordID());
-                System.out.println();
-
-                for (int i = 0; i < response.getOutputFields().getFieldsCount(); i++) {
-                    C_Order_ID = Integer.parseInt(response.getOutputFields().getField(i).getValue());
-                    System.out.println("Column" + (i + 1) + ": " + response.getOutputFields().getField(i).getColumn() + " = " + response.getOutputFields().getField(i).getValue());
-                }
-                System.out.println();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            success=false;
-            return;
-        }
-
-        CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
-        compositeOperation.setLogin(getLogin());
-        compositeOperation.setServiceType(SERVICE_TYPE);
 
         for(POSOrderLine orderLine : order.getOrderLines()) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
             createOrderLine.setServiceType("CreateSalesOrderLine");
             DataRow dataLine = new DataRow();
             dataLine.addField("AD_Org_ID", "11");
-            dataLine.addField("C_Order_ID", String.valueOf(C_Order_ID));
+            dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
             dataLine.addField("M_Product_ID", String.valueOf(orderLine.getProduct().getProductID()));
             dataLine.addField("Description", orderLine.getProductRemark());
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
@@ -108,12 +82,14 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         }
 
 
-/*        SetDocActionRequest docAction = new SetDocActionRequest();
+        SetDocActionRequest docAction = new SetDocActionRequest();
         docAction.setDocAction(Enums.DocAction.Complete);
         docAction.setServiceType("DocActionOrderPOS");
-        docAction.setRecordIDVariable("@M_Movement.M_Movement_ID");
+        docAction.setRecordIDVariable("@C_Order.C_Order_ID");
 
-        compositeOperation.addOperation(docAction);*/
+        compositeOperation.addOperation(docAction);
+
+        WebServiceClient client = getClient();
 
 
         try {
