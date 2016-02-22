@@ -3,6 +3,11 @@
     <color name="colorPrimary">#6389A8</color>
     <color name="colorPrimaryDark">#497799</color>
     <color name="colorAccent">#3a6d99</color>
+
+    <color name="colorA">#82a0b9</color>
+    <color name="colorB">#63a8a5</color>
+
+
     <!-- Background color for the numeric pad. -->
     <color name="pad_numeric_background_color">#434343</color>
 
