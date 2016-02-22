@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:contextClickable="true"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:nestedScrollingEnabled="false">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_gravity="left"
+            android:paddingLeft="18dp"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:textIsSelectable="false"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/paid"
+            android:paddingLeft="18dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/change"
+        android:paddingLeft="18dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif" />
+
+
+</LinearLayout>
