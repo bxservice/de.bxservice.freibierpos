@@ -80,11 +80,6 @@
                 android:value="de.bxservice.bxpos.ui.LoginActivity" />
         </activity>
         <activity
-            android:name=".ui.PaymentActivity"
-            android:parentActivityName=".ui.EditOrderActivity" >
-
-        </activity>
-        <activity
             android:name=".ui.PayOrderActivity"
             android:label="@string/title_activity_pay_order"
             android:parentActivityName=".ui.EditOrderActivity"
