@@ -48,15 +48,18 @@
                 <Button android:layout_width="55dp"
                     android:id = "@+id/seven"
                     style="@style/PadButtonStyle"
+                    android:onClick="onButtonClick"
                     android:text="@string/seven" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
                     android:id = "@+id/eight"
+                    android:onClick="onButtonClick"
                     android:text="@string/eight" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
+                    android:onClick="onButtonClick"
                     android:id = "@+id/nine"
                     android:text="@string/nine" />
 
@@ -71,16 +74,19 @@
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
+                    android:onClick="onButtonClick"
                     android:id = "@+id/four"
                     android:text="@string/four" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
+                    android:onClick="onButtonClick"
                     android:id = "@+id/five"
                     android:text="@string/five" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
+                    android:onClick="onButtonClick"
                     android:id = "@+id/six"
                     android:text="@string/six" />
 
@@ -96,16 +102,19 @@
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
                     android:id = "@+id/one"
+                    android:onClick="onButtonClick"
                     android:text="@string/one" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
                     android:id = "@+id/two"
+                    android:onClick="onButtonClick"
                     android:text="@string/two" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
                     android:id = "@+id/three"
+                    android:onClick="onButtonClick"
                     android:text="@string/three" />
 
             </LinearLayout>
@@ -121,17 +130,20 @@
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
                     android:id = "@+id/dec"
+                    android:onClick="onButtonClick"
                     android:text="@string/decimal" />
 
                 <Button android:layout_width="55dp"
                     style="@style/PadButtonStyle"
                     android:id = "@+id/zero"
+                    android:onClick="onButtonClick"
                     android:text="@string/zero" />
 
                 <Button android:layout_width="0dp"
                     style="@style/PadButtonStyle"
-                    android:id = "@+id/exact"
+                    android:id = "@+id/del"
                     android:text="@string/del"
+                    android:onClick="onButtonClick"
                     android:layout_weight="0.37" />
 
 
@@ -151,6 +163,7 @@
                 style="@style/OperationButtonStyle"
                 android:layout_weight="1"
                 android:id = "@+id/quickPay"
+                android:onClick="onButtonClick"
                 android:text="@string/exact"
                 />
 
@@ -160,6 +173,7 @@
                 android:textColor="@android:color/white"
                 android:layout_weight="1"
                 android:id = "@+id/pay"
+                android:onClick="onButtonClick"
                 android:text="@string/pay" />
 
         </LinearLayout>
