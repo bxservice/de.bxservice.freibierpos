@@ -112,6 +112,7 @@
     <string name="add_discount">Discount</string>
     <string name="add_tip">Courtesy</string>
     <string name="title_activity_pay_order">Payment</string>
+    <string name="reason">Reason</string>
     <string name="percentage_sign">%</string>
     <string name="currency_symbol">€</string>
 

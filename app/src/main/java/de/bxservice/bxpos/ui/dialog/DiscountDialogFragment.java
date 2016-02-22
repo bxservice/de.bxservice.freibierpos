@@ -22,23 +22,24 @@ import de.bxservice.bxpos.logic.DataProvider;
 /**
  * Created by Diego Ruiz on 22/02/16.
  */
-public class CourtesyDialogFragment extends DialogFragment {
+public class DiscountDialogFragment extends DialogFragment {
 
     /* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
-    public interface CourtesyDialogListener {
-        void onDialogPositiveClick(CourtesyDialogFragment dialog);
+    public interface DiscountDialogListener {
+        void onDialogPositiveClick(DiscountDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
-    CourtesyDialogListener mListener;
+    DiscountDialogListener mListener;
 
     public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 
     private BigDecimal subtotal = BigDecimal.ZERO;
-    private BigDecimal surchargeAmount = BigDecimal.ZERO;
-    private BigDecimal surchargePercent = BigDecimal.ZERO;
+    private BigDecimal discountAmount = BigDecimal.ZERO;
+    private BigDecimal discountPercent = BigDecimal.ZERO;
+    private String     reason = "";
 
     private TextWatcher percentWatcher;
     private TextWatcher amountWatcher;
@@ -51,7 +52,7 @@ public class CourtesyDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.courtesy_dialog, null);
+        View view = inflater.inflate(R.layout.discount_dialog, null);
 
         final TextView subTotalLabel = (TextView) view.findViewById(R.id.sub_total);
 
@@ -59,15 +60,18 @@ public class CourtesyDialogFragment extends DialogFragment {
 
         subTotalLabel.setText(getString(R.string.subtotal) + ": " + currencyFormat.format(getSubtotal()));
 
-        final EditText surchargePercentText = (EditText) view.findViewById(R.id.surcharge_percent);
-        final EditText surchargeAmountText = (EditText) view.findViewById(R.id.surcharge_amount);
+        final EditText discountPercentText = (EditText) view.findViewById(R.id.discount_percent);
+        final EditText discountAmountText = (EditText) view.findViewById(R.id.discount_amount);
+        final EditText reasonText = (EditText) view.findViewById(R.id.reason_text);
+
+        reasonText.setText(reason);
 
         percentWatcher = new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                surchargeAmountText.removeTextChangedListener(amountWatcher);
-                surchargeAmountText.setText(surchargeAmount.toString());
-                surchargeAmountText.addTextChangedListener(amountWatcher);
+                discountAmountText.removeTextChangedListener(amountWatcher);
+                discountAmountText.setText(discountAmount.toString());
+                discountAmountText.addTextChangedListener(amountWatcher);
             }
 
             public void beforeTextChanged(CharSequence s, int start,
@@ -82,22 +86,22 @@ public class CourtesyDialogFragment extends DialogFragment {
 
                     BigDecimal n2 = subtotal.multiply(number);
 
-                    surchargeAmount = n2.divide(ONE_HUNDRED, 2, BigDecimal.ROUND_HALF_UP); //total*percentage/100
+                    discountAmount = n2.divide(ONE_HUNDRED, 2, BigDecimal.ROUND_HALF_UP); //total*percentage/100
                 } catch (NumberFormatException e) {
-                    surchargeAmount = BigDecimal.ZERO;
+                    discountAmount = BigDecimal.ZERO;
                 }
 
             }
         };
 
-        surchargePercentText.addTextChangedListener(percentWatcher);
+        discountPercentText.addTextChangedListener(percentWatcher);
 
         amountWatcher = new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                surchargePercentText.removeTextChangedListener(percentWatcher);
-                surchargePercentText.setText(surchargePercent.toString());
-                surchargePercentText.addTextChangedListener(percentWatcher);
+                discountPercentText.removeTextChangedListener(percentWatcher);
+                discountPercentText.setText(discountPercent.toString());
+                discountPercentText.addTextChangedListener(percentWatcher);
             }
 
             public void beforeTextChanged(CharSequence s, int start,
@@ -111,31 +115,32 @@ public class CourtesyDialogFragment extends DialogFragment {
 
                     BigDecimal n2 = number.multiply(ONE_HUNDRED);
 
-                    surchargePercent = n2.divide(subtotal, 2, BigDecimal.ROUND_HALF_UP);  //Number*100/total
+                    discountPercent = n2.divide(subtotal, 2, BigDecimal.ROUND_HALF_UP);  //Number*100/total
                 }catch (NumberFormatException e) {
-                    surchargePercent = BigDecimal.ZERO;
+                    discountPercent = BigDecimal.ZERO;
                 }
             }
         };
 
-        surchargeAmountText.addTextChangedListener(amountWatcher);
+        discountAmountText.addTextChangedListener(amountWatcher);
 
-        if (!surchargeAmount.equals(BigDecimal.ZERO))
-            surchargeAmountText.setText(surchargeAmount.toString());
+        if (!discountAmount.equals(BigDecimal.ZERO))
+            discountAmountText.setText(discountAmount.toString());
 
-        builder.setTitle(R.string.set_extra);
+        builder.setTitle(R.string.add_discount);
         builder.setView(view)
                 // Add action buttons
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        setSurchargeAmount(new BigDecimal(surchargeAmountText.getText().toString()));
-                        mListener.onDialogPositiveClick(CourtesyDialogFragment.this);
+                        setDiscountAmount(new BigDecimal(discountAmountText.getText().toString()));
+                        setReason(reasonText.getText().toString());
+                        mListener.onDialogPositiveClick(DiscountDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        CourtesyDialogFragment.this.getDialog().cancel();
+                        DiscountDialogFragment.this.getDialog().cancel();
                     }
                 });
 
@@ -150,11 +155,11 @@ public class CourtesyDialogFragment extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (CourtesyDialogListener) activity;
+            mListener = (DiscountDialogListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement CourtesyDialogListener");
+                    + " must implement DiscountDialogListener");
         }
     }
 
@@ -166,19 +171,27 @@ public class CourtesyDialogFragment extends DialogFragment {
         this.subtotal = subtotal;
     }
 
-    public BigDecimal getSurchargeAmount() {
-        return surchargeAmount;
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
     }
 
-    public void setSurchargeAmount(BigDecimal surchargeAmount) {
-        this.surchargeAmount = surchargeAmount;
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
-    public BigDecimal getSurchargePercent() {
-        return surchargePercent;
+    public BigDecimal getDiscountPercent() {
+        return discountPercent;
     }
 
-    public void setSurchargePercent(BigDecimal surchargePercent) {
-        this.surchargePercent = surchargePercent;
+    public void setDiscountPercent(BigDecimal discountPercent) {
+        this.discountPercent = discountPercent;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
