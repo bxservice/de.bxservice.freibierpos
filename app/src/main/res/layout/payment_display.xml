@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.3"
+    android:id="@+id/linearLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:id="@+id/linearLayout1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:id="@+id/subTotal_textview"
+            android:text="Egal1"
+            android:hint="Egal1"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:layout_marginLeft="24dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:text="Egal"
+            android:hint="Egal"
+            android:id="@+id/extra_textView"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_marginRight="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:id="@+id/linearLayout2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:id="@+id/total_textview"
+            android:text="Egal"
+            android:hint="Egal"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:layout_marginLeft="24dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:text="Egal"
+            android:hint="Egal"
+            android:id="@+id/pay_textView"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_marginRight="24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:id="@+id/linearLayout3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:id="@+id/paid_textview"
+            android:text="Egal"
+            android:hint="Egal"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:layout_marginLeft="24dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:text="Recargo: "
+            android:hint="Egal"
+            android:id="@+id/change_textView"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:layout_marginRight="24dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

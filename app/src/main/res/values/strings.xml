@@ -103,5 +103,11 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="zero">0</string>
+    <string name="decimal">.</string>
+    <string name="exact">Quick Pay</string>
+    <string name="del">Del</string>
+    <string name="clr">Clr</string>
+    <string name="pay">Pay</string>
+    <string name="title_activity_pay_order">Payment</string>
 
 </resources>
