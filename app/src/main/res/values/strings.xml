@@ -108,6 +108,9 @@
     <string name="del">Del</string>
     <string name="clr">Clr</string>
     <string name="pay">Pay</string>
+    <string name="set_extra">Extra charges</string>
+    <string name="add_discount">Discount</string>
+    <string name="add_tip">Cortesy</string>
     <string name="title_activity_pay_order">Payment</string>
 
 </resources>

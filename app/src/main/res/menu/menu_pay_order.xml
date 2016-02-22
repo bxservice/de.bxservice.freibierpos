@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.bxservice.bxpos.ui.PayOrderActivity"
     >
-    <item android:id="@+id/set_guests"
-        android:title="@string/guests"
+    <item android:id="@+id/set_extra"
+        android:title="@string/set_extra"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
@@ -14,9 +14,13 @@
         android:orderInCategory="200"
         app:showAsAction="never" />
 
-    <item android:id="@+id/add_item"
-        android:title="@string/search"
+    <item android:id="@+id/add_discount"
+        android:title="@string/add_discount"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/add_tip"
+        android:title="@string/add_tip"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_add" />
+        app:showAsAction="ifRoom" />
 </menu>
