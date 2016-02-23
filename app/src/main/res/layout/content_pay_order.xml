@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:weightSum="1"
+    android:id = "@+id/pay_form"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_pay_order"
     tools:context="de.bxservice.bxpos.ui.PayOrderActivity">
