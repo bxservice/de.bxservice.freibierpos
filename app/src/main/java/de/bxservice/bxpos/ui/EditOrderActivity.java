@@ -486,6 +486,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 this.recreate();
 
             }
+        } else if(requestCode == PAY_REQUEST ) {
+            if (resultCode == 2) {
+                setResult(RESULT_OK);
+                finish();
+            }
         }
     }
 

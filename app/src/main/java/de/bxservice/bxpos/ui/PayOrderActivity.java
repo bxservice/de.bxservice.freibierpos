@@ -17,6 +17,7 @@ import java.text.NumberFormat;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.DataWritter;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
@@ -515,8 +516,15 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     @Override
     public void onDialogPositiveClick(PaymentCompletedDialogFragment dialog) {
         // User touched the dialog's positive button
+
         createOrderTask = new CreateOrderTask(order);
         createOrderTask.execute((Void) null);
+    }
+
+    @Override
+    public void finish() {
+        setResult(2); //Everything ok - the order was created and the create Activity should be closed
+        super.finish();
     }
 
     /**
@@ -545,11 +553,13 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if (success) {
-                // Read the data needed - Products. MProduct Category - Table ...
 
-            } else {
-            }
+            order.setStatus(POSOrder.COMPLETE_STATUS);
+            order.updateOrder(getBaseContext());
+
+            order.getTable().setStatus(Table.FREE_STATUS);
+            order.getTable().updateTable(getBaseContext());
+            finish();
 
         }
     }
