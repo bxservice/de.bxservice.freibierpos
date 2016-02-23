@@ -179,7 +179,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 addNewItemsOnBack = true;
                 onBackPressed();
                 return true;
-            }else if (caller.equals("MainActivity")) {
+            }else if (caller.equals("MainActivity") ||
+                    caller.equals("ViewOpenOrdersActivity")) {
                 openAddItemsActivity();
                 return true;
             }

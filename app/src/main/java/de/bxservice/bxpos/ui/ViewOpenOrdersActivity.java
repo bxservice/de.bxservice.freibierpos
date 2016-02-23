@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
@@ -21,9 +23,13 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 
 public class ViewOpenOrdersActivity extends AppCompatActivity {
 
+    static final int EDIT_ORDER_REQUEST = 2;  // The request code
+
     private GridView gridview;
     private ArrayList<OpenOrderGridItem> mGridData;
     private GridOpenOrderViewAdapter mGridAdapter;
+    private HashMap<OpenOrderGridItem, POSOrder> orderItemHashMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         gridview = (GridView) findViewById(R.id.open_orders_gridview);
 
         mGridData = new ArrayList<>();
+        orderItemHashMap = new HashMap<>();
 
         DataProvider dataProvider = new DataProvider(getBaseContext());
 
@@ -61,6 +68,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
             item.setTable(getString(R.string.table) + ": " + table);
 
             mGridData.add(item);
+            orderItemHashMap.put(item,order);
         }
 
         mGridAdapter = new GridOpenOrderViewAdapter(this, R.layout.open_order_grid_item_layout, mGridData);
@@ -72,8 +80,10 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(ViewOpenOrdersActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+                //Get item at position
+                OpenOrderGridItem item = (OpenOrderGridItem) parent.getItemAtPosition(position);
+                POSOrder order = orderItemHashMap.get(item);
+                openEditOrder(order);
             }
         });
 
@@ -86,6 +96,29 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_open_order_toolbar, menu);
         return true;
+    }
+
+    public void openEditOrder(POSOrder order) {
+        Intent intent = new Intent(this, EditOrderActivity.class);
+        intent.putExtra("caller","ViewOpenOrdersActivity");
+        intent.putExtra("draftOrder", order);
+        startActivityForResult(intent, EDIT_ORDER_REQUEST);
+    }
+
+    /**
+     * When it comes back from the edit order Activity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+         if(requestCode == EDIT_ORDER_REQUEST ) {
+            if (resultCode == 2 || resultCode == RESULT_OK) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        }
     }
 
 }

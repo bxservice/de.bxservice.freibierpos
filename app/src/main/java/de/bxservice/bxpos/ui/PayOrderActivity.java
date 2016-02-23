@@ -603,10 +603,12 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             order.setStatus(POSOrder.COMPLETE_STATUS);
             order.updateOrder(getBaseContext());
 
-            order.getTable().setStatus(Table.FREE_STATUS);
-            order.getTable().updateTable(getBaseContext());
-            finish();
+            if( order.getTable() != null) {
+                order.getTable().setStatus(Table.FREE_STATUS);
+                order.getTable().updateTable(getBaseContext());
+            }
 
+            finish();
         }
     }
 
