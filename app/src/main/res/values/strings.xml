@@ -119,4 +119,9 @@
     <string name="percentage_sign">%</string>
     <string name="currency_symbol">€</string>
 
+    <string name="order">Order</string>
+    <string name="unset_table">To go/Bar</string>
+    <string name="table">Table</string>
+
+
 </resources>
