@@ -5,14 +5,14 @@
         <item android:id="@+id/open_orders" android:icon="@android:drawable/ic_menu_today"
             android:title="@string/title_activity_view_open_orders" />
 
-        <item android:id="@+id/nav_reservation" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="@string/reservation" />
+        <!-- Login progress<item android:id="@+id/nav_reservation" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="@string/reservation" /> -->
 
-        <item android:id="@+id/nav_report" android:icon="@android:drawable/ic_menu_agenda"
-            android:title="@string/report" />
+        <!-- <item android:id="@+id/nav_report" android:icon="@android:drawable/ic_menu_agenda"
+            android:title="@string/report" /> -->
 
-        <item android:id="@+id/nav_settings" android:icon="@android:drawable/ic_menu_info_details"
-            android:title="@string/action_settings" />
+        <!-- <item android:id="@+id/nav_settings" android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/action_settings" /> -->
     </group>
 
     <item android:title="Communicate">
