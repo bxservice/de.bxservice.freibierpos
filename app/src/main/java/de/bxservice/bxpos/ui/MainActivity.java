@@ -221,6 +221,11 @@ public class MainActivity extends AppCompatActivity
                 this.recreate();
             }
         }
+        else if (requestCode == EDIT_ORDER_REQUEST) {
+            if(resultCode == RESULT_OK) {
+                this.recreate();
+            }
+        }
     }
 
 }

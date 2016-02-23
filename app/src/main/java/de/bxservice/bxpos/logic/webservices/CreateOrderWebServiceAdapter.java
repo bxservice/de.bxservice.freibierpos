@@ -21,7 +21,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
-    private static final String DOCUMENT_NO_PREFIX = "POS";
+    private static final String DOCUMENT_NO_PREFIX = "FreiBierPOS";
     private boolean success;
     private POSOrder order;
 
@@ -39,6 +39,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     public void queryPerformed() {
 
         order = (POSOrder) getParameter();
+
 
         CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
         compositeOperation.setLogin(getLogin());
@@ -81,16 +82,14 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             compositeOperation.addOperation(createOrderLine);
         }
 
-
         SetDocActionRequest docAction = new SetDocActionRequest();
         docAction.setDocAction(Enums.DocAction.Complete);
-        docAction.setServiceType("DocActionOrderPOS");
+        docAction.setServiceType("DocActionOrder");
         docAction.setRecordIDVariable("@C_Order.C_Order_ID");
 
         compositeOperation.addOperation(docAction);
 
         WebServiceClient client = getClient();
-
 
         try {
             CompositeResponse response = client.sendRequest(compositeOperation);
@@ -103,7 +102,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
                     if (response.getResponse(i).getStatus() == Enums.WebServiceResponseStatus.Error) {
                         System.out.println(response.getResponse(i).getErrorMessage());
                     } else {
-                        System.out.println("order line created succesfully");
+                        System.out.println("created successfully");
                     }
                     System.out.println();
                 }

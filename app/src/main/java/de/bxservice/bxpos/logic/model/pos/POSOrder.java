@@ -326,6 +326,14 @@ public class POSOrder implements Serializable {
         }
     }
 
+    public void payOrder() {
+        setStatus(COMPLETE_STATUS);
+        for (POSOrderLine orderLine : getOrderLines()) {
+            orderLine.completeLine();
+            orderLine.updateLine(null);
+        }
+    }
+
     public void uncompleteOrder() {
         setStatus(DRAFT_STATUS);
         for (POSOrderLine orderLine : getOrderLines()) {
