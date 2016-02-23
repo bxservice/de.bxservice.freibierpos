@@ -118,6 +118,10 @@
     <string name="to_pay">A pagar</string>
     <string name="paid">Pagado</string>
 
+    <string name="order">Orden</string>
+    <string name="unset_table">Para llevar/Barra</string>
+    <string name="table">Mesa</string>
+
 
 </resources>
 

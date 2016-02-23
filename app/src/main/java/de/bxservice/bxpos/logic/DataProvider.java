@@ -48,6 +48,10 @@ public class DataProvider {
         return dataMapper.getAllProducts();
     }
 
+    public List<POSOrder> getAllOpenOrders() {
+        return dataMapper.getOpenOrders();
+    }
+
     public POSOrder getPosOrder(Table table) {
         return dataMapper.getOpenPosOrder(table);
     }

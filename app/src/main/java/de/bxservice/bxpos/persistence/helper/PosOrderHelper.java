@@ -172,4 +172,44 @@ public class PosOrderHelper extends PosObjectHelper {
 
         return order;
     }
+
+    /**
+     * Get all products
+     * @return
+     */
+    public ArrayList<POSOrder> getOpenOrders() {
+        ArrayList<POSOrder> orders = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
+                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " <> ? ";
+
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS)});
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+            do {
+                POSOrder order = new POSOrder();
+                order.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID)));
+                order.setStatus(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS)));
+                order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
+                order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
+                order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
+                if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
+                        c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
+                    order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
+                order.setOrderLines(orderLineHelper.getAllOrderLines(order));
+
+                // adding to orders list
+                orders.add(order);
+            } while (c.moveToNext());
+        }
+
+        return orders;
+    }
+
 }

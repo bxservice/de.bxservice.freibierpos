@@ -204,6 +204,9 @@ public class POSOrder implements Serializable {
      */
     public void setTable(long tableId) {
 
+        if(orderManager == null)
+            orderManager = new PosOrderManagement(null);
+
         Table table = orderManager.getTable(tableId);
         if (table != null)
             setTable(table);
