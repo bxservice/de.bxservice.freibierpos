@@ -13,6 +13,8 @@ import de.bxservice.bxpos.R;
 
 public class ViewOpenOrdersActivity extends AppCompatActivity {
 
+    private  GridView gridview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +22,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.open_order_toolbar);
         setSupportActionBar(toolbar);
 
-        GridView gridview = (GridView) findViewById(R.id.open_orders_gridview);
+        gridview = (GridView) findViewById(R.id.open_orders_gridview);
         gridview.setAdapter(new ImageAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
