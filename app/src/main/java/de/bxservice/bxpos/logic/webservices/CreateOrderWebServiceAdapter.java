@@ -76,6 +76,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             dataLine.addField("M_Product_ID", String.valueOf(orderLine.getProduct().getProductID()));
             dataLine.addField("Description", orderLine.getProductRemark());
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
+            dataLine.addField("C_Tax_ID", "109"); //Exempt
             dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
             createOrderLine.setDataRow(dataLine);
 
