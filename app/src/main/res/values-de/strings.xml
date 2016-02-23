@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">FreiBier POS</string>
+    <string name="bx_pos">BX POS</string>
+
+    <string name="navigation_drawer_open"> Offene Navigationsleiste </string>
+    <string name="navigation_drawer_close"> Schließen Navigationsleiste</string>
+    <string name="search">Suche</string>
+    <string name="action_settings"> Einstellung</string>
+    <string name="reservation"> Reservierung</string>
+    <string name="report"> Bericht</string>
+    <string name="save"> speichern</string>
+
+    <!-- Strings related to dialogs -->
+    <string name="discard_draft_order">Ausschließen Auftrag?</string>
+    <string name="discard">Ausschließen</string>
+    <string name="number_of_guests">Festlegen Sie Anzahl von Leute</string>
+    <string name="guests">Leute</string>
+    <string name="set">Festlegen</string>
+    <string name="add"> Verlängern</string>
+    <string name="cancel"> Abbrechen</string>
+    <string name="note"> Verlängern Bemerkung</string>
+    <string name="kitchen_note"> Küche Note</string>
+    <string name="undo"> Rückgängig machen</string>
+    <string name="item_removed"> Entfernt Artikel</string>
+    <string name="delete"> Löschen</string>
+    <string name="copy"> Kopieren</string>
+    <string name="selected_count">%1$s ausgewählt</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username"> Benutzername</string>
+    <string name="prompt_password"> Passwort</string>
+    <string name="action_sign_in"> Anmelden</string>
+    <string name="action_sign_in_short"> Anmelden</string>
+    <string name="action_retry"> Wiederholen</string>
+    <string name="error_invalid_password"> Dieses Passwort ist zu kurz</string>
+    <string name="error_no_connection"> Keine Internetverbindung!</string>
+    <string name="error_incorrect_password"> Benutzername oder Passwort falsch</string>
+    <string name="error_field_required"> Dieses Feld wird benötigt</string>
+    <string name="error_config_server"> Datenfehler. Wenden Sie sich an den Administrator</string>
+
+    <!-- Activity titles strings -->
+    <string name="login_title">FreiBier POS</string>
+    <string name="title_activity_edit_order"> Auftrag bearbeiten</string>
+    <string name="title_activity_create_order">Neue Auftrag</string>
+    <string name="title_activity_add_items"> Verlängern items</string>
+    <string name="title_activity_view_open_orders"> offene Aufträge</string>
+    <string name="title_activity_create_reservation"> Reservierung</string>
+    <string name="title_activity_login"> anmelden</string>
+
+    <!-- Strings related to orders -->
+    <string name="empty_order"> Die auftrag ist leer</string>
+    <string name="ordering"> BESTELLUNG</string>
+    <string name="ordered"> BESTELLT</string>
+    <string name="quantity"> Menge</string>
+    <string name="subtotal"> Zwischensumme</string>
+    <string name="total"> Gesamt</string>
+
+
+    <!-- Strings related to roles -->
+    <string name="role">Rolle</string>
+    <string name="waiter_role"> Kellner</string>
+    <string name="supervisor_role"> Aufseher</string>
+    <string name="title_activity_admin_settings"> Einstellungen</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- General settings -->
+    <string name="pref_header_general">Kellner</string>
+
+    <string name="pref_title_display_name"> Kellner URL</string>
+    <string name="pref_default_display_name">URL</string>
+
+
+    <!-- Strings for Data & Sync -->
+    <string name="pref_header_data_sync">Daten &amp; synchronisieren</string>
+
+    <string name="pref_title_sync_frequency"> synchronisieren Häufigkeit</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minuten</item>
+        <item>30 minuten</item>
+        <item>1 Stunde</item>
+        <item> einmal am Tag</item>
+        <item>Immer (Every transaction)</item>
+        <item>Nie (Update manually)</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>480</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Strings for payment activity -->
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
+    <string name="decimal">.</string>
+    <string name="del"> Löschen</string>
+    <string name="clr">Clr</string>
+    <string name="pay">Zahlen </string>
+    <string name="set_extra"> Zuschlag</string>
+    <string name="add_discount"> Rabatt</string>
+    <string name="add_tip"> Höflichkeit</string>
+    <string name="title_activity_pay_order"> Zahlung</string>
+    
+    <string name="reason"> Grund</string>
+    <string name="change"> Veränderung</string>
+    <string name="to_pay"> Bezahlen</string>
+    <string name="paid"> Bezahlt</string>
+
+</resources>
