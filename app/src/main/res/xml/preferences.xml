@@ -14,6 +14,47 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_display_name" />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue=""
+            android:inputType="number"
+            android:key="pref_client"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/client" />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue=""
+            android:inputType="number"
+            android:key="pref_org"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/organization" />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue=""
+            android:inputType="number"
+            android:key="pref_role"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/role_id" />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue=""
+            android:inputType="number"
+            android:key="pref_warehouse"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/warehouse_id" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

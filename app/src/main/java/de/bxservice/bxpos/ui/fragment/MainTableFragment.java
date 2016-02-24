@@ -102,6 +102,7 @@ public class MainTableFragment extends Fragment {
                 }
             }
         });
+        //TODO: On table long press - allow to add multiple orders to one table and to check the existing ones
 
         return rootView;
     }

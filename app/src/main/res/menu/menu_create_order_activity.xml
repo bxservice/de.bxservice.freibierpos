@@ -13,6 +13,11 @@
         android:orderInCategory="200"
         app:showAsAction="never" />
 
+    <item android:id="@+id/set_table"
+        android:title="@string/set_table"
+        android:orderInCategory="300"
+        app:showAsAction="never" />
+
     <item android:id="@+id/items_search"
         android:title="@string/search"
         android:orderInCategory="100"

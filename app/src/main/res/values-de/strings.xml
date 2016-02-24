@@ -65,10 +65,14 @@
     <!-- Strings related to Settings -->
 
     <!-- General settings -->
-    <string name="pref_header_general">Kellner</string>
+    <string name="pref_header_general">Server</string>
 
-    <string name="pref_title_display_name"> Kellner URL</string>
+    <string name="pref_title_display_name">URL Server</string>
     <string name="pref_default_display_name">URL</string>
+    <string name="organization">Organisation ID</string>
+    <string name="client">Mandant ID</string>
+    <string name="role_id">Rolle ID</string>
+    <string name="warehouse_id">Lager ID</string>
 
 
     <!-- Strings for Data & Sync -->

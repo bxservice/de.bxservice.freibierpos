@@ -23,7 +23,7 @@ public class WebServiceRequestData {
     private String timeout         = null;
     private String attemptsTimeout = null;
     private String urlBase         = null;
-    private String role            = null;
+    private String warehosueId     = null;
 
     //Properties reader
     private AssetsPropertyReader assetsPropertyReader;
@@ -47,9 +47,9 @@ public class WebServiceRequestData {
         assetsPropertyReader = new AssetsPropertyReader(context);
         properties = assetsPropertyReader.getProperties(PosProperties.PROPERTIES_FILE);
 
-        clientId        = properties.getProperty(PosProperties.CLIENT_PROPERTY);
-        roleId          = properties.getProperty(role);
-        orgId           = properties.getProperty(PosProperties.ORG_PROPERTY);
+        //clientId        = properties.getProperty(PosProperties.CLIENT_PROPERTY);
+        //roleId          = properties.getProperty(role);
+        //orgId           = properties.getProperty(PosProperties.ORG_PROPERTY);
         attemptsNo      = properties.getProperty(PosProperties.ATTEMPS_PROPERTY);
         timeout         = properties.getProperty(PosProperties.TIMEOUT_PROPERTY);
         attemptsTimeout = properties.getProperty(PosProperties.ATTEMPTS_TIMEOUT_PROPERTY);
@@ -84,8 +84,12 @@ public class WebServiceRequestData {
         this.password = password;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setWarehosueId(String warehosueId) {
+        this.warehosueId= warehosueId;
+    }
+
+    public String getWarehosueId() {
+        return warehosueId;
     }
 
     public String getClientId() {

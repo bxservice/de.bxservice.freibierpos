@@ -27,6 +27,11 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
 
     public static final String KEY_PREF_URL = "pref_serverurl";
     public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
+    public static final String KEY_ORG_ID = "pref_org";
+    public static final String KEY_CLIENT_ID = "pref_client";
+    public static final String KEY_ROLE_ID = "pref_role";
+    public static final String KEY_WAREHOUSE_ID = "pref_warehouse";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
             startActivity(new Intent(getBaseContext(), LoginActivity.class));
+            finish();
             return true;
         }else{
             return super.onKeyDown(keyCode, event);

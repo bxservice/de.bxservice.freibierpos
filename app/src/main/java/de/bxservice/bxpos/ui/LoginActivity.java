@@ -201,6 +201,7 @@ public class LoginActivity extends AppCompatActivity  {
                 return;
             }
             //Check if network connection is available
+            //TODO: if offline - login with the credentials saved from the user login0
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
@@ -287,15 +288,25 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Void... params) {
 
+            //Get preferences from the administration settings
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
+            String orgConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
+            String clientConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
+            String roleConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
+            String warehouseConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID, "");
 
             // Sets the data to create a ws request to iDempiere
             WebServiceRequestData wsData = WebServiceRequestData.getInstance();
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
-            wsData.setRole(mRole);
             wsData.setUrlBase(syncConnPref);
+
+            //TODO: CHECK IF IT WORKS
+            wsData.setClientId(clientConnPref);
+            wsData.setOrgId(orgConnPref);
+            wsData.setRoleId(roleConnPref);
+            wsData.setWarehosueId(warehouseConnPref);
 
             wsData.readValues(getBaseContext());
 
