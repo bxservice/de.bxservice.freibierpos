@@ -116,8 +116,10 @@ public class DataReader {
         if(productCategoryList  != null && !productCategoryList.isEmpty() &&
                 productList      != null && !productList.isEmpty() &&
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
-                productPriceList != null && !productPriceList.isEmpty())
+                productPriceList != null && !productPriceList.isEmpty()) {
+            Log.i(LOG_TAG, "missing data");
             return true;
+        }
 
         return false;
     }

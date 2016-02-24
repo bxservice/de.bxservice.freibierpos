@@ -356,6 +356,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             showRemarkDialog();
             return true;
         }
+        //TODO: Support change of table in an order - Do it in EditOrder - CreateOrder
 
         return super.onOptionsItemSelected(item);
     }

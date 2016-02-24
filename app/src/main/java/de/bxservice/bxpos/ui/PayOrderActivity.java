@@ -57,6 +57,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     //Numeric pad buttons
     private View deleteButton;
 
+    //TODO: Add the payment option methods supported by iDempiere
+
     private CreateOrderTask createOrderTask;
 
 
@@ -137,6 +139,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             return true;
         }
         if (id == R.id.set_extra) {
+            //TODO: Customize tip as a charge in iDempiere (Configurable)
             showCourtesyDialog();
             return true;
         }
@@ -145,6 +148,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             return true;
         }
         if (id == R.id.add_discount) {
+            //TODO: Discount as a new line in iDempiere - Configurable
             showDiscountDialog();
             return true;
         }
@@ -163,6 +167,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 onDelete();
                 break;
             case R.id.quickPay:
+                //TODO: OnQuickPay Dialog don't let go back or undo the transaction
                 onQuickPay();
                 break;
             case R.id.pay:

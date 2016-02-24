@@ -50,7 +50,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         DataRow data = new DataRow();
         //TODO: get the real data
-        data.addField("C_BPartner_ID", "121"); //TODO: Change
+        data.addField("C_BPartner_ID", "121"); //TODO: Read the standard BPartner from the db
         data.addField("M_Warehouse_ID", "103");
         data.addField("AD_Org_ID", "11");
         data.addField("C_Currency_ID", "102"); //Burned €
@@ -60,8 +60,8 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
         data.addField("PaymentRule", "B"); //Cash
-        data.addField("M_PriceList_ID", "101"); //TODO: Get the real one
-        data.addField("SalesRep_ID", "101"); //TODO: USerName
+        data.addField("M_PriceList_ID", "101"); //TODO: Get the real one read at the beggining
+        data.addField("SalesRep_ID", "101"); //TODO: Logged user ID
         createOrder.setDataRow(data);
 
         compositeOperation.addOperation(createOrder);
@@ -76,7 +76,6 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             dataLine.addField("M_Product_ID", String.valueOf(orderLine.getProduct().getProductID()));
             dataLine.addField("Description", orderLine.getProductRemark());
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
-            dataLine.addField("C_Tax_ID", "109"); //Exempt
             dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
             createOrderLine.setDataRow(dataLine);
 
@@ -93,7 +92,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         WebServiceClient client = getClient();
 
         try {
-            CompositeResponse response = client.sendRequest(compositeOperation);
+            CompositeResponse response = client.sendRequest(compositeOperation); //TODO: Find the problem that calls iDempiere several times
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 System.out.println(response.getErrorMessage());

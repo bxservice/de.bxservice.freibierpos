@@ -65,11 +65,14 @@
     <!-- Strings related to Settings -->
 
     <!-- General settings -->
-    <string name="pref_header_general">Mesero</string>
+    <string name="pref_header_general">Servidor</string>
 
-    <string name="pref_title_display_name">Mesero URL</string>
+    <string name="pref_title_display_name">URL Servidor</string>
     <string name="pref_default_display_name">URL</string>
-
+    <string name="organization">ID Organización</string>
+    <string name="client">ID Grupo Empresarial</string>
+    <string name="role_id">ID Rol</string>
+    <string name="warehouse_id">ID Almacén</string>
 
     <!-- Strings for Data & Sync -->
     <string name="pref_header_data_sync">Datos &amp; sincronización</string>

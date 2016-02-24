@@ -20,5 +20,9 @@ public class OfflinePreferenceFragment extends PreferenceFragment {
         // guidelines.
         OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_URL));
         OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN));
+        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORG_ID));
+        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_CLIENT_ID));
+        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ROLE_ID));
+        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID));
     }
 }
