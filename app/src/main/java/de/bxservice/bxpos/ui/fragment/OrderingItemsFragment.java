@@ -1,6 +1,5 @@
 package de.bxservice.bxpos.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,7 +71,7 @@ public class OrderingItemsFragment extends Fragment {
         ArrayList<POSOrderLine> myDataset = new ArrayList<>();
 
 
-        for(POSOrderLine orderLine : order.getOrderLines()) {
+        for(POSOrderLine orderLine : order.getOrderingLines()) {
 
             if (orderLine.getLineStatus().equals(POSOrderLine.ORDERING)) {
                 myDataset.add(orderLine);
