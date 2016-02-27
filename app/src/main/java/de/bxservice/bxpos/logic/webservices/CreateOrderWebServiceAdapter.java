@@ -48,11 +48,13 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         CreateDataRequest createOrder = new CreateDataRequest();
         createOrder.setServiceType("CreateSalesOrder");
 
+        String orgId = getLogin().getOrgID().toString();
+
         DataRow data = new DataRow();
         //TODO: get the real data
         data.addField("C_BPartner_ID", "121"); //TODO: Read the standard BPartner from the db
         data.addField("M_Warehouse_ID", "103");
-        data.addField("AD_Org_ID", "11");
+        data.addField("AD_Org_ID", orgId);
         data.addField("C_Currency_ID", "102"); //Burned €
         data.addField("C_DocTypeTarget_ID", "135"); //PosOrder
         data.addField("C_DocType_ID", "135"); //PosOrder
@@ -71,7 +73,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             CreateDataRequest createOrderLine = new CreateDataRequest();
             createOrderLine.setServiceType("CreateSalesOrderLine");
             DataRow dataLine = new DataRow();
-            dataLine.addField("AD_Org_ID", "11");
+            dataLine.addField("AD_Org_ID", orgId);
             dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
             dataLine.addField("M_Product_ID", String.valueOf(orderLine.getProduct().getProductID()));
             dataLine.addField("Description", orderLine.getProductRemark());
