@@ -302,7 +302,6 @@ public class LoginActivity extends AppCompatActivity  {
             wsData.setPassword(mPassword);
             wsData.setUrlBase(syncConnPref);
 
-            //TODO: CHECK IF IT WORKS
             wsData.setClientId(clientConnPref);
             wsData.setOrgId(orgConnPref);
             wsData.setRoleId(roleConnPref);

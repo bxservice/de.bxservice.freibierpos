@@ -312,7 +312,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         switch (position) {
 
             case EditPagerAdapter.ORDERING_POSITION:
-                //TODO: Create two flags static to check??? to fix the wrong behavbior when scrolling up and down?
                 fabVisible.put(sendButton, true);
                 fabVisible.put(payButton, false);
                 sendButton.show();
