@@ -101,6 +101,15 @@ public class POSOrder implements Serializable {
     }
 
     /**
+     * Remove all items that were not send
+     */
+    public void removeOrderingItems() {
+        int orderingSize = getOrderingLines().size();
+        for (int i = 0; i < orderingSize; i++)
+            removeItem(0);
+    }
+
+    /**
      * Removes an item from the list
      * @param position
      */

@@ -25,6 +25,9 @@
     <string name="delete">Eliminar</string>
     <string name="copy">Copiar</string>
     <string name="selected_count">%1$s seleccionado</string>
+    <string name="set_table">Establecer mesa</string>
+    <string name="remove">Remover</string>
+    <string name="send_items">Enviar</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Nombre de usuario</string>
@@ -124,6 +127,8 @@
     <string name="order">Orden</string>
     <string name="unset_table">Para llevar/Barra</string>
     <string name="table">Mesa</string>
+
+    <string name="unsent_lines">Aún hay lineas sin enviar</string>
 
 
 </resources>

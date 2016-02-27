@@ -118,7 +118,27 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPaymentActivity();
+                if (order.getOrderingLines() != null && !order.getOrderingLines().isEmpty()) {
+                    new AlertDialog.Builder(EditOrderActivity.this)
+                            .setTitle(R.string.unsent_lines)
+                            .setNegativeButton(R.string.remove, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    order.removeOrderingItems();
+                                    openPaymentActivity();
+                                }
+                            })
+                            .setNeutralButton(R.string.cancel, null)
+                            .setPositiveButton(R.string.send_items, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    order.sendOrder(getApplicationContext());
+                                    openPaymentActivity();
+                                }
+                            }).create().show();
+                }
+                else
+                    openPaymentActivity();
             }
         });
         payButton.hide();
