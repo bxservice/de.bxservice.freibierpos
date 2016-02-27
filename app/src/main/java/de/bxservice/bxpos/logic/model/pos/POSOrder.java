@@ -40,7 +40,8 @@ public class POSOrder implements Serializable {
     //Checks how many times a product has been ordered
     private HashMap<Integer, Integer> orderlineProductQtyHashMap = new HashMap<>();
 
-    private ArrayList<POSOrderLine> orderLines = new ArrayList<>();
+    private ArrayList<POSOrderLine> orderingLines = new ArrayList<>();
+    private ArrayList<POSOrderLine> orderedLines = new ArrayList<>();
     private String orderRemark;
 
     private int currentLineNo = 10;
@@ -78,7 +79,7 @@ public class POSOrder implements Serializable {
             posOrderLine.setLineStatus(posOrderLine.ORDERING);
             posOrderLine.setLineNo(currentLineNo);
 
-            orderLines.add(posOrderLine);
+            orderingLines.add(posOrderLine);
             posOrderLine.createLine(ctx);
 
             if(isAlwaysOneLine) {
@@ -105,7 +106,7 @@ public class POSOrder implements Serializable {
      */
     public void removeItem (int position) {
 
-        POSOrderLine orderLine = orderLines.get(position);
+        POSOrderLine orderLine = orderingLines.get(position);
         MProduct product = orderLine.getProduct();
 
         if (isAlwaysOneLine && orderlineProductQtyHashMap.get(product.getProductID()) != null) {
@@ -120,7 +121,7 @@ public class POSOrder implements Serializable {
             orderlineProductHashMap.remove(product);
         }
 
-        orderLines.remove(position);
+        orderingLines.remove(position);
         orderLine.remove(null);
     }
 
@@ -132,14 +133,14 @@ public class POSOrder implements Serializable {
     public void addItem (int position, POSOrderLine orderLine) {
 
         //Copy the orderLine
-        if(orderLines.contains(orderLine)) {
+        if(orderingLines.contains(orderLine)) {
             addItem(orderLine.getProduct(), null);
             return;
         }
 
         MProduct product = orderLine.getProduct();
 
-        orderLines.add(position, orderLine);
+        orderingLines.add(position, orderLine);
 
         if (isAlwaysOneLine) {
             //If the list is empty - is the first time the product is ordered
@@ -166,12 +167,20 @@ public class POSOrder implements Serializable {
         return 0;
     }
 
-    public ArrayList<POSOrderLine> getOrderLines() {
-        return orderLines;
+    public ArrayList<POSOrderLine> getOrderingLines() {
+        return orderingLines;
     }
 
-    public void setOrderLines(ArrayList<POSOrderLine> orderLines) {
-        this.orderLines = orderLines;
+    public void setOrderingLines(ArrayList<POSOrderLine> orderLines) {
+        this.orderingLines = orderLines;
+    }
+
+    public ArrayList<POSOrderLine> getOrderedLines() {
+        return orderedLines;
+    }
+
+    public void setOrderedLines(ArrayList<POSOrderLine> orderedLines) {
+        this.orderedLines = orderedLines;
     }
 
     public String getOrderRemark() {
@@ -238,8 +247,9 @@ public class POSOrder implements Serializable {
     /**
      * Clear all the objects related to order lines
      */
+
     private void clearOrderLines() {
-        orderLines.clear();
+        orderingLines.clear();
         orderlineProductQtyHashMap.clear();
         orderlineProductHashMap.clear();
     }
@@ -258,7 +268,7 @@ public class POSOrder implements Serializable {
      */
     public BigDecimal getTotallines() {
         totallines = BigDecimal.ZERO;
-        for (POSOrderLine orderLine : getOrderLines()) {
+        for (POSOrderLine orderLine : getOrderedLines()) {
             totallines = orderLine.getLineNetAmt().add(totallines);
         }
         return totallines;
@@ -323,15 +333,17 @@ public class POSOrder implements Serializable {
 
     public void completeOrder() {
         setStatus(SENT_STATUS);
-        for (POSOrderLine orderLine : getOrderLines()) {
+        for (POSOrderLine orderLine : getOrderingLines()) {
             orderLine.completeLine();
             orderLine.updateLine(null);
+            orderedLines.add(orderLine);
         }
+        orderingLines.clear();
     }
 
     public void payOrder() {
         setStatus(COMPLETE_STATUS);
-        for (POSOrderLine orderLine : getOrderLines()) {
+        for (POSOrderLine orderLine : getOrderingLines()) {
             orderLine.completeLine();
             orderLine.updateLine(null);
         }
@@ -339,10 +351,12 @@ public class POSOrder implements Serializable {
 
     public void uncompleteOrder() {
         setStatus(DRAFT_STATUS);
-        for (POSOrderLine orderLine : getOrderLines()) {
+        for (POSOrderLine orderLine : getOrderedLines()) {
             orderLine.uncompleteLine();
             orderLine.updateLine(null);
+            orderingLines.add(orderLine);
         }
+        orderedLines.clear();
     }
 
     public boolean remove(Context ctx) {

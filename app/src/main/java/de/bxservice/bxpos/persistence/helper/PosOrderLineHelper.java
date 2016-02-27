@@ -135,6 +135,44 @@ public class PosOrderLineHelper extends PosObjectHelper {
         return lines;
     }
 
+    /**
+     * Getting all lines belonging to an order in a
+     * status
+     * @param order
+     * @return
+     */
+    public ArrayList<POSOrderLine> getAllOrderLines(POSOrder order, String status) {
+        ArrayList<POSOrderLine> lines = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " orderline " +
+                " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ? AND " +
+                " orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " = ?";
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId()), status});
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosProductHelper productHelper = new PosProductHelper(mContext);
+            do {
+                POSOrderLine orderLine = new POSOrderLine();
+                orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
+                orderLine.setOrder(order);
+                orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
+                orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
+                orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
+                orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
+                orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
+
+                lines.add(orderLine);
+            } while (c.moveToNext());
+        }
+
+        return lines;
+    }
+
     public int deleteOrderLine(POSOrderLine orderLine)
     {
         SQLiteDatabase db = getWritableDatabase();

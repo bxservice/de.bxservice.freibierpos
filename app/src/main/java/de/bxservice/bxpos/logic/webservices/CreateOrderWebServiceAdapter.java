@@ -7,7 +7,6 @@ import org.idempiere.webservice.client.request.CompositeOperationRequest;
 import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
-import org.idempiere.webservice.client.response.StandardResponse;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -69,7 +68,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         compositeOperation.addOperation(createOrder);
 
 
-        for(POSOrderLine orderLine : order.getOrderLines()) {
+        for(POSOrderLine orderLine : order.getOrderedLines()) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
             createOrderLine.setServiceType("CreateSalesOrderLine");
             DataRow dataLine = new DataRow();

@@ -296,7 +296,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 posOrder = (POSOrder) getIntent().getSerializableExtra(EditOrderActivity.EXTRA_ORDER);
                 setSelectedTable(posOrder.getTable());
                 setNumberOfGuests(posOrder.getGuestNumber());
-                posOrder.getOrderLines().clear();
+                posOrder.getOrderingLines().clear();
             }
 
         }
@@ -529,7 +529,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
                 ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
 
-                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != posOrder.getOrderLines().size()) {
+                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != posOrder.getOrderingLines().size()) {
                     updateOrderLines(orderLines);
                 }
 
@@ -548,7 +548,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void finish() {
         if (caller.equals("EditOrderActivity")) {
             Intent data = new Intent();
-            data.putExtra("orderLines", posOrder.getOrderLines());
+            data.putExtra("orderLines", posOrder.getOrderingLines());
             setResult(RESULT_OK, data);
         }
         super.finish();

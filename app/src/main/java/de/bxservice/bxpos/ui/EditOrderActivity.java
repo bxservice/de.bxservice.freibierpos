@@ -29,11 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.DataProvider;
-import de.bxservice.bxpos.logic.DataWritter;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
@@ -215,7 +213,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         KitchenNoteDialogFragment kitchenNoteDialog = new KitchenNoteDialogFragment();
         List<Integer> selectedItemPositions = getSelectedItems();
         if(selectedItemPositions != null && selectedItemPositions.size() == 1) {
-            POSOrderLine orderLine = order.getOrderLines().get(selectedItemPositions.get(0));
+            POSOrderLine orderLine = order.getOrderingLines().get(selectedItemPositions.get(0));
             kitchenNoteDialog.setOrderLine(orderLine);
             kitchenNoteDialog.setNote(orderLine.getProductRemark());
             kitchenNoteDialog.show(getFragmentManager(), "KitchenDialogFragment");
@@ -376,8 +374,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         StringBuilder totalQtyString = new StringBuilder( getString(R.string.quantity) + ": " );
         int totalQty = 0;
 
-        for(POSOrderLine orderLine : order.getOrderLines()) {
-
+        for(POSOrderLine orderLine : getLines(status)) {
             if (status.equals(orderLine.getLineStatus())) {
                 totalQty = totalQty + orderLine.getQtyOrdered();
             }
@@ -386,6 +383,26 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         totalQtyString.append(totalQty);
 
         return totalQtyString.toString();
+    }
+
+    /**
+     * return the right array according to the status
+     * @param status
+     * @return
+     */
+    private ArrayList<POSOrderLine> getLines (String status) {
+
+        if (order == null)
+            return null;
+
+        switch (status) {
+            case POSOrderLine.ORDERING:
+                return order.getOrderingLines();
+            case POSOrderLine.ORDERED:
+                return order.getOrderedLines();
+        }
+
+        return null;
     }
 
     /**
@@ -402,19 +419,24 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         StringBuilder totalString = new StringBuilder();
         BigDecimal total = BigDecimal.ZERO;
 
-        if (status. equals(POSOrderLine.ORDERING))
-            totalString.append(getString(R.string.subtotal));
-        else if (status.equals(POSOrderLine.ORDERED))
-            totalString.append(getString(R.string.total));
+        switch (status) {
+            case POSOrderLine.ORDERING:
+                totalString.append(getString(R.string.subtotal));
+                break;
+            case POSOrderLine.ORDERED:
+                totalString.append(getString(R.string.total));
+                break;
+        }
 
         totalString.append(": ");
 
-        for(POSOrderLine orderLine : order.getOrderLines()) {
+        for (POSOrderLine orderLine : getLines(status)) {
 
             if (status.equals( orderLine.getLineStatus())) {
                 total = total.add(orderLine.getLineNetAmt());
             }
         }
+
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
         totalString.append(currencyFormat.format(total));
@@ -450,7 +472,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             Intent data = new Intent();
             data.putExtra("remark",order.getOrderRemark());
             data.putExtra("guests", order.getGuestNumber());
-            data.putExtra("orderLines", order.getOrderLines());
+            data.putExtra("orderLines", order.getOrderingLines());
             setResult(RESULT_OK, data);
         }
         else if (orderSent)
@@ -481,8 +503,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
                 ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
 
-                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderLines().size()) {
-                    addnewOrderLines(orderLines);
+                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderingLines().size()) {
+                    addNewOrderLines(orderLines);
                 }
                 this.recreate();
 
@@ -495,9 +517,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
-    public void addnewOrderLines(ArrayList<POSOrderLine> orderLines) {
+    public void addNewOrderLines(ArrayList<POSOrderLine> orderLines) {
         for(POSOrderLine line : orderLines)
-            order.getOrderLines().add(line);
+            order.getOrderingLines().add(line);
     }
 
     /**

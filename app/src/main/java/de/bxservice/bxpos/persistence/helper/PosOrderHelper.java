@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -78,7 +79,8 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
-        order.setOrderLines(orderLineHelper.getAllOrderLines(order));
+        order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
+        order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
 
         return order;
     }
@@ -126,7 +128,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
                 order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
-                order.setOrderLines(orderLineHelper.getAllOrderLines(order));
+                order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
+                order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
 
                 // adding to orders list
                 orders.add(order);
@@ -168,7 +171,8 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setTable(table);
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
-        order.setOrderLines(orderLineHelper.getAllOrderLines(order));
+        order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
+        order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
 
         return order;
     }
@@ -202,7 +206,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
                         c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
                     order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
-                order.setOrderLines(orderLineHelper.getAllOrderLines(order));
+                order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
+                order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
 
                 // adding to orders list
                 orders.add(order);

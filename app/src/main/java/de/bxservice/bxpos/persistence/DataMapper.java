@@ -136,7 +136,7 @@ public class DataMapper implements Serializable {
 
         if (orderId != -1) {
             Log.i(LOG_TAG, "order created");
-            for (POSOrderLine orderLine: order.getOrderLines()) {
+            for (POSOrderLine orderLine: order.getOrderingLines()) {
                 orderLine.getOrder().setOrderId(orderId);
                 if(!createPosOrderLine(orderLine))
                     return false;
