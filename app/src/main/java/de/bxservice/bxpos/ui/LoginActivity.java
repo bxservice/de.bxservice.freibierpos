@@ -126,6 +126,18 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     /**
+     * Checks if the logged credentials were introduced before
+     * @param username
+     * @return
+     */
+    private PosUser getLoggedUser(String username) {
+        PosUserManagement userManager = new PosUserManagement(getApplicationContext());
+
+        PosUser user = userManager.get(username);
+        return user;
+    }
+
+    /**
      * Sets the role name in the corresponding language
      * set the hashmap for inner references
      */
@@ -323,6 +335,17 @@ public class LoginActivity extends AppCompatActivity  {
             mAuthTask = null;
 
             if (success) {
+
+                //New user -> create it in the database
+                if (getLoggedUser(mUsername) == null) {
+                    PosUser newUser = new PosUser();
+                    newUser.setUsername(mUsername);
+                    newUser.setPassword(mPassword);
+                    newUser.createUser(getBaseContext());
+
+                    Log.i(LOG_TAG, "New user created " + mUsername);
+                }
+
                 // Read the data needed - Products. MProduct Category - Table ...
                 new InitiateData().execute(getBaseContext());
 

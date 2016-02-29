@@ -61,6 +61,32 @@ public class PosUserHelper extends PosObjectHelper {
     }
 
     /*
+    * get single user from username
+    */
+    public PosUser getUser(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_USER + " WHERE "
+                + UserContract.User.COLUMN_NAME_USERNAME + " = ?";
+
+        Log.e(LOG_TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {username});
+
+        if (c != null && c.getCount() > 0)
+            c.moveToFirst();
+        else
+            return null;
+
+        PosUser td = new PosUser();
+        td.setId(c.getInt(c.getColumnIndex(UserContract.User.COLUMN_NAME_USER_ID)));
+        td.setUsername((c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME))));
+        td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD)));
+
+        return td;
+    }
+
+    /*
     * Updating a user
     */
     public int updateUser(PosUser user) {

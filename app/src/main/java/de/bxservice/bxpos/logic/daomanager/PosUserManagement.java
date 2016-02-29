@@ -39,4 +39,13 @@ public class PosUserManagement implements ObjectManagement, Serializable {
         return true;
     }
 
+    /**
+     * Get the user from the username
+     * @param username
+     * @return
+     */
+    public PosUser get(String username) {
+        return dataMapper.getUser(username);
+    }
+
 }
