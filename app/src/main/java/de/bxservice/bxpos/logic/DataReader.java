@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
@@ -25,7 +26,7 @@ import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
 public class DataReader {
 
     static final String LOG_TAG = "Data Reader";
-    
+
     private static volatile DataReader instance = null;
 
     private List<ProductCategory> productCategoryList = new ArrayList<>();
@@ -111,13 +112,17 @@ public class DataReader {
     }
 
     public boolean isDataComplete(){
+
         if(productCategoryList  != null && !productCategoryList.isEmpty() &&
                 productList      != null && !productList.isEmpty() &&
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
-                productPriceList != null && !productPriceList.isEmpty()) {
-            Log.i(LOG_TAG, "missing data");
+                productPriceList != null && !productPriceList.isEmpty() &&
+                DefaultPosData.getInstance().getDefaultBPartner() != 0 &&
+                DefaultPosData.getInstance().getDefaultPriceList() != 0) {
             return true;
         }
+
+        Log.i(LOG_TAG, "missing data");
 
         return false;
     }

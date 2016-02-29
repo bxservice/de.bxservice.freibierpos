@@ -12,10 +12,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 
 /**
+ * Brings the info about the products - prices
+ * and also the default values from the C_POS table
  * Created by Diego Ruiz on 9/11/15.
  */
 public class ProductPriceWebServiceAdapter extends AbstractWSObject {
@@ -39,7 +42,7 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
         ws.setLogin(getLogin());
 
         WebServiceClient client = getClient();
-        productPriceList = new ArrayList<ProductPrice>();
+        productPriceList = new ArrayList<>();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
@@ -61,6 +64,7 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
                     productId = 0;
                     productPriceId = 0;
                     price = null;
+                    DefaultPosData defaultData = DefaultPosData.getInstance();
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
@@ -75,6 +79,11 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
                             productId = Integer.valueOf(field.getValue());
                         else if ("PriceStd".equalsIgnoreCase(field.getColumn()))
                             price = new BigDecimal(field.getValue());
+                        //Default data from C_POS
+                        else if ("C_BPartnerCashTrx_ID".equalsIgnoreCase(field.getColumn()))
+                            defaultData.setDefaultBPartner(Integer.valueOf(field.getValue()));
+                        else if ("M_PriceList_ID".equalsIgnoreCase(field.getColumn()))
+                            defaultData.setDefaultPriceList(Integer.valueOf(field.getValue()));
 
                     }
 

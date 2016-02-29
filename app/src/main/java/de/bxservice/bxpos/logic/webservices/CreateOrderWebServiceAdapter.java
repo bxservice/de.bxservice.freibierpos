@@ -8,6 +8,7 @@ import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
 
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
@@ -49,9 +50,13 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         String orgId = getLogin().getOrgID().toString();
 
+        DefaultPosData defaultPosData = DefaultPosData.getInstance();
+        System.out.println("GOOOOKUUUUU "+ defaultPosData.getDefaultBPartner());
+
+
         DataRow data = new DataRow();
         //TODO: get the real data
-        data.addField("C_BPartner_ID", "121"); //TODO: Read the standard BPartner from the db
+        data.addField("C_BPartner_ID", String.valueOf(defaultPosData.getDefaultBPartner()));
         data.addField("M_Warehouse_ID", "103");
         data.addField("AD_Org_ID", orgId);
         data.addField("C_Currency_ID", "102"); //Burned €
@@ -61,7 +66,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
         data.addField("PaymentRule", "B"); //Cash
-        data.addField("M_PriceList_ID", "101"); //TODO: Get the real one read at the beggining
+        data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
         //data.addField("SalesRep_ID", "101"); //Removed because beforesave puts the context user that send the ws request
         createOrder.setDataRow(data);
 
