@@ -65,10 +65,17 @@ public class LoginActivity extends AppCompatActivity  {
     // Reference to the role code in the properties file
     private HashMap<String, String> roleCodes;
 
+    //Web service request data
+    private SharedPreferences sharedPref;
+    private WebServiceRequestData wsData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
 
@@ -105,6 +112,8 @@ public class LoginActivity extends AppCompatActivity  {
 
         createDummyUser();
 
+        initWebServiceRequestData();
+
     }
 
     private void createDummyUser() {
@@ -118,6 +127,29 @@ public class LoginActivity extends AppCompatActivity  {
         else {
             Log.e(LOG_TAG, "Dummy user exists FreiBierAdmin");
         }
+    }
+
+    /**
+     * Init the webservice request data with the data from preferences
+     */
+    private void initWebServiceRequestData() {
+        //Get preferences from the administration settings
+        String urlConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
+        String orgConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
+        String clientConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
+        String roleConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
+        String warehouseConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID, "");
+
+        // Sets the data to create a ws request to iDempiere
+        wsData = WebServiceRequestData.getInstance();
+        wsData.setUrlBase(urlConnPref);
+
+        wsData.setClientId(clientConnPref);
+        wsData.setOrgId(orgConnPref);
+        wsData.setRoleId(roleConnPref);
+        wsData.setWarehosueId(warehouseConnPref);
+
+        wsData.readValues(getBaseContext());
     }
 
     private PosUser getOfflineUser() {
@@ -226,7 +258,6 @@ public class LoginActivity extends AppCompatActivity  {
 
             } else {
 
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
 
                 // If the sync configuration chosen was Always offline login not allowed
@@ -277,7 +308,6 @@ public class LoginActivity extends AppCompatActivity  {
      */
     private void offlineLogin(PosUser loggedUser) {
 
-        WebServiceRequestData wsData = WebServiceRequestData.getInstance();
         wsData.setUsername(loggedUser.getUsername());
         wsData.setPassword(loggedUser.getPassword());
 
@@ -346,27 +376,8 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            //Get preferences from the administration settings
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String urlConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
-            String orgConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
-            String clientConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
-            String roleConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
-            String warehouseConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID, "");
-
-            // Sets the data to create a ws request to iDempiere
-            WebServiceRequestData wsData = WebServiceRequestData.getInstance();
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
-            wsData.setUrlBase(urlConnPref);
-
-            wsData.setClientId(clientConnPref);
-            wsData.setOrgId(orgConnPref);
-            wsData.setRoleId(roleConnPref);
-            wsData.setWarehosueId(warehouseConnPref);
-
-            wsData.readValues(getBaseContext());
-
 
             AuthenticationWebService auth = new AuthenticationWebService();
 
