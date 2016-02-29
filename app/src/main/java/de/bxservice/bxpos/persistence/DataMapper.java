@@ -122,10 +122,24 @@ public class DataMapper implements Serializable {
         return success;
     }
 
-
+    /**
+     * Return User from id
+     * @param id
+     * @return
+     */
     public PosUser getUser(long id) {
         PosUserHelper posUserHelper = new PosUserHelper(mContext);
         return posUserHelper.getUser(id);
+    }
+
+    /**
+     * Return user from username
+     * @param username
+     * @return
+     */
+    public PosUser getUser(String username) {
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+        return posUserHelper.getUser(username);
     }
 
     private boolean createPosOrder(POSOrder order) {
