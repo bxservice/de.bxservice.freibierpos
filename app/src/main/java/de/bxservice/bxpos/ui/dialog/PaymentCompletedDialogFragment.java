@@ -42,6 +42,7 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        setCancelable(false); //No back button - it's not a confirmation dialog, only an informative one
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
@@ -64,7 +65,7 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
         builder.setTitle(R.string.pay);
         builder.setView(view)
                 // Add action buttons
-                .setPositiveButton(R.string.pay, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onDialogPositiveClick(PaymentCompletedDialogFragment.this);

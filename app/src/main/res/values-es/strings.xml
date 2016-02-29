@@ -118,11 +118,11 @@
     <string name="add_discount">Descuento</string>
     <string name="add_tip">Cortesía</string>
     <string name="title_activity_pay_order">Pago </string>
-    
     <string name="reason">Razón</string>
     <string name="change">Cambio</string>
     <string name="to_pay">A pagar</string>
     <string name="paid">Pagado</string>
+    <string name="close">Cerrar</string>
 
     <string name="order">Orden</string>
     <string name="unset_table">Para llevar/Barra</string>

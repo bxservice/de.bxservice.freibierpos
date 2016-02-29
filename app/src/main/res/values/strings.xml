@@ -124,6 +124,7 @@
     <string name="paid">Paid</string>
     <string name="percentage_sign">%</string>
     <string name="currency_symbol">€</string>
+    <string name="close">Close</string>
 
     <string name="order">Order</string>
     <string name="unset_table">To go/Bar</string>
