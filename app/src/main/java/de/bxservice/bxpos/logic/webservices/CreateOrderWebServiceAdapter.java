@@ -20,7 +20,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
-    private static final String DOCUMENT_NO_PREFIX = "FreiBierPOS";
+    private static final String DOCUMENT_NO_PREFIX = "BXPOS";
     private boolean success;
     private POSOrder order;
 
@@ -62,7 +62,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
         data.addField("PaymentRule", "B"); //Cash
         data.addField("M_PriceList_ID", "101"); //TODO: Get the real one read at the beggining
-        data.addField("SalesRep_ID", "101"); //TODO: Logged user ID
+        //data.addField("SalesRep_ID", "101"); //Removed because beforesave puts the context user that send the ws request
         createOrder.setDataRow(data);
 
         compositeOperation.addOperation(createOrder);
