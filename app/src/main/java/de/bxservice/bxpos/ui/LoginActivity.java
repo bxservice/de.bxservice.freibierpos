@@ -225,20 +225,66 @@ public class LoginActivity extends AppCompatActivity  {
                 mAuthTask.execute((Void) null);
 
             } else {
-                Snackbar snackbar = Snackbar
-                        .make(mLoginFormView, getString(R.string.error_no_connection), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.action_retry), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        attemptLogin();
-                    }
-                });
 
-                // Changing message text color
-                snackbar.setActionTextColor(Color.RED);
-                snackbar.show();
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+
+                // If the sync configuration chosen was Always offline login not allowed
+                if("0".equals(syncConnPref)) {
+                    Snackbar snackbar = Snackbar
+                            .make(mLoginFormView, getString(R.string.error_no_connection), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.action_retry), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    attemptLogin();
+                                }
+                            });
+
+                    // Changing message text color
+                    snackbar.setActionTextColor(Color.RED);
+                    snackbar.show();
+                } else {
+
+                    PosUser loggedUser = getLoggedUser(username);
+
+                    //Username does not exist and no internet connection
+                    if(loggedUser == null) {
+                        Snackbar snackbar = Snackbar
+                                .make(mLoginFormView, getString(R.string.error_no_connection_username), Snackbar.LENGTH_LONG)
+                                .setAction(getString(R.string.action_retry), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        attemptLogin();
+                                    }
+                                });
+
+                        // Changing message text color
+                        snackbar.setActionTextColor(Color.RED);
+                        snackbar.show();
+                    } else {
+                        //No internet connection but the user is known
+                        offlineLogin(loggedUser);
+                    }
+                }
             }
         }
+    }
+
+    /**
+     * If there is no internet connection and the user is known
+     * login loading the data that was synchronized before
+     * @param loggedUser
+     */
+    private void offlineLogin(PosUser loggedUser) {
+
+        WebServiceRequestData wsData = WebServiceRequestData.getInstance();
+        wsData.setUsername(loggedUser.getUsername());
+        wsData.setPassword(loggedUser.getPassword());
+
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 
     private boolean isPasswordValid(String password) {
@@ -302,7 +348,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             //Get preferences from the administration settings
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
+            String urlConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
             String orgConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
             String clientConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
             String roleConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
@@ -312,7 +358,7 @@ public class LoginActivity extends AppCompatActivity  {
             WebServiceRequestData wsData = WebServiceRequestData.getInstance();
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
-            wsData.setUrlBase(syncConnPref);
+            wsData.setUrlBase(urlConnPref);
 
             wsData.setClientId(clientConnPref);
             wsData.setOrgId(orgConnPref);

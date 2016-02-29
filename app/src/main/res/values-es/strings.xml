@@ -37,6 +37,7 @@
     <string name="action_retry">REINTENTAR</string>
     <string name="error_invalid_password">Esta contrase{a es muy corta</string>
     <string name="error_no_connection">No hay conexión a Internet!</string>
+    <string name="error_no_connection_username">No hay conexión a internet y usuario desconocido!</string>
     <string name="error_incorrect_password">Nombre de usuario o contraseña incorrecto</string>
     <string name="error_field_required">Este campo es requerido</string>
     <string name="error_config_server"> Error en los datos. Por favor, póngase en contacto con el administrador </string>
@@ -85,8 +86,8 @@
         <item>15 minutos</item>
         <item>30 minutos</item>
         <item>1 hora</item>
-        <item>Una vez al d&#161;a</item>
-        <item>Siempre (Cada transacción);</item>
+        <item>Una vez al día</item>
+        <item>Siempre (Cada transacción)</item>
         <item>Nunca (Actualizar manualmente)</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">

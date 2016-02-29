@@ -34,6 +34,7 @@
     <string name="action_retry"> Wiederholen</string>
     <string name="error_invalid_password"> Dieses Passwort ist zu kurz</string>
     <string name="error_no_connection"> Keine Internetverbindung!</string>
+    <string name="error_no_connection_username">No internet connection and unknown username!</string>
     <string name="error_incorrect_password"> Benutzername oder Passwort falsch</string>
     <string name="error_field_required"> Dieses Feld wird benötigt</string>
     <string name="error_config_server"> Datenfehler. Wenden Sie sich an den Administrator</string>
