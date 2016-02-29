@@ -110,12 +110,13 @@
     <string name="decimal">.</string>
     <string name="del"> Löschen</string>
     <string name="clr">Clr</string>
-    <string name="pay">Zahlen </string>
+    <string name="pay">Bezahlen</string>
     <string name="set_extra"> Zuschlag</string>
     <string name="add_discount"> Rabatt</string>
     <string name="add_tip"> Höflichkeit</string>
-    <string name="title_activity_pay_order"> Zahlung</string>
-    
+    <string name="title_activity_pay_order">Bezahlung</string>
+    <string name="close">Schließen</string>
+
     <string name="reason"> Grund</string>
     <string name="change"> Veränderung</string>
     <string name="to_pay"> Bezahlen</string>
