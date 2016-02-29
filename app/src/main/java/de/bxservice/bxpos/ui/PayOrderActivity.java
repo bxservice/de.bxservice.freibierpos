@@ -167,7 +167,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 onDelete();
                 break;
             case R.id.quickPay:
-                //TODO: OnQuickPay Dialog don't let go back or undo the transaction
                 onQuickPay();
                 break;
             case R.id.pay:
