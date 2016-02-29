@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     static final int NEW_ORDER_REQUEST  = 1;  // The request code
     static final int EDIT_ORDER_REQUEST = 2;  // The request code
+    static final int OPEN_ORDER_REQUEST = 3;  // The request code
 
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
@@ -125,8 +126,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.open_orders) {
 
             Intent intent = new Intent(this, ViewOpenOrdersActivity.class);
-            startActivity(intent);
-
+            startActivityForResult(intent, OPEN_ORDER_REQUEST);
 
         } /*else if (id == R.id.nav_reservation) {
 
@@ -215,14 +215,11 @@ public class MainActivity extends AppCompatActivity
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == NEW_ORDER_REQUEST) {
+        if (requestCode == NEW_ORDER_REQUEST ||
+                requestCode == EDIT_ORDER_REQUEST ||
+                requestCode == OPEN_ORDER_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                this.recreate();
-            }
-        }
-        else if (requestCode == EDIT_ORDER_REQUEST) {
-            if(resultCode == RESULT_OK) {
                 this.recreate();
             }
         }
