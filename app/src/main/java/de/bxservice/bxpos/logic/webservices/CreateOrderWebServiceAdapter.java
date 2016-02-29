@@ -51,21 +51,18 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         String orgId = getLogin().getOrgID().toString();
 
         DefaultPosData defaultPosData = DefaultPosData.getInstance();
-        System.out.println("GOOOOKUUUUU "+ defaultPosData.getDefaultBPartner());
-
 
         DataRow data = new DataRow();
-        //TODO: get the real data
         data.addField("C_BPartner_ID", String.valueOf(defaultPosData.getDefaultBPartner()));
-        data.addField("M_Warehouse_ID", "103");
+        data.addField("M_Warehouse_ID", String.valueOf(defaultPosData.getDefaultWarehouse()));
         data.addField("AD_Org_ID", orgId);
-        data.addField("C_Currency_ID", "102"); //Burned €
+        data.addField("C_Currency_ID", String.valueOf(defaultPosData.getDefaultCurrency()));
         data.addField("C_DocTypeTarget_ID", "135"); //PosOrder
         data.addField("C_DocType_ID", "135"); //PosOrder
         data.addField("Description", order.getOrderRemark());
         data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
-        data.addField("PaymentRule", "B"); //Cash
+        data.addField("PaymentRule", "B"); //Cash //TODO: Multi payment type
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
         //data.addField("SalesRep_ID", "101"); //Removed because beforesave puts the context user that send the ws request
         createOrder.setDataRow(data);

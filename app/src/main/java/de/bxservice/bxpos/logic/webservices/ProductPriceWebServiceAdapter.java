@@ -84,6 +84,10 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
                             defaultData.setDefaultBPartner(Integer.valueOf(field.getValue()));
                         else if ("M_PriceList_ID".equalsIgnoreCase(field.getColumn()))
                             defaultData.setDefaultPriceList(Integer.valueOf(field.getValue()));
+                        else if ("C_Currency_ID".equalsIgnoreCase(field.getColumn()))
+                            defaultData.setDefaultCurrency(Integer.valueOf(field.getValue()));
+                        else if ("M_Warehouse_ID".equalsIgnoreCase(field.getColumn()))
+                            defaultData.setDefaultWarehouse(Integer.valueOf(field.getValue()));
 
                     }
 

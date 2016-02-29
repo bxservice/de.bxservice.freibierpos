@@ -118,7 +118,9 @@ public class DataReader {
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
                 productPriceList != null && !productPriceList.isEmpty() &&
                 DefaultPosData.getInstance().getDefaultBPartner() != 0 &&
-                DefaultPosData.getInstance().getDefaultPriceList() != 0) {
+                DefaultPosData.getInstance().getDefaultPriceList() != 0 &&
+                DefaultPosData.getInstance().getDefaultCurrency() != 0 &&
+                DefaultPosData.getInstance().getDefaultWarehouse() != 0) {
             return true;
         }
 
