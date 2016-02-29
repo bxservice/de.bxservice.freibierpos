@@ -213,6 +213,18 @@ public class MainActivity extends AppCompatActivity
         PosObjectHelper.closeDB(getBaseContext());
     }
 
+    /**
+     * Close the drawer when coming back from
+     * other activities
+     */
+    @Override
+    public void onResume(){
+        super.onResume();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START))
+            drawer.closeDrawer(GravityCompat.START);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == NEW_ORDER_REQUEST ||
