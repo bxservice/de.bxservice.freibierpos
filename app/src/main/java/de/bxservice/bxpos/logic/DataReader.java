@@ -13,6 +13,7 @@ import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.webservices.DefaultPosDataWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
@@ -33,6 +34,7 @@ public class DataReader {
     private List<TableGroup> tableGroupList = new ArrayList<>();
     private List<MProduct> productList = new ArrayList<>();
     private List<ProductPrice> productPriceList = new ArrayList<>();
+    private DefaultPosData defaultData = null;
     private boolean error = false;
     private Context mContext;
 
@@ -71,6 +73,24 @@ public class DataReader {
 
         tableThread.run();
 
+        Thread tablePosData = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DefaultPosDataWebServiceAdapter dataWS = new DefaultPosDataWebServiceAdapter();
+                defaultData = dataWS.getDefaultPosData();
+                persistPosData();
+            }
+        });
+
+        tablePosData.run();
+
+    }
+
+    /**
+     * Save default data in the database
+     */
+    public void persistPosData() {
+        defaultData.saveData(mContext);
     }
 
     /**
@@ -117,10 +137,7 @@ public class DataReader {
                 productList      != null && !productList.isEmpty() &&
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
                 productPriceList != null && !productPriceList.isEmpty() &&
-                DefaultPosData.getInstance().getDefaultBPartner() != 0 &&
-                DefaultPosData.getInstance().getDefaultPriceList() != 0 &&
-                DefaultPosData.getInstance().getDefaultCurrency() != 0 &&
-                DefaultPosData.getInstance().getDefaultWarehouse() != 0) {
+               defaultData != null) {
             return true;
         }
 
