@@ -50,6 +50,7 @@ public class POSOrder implements Serializable {
     private int guestNumber;
     private String status;
     private BigDecimal totallines = BigDecimal.ZERO;
+    private boolean sync = false;
 
     public void addItem(MProduct product, Context ctx) {
 
@@ -214,6 +215,14 @@ public class POSOrder implements Serializable {
 
     public void setTable(Table table) {
         this.table = table;
+    }
+
+    public boolean isSync() {
+        return sync;
+    }
+
+    public void setSync(boolean sync) {
+        this.sync = sync;
     }
 
     /**
