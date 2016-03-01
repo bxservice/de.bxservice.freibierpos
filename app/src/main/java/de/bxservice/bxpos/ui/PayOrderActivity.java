@@ -3,7 +3,10 @@ package de.bxservice.bxpos.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -593,10 +596,15 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            DataWriter write = new DataWriter(getBaseContext(), order);
+            //Check if network connection is available
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                DataWriter write = new DataWriter(getBaseContext(), order);
 
-            if (write.isSuccess())
-                return true;
+                //if (write.isSuccess())
+                    return true;
+            }
 
             return false;
         }
@@ -605,7 +613,12 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         protected void onPostExecute(final Boolean success) {
 
             order.setStatus(POSOrder.COMPLETE_STATUS);
-            order.setSync(true);
+
+            if (success) {
+                order.setSync(true);
+            } else {
+                System.out.println("ASFGASDFDASDFAJSGDJAGSJHDGASJH");
+            }
             order.updateOrder(getBaseContext());
 
             if( order.getTable() != null) {
