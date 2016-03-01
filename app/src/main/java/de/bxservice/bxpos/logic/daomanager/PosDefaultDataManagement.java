@@ -31,7 +31,7 @@ public class PosDefaultDataManagement implements ObjectManagement, Serializable 
 
     @Override
     public DefaultPosData get(long id){
-        return null;
+        return dataMapper.getDefaultData(id);
     }
 
     @Override

@@ -11,8 +11,6 @@ import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
  */
 public class DefaultPosData {
 
-    private static volatile DefaultPosData instance = null;
-
     //Manager in charge to communicate with the database - not mixing the model and db layers
     private PosDefaultDataManagement dataManager;
 
@@ -21,15 +19,7 @@ public class DefaultPosData {
     private int defaultCurrency = 0;
     private int defaultWarehouse = 0;
 
-    public static synchronized DefaultPosData getInstance() {
-        if (instance == null) {
-            instance = new DefaultPosData();
-        }
-        return instance;
-    }
-
-
-    public int getDefaultBPartner() {
+   public int getDefaultBPartner() {
         return defaultBPartner;
     }
 
@@ -61,13 +51,26 @@ public class DefaultPosData {
         this.defaultWarehouse = defaultWarehouse;
     }
 
-    public boolean createData (Context ctx) {
+    /**
+     * Save data - if the default data was not previously saved it creates it
+     * otherwise it updates it
+     * @param ctx
+     * @return
+     */
+    public boolean saveData (Context ctx) {
         dataManager = new PosDefaultDataManagement(ctx);
+
+        if (dataManager.get(1) == null)
+            return createData(ctx);
+        else
+            return updateData(ctx);
+    }
+
+    private boolean createData (Context ctx) {
         return dataManager.create(this);
     }
 
-    public boolean updateData (Context ctx) {
-        dataManager = new PosDefaultDataManagement(ctx);
+    private boolean updateData (Context ctx) {
         return dataManager.update(this);
     }
 

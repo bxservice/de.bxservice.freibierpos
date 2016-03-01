@@ -430,4 +430,14 @@ public class DataMapper implements Serializable {
         return true;
     }
 
+    /**
+     * Return default data if exists
+     * @param id
+     * @return
+     */
+    public DefaultPosData getDefaultData(long id) {
+        PosDefaultDataHelper posDefaultDataHelper = new PosDefaultDataHelper(mContext);
+        return posDefaultDataHelper.getData(id);
+    }
+
 }

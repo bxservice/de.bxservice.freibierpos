@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 import java.util.Locale;
 
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -59,4 +60,9 @@ public class DataProvider {
     public POSOrder getPosOrder(Table table) {
         return dataMapper.getOpenPosOrder(table);
     }
+
+    public DefaultPosData getDefaultData() {
+        return dataMapper.getDefaultData(1);
+    }
+
 }
