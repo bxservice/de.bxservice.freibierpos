@@ -245,7 +245,6 @@ public class LoginActivity extends AppCompatActivity  {
                 return;
             }
             //Check if network connection is available
-            //TODO: if offline - login with the credentials saved from the user login0
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
