@@ -22,6 +22,7 @@ public class PosOrderContract {
         public static final String COLUMN_NAME_GUESTS       = "guestno";
         public static final String COLUMN_NAME_REMARK       = "remark";
         public static final String COLUMN_NAME_TOTALLINES   = "totallines";
+        public static final String COLUMN_NAME_SYNCHRONIZED = "isSynchronized";
 
     }
 

@@ -12,7 +12,7 @@ import de.bxservice.bxpos.logic.webservices.CreateOrderWebServiceAdapter;
  * to persist it in the database
  * Created by Diego Ruiz on 6/11/15.
  */
-public class DataWritter {
+public class DataWriter {
 
     static final String LOG_TAG = "Data Writter";
 
@@ -20,7 +20,7 @@ public class DataWritter {
     private Context mContext;
 
 
-    public DataWritter(Context ctx, final POSOrder order) {
+    public DataWriter(Context ctx, final POSOrder order) {
 
         Log.i(LOG_TAG, "Data Writter accessed");
 

@@ -20,7 +20,7 @@ import java.text.NumberFormat;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
-import de.bxservice.bxpos.logic.DataWritter;
+import de.bxservice.bxpos.logic.DataWriter;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
@@ -593,7 +593,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            DataWritter write = new DataWritter(getBaseContext(), order);
+            DataWriter write = new DataWriter(getBaseContext(), order);
 
             if (write.isSuccess())
                 return true;
@@ -605,6 +605,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         protected void onPostExecute(final Boolean success) {
 
             order.setStatus(POSOrder.COMPLETE_STATUS);
+            order.setSync(true);
             order.updateOrder(getBaseContext());
 
             if( order.getTable() != null) {

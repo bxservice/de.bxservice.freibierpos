@@ -45,6 +45,8 @@ public class PosOrderHelper extends PosObjectHelper {
         if(order.getTable() != null)
             values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID, order.getTable().getTableID());
 
+        int flag = (order.isSync()) ? 1 : 0;
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED, flag);
 
         // insert row
         long orderId = database.insert(Tables.TABLE_POSORDER, null, values);
@@ -96,6 +98,9 @@ public class PosOrderHelper extends PosObjectHelper {
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS, order.getGuestNumber());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK, order.getOrderRemark());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES, order.getTotallinesInteger());
+
+        int flag = (order.isSync()) ? 1 : 0;
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED, flag);
 
         if(order.getTable() != null)
             values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID, order.getTable().getTableID());
