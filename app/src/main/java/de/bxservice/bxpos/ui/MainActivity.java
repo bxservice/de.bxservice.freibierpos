@@ -13,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
@@ -141,7 +143,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         }*/ else if (id == R.id.nav_send) {
+            DataProvider dataProvider = new DataProvider(getBaseContext());
 
+            if (dataProvider.getUnsynchronizedOrders() != null && dataProvider.getUnsynchronizedOrders().size() != 0)
+                Toast.makeText(getBaseContext(), Integer.toString( dataProvider.getUnsynchronizedOrders().size()) + "Ordets to be  ",
+                    Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getBaseContext(), getString(R.string.no_unsync_orders),
+                        Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

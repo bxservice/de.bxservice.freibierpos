@@ -133,5 +133,8 @@
 
     <string name="unsent_lines">There are still items pending to be sent</string>
 
+    <!-- Navigation Drawer strings -->
+    <string name="synchronize">Synchronize</string>
+    <string name="no_unsync_orders">Great! All the orders are in iDempiere</string>
 
 </resources>
