@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.persistence.definition;
 
+import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
@@ -32,5 +33,8 @@ public interface Tables {
     String TABLE_PRODUCT = ProductContract.ProductDB.TABLE_NAME;
     String TABLE_PRODUCT_CATEGORY = ProductCategoryContract.ProductCategoryDB.TABLE_NAME;
     String TABLE_PRODUCT_PRICE = ProductPriceContract.ProductPriceDB.TABLE_NAME;
+
+    //Data to send request to iDempiere
+    String TABLE_DEFAULT_POS_DATA = DefaultPosDataContract.DefaultDataDB.TABLE_NAME;
 
 }

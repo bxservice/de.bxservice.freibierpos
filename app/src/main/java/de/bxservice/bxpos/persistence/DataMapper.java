@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
@@ -14,6 +15,7 @@ import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
+import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductCategoryHelper;
@@ -62,6 +64,8 @@ public class DataMapper implements Serializable {
             success = createProductPrice((ProductPrice) object);
         if(object instanceof MProduct)
             success = createProduct((MProduct) object);
+        if(object instanceof DefaultPosData)
+            success = createDefaultData((DefaultPosData) object);
 
         return success;
     }
@@ -82,6 +86,8 @@ public class DataMapper implements Serializable {
             success = updatePosOrderLine((POSOrderLine) object);
         if(object instanceof Table)
             success = updateTable((Table) object);
+        if(object instanceof DefaultPosData)
+            success = updateDefaultData((DefaultPosData) object);
         /*if(object instanceof TableGroup)
             success = createTableGroup((TableGroup) object);
         if(object instanceof ProductCategory)
@@ -395,6 +401,33 @@ public class DataMapper implements Serializable {
 
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
         return orderHelper.getOrder(table);
+    }
+
+    private boolean createDefaultData(DefaultPosData defaultPosData) {
+
+        PosDefaultDataHelper posDefaultDataHelper = new PosDefaultDataHelper(mContext);
+
+        if (posDefaultDataHelper.createData(defaultPosData) == -1) {
+            Log.e(LOG_TAG, "Cannot create default data ");
+            return false;
+        }
+        Log.i(LOG_TAG, "Default data for web services created");
+        return true;
+    }
+
+    private boolean updateDefaultData(DefaultPosData data) {
+
+        PosDefaultDataHelper posDefaultDataHelper = new PosDefaultDataHelper(mContext);
+
+        if (posDefaultDataHelper.updateData(data) != -1) {
+            Log.i(LOG_TAG, "Default data updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update default data");
+            return false;
+        }
+
+        return true;
     }
 
 }
