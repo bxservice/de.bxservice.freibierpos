@@ -1,5 +1,9 @@
 package de.bxservice.bxpos.logic.model.idempiere;
 
+import android.content.Context;
+
+import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
+
 /**
  * Default pos data read from iDempiere
  * POS Terminal
@@ -8,6 +12,10 @@ package de.bxservice.bxpos.logic.model.idempiere;
 public class DefaultPosData {
 
     private static volatile DefaultPosData instance = null;
+
+    //Manager in charge to communicate with the database - not mixing the model and db layers
+    private PosDefaultDataManagement dataManager;
+
     private int defaultBPartner = 0;
     private int defaultPriceList = 0;
     private int defaultCurrency = 0;
@@ -52,4 +60,15 @@ public class DefaultPosData {
     public void setDefaultWarehouse(int defaultWarehouse) {
         this.defaultWarehouse = defaultWarehouse;
     }
+
+    public boolean createData (Context ctx) {
+        dataManager = new PosDefaultDataManagement(ctx);
+        return dataManager.create(this);
+    }
+
+    public boolean updateData (Context ctx) {
+        dataManager = new PosDefaultDataManagement(ctx);
+        return dataManager.update(this);
+    }
+
 }

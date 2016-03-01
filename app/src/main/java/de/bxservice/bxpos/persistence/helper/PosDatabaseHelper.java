@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
 
+import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
@@ -26,7 +27,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -157,6 +158,20 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE + " NUMERIC" +
                     ")";
 
+    private static final String CREATE_DEFAULT_DATA_TABLE =
+            "CREATE TABLE " + Tables.TABLE_DEFAULT_POS_DATA +
+                    "(" +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER + " INTEGER NOT NULL" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST + " INTEGER NOT NULL" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_CURRENCY + " INTEGER NOT NULL" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE + " INTEGER NOT NULL" +
+                    ")";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -251,6 +266,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_PRICE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_DEFAULT_POS_DATA);
 
     }
 
@@ -264,6 +280,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PRODUCT_PRICE_TABLE);
         db.execSQL(CREATE_POSORDER_TABLE);
         db.execSQL(CREATE_POSORDER_LINE_TABLE);
+        db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");
