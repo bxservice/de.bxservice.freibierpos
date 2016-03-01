@@ -355,6 +355,12 @@ public class DataMapper implements Serializable {
         return orders;
     }
 
+    public List<POSOrder> getUnsynchronizedOrders() {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        List<POSOrder> orders = orderHelper.getUnsynchronizedOrders();
+        return orders;
+    }
+
     public ProductPrice getProductPriceByProduct(MProduct product) {
         PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
         ProductPrice productPrice = productPriceHelper.getProductPriceByProduct(product);

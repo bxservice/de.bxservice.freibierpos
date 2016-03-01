@@ -50,7 +50,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
 
         OpenOrderGridItem item;
         BigDecimal totalLines;
-        int qtyOrdered;
+
         for(POSOrder order : dataProvider.getAllOpenOrders()) {
             item = new OpenOrderGridItem();
             item.setOrderNo(getString(R.string.order) + ": " + String.valueOf(order.getOrderId()));

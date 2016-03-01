@@ -123,4 +123,14 @@
     <string name="to_pay"> Bezahlen</string>
     <string name="paid"> Bezahlt</string>
 
+    <string name="order">Auftrag</string>
+    <string name="unset_table">Zum mitnehmen/Bar</string>
+    <string name="table">Tisch</string>
+
+    <string name="unsent_lines">Es gibt noch ausstehende Elemente gesendet werden</string>
+
+    <!-- Activity titles strings -->
+    <string name="synchronize">Synchronisieren</string>
+    <string name="no_unsync_orders">Super! Alle Aufträge sind in iDempiere</string>
+
 </resources>

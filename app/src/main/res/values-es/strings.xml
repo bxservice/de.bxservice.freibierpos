@@ -131,6 +131,9 @@
 
     <string name="unsent_lines">Aún hay lineas sin enviar</string>
 
+    <!-- Activity titles strings -->
+    <string name="synchronize">Sincronizar</string>
+    <string name="no_unsync_orders">¡Enhorabuena! Todas las órdenes están en iDempiere</string>
 
 </resources>
 

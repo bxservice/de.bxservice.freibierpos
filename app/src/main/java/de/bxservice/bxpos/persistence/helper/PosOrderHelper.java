@@ -183,7 +183,7 @@ public class PosOrderHelper extends PosObjectHelper {
     }
 
     /**
-     * Get all products
+     * Get all open orders
      * @return
      */
     public ArrayList<POSOrder> getOpenOrders() {
@@ -213,6 +213,53 @@ public class PosOrderHelper extends PosObjectHelper {
                     order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
                 order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
                 order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
+                order.setSync(flag);
+
+                // adding to orders list
+                orders.add(order);
+            } while (c.moveToNext());
+        }
+
+        return orders;
+    }
+
+    /**
+     * Get all orders that were paid but were not sent to iDempiere
+     * @return
+     */
+    public ArrayList<POSOrder> getUnsynchronizedOrders() {
+        ArrayList<POSOrder> orders = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
+                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? " +
+                " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED + " = ?" ;
+
+
+        Log.e(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), Integer.toString(0)});
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+            do {
+                POSOrder order = new POSOrder();
+                order.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID)));
+                order.setStatus(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS)));
+                order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
+                order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
+                order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
+                if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
+                        c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
+                    order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
+                order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
+                order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
+                order.setSync(flag);
 
                 // adding to orders list
                 orders.add(order);
