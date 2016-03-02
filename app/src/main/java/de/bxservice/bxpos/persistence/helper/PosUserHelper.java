@@ -57,6 +57,8 @@ public class PosUserHelper extends PosObjectHelper {
         td.setUsername((c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME))));
         td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD)));
 
+        c.close();
+
         return td;
     }
 
@@ -82,6 +84,8 @@ public class PosUserHelper extends PosObjectHelper {
         td.setId(c.getInt(c.getColumnIndex(UserContract.User.COLUMN_NAME_USER_ID)));
         td.setUsername((c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME))));
         td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD)));
+
+        c.close();
 
         return td;
     }

@@ -68,6 +68,8 @@ public class PosProductPriceHelper extends PosObjectHelper {
         productPrice.setStdPriceFromInt(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE)));
         productPrice.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID))));
 
+        c.close();
+
         return productPrice;
     }
 
@@ -93,6 +95,8 @@ public class PosProductPriceHelper extends PosObjectHelper {
         productPrice.setPriceListVersionID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID)));
         productPrice.setStdPriceFromInt(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE)));
         productPrice.setProduct(product);
+
+        c.close();
 
         return productPrice;
     }
@@ -138,6 +142,7 @@ public class PosProductPriceHelper extends PosObjectHelper {
                 // adding to category list
                 productPrices.add(productPrice);
             } while (c.moveToNext());
+            c.close();
         }
 
         return productPrices;

@@ -62,6 +62,8 @@ public class PosProductHelper extends PosObjectHelper {
         product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
         product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
 
+        c.close();
+
         return product;
     }
 
@@ -107,6 +109,7 @@ public class PosProductHelper extends PosObjectHelper {
 
                 products.add(product);
             } while (c.moveToNext());
+            c.close();
         }
 
         return products;
@@ -137,6 +140,7 @@ public class PosProductHelper extends PosObjectHelper {
 
                 products.add(product);
             } while (c.moveToNext());
+            c.close();
         }
 
         return products;
