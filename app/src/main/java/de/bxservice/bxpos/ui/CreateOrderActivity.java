@@ -62,7 +62,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
 
     private PagerSlidingTabStrip tabs;
-    private View mTabFormView;
     private DataProvider dataProvider;
 
     //RecyclerView attributes for search functionality
@@ -166,9 +165,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                     openConfirmationActivity();
             }
         });
-
-        mTabFormView = findViewById(R.id.createOrderContainer);
-
+        
     }
 
     /**
@@ -230,12 +227,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mTabFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mTabFormView.animate().setDuration(shortAnimTime).alpha(
+            mViewPager.setVisibility(show ? View.GONE : View.VISIBLE);
+            mViewPager.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mTabFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mViewPager.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
@@ -266,7 +263,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             recyclerView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mTabFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mViewPager.setVisibility(show ? View.GONE : View.VISIBLE);
             tabs.setVisibility(show ? View.GONE : View.VISIBLE);
             if (sendActionButton.getVisibility() == View.VISIBLE)
                 sendActionButton.hide();
