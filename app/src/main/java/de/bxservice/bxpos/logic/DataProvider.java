@@ -15,7 +15,7 @@ import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * Class in charge to provide the necessary objects to the UI
- * it comunicates to the database via Data Mapper
+ * it communicates to the database via Data Mapper
  * Created by Diego Ruiz on 30/12/15.
  */
 public class DataProvider {

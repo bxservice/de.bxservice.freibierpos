@@ -45,7 +45,7 @@ public abstract class AbstractWSObject {
         login.setClientID(Integer.parseInt(wsData.getClientId()));
         login.setRoleID(Integer.parseInt(wsData.getRoleId()));
         login.setOrgID(Integer.parseInt(wsData.getOrgId()));
-        login.setWarehouseID(Integer.parseInt(wsData.getWarehosueId()));
+        login.setWarehouseID(Integer.parseInt(wsData.getWarehouseId()));
     }
 
     public void initClient(){

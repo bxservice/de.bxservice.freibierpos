@@ -63,7 +63,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
         data.addField("PaymentRule", "B"); //Cash //TODO: Multi payment type
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
-        //data.addField("SalesRep_ID", "101"); //Removed because beforesave puts the context user that send the ws request
+        //data.addField("SalesRep_ID", "101"); //Removed because before save puts the context user that send the ws request
         createOrder.setDataRow(data);
 
         compositeOperation.addOperation(createOrder);

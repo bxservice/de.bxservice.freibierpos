@@ -27,21 +27,21 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
         // each data item is just a string in this case
         public TextView txtQty;
         public TextView txtProductName;
-        public TextView txtPtice;
+        public TextView txtPrice;
 
         public OrderedLineViewHolder(View v) {
             super(v);
 
             txtQty         = (TextView) itemView.findViewById(R.id.lblQty2);
             txtProductName = (TextView) itemView.findViewById(R.id.lblName2);
-            txtPtice       = (TextView) itemView.findViewById(R.id.lblpriceline2);
+            txtPrice = (TextView) itemView.findViewById(R.id.lblpriceline2);
 
         }
 
         public void bindOrderLine(POSOrderLine orderLine) {
             txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
             txtProductName.setText(orderLine.getProduct().getProductName());
-            txtPtice.setText(orderLine.getLineTotalAmt());
+            txtPrice.setText(orderLine.getLineTotalAmt());
         }
     }
 
