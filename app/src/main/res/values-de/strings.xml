@@ -127,7 +127,7 @@
     <string name="unset_table">Zum mitnehmen/Bar</string>
     <string name="table">Tisch</string>
 
-    <string name="unsent_lines">Es gibt noch ausstehende Elemente gesendet werden</string>
+    <string name="unsent_lines">Es gibt Bestellung noch Gegenstände warten</string>
     <string name="error_no_connection_on_pay_order">Keine Internetverbindung! Die Aufträge werden später synchronisiert werden</string>
 
     <!-- Activity titles strings -->
