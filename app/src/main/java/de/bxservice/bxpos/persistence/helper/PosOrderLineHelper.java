@@ -46,9 +46,8 @@ public class PosOrderLineHelper extends PosObjectHelper {
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT, orderLine.getLineNetAmtInteger());
 
         // insert row
-        long orderLineId = database.insert(Tables.TABLE_POSORDER_LINE, null, values);
 
-        return orderLineId;
+        return database.insert(Tables.TABLE_POSORDER_LINE, null, values);
     }
 
     /*

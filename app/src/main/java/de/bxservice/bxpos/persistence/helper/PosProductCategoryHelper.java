@@ -36,9 +36,8 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME, productCategory.getName());
 
         // insert row
-        long productCategoryId = db.insert(Tables.TABLE_PRODUCT_CATEGORY, null, values);
 
-        return productCategoryId;
+        return db.insert(Tables.TABLE_PRODUCT_CATEGORY, null, values);
     }
 
     /*

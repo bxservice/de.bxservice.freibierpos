@@ -322,8 +322,7 @@ public class DataMapper implements Serializable {
 
     public List<TableGroup> getAllTableGroups() {
         PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
-        List<TableGroup> tableGroups = tableGroupHelper.getAllTableGroups();
-        return tableGroups;
+        return tableGroupHelper.getAllTableGroups();
     }
 
     public Table getTable(long id) {
@@ -345,32 +344,27 @@ public class DataMapper implements Serializable {
 
     public List<ProductCategory> getAllCategories() {
         PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
-        List<ProductCategory> productCategories = productCategoryHelper.getAllProductCategories();
-        return productCategories;
+        return productCategoryHelper.getAllProductCategories();
     }
 
     public List<MProduct> getAllProducts() {
         PosProductHelper productHelper = new PosProductHelper(mContext);
-        List<MProduct> products = productHelper.getAllProducts();
-        return products;
+        return productHelper.getAllProducts();
     }
 
     public List<POSOrder> getOpenOrders() {
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
-        List<POSOrder> orders = orderHelper.getOpenOrders();
-        return orders;
+        return orderHelper.getOpenOrders();
     }
 
     public List<POSOrder> getUnsynchronizedOrders() {
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
-        List<POSOrder> orders = orderHelper.getUnsynchronizedOrders();
-        return orders;
+        return orderHelper.getUnsynchronizedOrders();
     }
 
     public ProductPrice getProductPriceByProduct(MProduct product) {
         PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
-        ProductPrice productPrice = productPriceHelper.getProductPriceByProduct(product);
-        return productPrice;
+        return productPriceHelper.getProductPriceByProduct(product);
     }
 
     private boolean removePosOrder(POSOrder order) {
