@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FreiBier POS</string>
     <string name="bx_pos">BX POS</string>
+    <string name="powered_by">Powered by BX Service</string>
 
     <string name="navigation_drawer_open">Abrir panel de navegación</string>
     <string name="navigation_drawer_close">Cerrar panel de navegación</string>
@@ -128,16 +129,20 @@
     <string name="order">Orden</string>
     <string name="unset_table">Para llevar/Barra</string>
     <string name="table">Mesa</string>
+    <string name="percentage_sign">%</string>
+    <string name="currency_symbol">€</string>
 
-    <string name="unsent_lines">Aún hay lineas sin enviar</string>
+    <string name="unsent_lines">Aún hay líneas sin enviar</string>
     <string name="error_no_connection_on_pay_order">No hay conexión a internet! Las órdenes serán sincronizadas luego</string>
     <string name="error_no_connection_on_sync_order">No hay conexión a internet. Intente más adelante</string>
 
     <string name="success_on_sync_order">Órdenes sincronizadas</string>
 
-    <!-- Activity titles strings -->
+    <!-- Navigation Drawer strings -->
     <string name="synchronize">Sincronizar</string>
     <string name="no_unsync_orders">¡Enhorabuena! Todas las órdenes están en iDempiere</string>
+    <string name="comm_category">Comunicación</string>
+
 
 </resources>
 

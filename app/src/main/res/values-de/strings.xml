@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FreiBier POS</string>
     <string name="bx_pos">BX POS</string>
+    <string name="powered_by">Powered by BX Service</string>
 
     <string name="navigation_drawer_open"> Offene Navigationsleiste </string>
     <string name="navigation_drawer_close"> Schließen Navigationsleiste</string>
@@ -114,6 +115,7 @@
     <string name="decimal">.</string>
     <string name="del"> Löschen</string>
     <string name="clr">Clr</string>
+    <string name="exact">Exakt</string>
     <string name="pay">Bezahlen</string>
     <string name="set_extra"> Zuschlag</string>
     <string name="add_discount"> Rabatt</string>
@@ -125,6 +127,8 @@
     <string name="change"> Veränderung</string>
     <string name="to_pay"> Bezahlen</string>
     <string name="paid"> Bezahlt</string>
+    <string name="percentage_sign">%</string>
+    <string name="currency_symbol">€</string>
 
     <string name="order">Auftrag</string>
     <string name="unset_table">Zum mitnehmen/Bar</string>
@@ -136,8 +140,10 @@
 
     <string name="success_on_sync_order">Bestellungen synchronisiert</string>
 
-    <!-- Activity titles strings -->
+    <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronisieren</string>
     <string name="no_unsync_orders">Super! Alle Aufträge sind in iDempiere</string>
+    <string name="comm_category">Kommunikation</string>
+
 
 </resources>

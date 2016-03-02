@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FreiBier POS</string>
     <string name="bx_pos">BX POS</string>
+    <string name="powered_by">Powered by BX Service</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -75,6 +76,7 @@
     <string name="pref_header_general">Server</string>
 
     <string name="pref_title_display_name">Server URL</string>
+    <string name="pref_default_display_name">URL</string>
     <string name="organization">Organization ID</string>
     <string name="client">Client ID</string>
     <string name="role_id">Role ID</string>
@@ -140,6 +142,7 @@
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronize</string>
     <string name="no_unsync_orders">Great! All the orders are in iDempiere</string>
+    <string name="comm_category">Communication</string>
 
 
 </resources>
