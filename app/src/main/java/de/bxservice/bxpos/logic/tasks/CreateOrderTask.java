@@ -13,26 +13,32 @@ import de.bxservice.bxpos.ui.PayOrderActivity;
  * the order to iDempiere
  * Created by Diego Ruiz on 2/03/16.
  */
-public class CreateOrderTask extends AsyncTask<Void, Void, Boolean> {
+public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
-
-    private POSOrder order;
     private Activity mActivity;
 
-    public CreateOrderTask(POSOrder order, Activity callerActivity) {
-        this.order = order;
+    public CreateOrderTask(Activity callerActivity) {
+        //this.order = order;
         mActivity = callerActivity;
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
-        DataWriter write = new DataWriter(mActivity.getBaseContext(), order);
-        return write.isSuccess();
+    protected Boolean doInBackground(POSOrder... orders) {
+
+        DataWriter write;
+        boolean success = true;
+
+        for(POSOrder order : orders) {
+            write = new DataWriter(mActivity.getBaseContext(), order);
+            order.payOrder(true, mActivity.getBaseContext());
+            success = write.isSuccess();
+        }
+
+        return success;
     }
 
     @Override
     protected void onPostExecute(final Boolean success) {
-        order.payOrder(true, mActivity.getBaseContext());
 
         if (mActivity instanceof PayOrderActivity)
             ((PayOrderActivity) mActivity).postExecuteTask(success);
