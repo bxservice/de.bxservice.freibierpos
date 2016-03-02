@@ -57,7 +57,7 @@ public class CourtesyDialogFragment extends DialogFragment {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        subTotalLabel.setText(getString(R.string.subtotal) + ": " + currencyFormat.format(getSubtotal()));
+        subTotalLabel.setText(getString(R.string.subtotal_courtesy, currencyFormat.format(getSubtotal())));
 
         final EditText surchargePercentText = (EditText) view.findViewById(R.id.surcharge_percent);
         final EditText surchargeAmountText = (EditText) view.findViewById(R.id.surcharge_amount);
