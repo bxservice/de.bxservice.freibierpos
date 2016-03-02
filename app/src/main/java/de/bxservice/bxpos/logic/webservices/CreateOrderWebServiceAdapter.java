@@ -24,7 +24,6 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
     private static final String DOCUMENT_NO_PREFIX = "BX-POS";
     private boolean success;
-    private POSOrder order;
 
     public CreateOrderWebServiceAdapter(POSOrder order) {
         super(order);
@@ -39,8 +38,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     @Override
     public void queryPerformed() {
 
-        order = (POSOrder) getParameter();
-
+        POSOrder order = (POSOrder) getParameter();
 
         CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
         compositeOperation.setLogin(getLogin());

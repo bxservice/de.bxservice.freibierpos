@@ -17,14 +17,10 @@ public class DataWriter {
     static final String LOG_TAG = "Data Writter";
 
     private boolean success = false;
-    private Context mContext;
 
-
-    public DataWriter(Context ctx, final POSOrder order) {
+    public DataWriter(final POSOrder order) {
 
         Log.i(LOG_TAG, "Data Writter accessed");
-
-        mContext = ctx;
 
         Thread createOrderThread = new Thread(new Runnable() {
             @Override

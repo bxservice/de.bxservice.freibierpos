@@ -30,7 +30,7 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         boolean success = true;
 
         for(POSOrder order : orders) {
-            write = new DataWriter(mActivity.getBaseContext(), order);
+            write = new DataWriter(order);
             order.payOrder(true, mActivity.getBaseContext());
             success = write.isSuccess();
         }

@@ -21,12 +21,10 @@ import de.bxservice.bxpos.persistence.DataMapper;
 public class DataProvider {
 
     private DataMapper dataMapper;
-    private Context mContext;
     public static final Locale LOCALE = Locale.GERMANY;
 
     public DataProvider(Context ctx) {
-        mContext = ctx;
-        dataMapper = new DataMapper(mContext);
+        dataMapper = new DataMapper(ctx);
     }
 
     public long getTotalTableGroups() {

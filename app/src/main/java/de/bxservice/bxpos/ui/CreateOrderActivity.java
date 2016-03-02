@@ -62,7 +62,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
 
     private PagerSlidingTabStrip tabs;
-    private DataProvider dataProvider;
 
     //RecyclerView attributes for search functionality
     private RecyclerView recyclerView;
@@ -176,7 +175,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         ProductPrice productPrice;
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        dataProvider = new DataProvider(getBaseContext());
+        DataProvider dataProvider = new DataProvider(getBaseContext());
 
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
