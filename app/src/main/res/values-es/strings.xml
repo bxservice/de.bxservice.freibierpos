@@ -50,7 +50,7 @@
     <string name="title_activity_edit_order">Editar orden</string>
     <string name="title_activity_create_order">Nueva orden</string>
     <string name="title_activity_add_items">Añadir items</string>
-    <string name="title_activity_view_open_orders">Ordenes Abiertas</string>
+    <string name="title_activity_view_open_orders">Órdenes abiertas</string>
     <string name="title_activity_create_reservation">Reservación</string>
     <string name="title_activity_login">Acceder</string>
 
