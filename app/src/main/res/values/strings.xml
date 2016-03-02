@@ -29,8 +29,8 @@
     <string name="set_table">Set table</string>
     <string name="remove">Remove</string>
     <string name="send_items">Send</string>
-    <string name="synchronize_orders_title">Synchronisieren Sie Aufträge?</string>
-    <string name="synchronize_orders_message">Synchronisieren Sie %1$s Aufträge mit ADempiere?</string>
+    <string name="synchronize_orders_title">Synchronize orders?</string>
+    <string name="synchronize_orders_message">Synchronize %1$s with iDempiere?</string>
 
 
     <!-- Strings related to login -->
