@@ -6,12 +6,14 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -560,15 +562,15 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             createOrderTask.execute((Void) null);
 
         }else { //No internet connection
-        /*
-            // If the sync configuration chosen was Always the order cannot be unsynchronized
+
+            // If the sync configuration chosen was Always the order has to be send
             if("0".equals(syncConnPref)) {
                 Snackbar snackbar = Snackbar
-                        .make(mLoginFormView, getString(R.string.error_no_connection), Snackbar.LENGTH_LONG)
+                        .make(mPayFormView, getString(R.string.error_no_connection), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.action_retry), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                attemptLogin();
+                                attemptSynchronizeOrder();
                             }
                         });
 
@@ -576,7 +578,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 snackbar.setActionTextColor(Color.RED);
                 snackbar.show();
             } else {
-
+/*
                 PosUser loggedUser = getLoggedUser(username);
 
                 //Username does not exist and no internet connection
@@ -596,8 +598,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 } else {
                     //No internet connection but the user is known
                     offlineLogin(loggedUser);
-                }
-            }*/
+                }*/
+            }
         }
 
     }
