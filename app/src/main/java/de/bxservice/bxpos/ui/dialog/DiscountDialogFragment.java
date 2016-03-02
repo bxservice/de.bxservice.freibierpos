@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
@@ -70,7 +71,7 @@ public class DiscountDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 discountAmountText.removeTextChangedListener(amountWatcher);
-                discountAmountText.setText(discountAmount.toString());
+                discountAmountText.setText(String.format(Locale.getDefault(), discountAmount.toString()));
                 discountAmountText.addTextChangedListener(amountWatcher);
             }
 
@@ -100,7 +101,7 @@ public class DiscountDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 discountPercentText.removeTextChangedListener(percentWatcher);
-                discountPercentText.setText(discountPercent.toString());
+                discountPercentText.setText(String.format(Locale.getDefault(), discountPercent.toString()));
                 discountPercentText.addTextChangedListener(percentWatcher);
             }
 
@@ -125,7 +126,7 @@ public class DiscountDialogFragment extends DialogFragment {
         discountAmountText.addTextChangedListener(amountWatcher);
 
         if (!discountAmount.equals(BigDecimal.ZERO))
-            discountAmountText.setText(discountAmount.toString());
+            discountAmountText.setText(String.format(Locale.getDefault(), discountAmount.toString()));
 
         builder.setTitle(R.string.add_discount);
         builder.setView(view)
