@@ -77,7 +77,7 @@ public class POSOrder implements Serializable {
             posOrderLine.setOrder(this);
             posOrderLine.setProduct(product);
             posOrderLine.setQtyOrdered(1); //If new item - is the first item that is added
-            posOrderLine.setLineStatus(posOrderLine.ORDERING);
+            posOrderLine.setLineStatus(POSOrderLine.ORDERING);
             posOrderLine.setLineNo(currentLineNo);
 
             orderingLines.add(posOrderLine);
