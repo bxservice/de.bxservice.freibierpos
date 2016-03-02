@@ -56,7 +56,7 @@ public class PosUser extends UserContract.User {
     }
 
     public boolean changePassword(String password, Context ctx) {
-        setPassword(password);
+        this.password = password;
         return updateUser(ctx);
     }
 
