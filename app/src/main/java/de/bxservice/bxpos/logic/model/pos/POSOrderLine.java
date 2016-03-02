@@ -180,9 +180,4 @@ public class POSOrderLine implements Serializable {
         return lineManager.remove(this);
     }
 
-    public POSOrderLine clone() {
-        POSOrderLine newLine = this;
-
-        return newLine;
-    }
 }
