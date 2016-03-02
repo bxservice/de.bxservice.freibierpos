@@ -29,14 +29,14 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
-import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
+import de.bxservice.bxpos.ui.dialog.SurchargeDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
 import de.bxservice.bxpos.ui.dialog.PaymentCompletedDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
 
 public class PayOrderActivity extends AppCompatActivity implements RemarkDialogFragment.RemarkDialogListener,
-        CourtesyDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener,
+        SurchargeDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener,
         PaymentCompletedDialogFragment.PaymentCompletedListener, View.OnLongClickListener {
 
     static final String LOG_TAG = "Pay Order Activity";
@@ -405,10 +405,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     private void showCourtesyDialog() {
-        CourtesyDialogFragment courtesyDialog = new CourtesyDialogFragment();
+        SurchargeDialogFragment courtesyDialog = new SurchargeDialogFragment();
         courtesyDialog.setSubtotal(subtotal);
         courtesyDialog.setSurchargeAmount(surcharge);
-        courtesyDialog.show(getFragmentManager(), "CourtesyDialogFragment");
+        courtesyDialog.show(getFragmentManager(), "SurchargeDialogFragment");
     }
 
     /**
@@ -416,7 +416,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @param dialog
      */
     @Override
-    public void onDialogPositiveClick(CourtesyDialogFragment dialog) {
+    public void onDialogPositiveClick(SurchargeDialogFragment dialog) {
         // User touched the dialog's positive button
         surcharge = dialog.getSurchargeAmount();
         //order.setSurcharge(); //TODO Create

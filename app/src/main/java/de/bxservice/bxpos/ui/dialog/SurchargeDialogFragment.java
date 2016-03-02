@@ -23,13 +23,13 @@ import de.bxservice.bxpos.logic.DataProvider;
 /**
  * Created by Diego Ruiz on 22/02/16.
  */
-public class CourtesyDialogFragment extends DialogFragment {
+public class SurchargeDialogFragment extends DialogFragment {
 
     /* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface CourtesyDialogListener {
-        void onDialogPositiveClick(CourtesyDialogFragment dialog);
+        void onDialogPositiveClick(SurchargeDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
@@ -131,12 +131,12 @@ public class CourtesyDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         setSurchargeAmount(new BigDecimal(surchargeAmountText.getText().toString()));
-                        mListener.onDialogPositiveClick(CourtesyDialogFragment.this);
+                        mListener.onDialogPositiveClick(SurchargeDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        CourtesyDialogFragment.this.getDialog().cancel();
+                        SurchargeDialogFragment.this.getDialog().cancel();
                     }
                 });
 
