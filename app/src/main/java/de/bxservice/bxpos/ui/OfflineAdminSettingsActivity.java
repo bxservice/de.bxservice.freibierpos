@@ -56,6 +56,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
                 startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                finish();
                 return true;
             }
             return true;
