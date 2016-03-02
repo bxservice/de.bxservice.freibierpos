@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/event_title"
+        android:hint="@string/add"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:paddingBottom="4dp"
