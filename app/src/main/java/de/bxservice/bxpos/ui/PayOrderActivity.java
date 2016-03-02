@@ -498,6 +498,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private void onQuickPay() {
         paidAmount = getTotal();
         onClear();
+        updatePaidField();
         completePayment();
     }
 
@@ -513,6 +514,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         //Paid amount bigger than the total or same as total
         if (paidAmount.compareTo(getTotal()) == 1 || paidAmount.compareTo(getTotal()) == 0) {
             onClear();
+            updatePaidField();
             completePayment();
         }
     }
