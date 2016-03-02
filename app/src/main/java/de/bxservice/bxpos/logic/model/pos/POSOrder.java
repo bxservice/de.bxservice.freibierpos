@@ -105,7 +105,7 @@ public class POSOrder implements Serializable {
      * Remove all items that were not send
      */
     public void removeOrderingItems() {
-        int orderingSize = getOrderingLines().size();
+        int orderingSize = orderingLines.size();
         for (int i = 0; i < orderingSize; i++)
             removeItem(0);
     }
@@ -286,7 +286,7 @@ public class POSOrder implements Serializable {
      */
     public BigDecimal getTotallines() {
         totallines = BigDecimal.ZERO;
-        for (POSOrderLine orderLine : getOrderedLines()) {
+        for (POSOrderLine orderLine : orderedLines) {
             totallines = orderLine.getLineNetAmt().add(totallines);
         }
         return totallines;
@@ -350,7 +350,7 @@ public class POSOrder implements Serializable {
 
     public void completeOrder() {
         status = SENT_STATUS;
-        for (POSOrderLine orderLine : getOrderingLines()) {
+        for (POSOrderLine orderLine : orderingLines) {
             orderLine.completeLine();
             orderLine.updateLine(null);
             orderedLines.add(orderLine);
@@ -379,7 +379,7 @@ public class POSOrder implements Serializable {
 
     public void uncompleteOrder() {
         status = DRAFT_STATUS;
-        for (POSOrderLine orderLine : getOrderedLines()) {
+        for (POSOrderLine orderLine : orderedLines) {
             orderLine.uncompleteLine();
             orderLine.updateLine(null);
             orderingLines.add(orderLine);
