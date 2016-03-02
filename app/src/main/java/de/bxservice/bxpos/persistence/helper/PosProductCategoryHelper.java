@@ -49,7 +49,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_CATEGORY + " WHERE "
                 + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " = " + productCategory_id;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -85,7 +85,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         List<ProductCategory> productCategories = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_CATEGORY;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);

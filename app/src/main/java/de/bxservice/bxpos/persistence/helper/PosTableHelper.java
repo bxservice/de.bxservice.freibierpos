@@ -52,7 +52,7 @@ public class PosTableHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE + " WHERE "
                 + TableContract.TableDB.COLUMN_NAME_TABLE_ID + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table_id)});
 
@@ -97,7 +97,7 @@ public class PosTableHelper extends PosObjectHelper {
         List<Table> tables = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
@@ -134,7 +134,7 @@ public class PosTableHelper extends PosObjectHelper {
                 " WHERE " + TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID
                 + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(tableGroup.getTableGroupID())});

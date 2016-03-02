@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity  {
             dummyUser.createUser(getApplicationContext());
         }
         else {
-            Log.e(LOG_TAG, "Dummy user exists FreiBierAdmin");
+            Log.i(LOG_TAG, "Dummy user exists FreiBierAdmin");
         }
     }
 

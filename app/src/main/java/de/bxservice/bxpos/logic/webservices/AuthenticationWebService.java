@@ -35,14 +35,14 @@ public class AuthenticationWebService extends AbstractWSObject{
             CompositeResponse response = client.sendRequest(compositeOperation);
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
-                Log.i("Error: ", response.getErrorMessage());
+                Log.e("Error: ", response.getErrorMessage());
                 success = false;
             } else {
                 success = true;
             }
 
         } catch (Exception e) {
-            Log.i("Exception: ", e.getMessage());
+            Log.e("Exception: ", e.getMessage());
             success = false;
         }
     }
