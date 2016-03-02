@@ -1,7 +1,6 @@
 package de.bxservice.bxpos.logic.tasks;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import de.bxservice.bxpos.logic.DataWriter;
