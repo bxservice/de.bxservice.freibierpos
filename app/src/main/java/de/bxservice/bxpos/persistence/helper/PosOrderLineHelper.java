@@ -111,7 +111,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
                 " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID
                 + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId())});
@@ -150,7 +150,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
                 " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ? AND " +
                 " orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId()), status});

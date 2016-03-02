@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,6 +45,8 @@ import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
+
+    private static final String LOG_TAG = "Main Activity";
 
     static final int NEW_ORDER_REQUEST  = 1;  // The request code
     static final int EDIT_ORDER_REQUEST = 2;  // The request code
@@ -336,7 +339,7 @@ public class MainActivity extends AppCompatActivity
                             }
 
                         } catch (Exception e) {
-
+                            Log.e(LOG_TAG, e.toString());
                         }
                     }
                 });

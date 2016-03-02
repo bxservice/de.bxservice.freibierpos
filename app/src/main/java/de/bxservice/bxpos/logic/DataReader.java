@@ -140,7 +140,7 @@ public class DataReader {
             return true;
         }
 
-        Log.i(LOG_TAG, "missing data");
+        Log.e(LOG_TAG, "missing data");
 
         return false;
     }
@@ -167,7 +167,7 @@ public class DataReader {
             }
         }
         else {
-            Log.i(LOG_TAG, "missing products");
+            Log.e(LOG_TAG, "missing products");
             error = true;
         }
 

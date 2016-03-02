@@ -42,7 +42,7 @@ public class PosUserHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_USER + " WHERE "
                 + UserContract.User.COLUMN_NAME_USER_ID + " = " + todo_id;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -70,7 +70,7 @@ public class PosUserHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_USER + " WHERE "
                 + UserContract.User.COLUMN_NAME_USERNAME + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, new String[] {username});
 

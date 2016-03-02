@@ -61,7 +61,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_DEFAULT_POS_DATA + " WHERE "
                 + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, new String[] { String.valueOf(data_id) });
 

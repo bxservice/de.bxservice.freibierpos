@@ -49,7 +49,7 @@ public class PosProductHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " WHERE "
                 + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = " + product_id;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -93,7 +93,7 @@ public class PosProductHelper extends PosObjectHelper {
                 " WHERE product." + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID
                 + " = ?";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(productCategory.getProductCategoryID())});
@@ -124,7 +124,7 @@ public class PosProductHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT +
                 " ORDER BY " + ProductContract.ProductDB.COLUMN_NAME_NAME;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);

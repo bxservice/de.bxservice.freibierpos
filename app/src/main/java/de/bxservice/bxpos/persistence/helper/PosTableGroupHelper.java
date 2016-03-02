@@ -50,7 +50,7 @@ public class PosTableGroupHelper extends PosObjectHelper {
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE_GROUP + " WHERE "
                 + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + " = " + tablegroup_id;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -90,7 +90,7 @@ public class PosTableGroupHelper extends PosObjectHelper {
         List<TableGroup> tableGroups = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE_GROUP;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);

@@ -120,7 +120,7 @@ public class PosOrderHelper extends PosObjectHelper {
         List<POSOrder> orders = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER;
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
@@ -165,7 +165,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 + PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " = ? AND "
                 + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? ";
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table.getTableID()), POSOrder.SENT_STATUS});
 
@@ -200,7 +200,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " <> ? ";
 
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS)});
@@ -246,7 +246,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED + " = ?" ;
 
 
-        Log.e(LOG_TAG, selectQuery);
+        Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), Integer.toString(0)});
