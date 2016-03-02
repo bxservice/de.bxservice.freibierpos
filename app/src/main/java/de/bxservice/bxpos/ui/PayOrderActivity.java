@@ -574,8 +574,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         if (networkInfo != null && networkInfo.isConnected()) {
 
             showProgress(true);
-            createOrderTask = new CreateOrderTask(order, this);
-            createOrderTask.execute((Void) null);
+            createOrderTask = new CreateOrderTask(this);
+            createOrderTask.execute(order);
 
         }else { //No internet connection
 

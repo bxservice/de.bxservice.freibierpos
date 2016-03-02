@@ -189,11 +189,10 @@ public class MainActivity extends AppCompatActivity
 
         //When no internet connection
         if (networkInfo != null && networkInfo.isConnected()) {
-            //TODO: Logic to synchronize the pending orders
-            for(POSOrder order : unsynchronizedOrders) {
-                CreateOrderTask createOrderTask = new CreateOrderTask(order, this);
-                createOrderTask.execute((Void) null);
-            }
+            CreateOrderTask createOrderTask = new CreateOrderTask(this);
+            //Convert from List to POSOrder[] to send as a parameter to the async task
+            POSOrder[] orderArray = unsynchronizedOrders.toArray(new POSOrder[0]);
+            createOrderTask.execute(orderArray);
         }
         else
             Toast.makeText(getBaseContext(), getString(R.string.error_no_connection_on_sync_order),
