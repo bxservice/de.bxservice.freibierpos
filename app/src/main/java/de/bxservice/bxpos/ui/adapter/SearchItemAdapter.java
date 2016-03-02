@@ -61,8 +61,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
 
         v.setOnClickListener(this);
 
-        SearchItemViewHolder vh = new SearchItemViewHolder(v);
-        return vh;
+        return new SearchItemViewHolder(v);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {

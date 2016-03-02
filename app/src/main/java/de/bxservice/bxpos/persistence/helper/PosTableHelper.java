@@ -39,9 +39,8 @@ public class PosTableHelper extends PosObjectHelper {
         values.put(TableContract.TableDB.COLUMN_NAME_VALUE, table.getValue());
 
         // insert row
-        long tableId = db.insert(Tables.TABLE_TABLE, null, values);
 
-        return tableId;
+        return db.insert(Tables.TABLE_TABLE, null, values);
     }
 
     /*

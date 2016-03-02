@@ -31,9 +31,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE, data.getDefaultWarehouse());
 
         // insert row
-        long dataId = database.insert(Tables.TABLE_DEFAULT_POS_DATA, null, values);
 
-        return dataId;
+        return database.insert(Tables.TABLE_DEFAULT_POS_DATA, null, values);
     }
 
     /*

@@ -37,9 +37,8 @@ public class PosTableGroupHelper extends PosObjectHelper {
         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
 
         // insert row
-        long tablegroupId = db.insert(Tables.TABLE_TABLE_GROUP, null, values);
 
-        return tablegroupId;
+        return db.insert(Tables.TABLE_TABLE_GROUP, null, values);
     }
 
     /*

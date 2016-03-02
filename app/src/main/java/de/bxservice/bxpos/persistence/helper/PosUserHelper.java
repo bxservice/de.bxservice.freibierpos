@@ -29,9 +29,8 @@ public class PosUserHelper extends PosObjectHelper {
         values.put(UserContract.User.COLUMN_NAME_PASSWORD, user.getPassword());
 
         // insert row
-        long userId = database.insert(Tables.TABLE_USER, null, values);
 
-        return userId;
+        return database.insert(Tables.TABLE_USER, null, values);
     }
 
     /*

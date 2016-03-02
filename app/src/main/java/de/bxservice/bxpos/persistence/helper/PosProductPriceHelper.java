@@ -38,9 +38,8 @@ public class PosProductPriceHelper extends PosObjectHelper {
         values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE, productPrice.getIntegerStdPrice());
 
         // insert row
-        long productPriceId = db.insert(Tables.TABLE_PRODUCT_PRICE, null, values);
 
-        return productPriceId;
+        return db.insert(Tables.TABLE_PRODUCT_PRICE, null, values);
     }
 
     /*

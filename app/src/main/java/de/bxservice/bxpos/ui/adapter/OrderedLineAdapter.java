@@ -62,8 +62,7 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
 
         v.setOnClickListener(this);
 
-        OrderedLineViewHolder vh = new OrderedLineViewHolder(v);
-        return vh;
+        return new OrderedLineViewHolder(v);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {

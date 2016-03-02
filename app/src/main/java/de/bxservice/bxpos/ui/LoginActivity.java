@@ -165,8 +165,7 @@ public class LoginActivity extends AppCompatActivity  {
     private PosUser getLoggedUser(String username) {
         PosUserManagement userManager = new PosUserManagement(getApplicationContext());
 
-        PosUser user = userManager.get(username);
-        return user;
+        return userManager.get(username);
     }
 
     /**

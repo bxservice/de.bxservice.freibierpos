@@ -122,8 +122,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
         mainLayout = (View) parent.getParent().getParent().getParent();
 
-        OrderingLineViewHolder vh = new OrderingLineViewHolder(v);
-        return vh;
+        return new OrderingLineViewHolder(v);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
