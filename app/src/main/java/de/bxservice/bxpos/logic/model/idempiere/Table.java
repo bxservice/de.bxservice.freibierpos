@@ -74,17 +74,17 @@ public class Table implements Serializable {
     }
 
     public boolean occupyTable(Context ctx) {
-        setStatus(BUSY_STATUS);
+        status = BUSY_STATUS;
         return updateTable(ctx);
     }
 
     public boolean freeTable(Context ctx) {
-        setStatus(FREE_STATUS);
+        status = FREE_STATUS;
         return updateTable(ctx);
     }
 
     public boolean reserveTable(Context ctx) {
-        setStatus(RESERVED_STATUS);
+        status = RESERVED_STATUS;
         return updateTable(ctx);
     }
 
