@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,8 @@ import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 public class PayOrderActivity extends AppCompatActivity implements RemarkDialogFragment.RemarkDialogListener,
         CourtesyDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener,
         PaymentCompletedDialogFragment.PaymentCompletedListener, View.OnLongClickListener {
+
+    static final String LOG_TAG = "Pay Order Activity";
 
     private POSOrder order;
 
@@ -557,7 +560,16 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         //Check if network connection is available
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) { //TODO: Add when preferences
+
+        //If the synchronization settings are configured as Never
+        if ("-1".equals(syncConnPref)) {
+            Log.i(LOG_TAG, "Sync never configured - order sent to queue");
+            completeOrder(false);
+            finish();
+        }
+
+        //When no internet connection
+        if (networkInfo != null && networkInfo.isConnected()) {
 
             showProgress(true);
             createOrderTask = new CreateOrderTask(order);
