@@ -11,7 +11,6 @@
         android:id="@+id/event_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="aaa"
         android:paddingBottom="4dp"
         android:paddingTop="4dp" />
 

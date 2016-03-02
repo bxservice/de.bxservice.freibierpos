@@ -15,7 +15,7 @@
             android:title="@string/action_settings" /> -->
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/comm_category">
         <menu>
             <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
                 android:title="Share" />

@@ -29,7 +29,7 @@
         android:layout_height="114dp"
         android:id="@+id/bxIcon"
         android:src="@drawable/freibier_logo"
-        android:contentDescription="freibier" />
+        android:contentDescription="@string/app_name" />
 
     <ScrollView android:id="@+id/login_form"
         android:layout_width="match_parent"

@@ -15,10 +15,10 @@
         android:src="@drawable/freibier_logo" android:id="@+id/imageView" />
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing" android:text="FreiBier POS"
+        android:paddingTop="@dimen/nav_header_vertical_spacing" android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Powered by Bx Service" android:id="@+id/textView" />
+        android:text="@string/powered_by" android:id="@+id/textView" />
 
 </LinearLayout>
