@@ -114,11 +114,9 @@
     <string name="decimal">.</string>
     <string name="exact">Pago rápido</string>
     <string name="del">Del</string>
-    <string name="clr">Clr</string>
     <string name="pay">Pagar</string>
     <string name="set_extra">Recargo</string>
     <string name="add_discount">Descuento</string>
-    <string name="add_tip">Cortesía</string>
     <string name="title_activity_pay_order">Pago </string>
     <string name="reason">Razón</string>
     <string name="change">Cambio</string>
