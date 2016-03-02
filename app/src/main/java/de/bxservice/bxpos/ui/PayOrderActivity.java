@@ -580,27 +580,20 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 snackbar.setActionTextColor(Color.RED);
                 snackbar.show();
             } else {
-/*
-                PosUser loggedUser = getLoggedUser(username);
 
-                //Username does not exist and no internet connection
-                if(loggedUser == null) {
-                    Snackbar snackbar = Snackbar
-                            .make(mLoginFormView, getString(R.string.error_no_connection_username), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.action_retry), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    attemptLogin();
-                                }
-                            });
+                Snackbar snackbar = Snackbar
+                        .make(mPayFormView, getString(R.string.error_no_connection_on_pay_order), Snackbar.LENGTH_LONG)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                completeOrder(false);
+                                finish();
+                            }
+                        });
 
-                    // Changing message text color
-                    snackbar.setActionTextColor(Color.RED);
-                    snackbar.show();
-                } else {
-                    //No internet connection but the user is known
-                    offlineLogin(loggedUser);
-                }*/
+                // Changing message text color
+                snackbar.setActionTextColor(Color.GREEN);
+                snackbar.show();
             }
         }
 

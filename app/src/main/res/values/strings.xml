@@ -132,6 +132,7 @@
     <string name="table">Table</string>
 
     <string name="unsent_lines">There are still items pending to be sent</string>
+    <string name="error_no_connection_on_pay_order">No internet connection! The orders will be synchronize later</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronize</string>
