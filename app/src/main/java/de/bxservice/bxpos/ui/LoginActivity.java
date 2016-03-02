@@ -380,10 +380,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             AuthenticationWebService auth = new AuthenticationWebService();
 
-            if (auth.isSuccess())
-                return true;
-
-            return false;
+            return auth.isSuccess();
         }
 
         @Override
@@ -429,10 +426,8 @@ public class LoginActivity extends AppCompatActivity  {
 
             DataReader data = DataReader.getInstance(getBaseContext());
 
-            if(data.isDataComplete() && !data.isError())
-                return true;
+            return data.isDataComplete() && !data.isError();
 
-            return false;
         }
 
         // onPostExecute displays the results of the AsyncTask.

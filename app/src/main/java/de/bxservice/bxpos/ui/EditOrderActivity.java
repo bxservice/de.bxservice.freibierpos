@@ -556,13 +556,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     /**
-     * Only works when long click was performed previosuly
+     * Only works when long click was performed previously
      * @param idx
      */
     public void onClickPressed(int idx){
         if(mActionMode != null) {
             myToggleSelection(idx);
-            return;
         }
     }
 
