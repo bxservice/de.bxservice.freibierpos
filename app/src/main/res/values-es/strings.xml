@@ -140,6 +140,7 @@
     <string name="synchronize">Sincronizar</string>
     <string name="no_unsync_orders">¡Enhorabuena! Todas las órdenes están en iDempiere</string>
     <string name="comm_category">Comunicación</string>
+    <string name="share">Compartir</string>
 
 
 </resources>
