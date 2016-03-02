@@ -557,16 +557,16 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
 
-        //Check if network connection is available
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
         //If the synchronization settings are configured as Never
         if ("-1".equals(syncConnPref)) {
             Log.i(LOG_TAG, "Sync never configured - order sent to queue");
             completeOrder(false);
             finish();
         }
+
+        //Check if network connection is available
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         //When no internet connection
         if (networkInfo != null && networkInfo.isConnected()) {

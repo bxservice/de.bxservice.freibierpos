@@ -1,9 +1,14 @@
 package de.bxservice.bxpos.ui;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -151,8 +156,15 @@ public class MainActivity extends AppCompatActivity
             List<POSOrder> unsynchronizedOrders = dataProvider.getUnsynchronizedOrders();
 
             if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
-                Toast.makeText(getBaseContext(), Integer.toString( dataProvider.getUnsynchronizedOrders().size()) + "Ordets to be  ",
-                        Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.synchronize_orders_title)
+                        .setMessage(getString(R.string.synchronize_orders_message, unsynchronizedOrders.size()))
+                        .setNegativeButton(R.string.cancel, null)
+                        .setPositiveButton(R.string.synchronize, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                            }
+                        }).create().show();
             }
             else
                 Toast.makeText(getBaseContext(), getString(R.string.no_unsync_orders),
@@ -162,6 +174,25 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * If there are orders to be synchronized. Checks if there is internet connection
+     * and synchronizes them
+     * @param unsynchronizedOrders
+     */
+    private void synchronizePendingOrders(List<POSOrder> unsynchronizedOrders) {
+        //Check if network connection is available
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        //When no internet connection
+        if (networkInfo != null && networkInfo.isConnected()) {
+            //TODO: Logic to synchronize the pending orders
+        }
+        else
+            Toast.makeText(getBaseContext(), getString(R.string.error_no_connection_on_sync_order),
+                    Toast.LENGTH_SHORT).show();
     }
 
     public void showGuestNumberDialog() {
