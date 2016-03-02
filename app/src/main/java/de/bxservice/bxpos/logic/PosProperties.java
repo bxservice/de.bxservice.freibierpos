@@ -7,7 +7,7 @@ public interface PosProperties {
 
     String PROPERTIES_FILE = "bxpos.properties";
 
-    String ATTEMPS_PROPERTY = "attemtpsno";
+    String ATTEMPTS_PROPERTY = "attemtpsno";
 
     String TIMEOUT_PROPERTY = "timeout";
 

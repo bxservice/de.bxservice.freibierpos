@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity  {
         wsData.setClientId(clientConnPref);
         wsData.setOrgId(orgConnPref);
         wsData.setRoleId(roleConnPref);
-        wsData.setWarehosueId(warehouseConnPref);
+        wsData.setWarehouseId(warehouseConnPref);
 
         wsData.readValues(getBaseContext());
     }

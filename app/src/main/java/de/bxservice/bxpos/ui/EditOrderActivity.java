@@ -229,7 +229,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
     }
 
-    private void showKithenNoteDialog() {
+    private void showKitchenNoteDialog() {
         KitchenNoteDialogFragment kitchenNoteDialog = new KitchenNoteDialogFragment();
         List<Integer> selectedItemPositions = getSelectedItems();
         if(selectedItemPositions != null && selectedItemPositions.size() == 1) {
@@ -644,7 +644,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     return true;
                 case R.id.ctx_item_note:
                     //shareCurrentItem();
-                    showKithenNoteDialog();
+                    showKitchenNoteDialog();
                     System.out.println("Clicked add note");
                     mode.finish(); // Action picked, so close the CAB
                     return true;

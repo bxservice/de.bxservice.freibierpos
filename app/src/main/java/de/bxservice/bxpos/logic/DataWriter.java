@@ -13,13 +13,13 @@ import de.bxservice.bxpos.logic.webservices.CreateOrderWebServiceAdapter;
  */
 public class DataWriter {
 
-    private static final String LOG_TAG = "Data Writter";
+    private static final String LOG_TAG = "Data Writer";
 
     private boolean success = false;
 
     public DataWriter(final POSOrder order) {
 
-        Log.i(LOG_TAG, "Data Writter accessed");
+        Log.i(LOG_TAG, "Data Writer accessed");
 
         Thread createOrderThread = new Thread(new Runnable() {
             @Override

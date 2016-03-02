@@ -318,7 +318,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     }
 
     /**
-     * Add the needed congiguration to the search view
+     * Add the needed configuration to the search view
      */
     private void setupSearchView() {
         mSearchView.setOnQueryTextListener(this);
@@ -358,9 +358,9 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     }
 
     private void showRemarkDialog() {
-        RemarkDialogFragment remarktDialog = new RemarkDialogFragment();
-        remarktDialog.setNote(getRemarkNote());
-        remarktDialog.show(getFragmentManager(), "RemarkDialogFragment");
+        RemarkDialogFragment remarkDialog = new RemarkDialogFragment();
+        remarkDialog.setNote(getRemarkNote());
+        remarkDialog.show(getFragmentManager(), "RemarkDialogFragment");
     }
 
     private void showGuestNumberDialog() {
@@ -462,7 +462,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     public void onBackPressed() {
 
-        //If the searchview mode is displayed, only go back to the tab
+        //If the search view mode is displayed, only go back to the tab
         if (recyclerView.isShown()) {
             mSearchView.onActionViewCollapsed();
             showSearchList(false);
