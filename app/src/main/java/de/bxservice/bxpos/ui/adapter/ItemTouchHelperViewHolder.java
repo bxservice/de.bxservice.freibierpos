@@ -6,7 +6,7 @@ package de.bxservice.bxpos.ui.adapter;
 public interface ItemTouchHelperViewHolder {
 
     /**
-     * Called when the {@link ItemTouchHelper} first registers an
+     * Called when the {@link ItemTouchHelperViewHolder} first registers an
      * item as being moved or swiped.
      * Implementations should update the item view to indicate
      * it's active state.
@@ -15,7 +15,7 @@ public interface ItemTouchHelperViewHolder {
 
 
     /**
-     * Called when the {@link ItemTouchHelper} has completed the
+     * Called when the {@link ItemTouchHelperViewHolder} has completed the
      * move or swipe, and the active item state should be cleared.
      */
     void onItemClear();
