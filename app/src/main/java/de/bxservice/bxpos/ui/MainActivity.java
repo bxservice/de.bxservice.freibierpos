@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                            /* Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
                         Toast.LENGTH_SHORT).show();*/
-                setNumberOfGuests(0);
-                setSelectedTable(null);
+                numberOfGuests = 0;
+                selectedTable = null;
                 createOrder();
             }
         });
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity
 
         // User touched the dialog's positive button
         int guests = dialog.getNumberOfGuests();
-        setNumberOfGuests(guests);
+        numberOfGuests = guests;
         createOrder();
 
     }
@@ -247,8 +247,8 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent = new Intent(this, CreateOrderActivity.class);
         intent.putExtra("caller","MainActivity");
-        intent.putExtra(EXTRA_NUMBER_OF_GUESTS, getNumberOfGuests());
-        intent.putExtra(EXTRA_ASSIGNED_TABLE, getSelectedTable());
+        intent.putExtra(EXTRA_NUMBER_OF_GUESTS, numberOfGuests);
+        intent.putExtra(EXTRA_ASSIGNED_TABLE, selectedTable);
 
         startActivityForResult(intent, NEW_ORDER_REQUEST);
     }
