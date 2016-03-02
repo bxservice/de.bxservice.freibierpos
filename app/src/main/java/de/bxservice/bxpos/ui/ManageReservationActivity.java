@@ -58,8 +58,8 @@ public class ManageReservationActivity extends AppCompatActivity {
  */
     private void prepareListData() {
 
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
 
         // Adding head data
         listDataHeader.add("28.10.2015");
@@ -68,7 +68,7 @@ public class ManageReservationActivity extends AppCompatActivity {
         listDataHeader.add("04.12.2015");
 
         // Adding child data
-        List<String> today= new ArrayList<String>();
+        List<String> today= new ArrayList<>();
         today.add("Table 1  - 9:30");
         today.add("Table 25 - 12:00");
         today.add("eeee");
@@ -79,11 +79,11 @@ public class ManageReservationActivity extends AppCompatActivity {
         today.add("eeee");
 
 
-        List<String> tomorrow = new ArrayList<String>();
+        List<String> tomorrow = new ArrayList<>();
         tomorrow.add("Table 9 - 21:00");
         tomorrow.add("Table 1 - 21:30");
 
-        List<String> pasadomanana = new ArrayList<String>();
+        List<String> pasadomanana = new ArrayList<>();
         pasadomanana.add("iDempiere World Conference Event - 20:00");
         pasadomanana.add("Karaoke night");
 

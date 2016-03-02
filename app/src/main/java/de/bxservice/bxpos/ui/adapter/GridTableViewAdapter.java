@@ -23,7 +23,7 @@ public class GridTableViewAdapter extends ArrayAdapter<TableGridItem> {
 
     private Context mContext;
     private int layoutResourceId;
-    private ArrayList<TableGridItem> mGridData = new ArrayList<TableGridItem>();
+    private ArrayList<TableGridItem> mGridData = new ArrayList<>();
 
     public GridTableViewAdapter(Context mContext, int layoutResourceId, ArrayList<TableGridItem> mGridData) {
         super(mContext, layoutResourceId, mGridData);

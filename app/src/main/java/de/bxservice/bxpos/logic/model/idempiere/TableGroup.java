@@ -16,7 +16,7 @@ public class TableGroup implements Serializable {
     private int tableGroupID;
     private String value;
     private String name;
-    private List<Table> tables = new ArrayList<Table>();
+    private List<Table> tables = new ArrayList<>();
     private PosTableGroupManagement tableGroupManager;
 
     public String getValue() {

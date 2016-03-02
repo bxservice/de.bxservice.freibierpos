@@ -16,7 +16,7 @@ public class ProductCategory {
 
     private int productCategoryID;
     private String name;
-    private List<MProduct> products = new ArrayList<MProduct>();
+    private List<MProduct> products = new ArrayList<>();
     private PosProductCategoryManagement productCategoryManager;
 
     public ProductCategory(){

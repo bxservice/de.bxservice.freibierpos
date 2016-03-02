@@ -21,7 +21,7 @@ public class GridOpenOrderViewAdapter extends ArrayAdapter<OpenOrderGridItem> {
 
     private Context mContext;
     private int layoutResourceId;
-    private ArrayList<OpenOrderGridItem> mGridData = new ArrayList<OpenOrderGridItem>();
+    private ArrayList<OpenOrderGridItem> mGridData = new ArrayList<>();
 
     public GridOpenOrderViewAdapter(Context mContext, int layoutResourceId, ArrayList<OpenOrderGridItem> mGridData) {
         super(mContext, layoutResourceId, mGridData);
