@@ -25,11 +25,6 @@ public class WebServiceRequestData {
     private String urlBase         = null;
     private String warehosueId     = null;
 
-    //Properties reader
-    private AssetsPropertyReader assetsPropertyReader;
-    private Properties properties;
-
-
     private WebServiceRequestData() {
 
     }
@@ -43,9 +38,9 @@ public class WebServiceRequestData {
     }
 
     public void readValues(Context context) {
-
-        assetsPropertyReader = new AssetsPropertyReader(context);
-        properties = assetsPropertyReader.getProperties(PosProperties.PROPERTIES_FILE);
+        //Properties reader
+        AssetsPropertyReader assetsPropertyReader = new AssetsPropertyReader(context);
+        Properties properties = assetsPropertyReader.getProperties(PosProperties.PROPERTIES_FILE);
 
         //clientId        = properties.getProperty(PosProperties.CLIENT_PROPERTY);
         //roleId          = properties.getProperty(role);
