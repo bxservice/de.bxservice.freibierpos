@@ -40,7 +40,7 @@ public class WebServiceRequestData {
     public void readValues(Context context) {
         //Properties reader
         AssetsPropertyReader assetsPropertyReader = new AssetsPropertyReader(context);
-        Properties properties = assetsPropertyReader.getProperties(PosProperties.PROPERTIES_FILE);
+        Properties properties = assetsPropertyReader.getProperties();
 
         //clientId        = properties.getProperty(PosProperties.CLIENT_PROPERTY);
         //roleId          = properties.getProperty(role);
