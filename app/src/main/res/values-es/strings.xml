@@ -133,6 +133,7 @@
 
     <string name="unsent_lines">Aún hay lineas sin enviar</string>
     <string name="error_no_connection_on_pay_order">No hay conexión a internet! Las órdenes serán sincronizadas luego</string>
+    <string name="error_no_connection_on_sync_order">No hay conexión a internet. Intente más adelante</string>
 
     <!-- Activity titles strings -->
     <string name="synchronize">Sincronizar</string>
