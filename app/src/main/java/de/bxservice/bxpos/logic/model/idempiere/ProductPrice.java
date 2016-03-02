@@ -67,7 +67,7 @@ public class ProductPrice {
      */
     public Integer getIntegerStdPrice() {
         Integer total;
-        total = Integer.valueOf(getStdPrice().multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
+        total = Integer.valueOf(stdPrice.multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
 
         return total;
     }
@@ -79,7 +79,7 @@ public class ProductPrice {
      */
     public void setStdPriceFromInt(Integer total) {
         double doubleValue = (double) total / 100;
-        setStdPrice(BigDecimal.valueOf(doubleValue));
+        stdPrice = BigDecimal.valueOf(doubleValue);
     }
 
     public boolean createProductPrice(Context ctx) {
