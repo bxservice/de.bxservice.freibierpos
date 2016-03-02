@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
@@ -66,7 +67,7 @@ public class CourtesyDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 surchargeAmountText.removeTextChangedListener(amountWatcher);
-                surchargeAmountText.setText(surchargeAmount.toString());
+                surchargeAmountText.setText(String.format(Locale.getDefault(),surchargeAmount.toString()));
                 surchargeAmountText.addTextChangedListener(amountWatcher);
             }
 
@@ -96,7 +97,7 @@ public class CourtesyDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 surchargePercentText.removeTextChangedListener(percentWatcher);
-                surchargePercentText.setText(surchargePercent.toString());
+                surchargePercentText.setText(String.format(Locale.getDefault(), surchargePercent.toString()));
                 surchargePercentText.addTextChangedListener(percentWatcher);
             }
 
@@ -121,7 +122,7 @@ public class CourtesyDialogFragment extends DialogFragment {
         surchargeAmountText.addTextChangedListener(amountWatcher);
 
         if (!surchargeAmount.equals(BigDecimal.ZERO))
-            surchargeAmountText.setText(surchargeAmount.toString());
+            surchargeAmountText.setText(String.format(Locale.getDefault(), surchargeAmount.toString()));
 
         builder.setTitle(R.string.set_extra);
         builder.setView(view)
