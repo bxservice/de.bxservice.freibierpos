@@ -136,6 +136,8 @@
     <string name="error_no_connection_on_pay_order">Keine Internetverbindung! Die Aufträge werden später synchronisiert werden</string>
     <string name="error_no_connection_on_sync_order">Keine Internetverbindung. Versuchen Sie es später noch einmal</string>
 
+    <string name="success_on_sync_order">Bestellungen synchronisiert</string>
+
     <!-- Activity titles strings -->
     <string name="synchronize">Synchronisieren</string>
     <string name="no_unsync_orders">Super! Alle Aufträge sind in iDempiere</string>
