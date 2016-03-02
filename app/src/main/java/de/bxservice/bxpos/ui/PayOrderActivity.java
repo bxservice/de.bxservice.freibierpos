@@ -560,7 +560,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         //If the synchronization settings are configured as Never
         if ("-1".equals(syncConnPref)) {
             Log.i(LOG_TAG, "Sync never configured - order sent to queue");
-            completeOrder(false);
+            order.payOrder(false, getBaseContext());
             finish();
         }
 
@@ -598,7 +598,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                         .setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                completeOrder(false);
+                                order.payOrder(false, getBaseContext());
                                 finish();
                             }
                         });
@@ -609,25 +609,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             }
         }
 
-    }
-
-    /**
-     * When the pay button is clicked completes the order
-     * set status complete and free the table
-     * Synchronized flag depends on the success of the creation in
-     * iDempiere
-     * @param isSynchronized
-     */
-    public void completeOrder(boolean isSynchronized) {
-
-        order.setStatus(POSOrder.COMPLETE_STATUS);
-        order.setSync(isSynchronized);
-        order.updateOrder(getBaseContext());
-
-        if( order.getTable() != null) {
-            order.getTable().setStatus(Table.FREE_STATUS);
-            order.getTable().updateTable(getBaseContext());
-        }
     }
 
     @Override
@@ -694,7 +675,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         @Override
         protected void onPostExecute(final Boolean success) {
             //TODO: Add when not success because not connection or because an error ocurred while saving
-            completeOrder(true);
+            order.payOrder(true, getBaseContext());
             finish();
         }
     }

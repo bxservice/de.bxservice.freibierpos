@@ -359,12 +359,23 @@ public class POSOrder implements Serializable {
         orderingLines.clear();
     }
 
-    public void payOrder() {
+    /**
+     * When the pay button is clicked completes the order
+     * set status complete and free the table
+     * Synchronized flag depends on the success of the creation in
+     * iDempiere
+     * @param isSynchronized
+     */
+    public void payOrder(boolean isSynchronized, Context ctx) {
         setStatus(COMPLETE_STATUS);
-        for (POSOrderLine orderLine : getOrderingLines()) {
-            orderLine.completeLine();
-            orderLine.updateLine(null);
+        setSync(isSynchronized);
+        updateOrder(ctx);
+
+        if(getTable() != null) {
+            getTable().setStatus(Table.FREE_STATUS);
+            getTable().updateTable(ctx);
         }
+
     }
 
     public void uncompleteOrder() {
