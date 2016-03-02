@@ -280,7 +280,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      * Get extras from the previous activity
      * - Order
      */
-    public void getExtras() {
+    private void getExtras() {
 
         Intent intent = getIntent();
 

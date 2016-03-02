@@ -17,9 +17,7 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryPOSData";
-
-    QueryDataRequest ws = new QueryDataRequest();
-    DefaultPosData defaultPosData;
+    private DefaultPosData defaultPosData;
 
     @Override
     public String getServiceType() {

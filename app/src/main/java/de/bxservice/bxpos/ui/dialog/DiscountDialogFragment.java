@@ -33,9 +33,9 @@ public class DiscountDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    DiscountDialogListener mListener;
+    private DiscountDialogListener mListener;
 
-    public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 
     private BigDecimal subtotal = BigDecimal.ZERO;
     private BigDecimal discountAmount = BigDecimal.ZERO;

@@ -14,7 +14,7 @@ import de.bxservice.bxpos.logic.webservices.CreateOrderWebServiceAdapter;
  */
 public class DataWriter {
 
-    static final String LOG_TAG = "Data Writter";
+    private static final String LOG_TAG = "Data Writter";
 
     private boolean success = false;
 
