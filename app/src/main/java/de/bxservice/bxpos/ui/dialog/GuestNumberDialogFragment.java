@@ -50,7 +50,7 @@ public class GuestNumberDialogFragment extends DialogFragment {
 
         np.setMaxValue(15);
         np.setMinValue(1);
-        np.setValue(getNumberOfGuests());
+        np.setValue(numberOfGuests);
         np.setWrapSelectorWheel(false);
 
         builder.setTitle(R.string.number_of_guests);
@@ -59,7 +59,7 @@ public class GuestNumberDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.set, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        setNumberOfGuests(np.getValue());
+                        numberOfGuests = np.getValue();
                         mListener.onDialogPositiveClick(GuestNumberDialogFragment.this);
                     }
                 })

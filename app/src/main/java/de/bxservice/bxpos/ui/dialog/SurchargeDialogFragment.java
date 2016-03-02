@@ -58,7 +58,7 @@ public class SurchargeDialogFragment extends DialogFragment {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        subTotalLabel.setText(getString(R.string.subtotal_courtesy, currencyFormat.format(getSubtotal())));
+        subTotalLabel.setText(getString(R.string.subtotal_courtesy, currencyFormat.format(subtotal)));
 
         final EditText surchargePercentText = (EditText) view.findViewById(R.id.surcharge_percent);
         final EditText surchargeAmountText = (EditText) view.findViewById(R.id.surcharge_amount);
@@ -130,7 +130,7 @@ public class SurchargeDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        setSurchargeAmount(new BigDecimal(surchargeAmountText.getText().toString()));
+                        surchargeAmount = new BigDecimal(surchargeAmountText.getText().toString());
                         mListener.onDialogPositiveClick(SurchargeDialogFragment.this);
                     }
                 })
