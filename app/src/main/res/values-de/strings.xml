@@ -16,15 +16,20 @@
     <string name="number_of_guests">Festlegen Sie Anzahl von Leute</string>
     <string name="guests">Leute</string>
     <string name="set">Festlegen</string>
-    <string name="add"> Verlängern</string>
-    <string name="cancel"> Abbrechen</string>
-    <string name="note"> Verlängern Bemerkung</string>
-    <string name="kitchen_note"> Küche Note</string>
-    <string name="undo"> Rückgängig machen</string>
-    <string name="item_removed"> Entfernt Artikel</string>
-    <string name="delete"> Löschen</string>
-    <string name="copy"> Kopieren</string>
+    <string name="add">Verlängern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="note">Verlängern Bemerkung</string>
+    <string name="kitchen_note">Küche Note</string>
+    <string name="undo">Rückgängig machen</string>
+    <string name="item_removed">Entfernt Artikel</string>
+    <string name="delete">Löschen</string>
+    <string name="copy">Kopieren</string>
     <string name="selected_count">%1$s ausgewählt</string>
+    <string name="set_table">Wählen Tisch</string>
+    <string name="remove">Entfernen</string>
+    <string name="send_items">Senden</string>
+    <string name="synchronize_orders_title">¿Sincronizar órdenes?</string>
+    <string name="synchronize_orders_message">¿Sincronizar %1$s órdenes con iDempiere?</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username"> Benutzername</string>
