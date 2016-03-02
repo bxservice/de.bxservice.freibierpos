@@ -90,7 +90,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
     public List<Integer> getSelectedItems() {
         List<Integer> items =
-                new ArrayList<Integer>(selectedItems.size());
+                new ArrayList<>(selectedItems.size());
         for (int i = 0; i < selectedItems.size(); i++) {
             items.add(selectedItems.keyAt(i));
         }

@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         rolesSpinner = (Spinner) findViewById(R.id.roles_spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.selected_item, roles);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.selected_item, roles);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rolesSpinner.setAdapter(adapter);
 
@@ -173,8 +173,8 @@ public class LoginActivity extends AppCompatActivity  {
      * set the hashmap for inner references
      */
     private void getRoleNames() {
-        roles = new ArrayList<String>();
-        roleCodes = new HashMap<String, String>();
+        roles = new ArrayList<>();
+        roleCodes = new HashMap<>();
 
         String roleName;
         try {

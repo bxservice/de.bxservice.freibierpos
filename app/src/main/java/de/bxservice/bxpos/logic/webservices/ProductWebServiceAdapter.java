@@ -22,7 +22,6 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryProduct";
 
-    QueryDataRequest ws = new QueryDataRequest();
     List<MProduct> productList;
 
     @Override
@@ -39,7 +38,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
 
         WebServiceClient client = getClient();
 
-        productList = new ArrayList<MProduct>();
+        productList = new ArrayList<>();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);

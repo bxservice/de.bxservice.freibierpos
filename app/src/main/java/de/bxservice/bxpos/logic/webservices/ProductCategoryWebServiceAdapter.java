@@ -37,7 +37,7 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
         ws.setLogin(getLogin());
 
         WebServiceClient client = getClient();
-        productCategoryList = new ArrayList<ProductCategory>();
+        productCategoryList = new ArrayList<>();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);

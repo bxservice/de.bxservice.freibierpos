@@ -12,7 +12,7 @@ public class PosRoles {
     public static final String SUPERVISOR_ROLE = "supervisor_role";
 
     public static ArrayList<String> getRoles(){
-        ArrayList<String> roles = new ArrayList<String>();
+        ArrayList<String> roles = new ArrayList<>();
 
         roles.add(WAITER_ROLE);
         roles.add(SUPERVISOR_ROLE);

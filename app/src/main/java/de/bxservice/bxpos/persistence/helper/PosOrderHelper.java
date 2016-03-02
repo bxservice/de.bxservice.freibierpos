@@ -117,7 +117,7 @@ public class PosOrderHelper extends PosObjectHelper {
      * Getting all orders
      */
     public List<POSOrder> getAllOrders() {
-        List<POSOrder> orders = new ArrayList<POSOrder>();
+        List<POSOrder> orders = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER;
 
         Log.e(LOG_TAG, selectQuery);
