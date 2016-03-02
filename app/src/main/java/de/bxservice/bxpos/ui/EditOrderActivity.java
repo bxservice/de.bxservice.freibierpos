@@ -566,7 +566,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void myToggleSelection(int idx) {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
 
         if(itemsFragment != null) {
             itemsFragment.getmAdapter().toggleSelection(idx);
@@ -576,13 +576,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void clearSelections() {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
         if(itemsFragment != null)
             itemsFragment.getmAdapter().clearSelections();
     }
 
     private void deleteSelectedItems() {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
 
         if(itemsFragment != null) {
             itemsFragment.getmAdapter().removeSelectedItems();
@@ -590,7 +590,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void copySelectedItems() {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
 
         if(itemsFragment != null) {
             itemsFragment.getmAdapter().copySelectedItems();
@@ -598,7 +598,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private List<Integer> getSelectedItems() {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(mEditPagerAdapter.ORDERING_POSITION);
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
 
         if(itemsFragment != null) {
             return itemsFragment.getmAdapter().getSelectedItems();
