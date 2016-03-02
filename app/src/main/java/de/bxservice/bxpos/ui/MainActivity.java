@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         }*/ else if (id == R.id.nav_send) {
             DataProvider dataProvider = new DataProvider(getBaseContext());
 
-            List<POSOrder> unsynchronizedOrders = dataProvider.getUnsynchronizedOrders();
+            final List<POSOrder> unsynchronizedOrders = dataProvider.getUnsynchronizedOrders();
 
             if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
                 new AlertDialog.Builder(this)
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                         .setNegativeButton(R.string.cancel, null)
                         .setPositiveButton(R.string.synchronize, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-
+                                synchronizePendingOrders(unsynchronizedOrders);
                             }
                         }).create().show();
             }
