@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import de.bxservice.bxpos.logic.DataWriter;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.ui.MainActivity;
 import de.bxservice.bxpos.ui.PayOrderActivity;
 
 /**
@@ -42,5 +43,8 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
         if (mActivity instanceof PayOrderActivity)
             ((PayOrderActivity) mActivity).postExecuteTask(success);
+
+        if (mActivity instanceof MainActivity)
+            ((MainActivity) mActivity).postExecuteTask(success);
     }
 }

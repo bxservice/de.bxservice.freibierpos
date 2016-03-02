@@ -287,4 +287,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * gets call after the create order task finishes
+     * @param success
+     */
+    public void postExecuteTask(boolean success) {
+        if(success)
+            Toast.makeText(getBaseContext(), getString(R.string.success_on_sync_order),
+                    Toast.LENGTH_SHORT).show();
+    }
+
 }

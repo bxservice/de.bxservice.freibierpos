@@ -137,6 +137,8 @@
     <string name="error_no_connection_on_pay_order">No internet connection! The orders will be synchronize later</string>
     <string name="error_no_connection_on_sync_order">No internet connection. Try again later</string>
 
+    <string name="success_on_sync_order">Orders synchronized</string>
+
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronize</string>
     <string name="no_unsync_orders">Great! All the orders are in iDempiere</string>
