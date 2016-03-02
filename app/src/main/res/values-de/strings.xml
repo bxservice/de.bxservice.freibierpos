@@ -113,13 +113,11 @@
     <string name="nine">9</string>
     <string name="zero">0</string>
     <string name="decimal">.</string>
-    <string name="del"> Löschen</string>
-    <string name="clr">Clr</string>
+    <string name="del">Löschen</string>
     <string name="exact">Exakt</string>
     <string name="pay">Bezahlen</string>
     <string name="set_extra"> Zuschlag</string>
     <string name="add_discount"> Rabatt</string>
-    <string name="add_tip"> Höflichkeit</string>
     <string name="title_activity_pay_order">Bezahlung</string>
     <string name="close">Schließen</string>
 
