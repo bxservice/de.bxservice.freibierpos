@@ -3,9 +3,12 @@ package de.bxservice.bxpos.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +27,8 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
@@ -53,6 +58,9 @@ public class MainActivity extends AppCompatActivity
 
     private int numberOfGuests = 0;
     private Table selectedTable = null;
+
+    private SharedPreferences sharedPref;
+    private String syncConnPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +102,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+        callAsynchronousTask();
     }
 
     @Override
@@ -163,7 +174,7 @@ public class MainActivity extends AppCompatActivity
                         .setNegativeButton(R.string.cancel, null)
                         .setPositiveButton(R.string.synchronize, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-                                synchronizePendingOrders(unsynchronizedOrders);
+                                synchronizePendingOrders(unsynchronizedOrders, false);
                             }
                         }).create().show();
             }
@@ -182,7 +193,7 @@ public class MainActivity extends AppCompatActivity
      * and synchronizes them
      * @param unsynchronizedOrders
      */
-    private void synchronizePendingOrders(List<POSOrder> unsynchronizedOrders) {
+    private void synchronizePendingOrders(List<POSOrder> unsynchronizedOrders, boolean automatic) {
         //Check if network connection is available
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -194,7 +205,7 @@ public class MainActivity extends AppCompatActivity
             POSOrder[] orderArray = unsynchronizedOrders.toArray(new POSOrder[0]);
             createOrderTask.execute(orderArray);
         }
-        else
+        else if (!automatic)
             Toast.makeText(getBaseContext(), getString(R.string.error_no_connection_on_sync_order),
                     Toast.LENGTH_SHORT).show();
     }
@@ -295,6 +306,45 @@ public class MainActivity extends AppCompatActivity
         if(success)
             Toast.makeText(getBaseContext(), getString(R.string.success_on_sync_order),
                     Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Calls the sync order task every x amount of time
+     * as chosen in the settings
+     */
+    public void callAsynchronousTask() {
+
+        //If the settings are set as always or never sync do not create the timer
+        if("-1".equals(syncConnPref) || "0".equals(syncConnPref))
+            return;
+
+        int syncTime = Integer.parseInt(syncConnPref);
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            DataProvider dataProvider = new DataProvider(getBaseContext());
+                            final List<POSOrder> unsynchronizedOrders = dataProvider.getUnsynchronizedOrders();
+
+                            if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
+                                synchronizePendingOrders(unsynchronizedOrders, true);
+                            }
+
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+            }
+        };
+
+        timer.schedule(doAsynchronousTask, syncTime * 60000, syncTime * 60000 /*one minute in ms*/);
     }
 
 }
