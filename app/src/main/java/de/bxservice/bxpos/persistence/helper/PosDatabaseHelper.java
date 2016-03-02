@@ -31,7 +31,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
-        public static final String BUILD = "build";
+        String BUILD = "build";
     }
 
     // Table Create Statements
