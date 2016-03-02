@@ -21,7 +21,7 @@ public class GuestNumberDialogFragment extends DialogFragment {
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface GuestNumberDialogListener {
-        public void onDialogPositiveClick(GuestNumberDialogFragment dialog);
+        void onDialogPositiveClick(GuestNumberDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
