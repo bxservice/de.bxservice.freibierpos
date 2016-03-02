@@ -134,8 +134,8 @@ public class DiscountDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        setDiscountAmount(new BigDecimal(discountAmountText.getText().toString()));
-                        setReason(reasonText.getText().toString());
+                        discountAmount = new BigDecimal(discountAmountText.getText().toString());
+                        reason = reasonText.getText().toString();
                         mListener.onDialogPositiveClick(DiscountDialogFragment.this);
                     }
                 })

@@ -51,7 +51,7 @@ public class KitchenNoteDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        setNote(remarkNote.getText().toString());
+                        note = remarkNote.getText().toString();
                         mListener.onDialogPositiveClick(KitchenNoteDialogFragment.this);
                     }
                 })
