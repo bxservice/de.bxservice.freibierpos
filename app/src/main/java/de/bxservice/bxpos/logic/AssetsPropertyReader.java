@@ -26,7 +26,7 @@ public class AssetsPropertyReader {
         properties = new Properties();
     }
 
-    public Properties getProperties(String FileName) {
+    public Properties getProperties() {
 
         try {
             /**
@@ -38,7 +38,7 @@ public class AssetsPropertyReader {
             /**
              * Open an asset using ACCESS_STREAMING mode. This
              */
-            InputStream inputStream = assetManager.open(FileName);
+            InputStream inputStream = assetManager.open(PosProperties.PROPERTIES_FILE);
             /**
              * Loads properties from the specified InputStream,
              */
