@@ -31,6 +31,7 @@ import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.DataWriter;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.ui.dialog.CourtesyDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
 import de.bxservice.bxpos.ui.dialog.PaymentCompletedDialogFragment;
@@ -562,6 +563,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             Log.i(LOG_TAG, "Sync never configured - order sent to queue");
             order.payOrder(false, getBaseContext());
             finish();
+            return;
         }
 
         //Check if network connection is available
@@ -572,7 +574,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         if (networkInfo != null && networkInfo.isConnected()) {
 
             showProgress(true);
-            createOrderTask = new CreateOrderTask(order);
+            createOrderTask = new CreateOrderTask(order, this);
             createOrderTask.execute((Void) null);
 
         }else { //No internet connection
@@ -654,30 +656,13 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     /**
-     * Represents an asynchronous creating task used to send
-     * the order to iDempiere
+     * gets call after the create order task finishes
+     * @param success
      */
-    public class CreateOrderTask extends AsyncTask<Void, Void, Boolean> {
-
-
-        private POSOrder order;
-
-        CreateOrderTask(POSOrder order) {
-            this.order = order;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            DataWriter write = new DataWriter(getBaseContext(), order);
-            return write.isSuccess();
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            //TODO: Add when not success because not connection or because an error ocurred while saving
-            order.payOrder(true, getBaseContext());
+    public void postExecuteTask(boolean success) {
+        //TODO: Add when not success because not connection or because an error ocurred while saving
+        if(success)
             finish();
-        }
     }
 
 }
