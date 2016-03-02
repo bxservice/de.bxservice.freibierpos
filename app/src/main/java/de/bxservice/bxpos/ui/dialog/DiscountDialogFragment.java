@@ -71,7 +71,7 @@ public class DiscountDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 discountAmountText.removeTextChangedListener(amountWatcher);
-                discountAmountText.setText(String.format(Locale.getDefault(), discountAmount.toString()));
+                discountAmountText.setText(discountAmount.toString());
                 discountAmountText.addTextChangedListener(amountWatcher);
             }
 
@@ -101,7 +101,7 @@ public class DiscountDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 discountPercentText.removeTextChangedListener(percentWatcher);
-                discountPercentText.setText(String.format(Locale.getDefault(), discountPercent.toString()));
+                discountPercentText.setText(discountPercent.toString());
                 discountPercentText.addTextChangedListener(percentWatcher);
             }
 
@@ -126,7 +126,7 @@ public class DiscountDialogFragment extends DialogFragment {
         discountAmountText.addTextChangedListener(amountWatcher);
 
         if (!discountAmount.equals(BigDecimal.ZERO))
-            discountAmountText.setText(String.format(Locale.getDefault(), discountAmount.toString()));
+            discountAmountText.setText(discountAmount.toString());
 
         builder.setTitle(R.string.add_discount);
         builder.setView(view)
