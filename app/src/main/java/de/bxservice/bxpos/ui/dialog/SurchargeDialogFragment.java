@@ -67,7 +67,7 @@ public class SurchargeDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 surchargeAmountText.removeTextChangedListener(amountWatcher);
-                surchargeAmountText.setText(String.format(Locale.getDefault(),surchargeAmount.toString()));
+                surchargeAmountText.setText(surchargeAmount.toString());
                 surchargeAmountText.addTextChangedListener(amountWatcher);
             }
 
@@ -97,7 +97,7 @@ public class SurchargeDialogFragment extends DialogFragment {
 
             public void afterTextChanged(Editable s) {
                 surchargePercentText.removeTextChangedListener(percentWatcher);
-                surchargePercentText.setText(String.format(Locale.getDefault(), surchargePercent.toString()));
+                surchargePercentText.setText(surchargePercent.toString());
                 surchargePercentText.addTextChangedListener(percentWatcher);
             }
 
@@ -122,7 +122,7 @@ public class SurchargeDialogFragment extends DialogFragment {
         surchargeAmountText.addTextChangedListener(amountWatcher);
 
         if (!surchargeAmount.equals(BigDecimal.ZERO))
-            surchargeAmountText.setText(String.format(Locale.getDefault(), surchargeAmount.toString()));
+            surchargeAmountText.setText(surchargeAmount.toString());
 
         builder.setTitle(R.string.set_extra);
         builder.setView(view)

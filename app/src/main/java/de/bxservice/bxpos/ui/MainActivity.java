@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         if (networkInfo != null && networkInfo.isConnected()) {
             CreateOrderTask createOrderTask = new CreateOrderTask(this);
             //Convert from List to POSOrder[] to send as a parameter to the async task
-            POSOrder[] orderArray = unsynchronizedOrders.toArray(new POSOrder[0]);
+            POSOrder[] orderArray = unsynchronizedOrders.toArray(new POSOrder[unsynchronizedOrders.size()]);
             createOrderTask.execute(orderArray);
         }
         else if (!automatic)
