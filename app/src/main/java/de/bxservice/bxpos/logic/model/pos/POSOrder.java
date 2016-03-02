@@ -236,7 +236,7 @@ public class POSOrder implements Serializable {
 
         Table table = orderManager.getTable(tableId);
         if (table != null)
-            setTable(table);
+            this.table = table;
     }
 
     public String getStatus() {
@@ -315,8 +315,7 @@ public class POSOrder implements Serializable {
      */
     public void setTotalFromInt(Integer total) {
         double doubleValue = (double) total / 100;
-        setTotallines(BigDecimal.valueOf(doubleValue));
-        //this.totallines = totallines;
+        this.totallines = BigDecimal.valueOf(doubleValue);
     }
 
     public boolean sendOrder (Context ctx) {
@@ -350,7 +349,7 @@ public class POSOrder implements Serializable {
     }
 
     public void completeOrder() {
-        setStatus(SENT_STATUS);
+        status = SENT_STATUS;
         for (POSOrderLine orderLine : getOrderingLines()) {
             orderLine.completeLine();
             orderLine.updateLine(null);
@@ -367,19 +366,19 @@ public class POSOrder implements Serializable {
      * @param isSynchronized
      */
     public void payOrder(boolean isSynchronized, Context ctx) {
-        setStatus(COMPLETE_STATUS);
-        setSync(isSynchronized);
+        status = COMPLETE_STATUS;
+        sync = isSynchronized;
         updateOrder(ctx);
 
-        if(getTable() != null) {
-            getTable().setStatus(Table.FREE_STATUS);
-            getTable().updateTable(ctx);
+        if(table != null) {
+            table.setStatus(Table.FREE_STATUS);
+            table.updateTable(ctx);
         }
 
     }
 
     public void uncompleteOrder() {
-        setStatus(DRAFT_STATUS);
+        status = DRAFT_STATUS;
         for (POSOrderLine orderLine : getOrderedLines()) {
             orderLine.uncompleteLine();
             orderLine.updateLine(null);
