@@ -165,7 +165,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                     openConfirmationActivity();
             }
         });
-        
+
     }
 
     /**
