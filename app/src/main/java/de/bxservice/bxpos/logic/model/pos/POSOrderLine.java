@@ -102,7 +102,7 @@ public class POSOrderLine implements Serializable {
      */
     public void setLineTotalFromInt(Integer total) {
         double doubleValue = (double) total / 100;
-        setLineNetAmt(BigDecimal.valueOf(doubleValue));
+        lineNetAmt = BigDecimal.valueOf(doubleValue);
     }
 
     public void setLineNetAmt(BigDecimal lineNetAmt) {
@@ -156,11 +156,11 @@ public class POSOrderLine implements Serializable {
     }
 
     public void completeLine() {
-        setLineStatus(POSOrderLine.ORDERED);
+        lineStatus = POSOrderLine.ORDERED;
     }
 
     public void uncompleteLine() {
-        setLineStatus(POSOrderLine.ORDERING);
+        lineStatus = POSOrderLine.ORDERING;
     }
 
     public boolean updateLine(Context ctx) {
