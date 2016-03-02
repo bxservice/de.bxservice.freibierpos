@@ -59,8 +59,10 @@
     <string name="ordering"> BESTELLUNG</string>
     <string name="ordered"> BESTELLT</string>
     <string name="quantity"> Menge</string>
-    <string name="subtotal"> Zwischensumme</string>
-    <string name="total"> Gesamt</string>
+    <string name="subtotal">Zwischensumme</string>
+    <string name="subtotal_courtesy">Zwischensumme: %1$s</string>
+    <string name="total">Gesamt</string>
+    <string name="total_value">Gesamt: %1$s</string>
 
 
     <!-- Strings related to roles -->
@@ -121,10 +123,12 @@
     <string name="title_activity_pay_order">Bezahlung</string>
     <string name="close">Schließen</string>
 
-    <string name="reason"> Grund</string>
-    <string name="change"> Veränderung</string>
+    <string name="reason">Grund</string>
+    <string name="change">Veränderung</string>
+    <string name="change_value">Veränderung: %1$s</string>
     <string name="to_pay"> Bezahlen</string>
-    <string name="paid"> Bezahlt</string>
+    <string name="paid">Bezahlt</string>
+    <string name="paid_value">Bezahlt: %1$s</string>
     <string name="percentage_sign">%</string>
     <string name="currency_symbol">€</string>
 

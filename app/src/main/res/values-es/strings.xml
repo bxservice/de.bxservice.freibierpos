@@ -60,8 +60,9 @@
     <string name="ordered">ORDENADO</string>
     <string name="quantity">Cantidad</string>
     <string name="subtotal">Subtotal</string>
+    <string name="subtotal_courtesy">Subtotal: %1$s</string>
     <string name="total">Total</string>
-
+    <string name="total_value">Total: %1$s</string>
 
     <!-- Strings related to roles -->
     <string name="role">Rol</string>
@@ -120,8 +121,10 @@
     <string name="title_activity_pay_order">Pago </string>
     <string name="reason">Razón</string>
     <string name="change">Cambio</string>
+    <string name="change_value">Cambio: %1$s</string>
     <string name="to_pay">A pagar</string>
     <string name="paid">Pagado</string>
+    <string name="paid_value">Pagado: %1$s</string>
     <string name="close">Cerrar</string>
 
     <string name="order">Orden</string>

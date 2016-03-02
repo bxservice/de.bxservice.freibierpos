@@ -58,7 +58,7 @@ public class DiscountDialogFragment extends DialogFragment {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        subTotalLabel.setText(getString(R.string.subtotal) + ": " + currencyFormat.format(getSubtotal()));
+        subTotalLabel.setText(getString(R.string.subtotal_courtesy, currencyFormat.format(getSubtotal())));
 
         final EditText discountPercentText = (EditText) view.findViewById(R.id.discount_percent);
         final EditText discountAmountText = (EditText) view.findViewById(R.id.discount_amount);

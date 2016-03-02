@@ -53,14 +53,14 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        totalText.setText(getString(R.string.total) + ": " + currencyFormat.format(getTotal()));
+        totalText.setText(getString(R.string.total_value, currencyFormat.format(getTotal())));
 
         final TextView paidText = (TextView) view.findViewById(R.id.paid);
-        paidText.setText(getString(R.string.paid) + ": " + currencyFormat.format(getPaidAmount()));
+        paidText.setText(getString(R.string.paid_value, currencyFormat.format(getPaidAmount())));
 
 
         final TextView changeText = (TextView) view.findViewById(R.id.change);
-        changeText.setText(getString(R.string.change) + ": " + currencyFormat.format(getChangeAmount()));
+        changeText.setText(getString(R.string.change_value, currencyFormat.format(getChangeAmount())));
 
         builder.setTitle(R.string.pay);
         builder.setView(view)
