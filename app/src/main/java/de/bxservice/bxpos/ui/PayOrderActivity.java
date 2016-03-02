@@ -5,11 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -532,10 +534,91 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     @Override
     public void onDialogPositiveClick(PaymentCompletedDialogFragment dialog) {
         // User touched the dialog's positive button
-        showProgress(true);
+        attemptSynchronizeOrder();
+    }
 
-        createOrderTask = new CreateOrderTask(order);
-        createOrderTask.execute((Void) null);
+    /**
+     * Attempts to create order in iDempiere.
+     * If there are errors (iDempiere server returns an error), the
+     * errors are presented and no actual login attempt is made.
+     */
+    private void attemptSynchronizeOrder() {
+        if (createOrderTask != null) {
+            return;
+        }
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+
+        //Check if network connection is available
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) { //TODO: Add when preferences
+
+            showProgress(true);
+            createOrderTask = new CreateOrderTask(order);
+            createOrderTask.execute((Void) null);
+
+        }else { //No internet connection
+        /*
+            // If the sync configuration chosen was Always the order cannot be unsynchronized
+            if("0".equals(syncConnPref)) {
+                Snackbar snackbar = Snackbar
+                        .make(mLoginFormView, getString(R.string.error_no_connection), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.action_retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                attemptLogin();
+                            }
+                        });
+
+                // Changing message text color
+                snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
+            } else {
+
+                PosUser loggedUser = getLoggedUser(username);
+
+                //Username does not exist and no internet connection
+                if(loggedUser == null) {
+                    Snackbar snackbar = Snackbar
+                            .make(mLoginFormView, getString(R.string.error_no_connection_username), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.action_retry), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    attemptLogin();
+                                }
+                            });
+
+                    // Changing message text color
+                    snackbar.setActionTextColor(Color.RED);
+                    snackbar.show();
+                } else {
+                    //No internet connection but the user is known
+                    offlineLogin(loggedUser);
+                }
+            }*/
+        }
+
+    }
+
+    /**
+     * When the pay button is clicked completes the order
+     * set status complete and free the table
+     * Synchronized flag depends on the success of the creation in
+     * iDempiere
+     * @param isSynchronized
+     */
+    public void completeOrder(boolean isSynchronized) {
+
+        order.setStatus(POSOrder.COMPLETE_STATUS);
+        order.setSync(isSynchronized);
+        order.updateOrder(getBaseContext());
+
+        if( order.getTable() != null) {
+            order.getTable().setStatus(Table.FREE_STATUS);
+            order.getTable().updateTable(getBaseContext());
+        }
     }
 
     @Override
@@ -595,37 +678,14 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         @Override
         protected Boolean doInBackground(Void... params) {
-
-            //Check if network connection is available
-            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                DataWriter write = new DataWriter(getBaseContext(), order);
-
-                //if (write.isSuccess())
-                    return true;
-            }
-
-            return false;
+            DataWriter write = new DataWriter(getBaseContext(), order);
+            return write.isSuccess();
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-
-            order.setStatus(POSOrder.COMPLETE_STATUS);
-
-            if (success) {
-                order.setSync(true);
-            } else {
-                System.out.println("ASFGASDFDASDFAJSGDJAGSJHDGASJH");
-            }
-            order.updateOrder(getBaseContext());
-
-            if( order.getTable() != null) {
-                order.getTable().setStatus(Table.FREE_STATUS);
-                order.getTable().updateTable(getBaseContext());
-            }
-
+            //TODO: Add when not success because not connection or because an error ocurred while saving
+            completeOrder(true);
             finish();
         }
     }
