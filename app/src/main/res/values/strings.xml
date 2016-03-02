@@ -25,9 +25,11 @@
     <string name="delete">Delete</string>
     <string name="copy">Copy</string>
     <string name="selected_count">%1$s selected</string>
-    <string name="set_table">Set Table</string>
+    <string name="set_table">Set table</string>
     <string name="remove">Remove</string>
     <string name="send_items">Send</string>
+    <string name="synchronize_orders_title">Synchronisieren Sie Aufträge?</string>
+    <string name="synchronize_orders_message">Synchronisieren Sie %1$s Aufträge mit ADempiere?</string>
 
 
     <!-- Strings related to login -->
