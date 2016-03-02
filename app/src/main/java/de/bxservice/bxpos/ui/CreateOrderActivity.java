@@ -146,10 +146,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         String tableName = "";
 
-        if (getSelectedTable() != null)
-            tableName = getSelectedTable().getTableName();
+        if (selectedTable != null)
+            tableName = selectedTable.getTableName();
 
-        Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests()) + " " + tableName,
+        Toast.makeText(getBaseContext(), Integer.toString(numberOfGuests) + " " + tableName,
                 Toast.LENGTH_SHORT).show();
 
 
@@ -359,14 +359,14 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     private void showRemarkDialog() {
         RemarkDialogFragment remarkDialog = new RemarkDialogFragment();
-        remarkDialog.setNote(getRemarkNote());
+        remarkDialog.setNote(remarkNote);
         remarkDialog.show(getFragmentManager(), "RemarkDialogFragment");
     }
 
     private void showGuestNumberDialog() {
         // Create an instance of the dialog fragment and show it
         GuestNumberDialogFragment guestDialog = new GuestNumberDialogFragment();
-        guestDialog.setNumberOfGuests(getNumberOfGuests());
+        guestDialog.setNumberOfGuests(numberOfGuests);
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
     }
 
@@ -422,8 +422,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         if(posOrder == null) {
             posOrder = new POSOrder();
-            posOrder.setGuestNumber(getNumberOfGuests());
-            posOrder.setOrderRemark(getRemarkNote());
+            posOrder.setGuestNumber(numberOfGuests);
+            posOrder.setOrderRemark(remarkNote);
             posOrder.setTable(selectedTable);
             posOrder.setStatus(POSOrder.DRAFT_STATUS);
             posOrder.createOrder(getBaseContext());
