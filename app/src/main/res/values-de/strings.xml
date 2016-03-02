@@ -142,6 +142,7 @@
     <string name="synchronize">Synchronisieren</string>
     <string name="no_unsync_orders">Super! Alle Aufträge sind in iDempiere</string>
     <string name="comm_category">Kommunikation</string>
+    <string name="share">Aktie</string>
 
 
 </resources>

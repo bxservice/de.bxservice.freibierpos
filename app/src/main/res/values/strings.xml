@@ -141,6 +141,8 @@
     <string name="synchronize">Synchronize</string>
     <string name="no_unsync_orders">Great! All the orders are in iDempiere</string>
     <string name="comm_category">Communication</string>
+    <string name="share">Share</string>
+
 
 
 </resources>
