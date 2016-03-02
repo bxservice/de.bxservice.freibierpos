@@ -1,6 +1,5 @@
 package de.bxservice.bxpos.logic;
 
-import android.content.Context;
 import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;

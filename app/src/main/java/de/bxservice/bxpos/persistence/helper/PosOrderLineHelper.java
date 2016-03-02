@@ -9,7 +9,6 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;

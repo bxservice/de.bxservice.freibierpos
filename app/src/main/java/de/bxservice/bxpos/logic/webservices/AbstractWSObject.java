@@ -3,8 +3,6 @@ package de.bxservice.bxpos.logic.webservices;
 import org.idempiere.webservice.client.base.LoginRequest;
 import org.idempiere.webservice.client.net.WebServiceClient;
 
-import java.util.Properties;
-
 /**
  * Created by Diego Ruiz on 4/11/15.
  */
