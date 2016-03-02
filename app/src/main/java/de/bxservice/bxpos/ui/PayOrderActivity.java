@@ -594,7 +594,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             } else {
 
                 Snackbar snackbar = Snackbar
-                        .make(mPayFormView, getString(R.string.error_no_connection_on_pay_order), Snackbar.LENGTH_LONG)
+                        .make(mPayFormView, getString(R.string.error_no_connection_on_pay_order), Snackbar.LENGTH_INDEFINITE)
                         .setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
