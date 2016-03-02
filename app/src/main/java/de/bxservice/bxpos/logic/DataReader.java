@@ -26,7 +26,7 @@ import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
  */
 public class DataReader {
 
-    static final String LOG_TAG = "Data Reader";
+    private static final String LOG_TAG = "Data Reader";
 
     private static volatile DataReader instance = null;
 
@@ -89,14 +89,14 @@ public class DataReader {
     /**
      * Save default data in the database
      */
-    public void persistPosData() {
+    private void persistPosData() {
         defaultData.saveData(mContext);
     }
 
     /**
      * Save tables in the database
      */
-    public void persistTables() {
+    private void persistTables() {
         for(TableGroup tg : tableGroupList) {
             tg.createTableGroup(mContext);
             for(Table table : tg.getTables()) {
@@ -108,7 +108,7 @@ public class DataReader {
     /**
      * Save product attributes in the database
      */
-    public void persistProductAttributes() {
+    private void persistProductAttributes() {
         for(ProductCategory productCategory : productCategoryList)
             productCategory.createProductCategory(mContext);
 

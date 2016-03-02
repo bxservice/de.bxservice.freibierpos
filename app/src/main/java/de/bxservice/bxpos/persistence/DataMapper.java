@@ -31,7 +31,7 @@ import de.bxservice.bxpos.persistence.helper.PosUserHelper;
  */
 public class DataMapper implements Serializable {
 
-    static final String LOG_TAG = "Data Mapper";
+    private static final String LOG_TAG = "Data Mapper";
 
     private boolean success = false;
     private transient Context mContext;

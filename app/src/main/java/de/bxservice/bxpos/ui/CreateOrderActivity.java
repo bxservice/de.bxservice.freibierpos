@@ -170,7 +170,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     /**
      * Creates the list view that will be used when click on search
      */
-    public void initSearchListItems() {
+    private void initSearchListItems() {
 
         ProductPrice productPrice;
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
@@ -276,7 +276,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * - Table number
      * - Number of guests
      */
-    public void getExtras() {
+    private void getExtras() {
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
@@ -370,7 +370,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
     }
 
-    public int getNumberOfGuests() {
+    private int getNumberOfGuests() {
         return numberOfGuests;
     }
 
