@@ -77,6 +77,8 @@ public class PosOrderLineHelper extends PosObjectHelper {
         orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
         orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
 
+        c.close();
+
         return orderLine;
     }
 
@@ -131,6 +133,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 lines.add(orderLine);
             } while (c.moveToNext());
+            c.close();
         }
 
         return lines;
@@ -169,6 +172,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 lines.add(orderLine);
             } while (c.moveToNext());
+            c.close();
         }
 
         return lines;

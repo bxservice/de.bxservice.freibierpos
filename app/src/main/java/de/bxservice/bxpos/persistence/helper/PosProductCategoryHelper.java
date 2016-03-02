@@ -60,6 +60,8 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         ProductCategory productCategory = new ProductCategory(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)),
                 c.getString(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME)));
 
+        c.close();
+
         return productCategory;
     }
 
@@ -101,6 +103,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
                 // adding to category list
                 productCategories.add(productCategory);
             } while (c.moveToNext());
+            c.close();
         }
 
         return productCategories;

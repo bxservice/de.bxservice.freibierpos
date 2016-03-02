@@ -77,6 +77,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setDefaultCurrency(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_CURRENCY)));
         defaultData.setDefaultPriceList(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST)));
 
+        c.close();
 
         return defaultData;
     }

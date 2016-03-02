@@ -69,6 +69,8 @@ public class PosTableHelper extends PosObjectHelper {
         table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
         table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
 
+        c.close();
+
         return table;
     }
 
@@ -115,6 +117,7 @@ public class PosTableHelper extends PosObjectHelper {
                 // adding to orders list
                 tables.add(table);
             } while (c.moveToNext());
+            c.close();
         }
 
         return tables;
@@ -149,6 +152,7 @@ public class PosTableHelper extends PosObjectHelper {
 
                 tables.add(table);
             } while (c.moveToNext());
+            c.close();
         }
 
         return tables;

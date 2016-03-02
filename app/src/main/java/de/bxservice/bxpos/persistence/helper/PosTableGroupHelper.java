@@ -63,6 +63,8 @@ public class PosTableGroupHelper extends PosObjectHelper {
         tableGroup.setValue((c.getString(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE))));
         tableGroup.setName(c.getString(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_GROUP_TABLE_NAME)));
 
+        c.close();
+
         return tableGroup;
     }
 
@@ -107,6 +109,7 @@ public class PosTableGroupHelper extends PosObjectHelper {
                 // adding to orders list
                 tableGroups.add(tableGroup);
             } while (c.moveToNext());
+            c.close();
         }
 
         return tableGroups;

@@ -85,6 +85,8 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
         order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
 
+        c.close();
+
         return order;
     }
 
@@ -140,6 +142,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 // adding to orders list
                 orders.add(order);
             } while (c.moveToNext());
+
+            c.close();
         }
 
         return orders;
@@ -179,6 +183,8 @@ public class PosOrderHelper extends PosObjectHelper {
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
         order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
         order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+
+        c.close();
 
         return order;
     }
@@ -221,6 +227,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 // adding to orders list
                 orders.add(order);
             } while (c.moveToNext());
+
+            c.close();
         }
 
         return orders;
@@ -265,6 +273,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 // adding to orders list
                 orders.add(order);
             } while (c.moveToNext());
+
+            c.close();
         }
 
         return orders;
