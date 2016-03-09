@@ -490,9 +490,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         //When new items want to be added - persist the changes in guests and notes
         if (caller.equals("CreateOrderActivity") && addNewItemsOnBack) {
             Intent data = new Intent();
-            data.putExtra("remark",order.getOrderRemark());
-            data.putExtra("guests", order.getGuestNumber());
-            data.putExtra("orderLines", order.getOrderingLines());
+            data.putExtra(EXTRA_ORDER, order);
             setResult(RESULT_OK, data);
         }
         else if (orderSent)
