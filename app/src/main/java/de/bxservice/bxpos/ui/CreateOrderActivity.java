@@ -509,8 +509,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         }
     }
 
-    public void updateOrderLines(ArrayList<POSOrderLine> orderLines) {
-        posOrder.recreateOrderLines(orderLines);
+    /**
+     * Refresh the quantity ordered on the product items buttons
+     */
+    public void updateOrderLinesQuantity() {
         mCreateOrderPagerAdapter.refreshAllQty(getSupportFragmentManager());
     }
 
@@ -520,16 +522,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
 
-                setRemarkNote(data.getExtras().get("remark").toString());
-                setNumberOfGuests((Integer) data.getExtras().get("guests"));
-
-                ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
-
-                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != posOrder.getOrderingLines().size()) {
-                    updateOrderLines(orderLines);
-                }
-
-                updateDraftOrder();
+                posOrder = (POSOrder)data.getExtras().get(EditOrderActivity.EXTRA_ORDER);
+                updateOrderLinesQuantity();
 
             }
             //Everything ok - the order was created and the create Activity should be closed
