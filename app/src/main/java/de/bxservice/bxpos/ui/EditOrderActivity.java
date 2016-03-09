@@ -655,7 +655,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 case R.id.ctx_item_note:
                     //shareCurrentItem();
                     showKitchenNoteDialog();
-                    System.out.println("Clicked add note");
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:
