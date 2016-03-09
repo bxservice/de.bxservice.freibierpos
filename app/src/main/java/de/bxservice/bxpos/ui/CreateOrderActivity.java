@@ -255,7 +255,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
             if (sendActionButton.getVisibility() == View.VISIBLE)
                 sendActionButton.hide();
-            else
+            else if (!show) //Show only when the search list is not shown
                 sendActionButton.show();
 
         } else {
@@ -266,7 +266,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             tabs.setVisibility(show ? View.GONE : View.VISIBLE);
             if (sendActionButton.getVisibility() == View.VISIBLE)
                 sendActionButton.hide();
-            else
+            else if (!show) //Show only when the search list is not shown
                 sendActionButton.show();
         }
     }//showSearchList
