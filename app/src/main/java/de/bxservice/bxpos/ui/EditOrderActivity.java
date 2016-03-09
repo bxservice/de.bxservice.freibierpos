@@ -112,7 +112,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             }
         });
 
-        fabVisible.put(sendButton, true);
 
         payButton = (FloatingActionButton) findViewById(R.id.fabPay);
         payButton.setOnClickListener(new View.OnClickListener() {
@@ -136,14 +135,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                                     openPaymentActivity();
                                 }
                             }).create().show();
-                }
-                else
+                } else
                     openPaymentActivity();
             }
         });
-        payButton.hide();
-        fabVisible.put(payButton, false);
-
 
         //Listen to tab swipes
         ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -169,8 +164,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         qtyTextView   = (TextView) findViewById(R.id.qty_textView);
         totalTextView = (TextView) findViewById(R.id.total_textView);
 
-        updateSummary(EditPagerAdapter.ORDERING_POSITION);
-
+        setActiveTab();
     }
 
     @Override
@@ -214,6 +208,29 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         //TODO: Add options to split the check and to Join the orders from different tables
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Sets the active tab depending on the caller
+     * From create -> ordering
+     *      view open orders
+     *      main Activity -> ordered
+     */
+    private void setActiveTab() {
+        if("CreateOrderActivity".equals(caller)) {
+            fabVisible.put(sendButton, true);
+            payButton.hide();
+            fabVisible.put(payButton, false);
+            updateSummary(EditPagerAdapter.ORDERING_POSITION);
+        } else {
+            fabVisible.put(sendButton, false);
+            sendButton.hide();
+            fabVisible.put(payButton, true);
+            updateSummary(EditPagerAdapter.ORDERED_POSITION);
+
+            mViewPager.setCurrentItem(EditPagerAdapter.ORDERED_POSITION, false);
+
+        }
     }
 
     private void showRemarkDialog() {
@@ -525,6 +542,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     addNewOrderLines(orderLines);
                 }
                 this.recreate();
+                mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
 
             }
         } else if(requestCode == PAY_REQUEST ) {
