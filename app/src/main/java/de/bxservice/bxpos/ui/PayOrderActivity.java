@@ -556,8 +556,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
 
         //If the synchronization settings are configured as Never
-        if ("-1".equals(syncConnPref)) {
-            Log.i(LOG_TAG, "Sync never configured - order sent to queue");
+        if (!"0".equals(syncConnPref)) {
+            Log.i(LOG_TAG, "Sync configuration - order sent to queue");
             order.payOrder(false, getBaseContext());
             finish();
             return;
