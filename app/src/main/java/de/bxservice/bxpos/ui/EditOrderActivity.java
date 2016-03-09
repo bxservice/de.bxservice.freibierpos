@@ -570,6 +570,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         if(itemsFragment != null) {
             itemsFragment.getmAdapter().toggleSelection(idx);
+            if(itemsFragment.getmAdapter().getSelectedItemCount() == 0) {
+                mActionMode.finish();
+                return;
+            }
             String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
             mActionMode.setTitle(title);
         }
@@ -611,6 +615,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         return getSupportFragmentManager().findFragmentByTag(
                 "android:switcher:" + mViewPager.getId() + ":"
                         + position);
+    }
+
+    private void openPaymentActivity() {
+        Intent intent = new Intent(this, PayOrderActivity.class);
+        intent.putExtra("completedOrder", order);
+        startActivityForResult(intent, PAY_REQUEST);
     }
 
     /**
@@ -660,12 +670,4 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
 
     }
-
-    private void openPaymentActivity() {
-        Intent intent = new Intent(this, PayOrderActivity.class);
-        intent.putExtra("completedOrder", order);
-        startActivityForResult(intent, PAY_REQUEST);
-    }
-
-
 }
