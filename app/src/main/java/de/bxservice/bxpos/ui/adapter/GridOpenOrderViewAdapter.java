@@ -1,4 +1,4 @@
-package de.bxservice.bxpos.ui;
+package de.bxservice.bxpos.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
