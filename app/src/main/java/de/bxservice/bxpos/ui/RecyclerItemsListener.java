@@ -7,10 +7,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Listener for the lis items when ordering
+ * Listener for the list items
  * Created by Diego Ruiz on 11/12/15.
  */
-public class RecyclerOrderingItemsListener implements RecyclerView.OnItemTouchListener {
+public class RecyclerItemsListener implements RecyclerView.OnItemTouchListener {
 
     private OnItemClickListener mListener;
 
@@ -21,7 +21,7 @@ public class RecyclerOrderingItemsListener implements RecyclerView.OnItemTouchLi
 
     GestureDetector mGestureDetector;
 
-    public RecyclerOrderingItemsListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
+    public RecyclerItemsListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
         mListener = listener;
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override

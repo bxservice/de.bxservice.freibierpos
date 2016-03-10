@@ -35,6 +35,10 @@ public class DataProvider {
         return dataMapper.getAllTableGroups();
     }
 
+    public List<Table> getAllTables() {
+        return dataMapper.getAllTables();
+    }
+
     public long getTotalCategories() {
         return dataMapper.getTotalCategories();
     }

@@ -37,17 +37,17 @@ import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
-import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
+import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
 public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
-        RemarkDialogFragment.RemarkDialogListener, SearchView.OnQueryTextListener {
+        RemarkDialogFragment.RemarkDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener, SearchView.OnQueryTextListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -285,13 +285,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
             if (caller.equals("MainActivity")) {
                 if(getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
-                    setSelectedTable((Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE));
+                    selectedTable = (Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE);
 
-                setNumberOfGuests(extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS));
+                numberOfGuests = extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS);
             } else if (caller.equals("EditOrderActivity")) {
                 posOrder = (POSOrder) getIntent().getSerializableExtra(EditOrderActivity.EXTRA_ORDER);
-                setSelectedTable(posOrder.getTable());
-                setNumberOfGuests(posOrder.getGuestNumber());
+                selectedTable = posOrder.getTable();
+                numberOfGuests = posOrder.getGuestNumber();
                 posOrder.getOrderingLines().clear();
             }
 
@@ -352,6 +352,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             showRemarkDialog();
             return true;
         }
+        if (id == R.id.change_table) {
+            showTransferTableDialog();
+            return true;
+        }
         //TODO: Support change of table in an order - Do it in EditOrder - CreateOrder
 
         return super.onOptionsItemSelected(item);
@@ -368,6 +372,11 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         GuestNumberDialogFragment guestDialog = new GuestNumberDialogFragment();
         guestDialog.setNumberOfGuests(numberOfGuests);
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
+    }
+
+    private void showTransferTableDialog() {
+        SwitchTableDialogFragment changeTableDialog = new SwitchTableDialogFragment();
+        changeTableDialog.show(getFragmentManager(), "SwitchTableDialogFragment");
     }
 
     private int getNumberOfGuests() {
@@ -402,7 +411,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void onDialogPositiveClick(GuestNumberDialogFragment dialog) {
         // User touched the dialog's positive button
         int guests = dialog.getNumberOfGuests();
-        setNumberOfGuests(guests);
+        numberOfGuests = guests;
         updateDraftOrder();
     }
 
@@ -414,7 +423,17 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void onDialogPositiveClick(RemarkDialogFragment dialog) {
         // User touched the dialog's positive button
         String note = dialog.getNote();
-        setRemarkNote(note);
+        remarkNote = note;
+        updateDraftOrder();
+    }
+
+    /**
+     * Click add on Change table dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(SwitchTableDialogFragment dialog) {
+        selectedTable = dialog.getTable();
         updateDraftOrder();
     }
 
@@ -441,6 +460,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             }
             if(numberOfGuests != posOrder.getGuestNumber()) {
                 posOrder.setGuestNumber(numberOfGuests);
+            }
+            if(selectedTable != null && !selectedTable.equals(posOrder.getTable())) {
+                //If a table was selected before
+                if(posOrder.getTable() != null)
+                    posOrder.getTable().freeTable(getBaseContext());
+                posOrder.setTable(selectedTable);
+                selectedTable.occupyTable(getBaseContext());
             }
 
             posOrder.updateOrder(getBaseContext());

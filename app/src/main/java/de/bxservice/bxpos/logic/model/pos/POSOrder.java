@@ -371,8 +371,7 @@ public class POSOrder implements Serializable {
         updateOrder(ctx);
 
         if(table != null) {
-            table.setStatus(Table.FREE_STATUS);
-            table.updateTable(ctx);
+            table.freeTable(ctx);
         }
 
     }
