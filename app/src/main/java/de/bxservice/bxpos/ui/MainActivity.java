@@ -294,9 +294,7 @@ public class MainActivity extends AppCompatActivity
                 requestCode == EDIT_ORDER_REQUEST ||
                 requestCode == OPEN_ORDER_REQUEST) {
             // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                this.recreate();
-            }
+            this.recreate();
         }
     }
 
