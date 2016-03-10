@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/table_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:elevation="2dp"
+        android:maxLines="1"
+        android:fontFamily="sans-serif-medium"
+        android:ellipsize="marquee"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:clickable="true"
+        android:contextClickable="true" />
+
+</LinearLayout>

@@ -325,6 +325,11 @@ public class DataMapper implements Serializable {
         return tableGroupHelper.getAllTableGroups();
     }
 
+    public List<Table> getAllTables() {
+        PosTableHelper tableHelper = new PosTableHelper(mContext);
+        return tableHelper.getAllTables();
+    }
+
     public Table getTable(long id) {
         PosTableHelper tableHelper = new PosTableHelper(mContext);
         return tableHelper.getTable(id);
