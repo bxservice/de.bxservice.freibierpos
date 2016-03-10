@@ -540,10 +540,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
                 if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderingLines().size()) {
                     addNewOrderLines(orderLines);
+                    mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
                 }
                 this.recreate();
-                mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
-
             }
         } else if(requestCode == PAY_REQUEST ) {
             if (resultCode == 2) {
