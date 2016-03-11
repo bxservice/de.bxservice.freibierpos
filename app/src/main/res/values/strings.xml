@@ -28,6 +28,8 @@
     <string name="selected_count">%1$s selected</string>
     <string name="set_table">Set table</string>
     <string name="change_table">Switch table</string>
+    <string name="split_order">Split order</string>
+    <string name="join_orders">Join orders</string>
     <string name="remove">Remove</string>
     <string name="send_items">Send</string>
     <string name="synchronize_orders_title">Synchronize orders?</string>

@@ -28,6 +28,8 @@
     <string name="selected_count">%1$s ausgewählt</string>
     <string name="set_table">Wählen Tisch</string>
     <string name="change_table">Schaltertisch</string>
+    <string name="split_order">Split-Bestellung</string>
+    <string name="join_orders">Mähdrescheraufträge</string>
     <string name="remove">Entfernen</string>
     <string name="send_items">Senden</string>
     <string name="synchronize_orders_title">Synchronisieren Sie Aufträge?</string>
