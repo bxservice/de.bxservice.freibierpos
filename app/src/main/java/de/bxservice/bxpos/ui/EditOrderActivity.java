@@ -268,6 +268,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void showJoinOrdersDialog() {
         JoinOrdersDialogFragment joinOrdersDialog = new JoinOrdersDialogFragment();
+        joinOrdersDialog.setOrder(order);
         joinOrdersDialog.show(getFragmentManager(), "JoinOrdersDialogFragment");
     }
 
