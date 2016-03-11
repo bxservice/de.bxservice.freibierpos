@@ -36,10 +36,11 @@ import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
+import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
-        RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener {
+        RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -205,6 +206,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             showRemarkDialog();
             return true;
         }
+        if (id == R.id.change_table) {
+            showTransferTableDialog();
+            return true;
+        }
         //TODO: Add options to split the check and to Join the orders from different tables
 
         return super.onOptionsItemSelected(item);
@@ -244,6 +249,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         GuestNumberDialogFragment guestDialog = new GuestNumberDialogFragment();
         guestDialog.setNumberOfGuests(order.getGuestNumber());
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
+    }
+
+    private void showTransferTableDialog() {
+        SwitchTableDialogFragment changeTableDialog = new SwitchTableDialogFragment();
+        changeTableDialog.show(getFragmentManager(), "SwitchTableDialogFragment");
     }
 
     private void showKitchenNoteDialog() {
@@ -291,6 +301,23 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         String note = dialog.getNote();
         dialog.getOrderLine().setProductRemark(note);
         dialog.getOrderLine().updateLine(getBaseContext());
+    }
+
+    /**
+     * Click add on Change table dialog
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(SwitchTableDialogFragment dialog) {
+
+        if (dialog.getTable() != null) {
+            //If table exists - free it up
+            if(order.getTable() != null)
+                order.getTable().freeTable(getBaseContext());
+            order.setTable(dialog.getTable());
+            order.getTable().occupyTable(getBaseContext());
+            order.updateOrder(getBaseContext());
+        }
     }
 
     /**
