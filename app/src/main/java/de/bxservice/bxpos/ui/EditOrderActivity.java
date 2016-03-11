@@ -54,6 +54,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private EditPagerAdapter mEditPagerAdapter;
 
+    static final String ORDER_STATE = "orderState";
     public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
     static final int ADD_ITEMS_REQUEST  = 1;  // The request code
     static final int PAY_REQUEST = 2;  // The request code
@@ -351,6 +352,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     .setPositiveButton(R.string.join, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
                             order.joinOrders(dialog.getOrder(), getBaseContext());
+                            orderChanged = true;
                             EditOrderActivity.super.recreate();
                         }
                     }).create().show();
@@ -390,6 +392,28 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
         else
             super .onBackPressed();
+    }
+
+    /**
+     * On recreate keep the value of orderChanged
+     * @param savedInstanceState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putBoolean(ORDER_STATE, orderChanged);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        orderChanged = savedInstanceState.getBoolean(ORDER_STATE);
     }
 
     @Override
