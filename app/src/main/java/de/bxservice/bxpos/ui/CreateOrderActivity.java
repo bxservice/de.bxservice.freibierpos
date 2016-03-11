@@ -356,7 +356,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             showTransferTableDialog();
             return true;
         }
-        //TODO: Support change of table in an order - Do it in EditOrder - CreateOrder
 
         return super.onOptionsItemSelected(item);
     }
