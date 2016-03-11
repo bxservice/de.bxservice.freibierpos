@@ -127,4 +127,10 @@ public class OrderingItemsFragment extends Fragment {
     public OrderingLineAdapter getmAdapter() {
         return mAdapter;
     }
+
+    public void refresh(POSOrder order) {
+        this.getArguments().putSerializable(ARG_ORDER, order);
+        mAdapter.notifyDataSetChanged();
+    }
+
 }
