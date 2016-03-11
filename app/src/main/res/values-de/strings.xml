@@ -34,6 +34,8 @@
     <string name="send_items">Senden</string>
     <string name="synchronize_orders_title">Synchronisieren Sie Aufträge?</string>
     <string name="synchronize_orders_message">Synchronisieren Sie %1$s Aufträge mit iDempiere?</string>
+    <string name="join_order_question">Join orders?</string>
+    <string name="join">Join</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username"> Benutzername</string>
