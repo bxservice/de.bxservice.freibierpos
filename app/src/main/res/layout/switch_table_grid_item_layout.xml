@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true">
+    android:focusable="true"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/table_title"
@@ -19,6 +20,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:clickable="true"
-        android:contextClickable="true" />
+        android:contextClickable="true"
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>
