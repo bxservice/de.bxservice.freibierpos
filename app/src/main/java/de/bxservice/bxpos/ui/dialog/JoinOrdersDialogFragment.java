@@ -91,11 +91,24 @@ public class JoinOrdersDialogFragment extends DialogFragment {
      */
     private void initGridData() {
         DataProvider dataProvider = new DataProvider(getActivity().getBaseContext());
-        mGridData = new ArrayList<>(dataProvider.getAllOpenOrders());
+        //If the order is != null don't add it to the array. Avoid join an order with itself
+        if (order != null) {
+            mGridData = new ArrayList<>();
+            for (POSOrder currentOrder : dataProvider.getAllOpenOrders()) {
+                if(order.getOrderId() != currentOrder.getOrderId())
+                    mGridData.add(currentOrder);
+            }
+        } else {
+            mGridData = new ArrayList<>(dataProvider.getAllOpenOrders());
+        }
     }
 
     public POSOrder getOrder() {
         return order;
+    }
+
+    public void setOrder(POSOrder order) {
+        this.order = order;
     }
 
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener
