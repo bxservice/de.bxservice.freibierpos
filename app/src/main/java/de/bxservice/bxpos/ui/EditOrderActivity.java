@@ -349,35 +349,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.join, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
-                            joinOrders(dialog.getOrder());
+                            order.joinOrders(dialog.getOrder(), getBaseContext());
+                            EditOrderActivity.super.recreate();
                         }
                     }).create().show();
         }
-    }
-
-    private void joinOrders(POSOrder originOrder) {
-        
-    }
-
-    /**
-     * Sum up the guests from the two orders
-     */
-    private void joinGuests() {
-
-    }
-
-    /**
-     * Concatenate the remarks from the two orders
-     */
-    private void joinRemarks() {
-
-    }
-
-    /**
-     * Join the order lines from the two orders
-     */
-    private void joinOrderLines() {
-
     }
 
     /**
