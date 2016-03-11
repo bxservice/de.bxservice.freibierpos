@@ -114,9 +114,14 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
          if(requestCode == EDIT_ORDER_REQUEST ) {
+            //When coming from edit order and items where added and sent
             if (resultCode == 2 || resultCode == RESULT_OK) {
                 setResult(RESULT_OK);
                 finish();
+            }
+            //When on back button - table changed. Update the UI
+            else if (resultCode == 3) {
+                this.recreate();
             }
         }
     }

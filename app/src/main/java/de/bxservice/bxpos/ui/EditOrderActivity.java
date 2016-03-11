@@ -73,6 +73,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private ViewPager mViewPager;
     private boolean addNewItemsOnBack = false;
     private boolean orderSent = false;
+    private boolean orderChanged = false;
 
     private ActionMode mActionMode;
 
@@ -317,6 +318,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             order.setTable(dialog.getTable());
             order.getTable().occupyTable(getBaseContext());
             order.updateOrder(getBaseContext());
+            orderChanged = true;
         }
     }
 
@@ -539,6 +541,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
         else if (orderSent)
             setResult(2); //Everything ok - the order was created and the create Activity should be closed
+        else if (orderChanged)
+            setResult(3); //Back button without sending the order - but order changed
 
         super.finish();
     }
@@ -580,6 +584,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
                 updateOrderingItems();
                 mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
+                orderChanged = true;
 
                 getIntent().putExtra("draftOrder", order);
 
