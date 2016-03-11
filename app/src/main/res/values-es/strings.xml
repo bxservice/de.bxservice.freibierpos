@@ -28,6 +28,8 @@
     <string name="selected_count">%1$s seleccionado</string>
     <string name="set_table">Establecer mesa</string>
     <string name="change_table">Cambiar mesa</string>
+    <string name="split_order">Dividir orden</string>
+    <string name="join_orders">Juntar órdenes</string>
     <string name="remove">Remover</string>
     <string name="send_items">Enviar</string>
     <string name="synchronize_orders_title">¿Sincronizar órdenes?</string>

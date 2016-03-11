@@ -34,13 +34,15 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
+import de.bxservice.bxpos.ui.dialog.JoinOrdersDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
-        RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener {
+        RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener,
+        SwitchTableDialogFragment.SwitchTableDialogListener, JoinOrdersDialogFragment.JoinOrdersDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -211,6 +213,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             showTransferTableDialog();
             return true;
         }
+        if (id == R.id.split_order) {
+            return true;
+        }
+        if (id == R.id.join_orders) {
+            showJoinOrdersDialog();
+            return true;
+        }
         //TODO: Add options to split the check and to Join the orders from different tables
 
         return super.onOptionsItemSelected(item);
@@ -255,6 +264,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private void showTransferTableDialog() {
         SwitchTableDialogFragment changeTableDialog = new SwitchTableDialogFragment();
         changeTableDialog.show(getFragmentManager(), "SwitchTableDialogFragment");
+    }
+
+    private void showJoinOrdersDialog() {
+        JoinOrdersDialogFragment joinOrdersDialog = new JoinOrdersDialogFragment();
+        joinOrdersDialog.show(getFragmentManager(), "JoinOrdersDialogFragment");
     }
 
     private void showKitchenNoteDialog() {
@@ -320,6 +334,15 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             order.updateOrder(getBaseContext());
             orderChanged = true;
         }
+    }
+
+    /**
+     * Click on an item on join orders
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(JoinOrdersDialogFragment dialog) {
+
     }
 
     /**
