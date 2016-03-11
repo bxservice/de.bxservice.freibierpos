@@ -414,6 +414,7 @@ public class LoginActivity extends AppCompatActivity  {
                         //No connection to the server but the user is known
                         Log.i(LOG_TAG, "No connection to the server - offline login");
                         offlineLogin(loggedUser);
+                        return;
                     }
                 }
 
