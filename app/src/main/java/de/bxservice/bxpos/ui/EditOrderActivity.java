@@ -341,7 +341,42 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      * @param dialog
      */
     @Override
-    public void onDialogPositiveClick(JoinOrdersDialogFragment dialog) {
+    public void onDialogPositiveClick(final JoinOrdersDialogFragment dialog) {
+
+        if(dialog.getOrder() != null) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.join_order_question)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.join, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            joinOrders(dialog.getOrder());
+                        }
+                    }).create().show();
+        }
+    }
+
+    private void joinOrders(POSOrder originOrder) {
+        
+    }
+
+    /**
+     * Sum up the guests from the two orders
+     */
+    private void joinGuests() {
+
+    }
+
+    /**
+     * Concatenate the remarks from the two orders
+     */
+    private void joinRemarks() {
+
+    }
+
+    /**
+     * Join the order lines from the two orders
+     */
+    private void joinOrderLines() {
 
     }
 
