@@ -303,7 +303,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         if(intent != null) {
 
-            order = (POSOrder)intent.getSerializableExtra("draftOrder");
+            order = (POSOrder) intent.getSerializableExtra("draftOrder");
             caller = intent.getStringExtra("caller");
 
         }
@@ -524,6 +524,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         startActivityForResult(intent, ADD_ITEMS_REQUEST);
     }
 
+    private void updateOrderingItems() {
+        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
+
+        if(itemsFragment != null) {
+            itemsFragment.refresh(order);
+        }
+    }
+
     /**
      * When it comes back from the create order Activity
      * @param requestCode
@@ -536,12 +544,18 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
 
-                ArrayList<POSOrderLine> orderLines = (ArrayList<POSOrderLine>) data.getExtras().get("orderLines");
+                order = (POSOrder) data.getExtras().get(EXTRA_ORDER);
 
-                if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderingLines().size()) {
+                /*if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderingLines().size()) {
                     addNewOrderLines(orderLines);
                     mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
-                }
+                }9*/
+
+                updateOrderingItems();
+                mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
+
+                getIntent().putExtra("draftOrder", order);
+
                 this.recreate();
             }
         } else if(requestCode == PAY_REQUEST ) {

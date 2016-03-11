@@ -292,7 +292,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 posOrder = (POSOrder) getIntent().getSerializableExtra(EditOrderActivity.EXTRA_ORDER);
                 selectedTable = posOrder.getTable();
                 numberOfGuests = posOrder.getGuestNumber();
-                posOrder.getOrderingLines().clear();
+                //posOrder.getOrderingLines().clear();
             }
 
         }
@@ -547,10 +547,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         if (requestCode == PICK_CONFIRMATION_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-
                 posOrder = (POSOrder)data.getExtras().get(EditOrderActivity.EXTRA_ORDER);
                 updateOrderLinesQuantity();
-
             }
             //Everything ok - the order was created and the create Activity should be closed
             if (resultCode == 2) {
@@ -564,7 +562,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public void finish() {
         if (caller.equals("EditOrderActivity")) {
             Intent data = new Intent();
-            data.putExtra("orderLines", posOrder.getOrderingLines());
+            data.putExtra(EditOrderActivity.EXTRA_ORDER, posOrder);
             setResult(RESULT_OK, data);
         }
         super.finish();
