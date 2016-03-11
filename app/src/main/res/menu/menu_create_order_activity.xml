@@ -14,7 +14,7 @@
         app:showAsAction="never" />
 
     <item android:id="@+id/change_table"
-        android:title="@string/set_table"
+        android:title="@string/change_table"
         android:orderInCategory="300"
         app:showAsAction="never" />
 
