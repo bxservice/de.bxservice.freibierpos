@@ -402,9 +402,25 @@ public class LoginActivity extends AppCompatActivity  {
                 new InitiateData().execute(getBaseContext());
 
             } else {
+
+                String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+
+                // If the sync configuration chosen was Always offline login not allowed
+                if(!"0".equals(syncConnPref)) {
+                    PosUser loggedUser = getLoggedUser(mUsername);
+
+                    //Username does not exist and no internet connection
+                    if(loggedUser != null) {
+                        //No connection to the server but the user is known
+                        Log.i(LOG_TAG, "No connection to the server - offline login");
+                        offlineLogin(loggedUser);
+                    }
+                }
+
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
                 onCancelled();
+
             }
         }
 
