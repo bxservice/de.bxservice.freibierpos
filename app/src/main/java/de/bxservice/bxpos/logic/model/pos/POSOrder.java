@@ -42,12 +42,12 @@ public class POSOrder implements Serializable {
 
     private ArrayList<POSOrderLine> orderingLines = new ArrayList<>();
     private ArrayList<POSOrderLine> orderedLines = new ArrayList<>();
-    private String orderRemark;
+    private String orderRemark = "";
 
     private int currentLineNo = 10;
     private long orderId;
     private Table table;
-    private int guestNumber;
+    private int guestNumber = 0;
     private String status;
     private BigDecimal totallines = BigDecimal.ZERO;
     private boolean sync = false;
@@ -389,6 +389,44 @@ public class POSOrder implements Serializable {
     public boolean remove(Context ctx) {
         orderManager = new PosOrderManagement(ctx);
         return orderManager.remove(this);
+    }
+
+    /**
+     * Receive another order and joins them
+     * @param originOrder
+     * @param ctx
+     */
+    public void joinOrders(POSOrder originOrder, Context ctx) {
+
+        //Join guests - Sum up the guests
+        guestNumber = guestNumber + originOrder.getGuestNumber();
+
+        //Join remarks - Concatenate the remarks
+        orderRemark = orderRemark  + " " + originOrder.getOrderRemark();
+
+        //Join the ordered lines from the two orders
+        for (POSOrderLine originLine : originOrder.getOrderedLines()) {
+            originLine.setOrder(this);
+            originLine.updateLine(ctx);
+            orderedLines.add(originLine);
+        }
+
+        //Join the ordering lines from the two orders
+        for (POSOrderLine originLine : originOrder.getOrderingLines()) {
+            originLine.setOrder(this);
+            originLine.updateLine(ctx);
+            orderingLines.add(originLine);
+        }
+
+        updateOrder(ctx);
+
+        // Free the table of the merged order
+        if (originOrder.getTable() != null) {
+            originOrder.getTable().freeTable(ctx);
+        }
+
+        //Delete the merged order from the db
+        originOrder.remove(ctx);
     }
 
 }
