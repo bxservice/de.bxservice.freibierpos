@@ -429,4 +429,42 @@ public class POSOrder implements Serializable {
         originOrder.remove(ctx);
     }
 
+    /**
+     * Split one order into two
+     * @param destinationOrder
+     * @param toSplitLines
+     * @param ctx
+     */
+    public void splitOrder(POSOrder destinationOrder, ArrayList<POSOrderLine> toSplitLines, Context ctx) {
+
+        if(toSplitLines == null || toSplitLines.isEmpty())
+            return;
+
+        //If order is null -> new order
+        if(destinationOrder == null) {
+            POSOrder newOrder = new POSOrder();
+
+            newOrder.createOrder(ctx);
+            newOrder.setStatus(SENT_STATUS);
+            newOrder.setOrderedLines(toSplitLines);
+
+            newOrder.createOrder(ctx);
+
+            for (POSOrderLine orderLine : toSplitLines) {
+                orderLine.setOrder(newOrder);
+                orderLine.updateLine(ctx);
+            }
+            //TODO: When split left the same table -> multiple tanlñes
+            //newOrder.setTable(table);
+
+        } else {
+            for (POSOrderLine orderLine : toSplitLines) {
+                orderLine.setOrder(destinationOrder);
+                orderLine.updateLine(ctx);
+                destinationOrder.getOrderedLines().add(orderLine);
+            }
+        }
+
+    }
+
 }

@@ -37,6 +37,7 @@
     <string name="join_order_question">¿Combinar órdenes?</string>
     <string name="join">Combinar</string>
     <string name="split">Dividir</string>
+    <string name="new_order">Nueva orden</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Nombre de usuario</string>

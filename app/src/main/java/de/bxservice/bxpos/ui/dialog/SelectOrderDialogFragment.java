@@ -20,21 +20,24 @@ import de.bxservice.bxpos.ui.RecyclerItemsListener;
 import de.bxservice.bxpos.ui.adapter.JoinOrdersDialogAdapter;
 
 /**
+ * Dialog fragment used to select another order
+ * it is used in join and split options
  * Created by Diego Ruiz on 11/03/16.
  */
-public class JoinOrdersDialogFragment extends DialogFragment {
+public class SelectOrderDialogFragment extends DialogFragment {
 
 
 
-    public interface JoinOrdersDialogListener {
-        void onDialogPositiveClick(JoinOrdersDialogFragment dialog);
+    public interface SelectOrderDialogListener {
+        void onDialogPositiveClick(SelectOrderDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
-    JoinOrdersDialogListener mListener;
+    SelectOrderDialogListener mListener;
     private ArrayList<POSOrder> mGridData;
     private RecyclerView recyclerView;
     private POSOrder order;
+    private boolean isJoin; //flag to check if it is call to join or split
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class JoinOrdersDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        View view = inflater.inflate(R.layout.join_orders_dialog, null);
+        View view = inflater.inflate(R.layout.select_order_dialog, null);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.open_order_list);
 
@@ -61,8 +64,8 @@ public class JoinOrdersDialogFragment extends DialogFragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         order = mGridData.get(position);
-                        mListener.onDialogPositiveClick(JoinOrdersDialogFragment.this);
-                        JoinOrdersDialogFragment.this.getDialog().dismiss();
+                        mListener.onDialogPositiveClick(SelectOrderDialogFragment.this);
+                        SelectOrderDialogFragment.this.getDialog().dismiss();
                     }
 
                     @Override
@@ -74,13 +77,26 @@ public class JoinOrdersDialogFragment extends DialogFragment {
 
         recyclerView.setAdapter(mGridAdapter);
 
-        builder.setTitle(R.string.join_orders);
+        if(isJoin)
+            builder.setTitle(R.string.join_orders);
+        else
+            builder.setTitle(R.string.split_order);
+
         builder.setView(view)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        JoinOrdersDialogFragment.this.getDialog().cancel();
+                        SelectOrderDialogFragment.this.getDialog().cancel();
                     }
                 });
+
+        if(!isJoin)
+            builder.setPositiveButton(R.string.new_order, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            order = null;
+                            mListener.onDialogPositiveClick(SelectOrderDialogFragment.this);
+                            SelectOrderDialogFragment.this.getDialog().dismiss();
+                        }
+                    });
 
         // Create the AlertDialog object and return it
         return builder.create();
@@ -111,6 +127,14 @@ public class JoinOrdersDialogFragment extends DialogFragment {
         this.order = order;
     }
 
+    public boolean isJoin() {
+        return isJoin;
+    }
+
+    public void setIsJoin(boolean isJoin) {
+        this.isJoin = isJoin;
+    }
+
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener
     @Override
     public void onAttach(Activity activity) {
@@ -118,11 +142,11 @@ public class JoinOrdersDialogFragment extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (JoinOrdersDialogListener) activity;
+            mListener = (SelectOrderDialogListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement JoinOrdersDialogListener");
+                    + " must implement SelectOrderDialogListener");
         }
     }
 
