@@ -17,7 +17,7 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
-import de.bxservice.bxpos.ui.adapter.JoinOrdersDialogAdapter;
+import de.bxservice.bxpos.ui.adapter.SelectOrderDialogAdapter;
 
 /**
  * Dialog fragment used to select another order
@@ -26,7 +26,7 @@ import de.bxservice.bxpos.ui.adapter.JoinOrdersDialogAdapter;
  */
 public class SelectOrderDialogFragment extends DialogFragment {
 
-
+    private static final String IS_JOIN = "isJoin";
 
     public interface SelectOrderDialogListener {
         void onDialogPositiveClick(SelectOrderDialogFragment dialog);
@@ -37,10 +37,15 @@ public class SelectOrderDialogFragment extends DialogFragment {
     private ArrayList<POSOrder> mGridData;
     private RecyclerView recyclerView;
     private POSOrder order;
-    private boolean isJoin; //flag to check if it is call to join or split
+    private boolean isJoin = true; //flag to check if it is call to join or split
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        //On rotation screen
+        if (savedInstanceState != null)
+            isJoin = savedInstanceState.getBoolean(IS_JOIN);
+
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -57,7 +62,7 @@ public class SelectOrderDialogFragment extends DialogFragment {
 
         initGridData();
 
-        JoinOrdersDialogAdapter mGridAdapter = new JoinOrdersDialogAdapter(mGridData);
+        SelectOrderDialogAdapter mGridAdapter = new SelectOrderDialogAdapter(mGridData);
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemsListener(getActivity().getBaseContext(), recyclerView, new RecyclerItemsListener.OnItemClickListener() {
@@ -148,6 +153,12 @@ public class SelectOrderDialogFragment extends DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement SelectOrderDialogListener");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(IS_JOIN, isJoin);
     }
 
 }
