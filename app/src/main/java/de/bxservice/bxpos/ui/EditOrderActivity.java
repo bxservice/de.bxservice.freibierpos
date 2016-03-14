@@ -549,7 +549,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if (order == null)
             return "";
 
-        StringBuilder totalQtyString = new StringBuilder( getString(R.string.quantity) + ": " );
         int totalQty = 0;
 
         for(POSOrderLine orderLine : getLines(status)) {
@@ -558,9 +557,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             }
         }
 
-        totalQtyString.append(totalQty);
-
-        return totalQtyString.toString();
+        return getString(R.string.quantity_summary, totalQty);
     }
 
     /**
@@ -594,19 +591,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if (order == null)
             return "";
 
-        StringBuilder totalString = new StringBuilder();
         BigDecimal total = BigDecimal.ZERO;
-
-        switch (status) {
-            case POSOrderLine.ORDERING:
-                totalString.append(getString(R.string.subtotal));
-                break;
-            case POSOrderLine.ORDERED:
-                totalString.append(getString(R.string.total));
-                break;
-        }
-
-        totalString.append(": ");
 
         for (POSOrderLine orderLine : getLines(status)) {
 
@@ -615,11 +600,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             }
         }
 
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        totalString.append(currencyFormat.format(total));
 
-        return totalString.toString();
+        switch (status) {
+            case POSOrderLine.ORDERING:
+                return getString(R.string.subtotal_courtesy, currencyFormat.format(total));
+            case POSOrderLine.ORDERED:
+                return getString(R.string.total_value, currencyFormat.format(total));
+            default:
+                return getString(R.string.subtotal_courtesy, currencyFormat.format(total));
+        }
 
     }
 
