@@ -14,7 +14,7 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 /**
  * Created by Diego Ruiz on 11/03/16.
  */
-public class JoinOrdersDialogAdapter extends RecyclerView.Adapter<JoinOrdersDialogAdapter.JoinOrdersDialogViewHolder>
+public class SelectOrderDialogAdapter extends RecyclerView.Adapter<SelectOrderDialogAdapter.JoinOrdersDialogViewHolder>
         implements View.OnClickListener {
 
     private ArrayList<POSOrder> mDataset;
@@ -45,7 +45,7 @@ public class JoinOrdersDialogAdapter extends RecyclerView.Adapter<JoinOrdersDial
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public JoinOrdersDialogAdapter(ArrayList<POSOrder> myDataset) {
+    public SelectOrderDialogAdapter(ArrayList<POSOrder> myDataset) {
         mDataset = myDataset;
     }
 

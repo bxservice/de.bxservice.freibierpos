@@ -227,7 +227,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             showJoinOrdersDialog();
             return true;
         }
-        //TODO: Add options to split the check and to Join the orders from different tables
 
         return super.onOptionsItemSelected(item);
     }

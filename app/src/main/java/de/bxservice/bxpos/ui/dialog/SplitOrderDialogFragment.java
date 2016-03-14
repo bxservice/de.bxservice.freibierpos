@@ -112,6 +112,8 @@ public class SplitOrderDialogFragment extends DialogFragment {
                     }
                 });
 
+        setRetainInstance(true);
+
         // Create the AlertDialog object and return it
         return builder.create();
     }
