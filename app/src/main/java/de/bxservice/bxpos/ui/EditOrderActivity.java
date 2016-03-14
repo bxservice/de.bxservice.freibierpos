@@ -280,6 +280,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void showSplitOrderDialog() {
+
+        //If only one item - show error
+        if(order.getOrderedLines().size() <= 1) {
+            Snackbar.make(mainView, getString(R.string.unable_split), Snackbar.LENGTH_LONG)
+                    .setAction("OK", null).show();
+            return;
+        }
+
         SplitOrderDialogFragment splitOrderDialog = new SplitOrderDialogFragment();
         splitOrderDialog.setOrder(order);
         splitOrderDialog.show(getFragmentManager(), "SplitOrderDialogFragment");
@@ -386,6 +394,17 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onDialogPositiveClick(SplitOrderDialogFragment dialog) {
         if(dialog.getSelectedLines() != null && !dialog.getSelectedLines().isEmpty()) {
             selectedItemsToSplit = dialog.getSelectedLines();
+
+            //If all the items were selected
+            if(selectedItemsToSplit.size() == order.getOrderedLines().size()) {
+                Snackbar snackbar = Snackbar
+                        .make(mainView, getString(R.string.split_all_Error), Snackbar.LENGTH_LONG)
+                        .setAction("OK", null);
+                snackbar.show();
+
+                return;
+            }
+
             SelectOrderDialogFragment joinOrdersDialog = new SelectOrderDialogFragment();
             joinOrdersDialog.setOrder(order);
             joinOrdersDialog.setIsJoin(false);
