@@ -70,7 +70,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private CreateOrderTask createOrderTask;
 
 
-
+    private boolean orderPaid = false;
     private String discountReason;
     private StringBuilder payAmount = new StringBuilder("");
 
@@ -498,6 +498,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             return;
         }
 
+        orderPaid = true;
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
 
@@ -558,7 +560,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
     @Override
     public void finish() {
-        setResult(2); //Everything ok - the order was created and the create Activity should be closed
+        if(orderPaid)
+            setResult(RESULT_OK); //Everything ok - the order was created and the create Activity should be closed
+        else
+            setResult(RESULT_CANCELED);
         super.finish();
     }
 
