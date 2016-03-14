@@ -38,6 +38,8 @@
     <string name="join">Join</string>
     <string name="split">Split</string>
     <string name="new_order">Neue</string>
+    <string name="unable_split">You cannot split an order with one or less items</string>
+    <string name="split_all_Error">You can\'t select all items to split</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username"> Benutzername</string>

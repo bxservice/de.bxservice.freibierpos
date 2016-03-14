@@ -38,6 +38,8 @@
     <string name="join">Combinar</string>
     <string name="split">Dividir</string>
     <string name="new_order">Nueva orden</string>
+    <string name="unable_split">No se puede dividir una orden con menos de un item</string>
+    <string name="split_all_Error">No se pueden seleccionar todos los items para dividir</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Nombre de usuario</string>
