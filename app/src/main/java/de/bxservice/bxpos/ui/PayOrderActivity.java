@@ -208,17 +208,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     public String getSubtotalText() {
-
-        StringBuilder subTotalString = new StringBuilder();
-        subTotalString.append(getString(R.string.subtotal));
-        subTotalString.append(": ");
-
-        BigDecimal total = subtotal;
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        subTotalString.append(currencyFormat.format(total));
 
-        return subTotalString.toString();
+        return getString(R.string.subtotal_value, currencyFormat.format(subtotal));
     }
 
     /**
@@ -227,17 +219,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     public String getAmountToPayText() {
-
-        StringBuilder amountString = new StringBuilder();
-        amountString.append(getString(R.string.to_pay));
-        amountString.append(": ");
-
-        BigDecimal total = getAmountToPay();
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        amountString.append(currencyFormat.format(total));
 
-        return amountString.toString();
+        return getString(R.string.to_pay, currencyFormat.format(getAmountToPay()));
     }
 
     /**
@@ -246,17 +230,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     public String getSurchargeText() {
-
-        StringBuilder surchargeString = new StringBuilder();
-        surchargeString.append(getString(R.string.set_extra));
-        surchargeString.append(": ");
-
-        BigDecimal total = getSurcharge();
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        surchargeString.append(currencyFormat.format(total));
 
-        return surchargeString.toString();
+        return getString(R.string.surcharge_value, currencyFormat.format(surcharge));
     }
 
     /**
@@ -265,17 +241,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     public String getDiscountText() {
-
-        StringBuilder discountString = new StringBuilder();
-        discountString.append(getString(R.string.add_discount));
-        discountString.append(": ");
-
-        BigDecimal total = getDiscount().negate();
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        discountString.append(currencyFormat.format(total));
 
-        return discountString.toString();
+        return getString(R.string.discount_value, currencyFormat.format(discount.negate()));
     }
 
     /**
@@ -284,17 +252,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     public String getChangeText() {
-
-        StringBuilder changeString = new StringBuilder();
-        changeString.append(getString(R.string.change));
-        changeString.append(": ");
-
-        BigDecimal total = getChange();
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        changeString.append(currencyFormat.format(total));
 
-        return changeString.toString();
+        return getString(R.string.change_value, currencyFormat.format(getChange()));
     }
 
     /**
@@ -303,17 +263,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     public String getPaidAmountText() {
-
-        StringBuilder paidString = new StringBuilder();
-        paidString.append(getString(R.string.paid));
-        paidString.append(": ");
-
-        BigDecimal total = getPaidAmount();
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        paidString.append(currencyFormat.format(total));
 
-        return paidString.toString();
+        return getString(R.string.paid_value, currencyFormat.format(paidAmount));
     }
 
     public BigDecimal getSubtotal() {
@@ -355,25 +307,19 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     /**
-     * Fill surcharge text view with the assigned surcharge
+     * Fill total text view with the total
      * of the order
      * @return
      */
     public String getTotalText() {
-
-        StringBuilder totalString = new StringBuilder();
-        totalString.append(getString(R.string.total));
-        totalString.append(": ");
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-        totalString.append(currencyFormat.format(getTotal()));
 
-        return totalString.toString();
+        return getString(R.string.total_value, currencyFormat.format(getTotal()));
     }
 
     public BigDecimal getTotal() {
-        total = subtotal.add(getSurcharge());
-        total = total.subtract(getDiscount());
+        total = subtotal.add(surcharge);
+        total = total.subtract(discount);
         return total;
     }
 
@@ -527,7 +473,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private void showPaymentDialog() {
         PaymentCompletedDialogFragment paymentDialog = new PaymentCompletedDialogFragment();
         paymentDialog.setTotal(getTotal());
-        paymentDialog.setPaidAmount(getPaidAmount());
+        paymentDialog.setPaidAmount(paidAmount);
         paymentDialog.setChangeAmount(getChange());
         paymentDialog.show(getFragmentManager(), "PaymentDialogFragment");
     }
