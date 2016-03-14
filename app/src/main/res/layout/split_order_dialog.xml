@@ -10,6 +10,84 @@
         android:id="@+id/ordered_items_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <LinearLayout
+        android:id="@+id/summaryLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPrimary"
+        android:gravity="bottom"
+        android:layout_margin="2dp">
+
+        <LinearLayout
+            android:id="@+id/originalOrder"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:id="@+id/qty_textView"
+                android:layout_gravity="left"
+                android:gravity="left"
+                android:layout_marginLeft="24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:id="@+id/total_textView"
+                android:gravity="left"
+                android:layout_gravity="left"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="24dp"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/newOrder"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:id="@+id/new_qty_textView"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_marginRight="24dp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:id="@+id/new_total_textView"
+                android:gravity="right"
+                android:layout_gravity="right"
+                android:textColor="#ffffff"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

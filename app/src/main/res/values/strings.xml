@@ -69,7 +69,7 @@
     <string name="subtotal_courtesy">Subtotal: %1$s</string>
     <string name="total_value">Total: %1$s</string>
     <string name="total">Total</string>
-
+    <string name="quantity_summary">Quantity: %1$s</string>
 
     <!-- Strings related to roles -->
     <string name="role">Role</string>

@@ -10,8 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -33,8 +37,13 @@ public class SplitOrderDialogFragment extends DialogFragment {
     // Use this instance of the interface to deliver action events
     SplitOrderDialogListener mListener;
     private ArrayList<POSOrderLine> mGridData;
+    private ArrayList<POSOrderLine> selectedLines;
     private RecyclerView recyclerView;
     private POSOrder order;
+    private TextView qtyTextView;
+    private TextView totalTextView;
+    private TextView newQtyTextView;
+    private TextView newTotalTextView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -46,6 +55,11 @@ public class SplitOrderDialogFragment extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.split_order_dialog, null);
 
+        qtyTextView   = (TextView) view.findViewById(R.id.qty_textView);
+        totalTextView = (TextView) view.findViewById(R.id.total_textView);
+        newQtyTextView   = (TextView) view.findViewById(R.id.new_qty_textView);
+        newTotalTextView = (TextView) view.findViewById(R.id.new_total_textView);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.ordered_items_list);
 
         // use a grid layout manager with 2 columns
@@ -54,16 +68,24 @@ public class SplitOrderDialogFragment extends DialogFragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
         initGridData();
+        updateSummary();
 
-        OrderingLineAdapter mGridAdapter = new OrderingLineAdapter(mGridData);
+        final OrderingLineAdapter mGridAdapter = new OrderingLineAdapter(mGridData);
 
-        /*recyclerView.addOnItemTouchListener(
+        recyclerView.addOnItemTouchListener(
                 new RecyclerItemsListener(getActivity().getBaseContext(), recyclerView, new RecyclerItemsListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        //order = mGridData.get(position);
-                        mListener.onDialogPositiveClick(SplitOrderDialogFragment.this);
-                        SplitOrderDialogFragment.this.getDialog().dismiss();
+
+                        POSOrderLine selectedLine = mGridData.get(position);
+
+                        if (!selectedLines.contains(selectedLine))
+                            selectedLines.add(selectedLine);
+                        else
+                            selectedLines.remove(selectedLine);
+
+                        updateSummary();
+                        mGridAdapter.toggleSelection(position);
                     }
 
                     @Override
@@ -71,7 +93,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
                     }
 
                 })
-        );*/
+        );
 
         recyclerView.setAdapter(mGridAdapter);
 
@@ -95,6 +117,40 @@ public class SplitOrderDialogFragment extends DialogFragment {
     }
 
     /**
+     * Set text on summary fields
+     */
+    private void updateSummary() {
+        if(order == null)
+            return;
+
+        int totalQty = 0;
+        BigDecimal total = BigDecimal.ZERO;
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
+        for(POSOrderLine orderLine : mGridData) {
+            totalQty = totalQty + orderLine.getQtyOrdered();
+            total = total.add(orderLine.getLineNetAmt());
+        }
+
+        int newTotalQty = 0;
+        BigDecimal newTotal = BigDecimal.ZERO;
+
+        newTotalQty = selectedLines.size();
+
+        if (selectedLines != null && selectedLines.size() != 0) {
+            for(POSOrderLine orderLine : selectedLines) {
+                newTotal = newTotal.add(orderLine.getLineNetAmt());
+            }
+        }
+
+        qtyTextView.setText(getActivity().getBaseContext().getString(R.string.quantity_summary, totalQty - newTotalQty));
+        totalTextView.setText(getActivity().getBaseContext().getString(R.string.total_value, currencyFormat.format(total.subtract(newTotal))));
+
+        newQtyTextView.setText(getActivity().getBaseContext().getString(R.string.quantity_summary, newTotalQty));
+        newTotalTextView.setText(getActivity().getBaseContext().getString(R.string.total_value, currencyFormat.format(newTotal)));
+    }
+
+    /**
      * init the grid data with all the tables
      */
     private void initGridData() {
@@ -102,6 +158,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
         if (order != null) {
             mGridData = order.getOrderedLines();
         }
+        selectedLines = new ArrayList<>();
     }
 
     public POSOrder getOrder() {
