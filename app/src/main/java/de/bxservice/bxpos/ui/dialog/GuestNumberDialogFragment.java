@@ -48,7 +48,7 @@ public class GuestNumberDialogFragment extends DialogFragment {
 
         final NumberPicker np = (NumberPicker) view.findViewById(R.id.number_picker);
 
-        np.setMaxValue(15);
+        np.setMaxValue(100);
         np.setMinValue(1);
         np.setValue(numberOfGuests);
         np.setWrapSelectorWheel(false);
