@@ -693,7 +693,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 this.recreate();
             }
         } else if(requestCode == PAY_REQUEST ) {
-            if (resultCode == 2) {
+            if (resultCode == RESULT_OK) {
                 setResult(RESULT_OK);
                 finish();
             }
