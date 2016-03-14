@@ -74,7 +74,7 @@ public class JoinOrdersDialogFragment extends DialogFragment {
 
         recyclerView.setAdapter(mGridAdapter);
 
-        builder.setTitle(R.string.change_table);
+        builder.setTitle(R.string.join_orders);
         builder.setView(view)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
