@@ -37,12 +37,14 @@ import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.JoinOrdersDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
+import de.bxservice.bxpos.ui.dialog.SplitOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener,
-        SwitchTableDialogFragment.SwitchTableDialogListener, JoinOrdersDialogFragment.JoinOrdersDialogListener {
+        SwitchTableDialogFragment.SwitchTableDialogListener, JoinOrdersDialogFragment.JoinOrdersDialogListener,
+        SplitOrderDialogFragment.SplitOrderDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -215,6 +217,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             return true;
         }
         if (id == R.id.split_order) {
+            showSplitOrderDialog();
             return true;
         }
         if (id == R.id.join_orders) {
@@ -272,6 +275,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         joinOrdersDialog.setOrder(order);
         joinOrdersDialog.show(getFragmentManager(), "JoinOrdersDialogFragment");
     }
+
+    private void showSplitOrderDialog() {
+        SplitOrderDialogFragment splitOrderDialog = new SplitOrderDialogFragment();
+        splitOrderDialog.setOrder(order);
+        splitOrderDialog.show(getFragmentManager(), "SplitOrderDialogFragment");
+    }
+
 
     private void showKitchenNoteDialog() {
         KitchenNoteDialogFragment kitchenNoteDialog = new KitchenNoteDialogFragment();
@@ -357,6 +367,15 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                         }
                     }).create().show();
         }
+    }
+
+    /**
+     * Click on split button
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(SplitOrderDialogFragment dialog) {
+
     }
 
     /**
