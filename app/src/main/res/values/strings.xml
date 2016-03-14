@@ -69,7 +69,7 @@
     <string name="ordered">ORDERED</string>
     <string name="quantity">Quantity</string>
     <string name="subtotal">Subtotal</string>
-    <string name="subtotal_courtesy">Subtotal: %1$s</string>
+    <string name="subtotal_value">Subtotal: %1$s</string>
     <string name="total_value">Total: %1$s</string>
     <string name="total">Total</string>
     <string name="quantity_summary">Quantity: %1$s</string>
@@ -132,7 +132,9 @@
     <string name="reason">Reason</string>
     <string name="change">Change</string>
     <string name="change_value">Change: %1$s</string>
-    <string name="to_pay">Pay</string>
+    <string name="to_pay">Pay: %1$s</string>
+    <string name="surcharge_value">Surcharge: %1$s</string>
+    <string name="discount_value">Discount: %1$s</string>
     <string name="paid">Paid</string>
     <string name="paid_value">Paid: %1$s</string>
     <string name="percentage_sign">%</string>

@@ -604,11 +604,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         switch (status) {
             case POSOrderLine.ORDERING:
-                return getString(R.string.subtotal_courtesy, currencyFormat.format(total));
+                return getString(R.string.subtotal_value, currencyFormat.format(total));
             case POSOrderLine.ORDERED:
                 return getString(R.string.total_value, currencyFormat.format(total));
             default:
-                return getString(R.string.subtotal_courtesy, currencyFormat.format(total));
+                return getString(R.string.subtotal_value, currencyFormat.format(total));
         }
 
     }

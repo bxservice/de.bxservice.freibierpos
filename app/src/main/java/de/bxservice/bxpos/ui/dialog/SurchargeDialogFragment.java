@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.Locale;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
@@ -58,7 +57,7 @@ public class SurchargeDialogFragment extends DialogFragment {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        subTotalLabel.setText(getString(R.string.subtotal_courtesy, currencyFormat.format(subtotal)));
+        subTotalLabel.setText(getString(R.string.subtotal_value, currencyFormat.format(subtotal)));
 
         final EditText surchargePercentText = (EditText) view.findViewById(R.id.surcharge_percent);
         final EditText surchargeAmountText = (EditText) view.findViewById(R.id.surcharge_amount);
