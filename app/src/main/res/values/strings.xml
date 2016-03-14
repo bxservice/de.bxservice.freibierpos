@@ -36,6 +36,7 @@
     <string name="synchronize_orders_message">Synchronize %1$s with iDempiere?</string>
     <string name="join_order_question">Join orders?</string>
     <string name="join">Join</string>
+    <string name="split">Split</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
