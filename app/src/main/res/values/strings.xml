@@ -37,6 +37,7 @@
     <string name="join_order_question">Join orders?</string>
     <string name="join">Join</string>
     <string name="split">Split</string>
+    <string name="new_order">New order</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>

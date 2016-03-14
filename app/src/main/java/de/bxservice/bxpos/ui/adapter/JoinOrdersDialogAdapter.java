@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 
 /**
@@ -39,7 +38,7 @@ public class JoinOrdersDialogAdapter extends RecyclerView.Adapter<JoinOrdersDial
         public void bindTable(POSOrder order) {
             txtOrder.setText(String.valueOf(order.getOrderId()));
             if (order.getTable() != null)
-                txtTable.setText(String.valueOf(order.getTable().getTableName()));
+                txtTable.setText(order.getTable().getTableName());
             else
                 txtTable.setText(itemView.getResources().getString(R.string.unset_table));
         }
@@ -55,7 +54,7 @@ public class JoinOrdersDialogAdapter extends RecyclerView.Adapter<JoinOrdersDial
     public JoinOrdersDialogViewHolder onCreateViewHolder(ViewGroup parent,
                                                     int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.join_orders_grid_item_layout, parent, false);
+                .inflate(R.layout.select_order_grid_item_layout, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
         v.setOnClickListener(this);

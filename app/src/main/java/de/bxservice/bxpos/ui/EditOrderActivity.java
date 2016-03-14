@@ -34,7 +34,7 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
-import de.bxservice.bxpos.ui.dialog.JoinOrdersDialogFragment;
+import de.bxservice.bxpos.ui.dialog.SelectOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SplitOrderDialogFragment;
@@ -43,7 +43,7 @@ import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener,
-        SwitchTableDialogFragment.SwitchTableDialogListener, JoinOrdersDialogFragment.JoinOrdersDialogListener,
+        SwitchTableDialogFragment.SwitchTableDialogListener, SelectOrderDialogFragment.SelectOrderDialogListener,
         SplitOrderDialogFragment.SplitOrderDialogListener {
 
     /**
@@ -79,6 +79,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private boolean addNewItemsOnBack = false;
     private boolean orderSent = false;
     private boolean orderChanged = false;
+
+    //Split order array
+    private ArrayList<POSOrderLine> selectedItemsToSplit = null;
 
     private ActionMode mActionMode;
 
@@ -271,9 +274,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void showJoinOrdersDialog() {
-        JoinOrdersDialogFragment joinOrdersDialog = new JoinOrdersDialogFragment();
+        SelectOrderDialogFragment joinOrdersDialog = new SelectOrderDialogFragment();
         joinOrdersDialog.setOrder(order);
-        joinOrdersDialog.show(getFragmentManager(), "JoinOrdersDialogFragment");
+        joinOrdersDialog.setIsJoin(true);
+        joinOrdersDialog.show(getFragmentManager(), "SelectOrderDialogFragment");
     }
 
     private void showSplitOrderDialog() {
@@ -353,9 +357,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      * @param dialog
      */
     @Override
-    public void onDialogPositiveClick(final JoinOrdersDialogFragment dialog) {
+    public void onDialogPositiveClick(final SelectOrderDialogFragment dialog) {
 
-        if(dialog.getOrder() != null) {
+        if(dialog.getOrder() != null && dialog.isJoin()) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.join_order_question)
                     .setNegativeButton(R.string.cancel, null)
@@ -367,6 +371,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                         }
                     }).create().show();
         }
+        // If the option is split
+        else if (!dialog.isJoin()) {
+            order.splitOrder(dialog.getOrder(), selectedItemsToSplit, getBaseContext());
+            orderChanged = true;
+            EditOrderActivity.super.onBackPressed();
+        }
     }
 
     /**
@@ -375,7 +385,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     @Override
     public void onDialogPositiveClick(SplitOrderDialogFragment dialog) {
-
+        if(dialog.getSelectedLines() != null && !dialog.getSelectedLines().isEmpty()) {
+            selectedItemsToSplit = dialog.getSelectedLines();
+            SelectOrderDialogFragment joinOrdersDialog = new SelectOrderDialogFragment();
+            joinOrdersDialog.setOrder(order);
+            joinOrdersDialog.setIsJoin(false);
+            joinOrdersDialog.show(getFragmentManager(), "SelectOrderDialogFragment");
+        }
     }
 
     /**

@@ -137,7 +137,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
 
         newTotalQty = selectedLines.size();
 
-        if (selectedLines != null && selectedLines.size() != 0) {
+        if (selectedLines != null && !selectedLines.isEmpty()) {
             for(POSOrderLine orderLine : selectedLines) {
                 newTotal = newTotal.add(orderLine.getLineNetAmt());
             }
@@ -167,6 +167,10 @@ public class SplitOrderDialogFragment extends DialogFragment {
 
     public void setOrder(POSOrder order) {
         this.order = order;
+    }
+
+    public ArrayList<POSOrderLine> getSelectedLines() {
+        return selectedLines;
     }
 
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener
