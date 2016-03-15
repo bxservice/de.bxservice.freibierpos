@@ -109,4 +109,8 @@ public class OrderedItemsFragment extends Fragment {
         return rootView;
     }
 
+    public OrderedLineAdapter getAdapter() {
+        return mAdapter;
+    }
+
 }
