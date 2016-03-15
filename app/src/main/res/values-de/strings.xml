@@ -159,5 +159,6 @@
     <string name="comm_category">Kommunikation</string>
     <string name="share">Aktie</string>
 
+    <string name="void_item">Void</string>
 
 </resources>

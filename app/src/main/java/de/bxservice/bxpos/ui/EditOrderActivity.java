@@ -83,6 +83,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     //Split order array
     private ArrayList<POSOrderLine> selectedItemsToSplit = null;
 
+    //Calls for CAB menu in different fragments
     private ActionMode mActionMode;
 
     @Override
@@ -161,6 +162,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             public void onPageSelected(int position) {
                 animateFab(position);
                 updateSummary(position);
+                if(mActionMode != null)
+                    mActionMode.finish();
             }
 
             @Override
@@ -709,37 +712,51 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      * When Long click - shows the CAB and perform the corresponding action
      * @param idx
      */
-    public void onLongPressed(int idx){
+    public void onLongPressed(int idx, int fragmentPosition){
         if(mActionMode != null) {
-            myToggleSelection(idx);
+            myToggleSelection(idx, fragmentPosition);
             return;
         }
-        mActionMode = EditOrderActivity.this.startSupportActionMode(new ActionBarCallBack());
-        myToggleSelection(idx);
+
+        if(fragmentPosition == EditPagerAdapter.ORDERING_POSITION)
+            mActionMode = EditOrderActivity.this.startSupportActionMode(new OrderingActionBarCallBack());
+        else if(fragmentPosition == EditPagerAdapter.ORDERED_POSITION)
+            mActionMode = EditOrderActivity.this.startSupportActionMode(new OrderedActionBarCallBack());
+
+        myToggleSelection(idx, fragmentPosition);
     }
 
     /**
      * Only works when long click was performed previously
      * @param idx
      */
-    public void onClickPressed(int idx){
+    public void onClickPressed(int idx, int fragmentPosition){
         if(mActionMode != null) {
-            myToggleSelection(idx);
+            myToggleSelection(idx, fragmentPosition);
         }
     }
 
-    private void myToggleSelection(int idx) {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
+    private void myToggleSelection(int idx, int fragmentPosition) {
 
-        if(itemsFragment != null) {
-            itemsFragment.getmAdapter().toggleSelection(idx);
-            if(itemsFragment.getmAdapter().getSelectedItemCount() == 0) {
-                mActionMode.finish();
-                return;
-            }
-            String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
-            mActionMode.setTitle(title);
+        switch(fragmentPosition) {
+            case EditPagerAdapter.ORDERING_POSITION:
+                OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
+
+                if(itemsFragment != null) {
+                    itemsFragment.getmAdapter().toggleSelection(idx);
+                    if(itemsFragment.getmAdapter().getSelectedItemCount() == 0) {
+                        mActionMode.finish();
+                        return;
+                    }
+                    String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
+                    mActionMode.setTitle(title);
+                }
+                break;
+
+            case EditPagerAdapter.ORDERED_POSITION:
+                break;
         }
+
     }
 
     private void clearSelections() {
@@ -789,7 +806,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     /**
      * Class in charge of the CAB
      */
-    class ActionBarCallBack implements ActionMode.Callback {
+    class OrderingActionBarCallBack implements ActionMode.Callback {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -816,7 +833,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.ctx_item_note:
-                    //shareCurrentItem();
                     showKitchenNoteDialog();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
@@ -832,4 +848,42 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
 
     }
+
+    /**
+     * Class in charge of the CAB
+     */
+    class OrderedActionBarCallBack implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.contextual_ordered_menu, menu);
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+            //clearSelections();
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.ctx_item_void:
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+    }
+
 }

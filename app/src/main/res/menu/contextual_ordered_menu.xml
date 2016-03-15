@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/ctx_item_void"
+        android:title="@string/void_item"
+        android:icon="@drawable/ic_delete_forever_white_24dp"
+        app:showAsAction="ifRoom|withText"
+        android:titleCondensed="@string/void_item">
+    </item>
+
+</menu>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.ui.EditOrderActivity;
+import de.bxservice.bxpos.ui.RecyclerItemsListener;
+import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.OrderedLineAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
@@ -78,12 +82,24 @@ public class OrderedItemsFragment extends Fragment {
         // specify an adapter (and its listener)
         mAdapter = new OrderedLineAdapter(myDataset);
 
-        mAdapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("DemoRecView", "Pulsado el elemento " + mRecyclerView.getChildAdapterPosition(v));
-            }
-        });
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemsListener(getActivity().getBaseContext(), mRecyclerView, new RecyclerItemsListener.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        int idx = mRecyclerView.getChildAdapterPosition(view);
+                        ((EditOrderActivity) getActivity()).onClickPressed(idx, EditPagerAdapter.ORDERED_POSITION);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        int idx = mRecyclerView.getChildAdapterPosition(view);
+                        ((EditOrderActivity) getActivity()).onLongPressed(idx, EditPagerAdapter.ORDERED_POSITION);
+                    }
+                })
+        );
+
+
         //TODO: Add on Long click - Void Items + admin PIN + Reason (mandatory)
 
         mRecyclerView.setAdapter(mAdapter);
