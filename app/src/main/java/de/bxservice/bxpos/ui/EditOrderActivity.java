@@ -33,12 +33,14 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
+import de.bxservice.bxpos.ui.adapter.OrderedLineAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SelectOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SplitOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
+import de.bxservice.bxpos.ui.fragment.OrderedItemsFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
@@ -739,30 +741,58 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private void myToggleSelection(int idx, int fragmentPosition) {
 
         switch(fragmentPosition) {
-            case EditPagerAdapter.ORDERING_POSITION:
-                OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
 
-                if(itemsFragment != null) {
-                    itemsFragment.getmAdapter().toggleSelection(idx);
-                    if(itemsFragment.getmAdapter().getSelectedItemCount() == 0) {
+            case EditPagerAdapter.ORDERING_POSITION:
+                OrderingItemsFragment orderingFragment = (OrderingItemsFragment) getFragment(fragmentPosition);
+
+                if(orderingFragment != null) {
+                    orderingFragment.getmAdapter().toggleSelection(idx);
+                    if(orderingFragment.getmAdapter().getSelectedItemCount() == 0) {
                         mActionMode.finish();
                         return;
                     }
-                    String title = getString(R.string.selected_count, itemsFragment.getmAdapter().getSelectedItemCount());
+                    String title = getString(R.string.selected_count, orderingFragment.getmAdapter().getSelectedItemCount());
                     mActionMode.setTitle(title);
                 }
                 break;
 
             case EditPagerAdapter.ORDERED_POSITION:
+                OrderedItemsFragment orderedFragment = (OrderedItemsFragment) getFragment(fragmentPosition);
+
+                if(orderedFragment != null) {
+                    orderedFragment.getAdapter().toggleSelection(idx);
+                    if(orderedFragment.getAdapter().getSelectedItemCount() == 0) {
+                        mActionMode.finish();
+                        return;
+                    }
+                    String title = getString(R.string.selected_count, orderedFragment.getAdapter().getSelectedItemCount());
+                    mActionMode.setTitle(title);
+                }
                 break;
+
         }
 
     }
 
-    private void clearSelections() {
-        OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
-        if(itemsFragment != null)
-            itemsFragment.getmAdapter().clearSelections();
+    private void clearSelections(int fragmentPosition) {
+
+        switch(fragmentPosition) {
+
+            case EditPagerAdapter.ORDERING_POSITION:
+                OrderingItemsFragment orderingFragment = (OrderingItemsFragment) getFragment(fragmentPosition);
+                if(orderingFragment != null)
+                    orderingFragment.getmAdapter().clearSelections();
+                break;
+
+            case EditPagerAdapter.ORDERED_POSITION:
+                OrderedItemsFragment orderedFragment = (OrderedItemsFragment) getFragment(fragmentPosition);
+                if(orderedFragment != null)
+                    orderedFragment.getAdapter().clearSelections();
+                break;
+
+        }
+
+
     }
 
     private void deleteSelectedItems() {
@@ -804,7 +834,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     /**
-     * Class in charge of the CAB
+     * Class in charge of the CAB for the ordering tab
      */
     class OrderingActionBarCallBack implements ActionMode.Callback {
 
@@ -817,7 +847,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
-            clearSelections();
+            clearSelections(EditPagerAdapter.ORDERING_POSITION);
         }
 
         // Called when the user selects a contextual menu item
@@ -850,7 +880,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     /**
-     * Class in charge of the CAB
+     * Class in charge of the CAB for the ordered tab
      */
     class OrderedActionBarCallBack implements ActionMode.Callback {
 
@@ -863,7 +893,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
-            //clearSelections();
+            clearSelections(EditPagerAdapter.ORDERED_POSITION);
         }
 
         // Called when the user selects a contextual menu item

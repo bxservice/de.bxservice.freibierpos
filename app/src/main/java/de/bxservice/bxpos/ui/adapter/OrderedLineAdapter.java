@@ -1,6 +1,9 @@
 package de.bxservice.bxpos.ui.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -19,11 +23,12 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
         implements View.OnClickListener, ItemTouchHelperAdapter {
 
     private ArrayList<POSOrderLine> mDataset;
+    private SparseBooleanArray selectedItems;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class OrderedLineViewHolder extends RecyclerView.ViewHolder {
+    public static class OrderedLineViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         // each data item is just a string in this case
         public TextView txtQty;
         public TextView txtProductName;
@@ -43,11 +48,56 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
             txtProductName.setText(orderLine.getProduct().getProductName());
             txtPrice.setText(orderLine.getLineTotalAmt());
         }
+
+        @Override
+        public void onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY);
+        }
+
+        @Override
+        public void onItemClear() {
+            TypedValue outValue = new TypedValue();
+            itemView.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            itemView.setBackgroundResource(outValue.resourceId);
+        }
+    }
+
+    /**
+     * An item changes its selection state
+     * @param pos
+     */
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        }
+        else {
+            selectedItems.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items =
+                new ArrayList<>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public OrderedLineAdapter(ArrayList<POSOrderLine> myDataset) {
         mDataset = myDataset;
+        selectedItems = new SparseBooleanArray();
     }
 
     private View.OnClickListener listener;
@@ -81,6 +131,7 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
         POSOrderLine orderLine = mDataset.get(position);
 
         holder.bindOrderLine(orderLine);
+        holder.itemView.setActivated(selectedItems.get(position, false));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -97,16 +148,6 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        if (fromPosition < toPosition) {
-            for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(mDataset, i, i + 1);
-            }
-        } else {
-            for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(mDataset, i, i - 1);
-            }
-        }
-        notifyItemMoved(fromPosition, toPosition);
     }
 
 }
