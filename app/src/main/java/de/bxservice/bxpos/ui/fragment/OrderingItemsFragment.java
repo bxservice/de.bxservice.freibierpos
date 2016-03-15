@@ -16,6 +16,7 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.ui.EditOrderActivity;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
+import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.OnDataChangeListener;
 import de.bxservice.bxpos.ui.adapter.OrderingLineAdapter;
 import de.bxservice.bxpos.ui.adapter.SimpleItemTouchHelperCallback;
@@ -89,7 +90,7 @@ public class OrderingItemsFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         int idx = mRecyclerView.getChildAdapterPosition(view);
-                        ((EditOrderActivity) getActivity()).onClickPressed(idx);
+                        ((EditOrderActivity) getActivity()).onClickPressed(idx, EditPagerAdapter.ORDERING_POSITION);
                     }
 
                     @Override
@@ -97,7 +98,7 @@ public class OrderingItemsFragment extends Fragment {
                     {
                         //POSOrderLine selectedItem = mAdapter.getSelectedItem(position);
                         int idx = mRecyclerView.getChildAdapterPosition(view);
-                        ((EditOrderActivity) getActivity()).onLongPressed(idx);
+                        ((EditOrderActivity) getActivity()).onLongPressed(idx, EditPagerAdapter.ORDERING_POSITION);
                     }
                 })
         );
