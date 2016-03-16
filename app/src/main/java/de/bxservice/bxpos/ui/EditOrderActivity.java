@@ -815,7 +815,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 order.voidLine(selectedItemPositions.get(i));
             }
 
-            itemsFragment.refresh(order);
+            //itemsFragment.refresh(order);
+            this.recreate(); //TODO: Improve fragment recreation
+            //updateSummary(EditPagerAdapter.ORDERED_POSITION);
         }
     }
 

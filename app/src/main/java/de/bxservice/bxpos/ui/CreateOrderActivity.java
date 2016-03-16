@@ -79,6 +79,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private FloatingActionButton sendActionButton;
 
     private String caller;
+    private boolean itemsAdded = false;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -148,10 +149,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         if (selectedTable != null)
             tableName = selectedTable.getTableName();
-
-        Toast.makeText(getBaseContext(), Integer.toString(numberOfGuests) + " " + tableName,
-                Toast.LENGTH_SHORT).show();
-
 
         sendActionButton = (FloatingActionButton) findViewById(R.id.fab);
         sendActionButton.setOnClickListener(new View.OnClickListener() {
@@ -530,6 +527,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             startActivityForResult(intent, PICK_CONFIRMATION_REQUEST);
         }
         else if ("EditOrderActivity".equals(caller)) {
+            itemsAdded = true;
             onBackPressed();
         }
     }
@@ -559,7 +557,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     @Override
     public void finish() {
-        if (caller.equals("EditOrderActivity")) {
+        if (caller.equals("EditOrderActivity") && itemsAdded) {
             Intent data = new Intent();
             data.putExtra(EditOrderActivity.EXTRA_ORDER, posOrder);
             setResult(RESULT_OK, data);
