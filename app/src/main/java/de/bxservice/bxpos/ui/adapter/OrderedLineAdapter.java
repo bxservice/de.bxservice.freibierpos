@@ -46,10 +46,6 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
             txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
             txtProductName.setText(orderLine.getProduct().getProductName());
             txtPrice.setText(orderLine.getLineTotalAmt());
-
-            //Show in a special color the voided lines
-            if(orderLine.getQtyOrdered() < 0)
-                itemView.setBackgroundColor(Color.parseColor("#FF4646"));
         }
 
         @Override
@@ -135,6 +131,12 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
 
         holder.bindOrderLine(orderLine);
         holder.itemView.setActivated(selectedItems.get(position, false));
+
+        //Show in a special color the voided lines
+        if(orderLine.getQtyOrdered() < 0) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#FF4646"));
+            holder.itemView.setClickable(false);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

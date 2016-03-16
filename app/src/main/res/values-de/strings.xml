@@ -160,5 +160,6 @@
     <string name="share">Aktie</string>
 
     <string name="void_item">Void</string>
+    <string name="already_voided_item">You can\'t void a voided line</string>
 
 </resources>

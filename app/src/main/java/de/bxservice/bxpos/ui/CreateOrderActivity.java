@@ -24,8 +24,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.text.NumberFormat;
