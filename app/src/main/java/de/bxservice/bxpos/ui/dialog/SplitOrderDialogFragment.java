@@ -158,7 +158,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
     private void initGridData() {
         //If the order is != null don't add it to the array. Avoid join an order with itself
         if (order != null) {
-            mGridData = order.getOrderedLines();
+            mGridData = order.getOrderedLinesNoVoid();
         }
         selectedLines = new ArrayList<>();
     }
