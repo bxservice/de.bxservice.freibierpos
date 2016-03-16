@@ -183,6 +183,7 @@ public class PosOrderHelper extends PosObjectHelper {
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
         order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
         order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
+        order.setCurrentLineNo();
 
         c.close();
 
@@ -223,6 +224,8 @@ public class PosOrderHelper extends PosObjectHelper {
 
                 Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
                 order.setSync(flag);
+
+                order.setCurrentLineNo();
 
                 // adding to orders list
                 orders.add(order);
