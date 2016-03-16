@@ -225,6 +225,11 @@ public class POSOrder implements Serializable {
         this.sync = sync;
     }
 
+    public void setCurrentLineNo() {
+        if(orderedLines != null && !orderedLines.isEmpty())
+            currentLineNo = orderedLines.get(orderedLines.size() - 1).getLineNo() + 10;
+    }
+
     /**
      * Set table from Id
      * @param tableId
