@@ -144,8 +144,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
      */
     public ArrayList<POSOrderLine> getAllOrderingLines(POSOrder order) {
 
-        return getAllOrderLines(order, POSOrderLine.ORDERING);
+        String whereClause = " WHERE " + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ? AND " +
+                PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " = ?";
 
+        return getAllOrderLines(order, whereClause, new String[] {String.valueOf(order.getOrderId()), POSOrderLine.ORDERING});
     }
 
     /**
@@ -156,9 +158,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
      */
     public ArrayList<POSOrderLine> getAllOrderedLines(POSOrder order) {
 
-        //TODO: add the logic to get the voided lines also
-        return getAllOrderLines(order, POSOrderLine.ORDERED);
+        String whereClause = " WHERE " + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ? AND " +
+                PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " IN (?,?)";
 
+        return getAllOrderLines(order, whereClause, new String[] {String.valueOf(order.getOrderId()), POSOrderLine.ORDERED, POSOrderLine.VOID});
     }
 
 
@@ -168,17 +171,19 @@ public class PosOrderLineHelper extends PosObjectHelper {
      * @param order
      * @return
      */
-    private ArrayList<POSOrderLine> getAllOrderLines(POSOrder order, String status) {
+    private ArrayList<POSOrderLine> getAllOrderLines(POSOrder order, String whereClause, String[] args) {
         ArrayList<POSOrderLine> lines = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " orderline " +
-                " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ? AND " +
-                " orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " = ?";
+        StringBuilder selectQuery = new StringBuilder();
 
-        Log.d(LOG_TAG, selectQuery);
+        selectQuery.append("SELECT  * FROM ");
+        selectQuery.append(Tables.TABLE_POSORDER_LINE);
+        selectQuery.append(whereClause);
+
+        Log.d(LOG_TAG, selectQuery.toString());
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId()), status});
+        Cursor c = db.rawQuery(selectQuery.toString(), args);
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {

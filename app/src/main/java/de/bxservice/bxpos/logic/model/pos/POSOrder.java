@@ -468,20 +468,26 @@ public class POSOrder implements Serializable {
     }
 
     /**
-     * Void line
+     * Void line by creating a copy of the original line
+     * but with negative qty
      */
     public void voidLine(int position) {
 
         POSOrderLine voidedLine = orderedLines.get(position); //Original line to be voided
-        POSOrderLine voidLine = voidedLine; //Line that voids with -quantity
+        POSOrderLine voidLine = new POSOrderLine(); //Line that voids with -quantity
+
+        //Copy all the values from the original line
+        voidLine.setProductRemark(voidedLine.getProductRemark());
+        voidLine.setProduct(voidedLine.getProduct());
+        voidLine.setOrder(voidedLine.getOrder());
+        voidLine.setQtyOrdered(-1 * voidedLine.getQtyOrdered()); //Same quantity opposite sign
+        voidLine.setLineNo(voidedLine.getLineNo() + 5); //Normal lines raise from 10 to 10
+        voidLine.completeLine();
 
         voidedLine.voidLine();
         voidedLine.updateLine(null);
 
-        voidLine.setQtyOrdered(-1 * voidedLine.getQtyOrdered()); //Same quantity opposite sign
-        voidLine.setLineNo(voidedLine.getLineNo() + 5); //Normal lines raise from 10 to 10
-
-        orderedLines.add(position +1, voidLine);
+        orderedLines.add(position + 1, voidLine);
         voidLine.createLine(null);
     }
 
