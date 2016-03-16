@@ -69,16 +69,8 @@ public class OrderedItemsFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<POSOrderLine> myDataset = new ArrayList<>();
-
-
-        for(POSOrderLine orderLine : order.getOrderedLines()) {
-            myDataset.add(orderLine);
-        }
-
-
         // specify an adapter (and its listener)
-        mAdapter = new OrderedLineAdapter(myDataset);
+        mAdapter = new OrderedLineAdapter(order.getOrderedLines());
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemsListener(getActivity().getBaseContext(), mRecyclerView, new RecyclerItemsListener.OnItemClickListener() {
