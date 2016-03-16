@@ -288,7 +288,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private void showSplitOrderDialog() {
 
         //If only one item - show error
-        if(order.getOrderedLines().size() <= 1) {
+        if(order.getOrderedLinesNoVoid().size() <= 1) {
             Snackbar.make(mainView, getString(R.string.unable_split), Snackbar.LENGTH_LONG)
                     .setAction("OK", null).show();
             return;
@@ -402,7 +402,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             selectedItemsToSplit = dialog.getSelectedLines();
 
             //If all the items were selected
-            if(selectedItemsToSplit.size() == order.getOrderedLines().size()) {
+            if(selectedItemsToSplit.size() == order.getOrderedLinesNoVoid().size()) {
                 Snackbar snackbar = Snackbar
                         .make(mainView, getString(R.string.split_all_Error), Snackbar.LENGTH_LONG)
                         .setAction("OK", null);
@@ -813,7 +813,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if(itemsFragment != null) {
             List<Integer> selectedItemPositions = itemsFragment.getAdapter().getSelectedItems();
             for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-                if(!order.voidLine(selectedItemPositions.get(i))) {
+                if(!order.voidLine(selectedItemPositions.get(i))) { //TODO: Validate before confirmation dialog shows up
                     Toast.makeText(getBaseContext(), getString(R.string.already_voided_item),
                             Toast.LENGTH_LONG).show();
                     return;

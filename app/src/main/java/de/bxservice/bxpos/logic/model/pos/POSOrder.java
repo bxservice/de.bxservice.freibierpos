@@ -193,6 +193,21 @@ public class POSOrder implements Serializable {
         this.orderedLines = orderedLines;
     }
 
+    /**
+     * Return all the ordered lines that has not been voided
+     * @return
+     */
+    public ArrayList<POSOrderLine> getOrderedLinesNoVoid() {
+        ArrayList<POSOrderLine> noVoidedLines = new ArrayList<>();
+
+        for(POSOrderLine line : orderedLines) {
+            if(!line.getLineStatus().equals(POSOrderLine.VOIDED) && line.getQtyOrdered() > 0)
+                noVoidedLines.add(line);
+        }
+
+        return noVoidedLines;
+    }
+
     public String getOrderRemark() {
         return orderRemark;
     }
