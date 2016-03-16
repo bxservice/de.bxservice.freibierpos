@@ -157,6 +157,7 @@
     <string name="share">Compartir</string>
 
     <string name="void_item">Anular</string>
+    <string name="already_voided_item">No puede anular una línea ya anulada</string>
 
 </resources>
 

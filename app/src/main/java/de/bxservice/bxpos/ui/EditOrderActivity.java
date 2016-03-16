@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -812,7 +813,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if(itemsFragment != null) {
             List<Integer> selectedItemPositions = itemsFragment.getAdapter().getSelectedItems();
             for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-                order.voidLine(selectedItemPositions.get(i));
+                if(!order.voidLine(selectedItemPositions.get(i))) {
+                    Toast.makeText(getBaseContext(), getString(R.string.already_voided_item),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
 
             //itemsFragment.refresh(order);
