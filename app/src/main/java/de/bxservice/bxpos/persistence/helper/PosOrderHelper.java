@@ -82,8 +82,8 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
-        order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
-        order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+        order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
+        order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
 
         c.close();
 
@@ -136,8 +136,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
                 order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
-                order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
-                order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+                order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
+                order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
 
                 // adding to orders list
                 orders.add(order);
@@ -181,8 +181,8 @@ public class PosOrderHelper extends PosObjectHelper {
         order.setTable(table);
 
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
-        order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
-        order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+        order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
+        order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
 
         c.close();
 
@@ -218,8 +218,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
                         c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
                     order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
-                order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
-                order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+                order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
+                order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
 
                 Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
                 order.setSync(flag);
@@ -264,8 +264,8 @@ public class PosOrderHelper extends PosObjectHelper {
                 if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
                         c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
                     order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
-                order.setOrderingLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERING));
-                order.setOrderedLines(orderLineHelper.getAllOrderLines(order, POSOrderLine.ORDERED));
+                order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
+                order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
 
                 Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
                 order.setSync(flag);

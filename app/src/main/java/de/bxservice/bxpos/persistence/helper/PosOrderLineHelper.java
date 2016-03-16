@@ -138,12 +138,37 @@ public class PosOrderLineHelper extends PosObjectHelper {
     }
 
     /**
+     * Returns all the ordering lines from an order
+     * @param order
+     * @return
+     */
+    public ArrayList<POSOrderLine> getAllOrderingLines(POSOrder order) {
+
+        return getAllOrderLines(order, POSOrderLine.ORDERING);
+
+    }
+
+    /**
+     * Returns all the ordered lines in an order
+     * including voided items
+     * @param order
+     * @return
+     */
+    public ArrayList<POSOrderLine> getAllOrderedLines(POSOrder order) {
+
+        //TODO: add the logic to get the voided lines also
+        return getAllOrderLines(order, POSOrderLine.ORDERED);
+
+    }
+
+
+    /**
      * Getting all lines belonging to an order in a
      * status
      * @param order
      * @return
      */
-    public ArrayList<POSOrderLine> getAllOrderLines(POSOrder order, String status) {
+    private ArrayList<POSOrderLine> getAllOrderLines(POSOrder order, String status) {
         ArrayList<POSOrderLine> lines = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " orderline " +

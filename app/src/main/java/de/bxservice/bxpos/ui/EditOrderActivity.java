@@ -557,9 +557,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         int totalQty = 0;
 
         for(POSOrderLine orderLine : getLines(status)) {
-            if (status.equals(orderLine.getLineStatus())) {
-                totalQty = totalQty + orderLine.getQtyOrdered();
-            }
+            totalQty = totalQty + orderLine.getQtyOrdered();
         }
 
         return getString(R.string.quantity_summary, totalQty);
@@ -599,10 +597,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         BigDecimal total = BigDecimal.ZERO;
 
         for (POSOrderLine orderLine : getLines(status)) {
-
-            if (status.equals( orderLine.getLineStatus())) {
-                total = total.add(orderLine.getLineNetAmt());
-            }
+            total = total.add(orderLine.getLineNetAmt());
         }
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
@@ -811,6 +806,19 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
+    private void voidSelectedItems() {
+        OrderedItemsFragment itemsFragment = (OrderedItemsFragment) getFragment(EditPagerAdapter.ORDERED_POSITION);
+
+        if(itemsFragment != null) {
+            List<Integer> selectedItemPositions = itemsFragment.getAdapter().getSelectedItems();
+            for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+                order.voidLine(selectedItemPositions.get(i));
+            }
+
+            itemsFragment.refresh(order);
+        }
+    }
+
     private List<Integer> getSelectedItems() {
         OrderingItemsFragment itemsFragment = (OrderingItemsFragment) getFragment(EditPagerAdapter.ORDERING_POSITION);
 
@@ -901,6 +909,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.ctx_item_void:
+                    voidSelectedItems();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:

@@ -20,6 +20,7 @@ public class POSOrderLine implements Serializable {
     //Order Line status
     public static final String ORDERING    = "ORDERING";
     public static final String ORDERED     = "ORDERED";
+    public static final String VOID    = "VOID";
 
     private PosOrderLineManagement lineManager;
     //Order that the line belongs to
@@ -156,11 +157,16 @@ public class POSOrderLine implements Serializable {
     }
 
     public void completeLine() {
-        lineStatus = POSOrderLine.ORDERED;
+        lineStatus = ORDERED;
     }
 
     public void uncompleteLine() {
-        lineStatus = POSOrderLine.ORDERING;
+        lineStatus = ORDERING;
+    }
+
+    public void voidLine() {
+        lineStatus = VOID;
+        productRemark = productRemark + " ***VOIDED***"; //Description in iDempiere
     }
 
     public boolean updateLine(Context ctx) {
