@@ -20,7 +20,7 @@ public class POSOrderLine implements Serializable {
     //Order Line status
     public static final String ORDERING    = "ORDERING";
     public static final String ORDERED     = "ORDERED";
-    public static final String VOID    = "VOID";
+    public static final String VOID    = "VOIDED";
 
     private PosOrderLineManagement lineManager;
     //Order that the line belongs to
