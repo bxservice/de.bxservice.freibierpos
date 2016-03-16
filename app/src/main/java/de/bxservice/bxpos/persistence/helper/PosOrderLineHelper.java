@@ -161,7 +161,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
         String whereClause = " WHERE " + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ? AND " +
                 PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " IN (?,?)";
 
-        return getAllOrderLines(order, whereClause, new String[] {String.valueOf(order.getOrderId()), POSOrderLine.ORDERED, POSOrderLine.VOID});
+        return getAllOrderLines(order, whereClause, new String[] {String.valueOf(order.getOrderId()), POSOrderLine.ORDERED, POSOrderLine.VOIDED});
     }
 
 
@@ -179,6 +179,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
         selectQuery.append("SELECT  * FROM ");
         selectQuery.append(Tables.TABLE_POSORDER_LINE);
         selectQuery.append(whereClause);
+        selectQuery.append(" ORDER BY " + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO);
 
         Log.d(LOG_TAG, selectQuery.toString());
 
@@ -193,6 +194,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
                 orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
                 orderLine.setOrder(order);
                 orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
+                orderLine.setLineNo(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO)));
                 orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
                 orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
                 orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));

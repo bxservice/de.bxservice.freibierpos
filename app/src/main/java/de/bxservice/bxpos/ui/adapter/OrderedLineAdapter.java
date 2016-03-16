@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
@@ -47,6 +46,10 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
             txtQty.setText(String.valueOf(orderLine.getQtyOrdered()));
             txtProductName.setText(orderLine.getProduct().getProductName());
             txtPrice.setText(orderLine.getLineTotalAmt());
+
+            //Show in a special color the voided lines
+            if(orderLine.getQtyOrdered() < 0)
+                itemView.setBackgroundColor(Color.parseColor("#FF4646"));
         }
 
         @Override
