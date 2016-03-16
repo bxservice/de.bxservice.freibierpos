@@ -69,15 +69,8 @@ public class OrderingItemsFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList<POSOrderLine> myDataset = new ArrayList<>();
-
-
-        for(POSOrderLine orderLine : order.getOrderingLines()) {
-            myDataset.add(orderLine);
-        }
-
         // specify an adapter (and its listener)
-        mAdapter = new OrderingLineAdapter(myDataset);
+        mAdapter = new OrderingLineAdapter(order.getOrderingLines());
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
