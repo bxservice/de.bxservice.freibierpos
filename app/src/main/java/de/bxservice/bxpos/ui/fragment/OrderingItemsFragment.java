@@ -73,10 +73,7 @@ public class OrderingItemsFragment extends Fragment {
 
 
         for(POSOrderLine orderLine : order.getOrderingLines()) {
-
-            if (orderLine.getLineStatus().equals(POSOrderLine.ORDERING)) {
-                myDataset.add(orderLine);
-            }
+            myDataset.add(orderLine);
         }
 
         // specify an adapter (and its listener)

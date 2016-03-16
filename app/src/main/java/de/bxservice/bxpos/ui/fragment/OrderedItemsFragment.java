@@ -18,6 +18,7 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.ui.EditOrderActivity;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
+import de.bxservice.bxpos.ui.adapter.OnDataChangeListener;
 import de.bxservice.bxpos.ui.adapter.OrderedLineAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
@@ -72,10 +73,7 @@ public class OrderedItemsFragment extends Fragment {
 
 
         for(POSOrderLine orderLine : order.getOrderedLines()) {
-
-            if (orderLine.getLineStatus().equals(POSOrderLine.ORDERED)) {
-                myDataset.add(orderLine);
-            }
+            myDataset.add(orderLine);
         }
 
 
@@ -99,18 +97,21 @@ public class OrderedItemsFragment extends Fragment {
                 })
         );
 
-
         //TODO: Add on Long click - Void Items + admin PIN + Reason (mandatory)
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
-
 
         return rootView;
     }
 
     public OrderedLineAdapter getAdapter() {
         return mAdapter;
+    }
+
+    public void refresh(POSOrder order) {
+        this.getArguments().putSerializable(ARG_ORDER, order);
+        mAdapter.notifyDataSetChanged();
     }
 
 }
