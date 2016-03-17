@@ -40,6 +40,7 @@
     <string name="new_order">Nueva orden</string>
     <string name="unable_split">No se puede dividir una orden con menos de un item</string>
     <string name="split_all_Error">No se pueden seleccionar todos los items para dividir</string>
+    <string name="void_title">Anular items</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Nombre de usuario</string>
@@ -161,6 +162,7 @@
     <string name="pref_header_data_security">Seguridad</string>
     <string name="pref_summary_void_approval">Solicitar un PIN cuando se anulan items</string>
     <string name="pref_title_void_approval">Bloquear anular items</string>
+    <string name="error_invalid_reason">Una razón debe ser introducida</string>
 
 </resources>
 
