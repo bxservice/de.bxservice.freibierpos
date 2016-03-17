@@ -12,11 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.text.NumberFormat;
-
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
 
 /**
  * Created by Diego Ruiz on 17/03/16.
@@ -33,9 +29,8 @@ public class VoidReasonDialogFragment extends DialogFragment {
     // Use this instance of the interface to deliver action events
     VoidReasonDialogListener mListener;
     private String reason = "";
-    //private POSOrderLine orderLine;
-    EditText voidReason;
-
+    private int noItems = 0;
+    private EditText voidReason;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,9 +44,7 @@ public class VoidReasonDialogFragment extends DialogFragment {
 
         final TextView voidSummaryText = (TextView) view.findViewById(R.id.void_summary);
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-
-        voidSummaryText.setText(getString(R.string.subtotal_value, currencyFormat.format(50)));
+        voidSummaryText.setText(getString(R.string.void_summary, noItems));
 
         voidReason = (EditText) view.findViewById(R.id.reason_text);
 
@@ -121,11 +114,7 @@ public class VoidReasonDialogFragment extends DialogFragment {
         return reason;
     }
 
-    /*public POSOrderLine getOrderLine() {
-        return orderLine;
+    public void setNoItems(int noItems) {
+        this.noItems = noItems;
     }
-
-    public void setOrderLine(POSOrderLine orderLine) {
-        this.orderLine = orderLine;
-    }*/
 }

@@ -164,6 +164,8 @@
     <string name="pref_title_void_approval">Bloquear anular items</string>
     <string name="error_invalid_reason">Una razón debe ser introducida</string>
     <string name="approve_void">Confirmación de anulación</string>
+    <string name="void_summary">¿Anular %1$s items?</string>
+    <string name="void_approval_message">¿Aprobar la anulacion de %1$s items porque %2$s</string>
 
 </resources>
 

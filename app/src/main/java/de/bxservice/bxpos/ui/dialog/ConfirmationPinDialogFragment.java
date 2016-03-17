@@ -32,7 +32,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
     ConfirmationPinDialogListener mListener;
     private String reason = "";
     private String pinCode = "";
-    //private POSOrderLine orderLine;
+    private int noItems = 0;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -46,9 +46,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
 
         final TextView voidSummaryText = (TextView) view.findViewById(R.id.void_summary);
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
-
-        voidSummaryText.setText(getString(R.string.subtotal_value, currencyFormat.format(50) + reason));
+        voidSummaryText.setText(getString(R.string.void_approval_message, noItems, reason));
 
         final EditText enteredCode = (EditText) view.findViewById(R.id.pin_text);
 
@@ -104,11 +102,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
         return reason;
     }
 
-    /*public POSOrderLine getOrderLine() {
-        return orderLine;
+    public void setNoItems(int noItems) {
+        this.noItems = noItems;
     }
-
-    public void setOrderLine(POSOrderLine orderLine) {
-        this.orderLine = orderLine;
-    }*/
 }
