@@ -2,6 +2,8 @@ package de.bxservice.bxpos.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -432,7 +434,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     @Override
     public void onDialogPositiveClick(VoidReasonDialogFragment dialog) {
         if(dialog.getReason() != null) {
-            voidSelectedItems(dialog.getReason());
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            boolean blockVoid = sharedPref.getBoolean(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED, true);
+
+            if(blockVoid) {
+                System.out.println("permission needed");
+
+            } else {
+                voidSelectedItems(dialog.getReason());
+            }
         }
         dialog.dismiss();
     }
