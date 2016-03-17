@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class VoidReasonDialogFragment extends DialogFragment {
     VoidReasonDialogListener mListener;
     private String reason = "";
     //private POSOrderLine orderLine;
+    EditText voidReason;
 
 
     @Override
@@ -51,7 +53,7 @@ public class VoidReasonDialogFragment extends DialogFragment {
 
         voidSummaryText.setText(getString(R.string.subtotal_value, currencyFormat.format(50)));
 
-        final EditText voidReason = (EditText) view.findViewById(R.id.reason_text);
+        voidReason = (EditText) view.findViewById(R.id.reason_text);
 
         builder.setTitle(R.string.void_title);
         builder.setView(view)
@@ -59,13 +61,7 @@ public class VoidReasonDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.void_item, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        reason = voidReason.getText().toString();
-                        if (!TextUtils.isEmpty(reason)) {
-                            voidReason.setError(getString(R.string.error_invalid_reason));
-                            voidReason.requestFocus();
-                        }
-                        else
-                            mListener.onDialogPositiveClick(VoidReasonDialogFragment.this);
+                        //Nothing on purpose to avoid closing the dialog when the reason is not filled out
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -74,8 +70,36 @@ public class VoidReasonDialogFragment extends DialogFragment {
                     }
                 });
 
+
+
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();    //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
+        final AlertDialog d = (AlertDialog) getDialog();
+        if(d != null)
+        {
+            Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    reason = voidReason.getText().toString();
+                    if (TextUtils.isEmpty(reason)) {
+                        voidReason.setError(getString(R.string.error_invalid_reason));
+                        voidReason.requestFocus();
+                    }
+                    else {
+                        mListener.onDialogPositiveClick(VoidReasonDialogFragment.this);
+                    }
+                }
+            });
+        }
     }
 
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener
