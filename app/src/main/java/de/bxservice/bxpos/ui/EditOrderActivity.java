@@ -34,20 +34,20 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
-import de.bxservice.bxpos.ui.adapter.OrderedLineAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SelectOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SplitOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
+import de.bxservice.bxpos.ui.dialog.VoidReasonDialogFragment;
 import de.bxservice.bxpos.ui.fragment.OrderedItemsFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener,
         SwitchTableDialogFragment.SwitchTableDialogListener, SelectOrderDialogFragment.SelectOrderDialogListener,
-        SplitOrderDialogFragment.SplitOrderDialogListener {
+        SplitOrderDialogFragment.SplitOrderDialogListener, VoidReasonDialogFragment.VoidReasonDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -299,7 +299,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         splitOrderDialog.show(getFragmentManager(), "SplitOrderDialogFragment");
     }
 
-
     private void showKitchenNoteDialog() {
         KitchenNoteDialogFragment kitchenNoteDialog = new KitchenNoteDialogFragment();
         List<Integer> selectedItemPositions = getSelectedItems();
@@ -309,6 +308,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             kitchenNoteDialog.setNote(orderLine.getProductRemark());
             kitchenNoteDialog.show(getFragmentManager(), "KitchenDialogFragment");
         }
+    }
+
+    private void showVoidReasonDialog() {
+        VoidReasonDialogFragment voidReasonDialog = new VoidReasonDialogFragment();
+        voidReasonDialog.show(getFragmentManager(), "VoidReasonDialogFragment");
     }
 
     /**
@@ -418,6 +422,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
+    /**
+     * Click on void button
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(VoidReasonDialogFragment dialog) {
+        if(dialog.getReason() != null) {
+            voidSelectedItems();
+        }
+    }
     /**
      * Get extras from the previous activity
      * - Order
@@ -916,7 +930,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.ctx_item_void:
-                    voidSelectedItems();
+                    showVoidReasonDialog();
+                    //voidSelectedItems();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:

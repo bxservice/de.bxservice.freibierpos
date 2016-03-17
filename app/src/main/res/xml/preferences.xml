@@ -80,7 +80,7 @@
             android:key="pref_key_approval_on_void"
             android:summary="@string/pref_summary_void_approval"
             android:title="@string/pref_title_void_approval"
-            android:defaultValue="false"/>
+            android:defaultValue="true"/>
 
         <EditTextPreference
             android:capitalize="words"
