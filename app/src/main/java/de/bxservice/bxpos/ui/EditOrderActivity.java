@@ -319,12 +319,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void showVoidReasonDialog() {
         VoidReasonDialogFragment voidReasonDialog = new VoidReasonDialogFragment();
+        voidReasonDialog.setNoItems(positionItemsToVoid.size());
         voidReasonDialog.show(getFragmentManager(), "VoidReasonDialogFragment");
     }
 
     private void showConfirmationPINDialog(String reason) {
         ConfirmationPinDialogFragment confirmationPinDialog = new ConfirmationPinDialogFragment();
         confirmationPinDialog.setReason(reason);
+        confirmationPinDialog.setNoItems(positionItemsToVoid.size());
         confirmationPinDialog.show(getFragmentManager(), "ConfirmationPinDialogFragment");
     }
 
@@ -479,7 +481,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 voidSelectedItems(dialog.getReason());
             }
         }
-        dialog.dismiss();
     }
 
     /**

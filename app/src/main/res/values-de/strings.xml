@@ -167,5 +167,7 @@
     <string name="pref_title_void_approval">Block void items</string>
     <string name="error_invalid_reason">A reason must be introduced</string>
     <string name="approve_void">Void approval</string>
+    <string name="void_summary">Void %1$s items?</string>
+    <string name="void_approval_message">Approve %1$s voided items because of %2$s</string>
 
 </resources>
