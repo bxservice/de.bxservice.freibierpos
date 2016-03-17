@@ -100,6 +100,10 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
         this.reason = reason;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
     /*public POSOrderLine getOrderLine() {
         return orderLine;
     }

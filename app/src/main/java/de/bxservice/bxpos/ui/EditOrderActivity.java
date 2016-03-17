@@ -472,12 +472,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 return;
             }
 
-            /*if(blockVoid) {
-                System.out.println("permission needed");
+            if(!assignedPin.equals(dialog.getPinCode())) {
+                System.out.println("wrong PIN");
 
             } else {
                 voidSelectedItems(dialog.getReason());
-            }*/
+            }
         }
         dialog.dismiss();
     }
