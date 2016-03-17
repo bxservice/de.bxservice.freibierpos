@@ -368,30 +368,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         changeTableDialog.show(getFragmentManager(), "SwitchTableDialogFragment");
     }
 
-    private int getNumberOfGuests() {
-        return numberOfGuests;
-    }
-
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
-    }
-
-    public Table getSelectedTable() {
-        return selectedTable;
-    }
-
-    public void setSelectedTable(Table selectedTable) {
-        this.selectedTable = selectedTable;
-    }
-
-    public String getRemarkNote() {
-        return remarkNote;
-    }
-
-    public void setRemarkNote(String remarkNote) {
-        this.remarkNote = remarkNote;
-    }
-
     /**
      * Click set on guest number dialog
      * @param dialog
@@ -399,8 +375,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     @Override
     public void onDialogPositiveClick(GuestNumberDialogFragment dialog) {
         // User touched the dialog's positive button
-        int guests = dialog.getNumberOfGuests();
-        numberOfGuests = guests;
+        numberOfGuests = dialog.getNumberOfGuests();
         updateDraftOrder();
     }
 
