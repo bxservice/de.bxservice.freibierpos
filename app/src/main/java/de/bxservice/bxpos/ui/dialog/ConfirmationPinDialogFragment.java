@@ -10,11 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.text.NumberFormat;
-
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
 
 /**
  * Created by Diego Ruiz on 17/03/16.
