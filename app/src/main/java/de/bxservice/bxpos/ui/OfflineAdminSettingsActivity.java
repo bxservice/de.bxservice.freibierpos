@@ -7,11 +7,13 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -134,10 +136,13 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
                                 ? listPreference.getEntries()[index]
                                 : null);
 
-            } else if (preference instanceof CheckBoxPreference) {
-                // For all checkboxes show the defined summary
+            } else if ((preference instanceof CheckBoxPreference) ||
+                    (preference instanceof EditTextPreference
+                            && ((EditTextPreference) preference).getEditText().getInputType() == (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD)) ) {
+                // For all checkboxes show the defined summary or password types
                 preference.setSummary(preference.getSummary());
             } else {
+
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
