@@ -835,11 +835,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if(itemsFragment != null) {
             positionItemsToVoid = itemsFragment.getAdapter().getSelectedItems();
 
-            if (positionItemsToVoid == null || positionItemsToVoid.isEmpty())
+            if (positionItemsToVoid == null || positionItemsToVoid.isEmpty()) {
+                positionItemsToVoid = null;
                 return false;
+            }
 
             for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
                 if(!order.getOrderedLines().get(positionItemsToVoid.get(i)).isVoidable()) {
+                    positionItemsToVoid = null;
                     return false;
                 }
             }
@@ -851,22 +854,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void voidSelectedItems(String reason) {
-        OrderedItemsFragment itemsFragment = (OrderedItemsFragment) getFragment(EditPagerAdapter.ORDERED_POSITION);
+        if(positionItemsToVoid != null) {
 
-        if(itemsFragment != null) {
-            List<Integer> selectedItemPositions = itemsFragment.getAdapter().getSelectedItems();
-            for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-                if(!order.voidLine(selectedItemPositions.get(i), reason)) { //TODO: Validate before confirmation dialog shows up
-                    Toast.makeText(getBaseContext(), getString(R.string.already_voided_item),
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
+            for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
+                order.voidLine(positionItemsToVoid.get(i), reason);
             }
 
-            //itemsFragment.refresh(order);
             this.recreate(); //TODO: Improve fragment recreation
-            //updateSummary(EditPagerAdapter.ORDERED_POSITION);
         }
+        //itemsFragment.refresh(order);
+        //updateSummary(EditPagerAdapter.ORDERED_POSITION);
     }
 
     private List<Integer> getSelectedItems() {
