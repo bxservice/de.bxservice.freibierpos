@@ -161,5 +161,8 @@
 
     <string name="void_item">Void</string>
     <string name="already_voided_item">You can\'t void a voided line</string>
+    <string name="pref_header_data_security">Security</string>
+    <string name="pref_summary_void_approval">Request a PIN when an item is voided</string>
+    <string name="pref_title_void_approval">Block void items</string>
 
 </resources>

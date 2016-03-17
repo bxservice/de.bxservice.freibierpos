@@ -24,5 +24,8 @@ public class OfflinePreferenceFragment extends PreferenceFragment {
         OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_CLIENT_ID));
         OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ROLE_ID));
         OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID));
+        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED));
+        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PIN_CODE));
+
     }
 }

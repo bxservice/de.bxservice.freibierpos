@@ -25,12 +25,20 @@ import de.bxservice.bxpos.R;
  */
 public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
 
+    //General
     public static final String KEY_PREF_URL = "pref_serverurl";
-    public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
     public static final String KEY_ORG_ID = "pref_org";
     public static final String KEY_CLIENT_ID = "pref_client";
     public static final String KEY_ROLE_ID = "pref_role";
     public static final String KEY_WAREHOUSE_ID = "pref_warehouse";
+
+    //Sync & Data
+    public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
+
+    //Security
+    public static final String KEY_VOID_BLOCKED = "pref_key_approval_on_void";
+    public static final String KEY_PIN_CODE = "pref_security_pin";
+
 
 
     @Override

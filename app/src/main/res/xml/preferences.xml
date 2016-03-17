@@ -73,4 +73,25 @@
             android:title="@string/pref_title_sync_frequency" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/pref_header_data_security"
+        android:key="pref_key_security_settings">
+        <CheckBoxPreference
+            android:key="pref_key_approval_on_void"
+            android:summary="@string/pref_summary_void_approval"
+            android:title="@string/pref_title_void_approval"
+            android:defaultValue="false"/>
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue="1234"
+            android:inputType="numberPassword"
+            android:key="pref_security_pin"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_title_pin_code" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
