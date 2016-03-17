@@ -431,6 +431,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if(dialog.getReason() != null) {
             voidSelectedItems();
         }
+        dialog.dismiss();
     }
     /**
      * Get extras from the previous activity
