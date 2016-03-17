@@ -168,5 +168,7 @@
     <string name="approve_void">Void approval</string>
     <string name="void_summary">Void %1$s items?</string>
     <string name="void_approval_message">Approve %1$s voided items because of %2$s</string>
+    <string name="assign_password">The admin PIN has not been assigned. Contact the administrator</string>
+    <string name="wrong_password">Wrong password</string>
 
 </resources>

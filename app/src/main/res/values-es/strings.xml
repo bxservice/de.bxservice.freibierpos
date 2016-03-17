@@ -166,6 +166,8 @@
     <string name="approve_void">Confirmación de anulación</string>
     <string name="void_summary">¿Anular %1$s items?</string>
     <string name="void_approval_message">¿Aprobar la anulacion de %1$s items porque %2$s</string>
+    <string name="assign_password">El PIN no ha sido asignado. Pongase en contacto con el administrador.</string>
+    <string name="wrong_password">Contraseña incorrecta</string>
 
 </resources>
 

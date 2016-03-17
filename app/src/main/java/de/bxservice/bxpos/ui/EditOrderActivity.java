@@ -470,13 +470,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             String assignedPin = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PIN_CODE, null);
 
             if(assignedPin == null) {
-                //TODO: Create string asing pin
+                Snackbar.make(mainView, R.string.assign_password, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 return;
             }
 
             if(!assignedPin.equals(dialog.getPinCode())) {
-                System.out.println("wrong PIN");
-
+                Snackbar.make(mainView, R.string.wrong_password, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             } else {
                 voidSelectedItems(dialog.getReason());
             }

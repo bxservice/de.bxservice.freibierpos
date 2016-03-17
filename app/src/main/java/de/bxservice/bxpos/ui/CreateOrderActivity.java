@@ -143,11 +143,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(mViewPager);
 
-        String tableName = "";
-
-        if (selectedTable != null)
-            tableName = selectedTable.getTableName();
-
         sendActionButton = (FloatingActionButton) findViewById(R.id.fab);
         sendActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
