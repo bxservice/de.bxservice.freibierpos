@@ -89,6 +89,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     //Calls for CAB menu in different fragments
     private ActionMode mActionMode;
 
+    //Voiding items
+    private List<Integer> positionItemsToVoid = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -429,7 +432,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     @Override
     public void onDialogPositiveClick(VoidReasonDialogFragment dialog) {
         if(dialog.getReason() != null) {
-            voidSelectedItems();
+            voidSelectedItems(dialog.getReason());
         }
         dialog.dismiss();
     }
@@ -822,13 +825,38 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
-    private void voidSelectedItems() {
+    /**
+     * Check all the lines selected and see if they can be voided
+     * @return
+     */
+    private boolean isValidVoidAttempt() {
+        OrderedItemsFragment itemsFragment = (OrderedItemsFragment) getFragment(EditPagerAdapter.ORDERED_POSITION);
+
+        if(itemsFragment != null) {
+            positionItemsToVoid = itemsFragment.getAdapter().getSelectedItems();
+
+            if (positionItemsToVoid == null || positionItemsToVoid.isEmpty())
+                return false;
+
+            for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
+                if(!order.getOrderedLines().get(positionItemsToVoid.get(i)).isVoidable()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void voidSelectedItems(String reason) {
         OrderedItemsFragment itemsFragment = (OrderedItemsFragment) getFragment(EditPagerAdapter.ORDERED_POSITION);
 
         if(itemsFragment != null) {
             List<Integer> selectedItemPositions = itemsFragment.getAdapter().getSelectedItems();
             for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-                if(!order.voidLine(selectedItemPositions.get(i))) { //TODO: Validate before confirmation dialog shows up
+                if(!order.voidLine(selectedItemPositions.get(i), reason)) { //TODO: Validate before confirmation dialog shows up
                     Toast.makeText(getBaseContext(), getString(R.string.already_voided_item),
                             Toast.LENGTH_LONG).show();
                     return;
@@ -931,8 +959,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.ctx_item_void:
-                    showVoidReasonDialog();
-                    //voidSelectedItems();
+                    if(isValidVoidAttempt())
+                        showVoidReasonDialog();
+                    else
+                        Toast.makeText(getBaseContext(), getString(R.string.already_voided_item),
+                                Toast.LENGTH_LONG).show();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:
