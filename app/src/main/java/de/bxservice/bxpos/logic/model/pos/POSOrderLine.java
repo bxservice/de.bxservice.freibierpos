@@ -164,9 +164,9 @@ public class POSOrderLine implements Serializable {
         lineStatus = ORDERING;
     }
 
-    public void voidLine() {
+    public void voidLine(String reason) {
         lineStatus = VOIDED;
-        productRemark = productRemark + " ***VOIDED***"; //Description in iDempiere
+        productRemark = productRemark + " ***VOIDED*** " + reason; //Description in iDempiere
     }
 
     public boolean updateLine(Context ctx) {
@@ -184,6 +184,19 @@ public class POSOrderLine implements Serializable {
     public boolean remove(Context ctx) {
         lineManager = new PosOrderLineManagement(ctx);
         return lineManager.remove(this);
+    }
+
+    /**
+     * Return if a line is voidable or not
+     * based on the conditions of not having
+     * VOID status and qty greater than 0
+     * @return
+     */
+    public boolean isVoidable() {
+        if(lineStatus.equals(VOIDED) || qtyOrdered < 0)
+            return false;
+
+        return true;
     }
 
 }

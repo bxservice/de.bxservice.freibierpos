@@ -492,12 +492,12 @@ public class POSOrder implements Serializable {
      * Void line by creating a copy of the original line
      * but with negative qty
      */
-    public boolean voidLine(int position) {
+    public boolean voidLine(int position, String reason) {
 
         POSOrderLine voidedLine = orderedLines.get(position); //Original line to be voided
 
         //If the selected line is voided or is a voiding error
-        if(voidedLine.getLineStatus().equals(POSOrderLine.VOIDED) || voidedLine.getQtyOrdered() < 0)
+        if(!voidedLine.isVoidable())
             return false;
 
         POSOrderLine voidLine = new POSOrderLine(); //Line that voids with -quantity
@@ -510,7 +510,7 @@ public class POSOrder implements Serializable {
         voidLine.setLineNo(voidedLine.getLineNo() + 5); //Normal lines raise from 10 to 10
         voidLine.completeLine();
 
-        voidedLine.voidLine();
+        voidedLine.voidLine(reason);
         voidedLine.updateLine(null);
 
         orderedLines.add(position + 1, voidLine);
