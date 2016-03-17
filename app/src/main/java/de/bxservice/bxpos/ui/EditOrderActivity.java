@@ -36,6 +36,7 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
+import de.bxservice.bxpos.ui.dialog.ConfirmationPinDialogFragment;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SelectOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
@@ -49,7 +50,8 @@ import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
 public class EditOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener,
         SwitchTableDialogFragment.SwitchTableDialogListener, SelectOrderDialogFragment.SelectOrderDialogListener,
-        SplitOrderDialogFragment.SplitOrderDialogListener, VoidReasonDialogFragment.VoidReasonDialogListener {
+        SplitOrderDialogFragment.SplitOrderDialogListener, VoidReasonDialogFragment.VoidReasonDialogListener,
+        ConfirmationPinDialogFragment.ConfirmationPinDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -320,6 +322,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         voidReasonDialog.show(getFragmentManager(), "VoidReasonDialogFragment");
     }
 
+    private void showConfirmationPINDialog(String reason) {
+        ConfirmationPinDialogFragment confirmationPinDialog = new ConfirmationPinDialogFragment();
+        confirmationPinDialog.setReason(reason);
+        confirmationPinDialog.show(getFragmentManager(), "ConfirmationPinDialogFragment");
+    }
+
+
     /**
      * Click set on guest number dialog
      * @param dialog
@@ -439,14 +448,40 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             boolean blockVoid = sharedPref.getBoolean(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED, true);
 
             if(blockVoid) {
-                System.out.println("permission needed");
-
+                showConfirmationPINDialog(dialog.getReason());
             } else {
                 voidSelectedItems(dialog.getReason());
             }
         }
         dialog.dismiss();
     }
+
+    /**
+     * Click on approve button
+     * @param dialog
+     */
+    @Override
+    public void onDialogPositiveClick(ConfirmationPinDialogFragment dialog) {
+        if(dialog.getPinCode() != null) {
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String assignedPin = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PIN_CODE, null);
+
+            if(assignedPin == null) {
+                //TODO: Create string asing pin
+                return;
+            }
+
+            /*if(blockVoid) {
+                System.out.println("permission needed");
+
+            } else {
+                voidSelectedItems(dialog.getReason());
+            }*/
+        }
+        dialog.dismiss();
+    }
+
     /**
      * Get extras from the previous activity
      * - Order

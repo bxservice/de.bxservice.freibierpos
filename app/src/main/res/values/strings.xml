@@ -165,5 +165,6 @@
     <string name="pref_title_void_approval">Block void items</string>
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">A reason must be introduced</string>
+    <string name="approve_void">Void approval</string>
 
 </resources>
