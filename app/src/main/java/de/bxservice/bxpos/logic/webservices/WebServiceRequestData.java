@@ -52,11 +52,16 @@ public class WebServiceRequestData {
     }
 
     public boolean isDataComplete() {
-        if (username != null && password != null &&
-                clientId != null && roleId != null &&
-                orgId != null && attemptsNo != null &&
-                attemptsNo != null && timeout != null &&
-                attemptsTimeout != null && urlBase != null)
+        if (username != null && !username.isEmpty() &&
+                password != null        && !password.isEmpty() &&
+                clientId != null        && !clientId.isEmpty() &&
+                roleId != null          && !roleId.isEmpty() &&
+                orgId != null           && !orgId.isEmpty() &&
+                attemptsNo != null      && !attemptsNo.isEmpty() &&
+                attemptsNo != null      && !attemptsNo.isEmpty() &&
+                timeout != null         && !timeout.isEmpty() &&
+                attemptsTimeout != null && !attemptsTimeout.isEmpty() &&
+                urlBase != null         && !urlBase.isEmpty())
             return true;
 
         return false;

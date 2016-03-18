@@ -243,6 +243,7 @@ public class LoginActivity extends AppCompatActivity  {
                 finish();
                 return;
             }
+
             //Check if network connection is available
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -377,9 +378,18 @@ public class LoginActivity extends AppCompatActivity  {
             wsData.setUsername(mUsername);
             wsData.setPassword(mPassword);
 
-            AuthenticationWebService auth = new AuthenticationWebService();
+            //If the data to connect to the server has not been set up before - error
+            if(!wsData.isDataComplete()) {
+                Snackbar snackbar = Snackbar
+                        .make(mLoginFormView, getString(R.string.error_no_server_data_configured), Snackbar.LENGTH_LONG)
+                        .setAction("", null);
+                snackbar.show();
+                return false;
+            } else {
+                AuthenticationWebService auth = new AuthenticationWebService();
 
-            return auth.isSuccess();
+                return auth.isSuccess();
+            }
         }
 
         @Override
