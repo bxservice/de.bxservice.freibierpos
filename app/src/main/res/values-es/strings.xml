@@ -53,7 +53,8 @@
     <string name="error_no_connection_username">No hay conexión a internet y usuario desconocido!</string>
     <string name="error_incorrect_password">Nombre de usuario o contraseña incorrecto</string>
     <string name="error_field_required">Este campo es requerido</string>
-    <string name="error_config_server"> Error en los datos. Por favor, póngase en contacto con el administrador </string>
+    <string name="error_config_server"> Error en los datos. Por favor, póngase en contacto con el administrador</string>
+    <string name="error_no_server_data_configured">Faltan datos de autenticación. Por favor, póngase en contacto con el administrador</string>
 
     <!-- Activity titles strings -->
     <string name="login_title">FreiBier POS</string>

@@ -54,6 +54,7 @@
     <string name="error_incorrect_password">Wrong username or password</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_config_server">Data error. Please contact the administrator</string>
+    <string name="error_no_server_data_configured">Login data missing. Please contact the administrator!</string>
 
     <!-- Activity titles strings -->
     <string name="login_title">FreiBier POS</string>
