@@ -257,7 +257,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDialogPositiveClick(MultipleOrdersTableDialogFragment dialog) {
-
+        if(dialog.getOrder() != null)
+            editOrder(dialog.getOrder());
     }
 
     public void createOrder(){
@@ -277,14 +278,19 @@ public class MainActivity extends AppCompatActivity
             createOrder();
         //Only one order in the table -> Open edit activity
         else if (orders.size() == 1) {
-            Intent intent = new Intent(this, EditOrderActivity.class);
-            intent.putExtra("caller","MainActivity");
-            intent.putExtra("draftOrder", orders.get(0));
-            startActivityForResult(intent, EDIT_ORDER_REQUEST);
+            editOrder(orders.get(0));
         } else {
             showSelectOrderDialog(orders);
         }
     }
+
+    public void editOrder(POSOrder order) {
+        Intent intent = new Intent(this, EditOrderActivity.class);
+        intent.putExtra("caller","MainActivity");
+        intent.putExtra("draftOrder", order);
+        startActivityForResult(intent, EDIT_ORDER_REQUEST);
+    }
+
 
     /**
      * On destroy closes the db connection
