@@ -89,8 +89,6 @@ public class OrderedItemsFragment extends Fragment {
                 })
         );
 
-        //TODO: Add on Long click - Void Items + admin PIN + Reason (mandatory)
-
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
 
