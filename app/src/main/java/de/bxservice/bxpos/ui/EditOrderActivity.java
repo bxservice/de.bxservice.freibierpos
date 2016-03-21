@@ -662,21 +662,15 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if (order == null)
             return "";
 
-        BigDecimal total = BigDecimal.ZERO;
-
-        for (POSOrderLine orderLine : getLines(status)) {
-            total = total.add(orderLine.getLineNetAmt());
-        }
-
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         switch (status) {
             case POSOrderLine.ORDERING:
-                return getString(R.string.subtotal_value, currencyFormat.format(total));
+                return getString(R.string.subtotal_value, currencyFormat.format(order.getTotalOrderinglines()));
             case POSOrderLine.ORDERED:
-                return getString(R.string.total_value, currencyFormat.format(total));
+                return getString(R.string.total_value, currencyFormat.format(order.getTotallines()));
             default:
-                return getString(R.string.subtotal_value, currencyFormat.format(total));
+                return getString(R.string.subtotal_value, currencyFormat.format(order.getTotalOrderinglines()));
         }
 
     }

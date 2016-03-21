@@ -314,6 +314,18 @@ public class POSOrder implements Serializable {
 
     /**
      * Returns the total sum of the order lines
+     * @return
+     */
+    public BigDecimal getTotalOrderinglines() {
+        totallines = BigDecimal.ZERO;
+        for (POSOrderLine orderLine : orderingLines) {
+            totallines = orderLine.getLineNetAmt().add(totallines);
+        }
+        return totallines;
+    }
+
+    /**
+     * Returns the total sum of the order lines
      * in an integer to be save in the database
      * @return
      */
