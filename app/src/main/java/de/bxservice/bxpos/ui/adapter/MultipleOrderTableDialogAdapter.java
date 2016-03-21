@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 
 /**
@@ -37,10 +39,8 @@ public class MultipleOrderTableDialogAdapter extends RecyclerView.Adapter<Multip
 
         public void bindTable(POSOrder order) {
             txtOrderId.setText(String.valueOf(order.getOrderId()));
-            if (order.getTable() != null)
-                txtTotal.setText(order.getTable().getTableName());
-            else
-                txtTotal.setText(itemView.getResources().getString(R.string.unset_table));
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+            txtTotal.setText(currencyFormat.format(order.getTotallines()));
         }
     }
 
