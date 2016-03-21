@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity
     public void editOrder(List<POSOrder> orders){
 
         //No orders in the array -> free table - new order
-        if(orders.isEmpty())
+        if (orders.isEmpty())
             createOrder();
         //Only one order in the table -> Open edit activity
         else if (orders.size() == 1) {
