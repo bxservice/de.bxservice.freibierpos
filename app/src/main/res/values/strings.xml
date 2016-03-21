@@ -41,6 +41,7 @@
     <string name="unable_split">You can\'t split an order with one or less items</string>
     <string name="split_all_Error">You can\'t select all items to split</string>
     <string name="void_title">Void items</string>
+    <string name="select_order">Select order</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>

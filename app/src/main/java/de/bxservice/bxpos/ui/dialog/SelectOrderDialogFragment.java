@@ -82,11 +82,8 @@ public class SelectOrderDialogFragment extends DialogFragment {
 
         recyclerView.setAdapter(mGridAdapter);
 
-        if(isJoin)
-            builder.setTitle(R.string.join_orders);
-        else
-            builder.setTitle(R.string.split_order);
-
+        builder.setTitle(R.string.select_order);
+        
         builder.setView(view)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
