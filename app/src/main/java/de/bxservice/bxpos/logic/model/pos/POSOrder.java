@@ -313,7 +313,7 @@ public class POSOrder implements Serializable {
     }
 
     /**
-     * Returns the total sum of the order lines
+     * Returns the total sum of the ordering lines
      * @return
      */
     public BigDecimal getTotalOrderinglines() {
@@ -323,6 +323,25 @@ public class POSOrder implements Serializable {
         }
         return totallines;
     }
+
+    public int getOrderedQty() {
+        int totalQty = 0;
+        for(POSOrderLine orderLine : orderedLines) {
+            totalQty = totalQty + orderLine.getQtyOrdered();
+        }
+
+        return totalQty;
+    }
+
+    public int getOrderingQty() {
+        int totalQty = 0;
+        for(POSOrderLine orderLine : orderingLines) {
+            totalQty = totalQty + orderLine.getQtyOrdered();
+        }
+
+        return totalQty;
+    }
+
 
     /**
      * Returns the total sum of the order lines
