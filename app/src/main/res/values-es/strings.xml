@@ -41,6 +41,7 @@
     <string name="unable_split">No se puede dividir una orden con menos de un item</string>
     <string name="split_all_Error">No se pueden seleccionar todos los items para dividir</string>
     <string name="void_title">Anular items</string>
+    <string name="select_order">Seleccionar orden</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Nombre de usuario</string>
