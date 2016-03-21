@@ -131,6 +131,7 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
 
         holder.bindOrderLine(orderLine);
         holder.itemView.setActivated(selectedItems.get(position, false));
+        holder.setIsRecyclable(false);
 
         //Show in a special color the voided lines
         if(orderLine.getQtyOrdered() < 0) {
