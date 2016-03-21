@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -256,15 +257,20 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, NEW_ORDER_REQUEST);
     }
 
-    public void editOrder(POSOrder order){
-        if (order != null) {
+    public void editOrder(List<POSOrder> orders){
+
+        //No orders in the array -> free table - new order
+        if(orders.isEmpty())
+            createOrder();
+        //Only one order in the table -> Open edit activity
+        else if (orders.size() == 1) {
             Intent intent = new Intent(this, EditOrderActivity.class);
             intent.putExtra("caller","MainActivity");
-            intent.putExtra("draftOrder", order);
+            intent.putExtra("draftOrder", orders.get(0));
             startActivityForResult(intent, EDIT_ORDER_REQUEST);
+        } else {
+            System.out.println("Multiple orders");
         }
-        else
-            createOrder();
     }
 
     /**
