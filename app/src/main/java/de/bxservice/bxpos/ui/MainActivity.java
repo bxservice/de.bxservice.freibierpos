@@ -39,13 +39,15 @@ import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
+import de.bxservice.bxpos.ui.dialog.MultipleOrdersTableDialogFragment;
 
 /**
  * First Activity after login
  * It displays the tables in a tabbed activity with the different groups
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener,
+        MultipleOrdersTableDialogFragment.MultipleOrdersTableDialogListener {
 
     private static final String LOG_TAG = "Main Activity";
 
@@ -219,6 +221,12 @@ public class MainActivity extends AppCompatActivity
         guestDialog.show(getFragmentManager(), "NumberOfGuestDialogFragment");
     }
 
+    public void showSelectOrderDialog(List<POSOrder> orders) {
+        MultipleOrdersTableDialogFragment ordersDialog = new MultipleOrdersTableDialogFragment();
+        ordersDialog.setTableOrders(orders);
+        ordersDialog.show(getFragmentManager(), "MultipleOrdersTableDialogFragment");
+    }
+
     public int getNumberOfGuests() {
         return numberOfGuests;
     }
@@ -247,6 +255,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onDialogPositiveClick(MultipleOrdersTableDialogFragment dialog) {
+
+    }
+
     public void createOrder(){
 
         Intent intent = new Intent(this, CreateOrderActivity.class);
@@ -269,7 +282,7 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("draftOrder", orders.get(0));
             startActivityForResult(intent, EDIT_ORDER_REQUEST);
         } else {
-            System.out.println("Multiple orders");
+            showSelectOrderDialog(orders);
         }
     }
 
