@@ -402,6 +402,11 @@ public class DataMapper implements Serializable {
         return orderHelper.getOrder(table);
     }
 
+    public List<POSOrder> getTableOrders(Table table) {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getTableOrders(table);
+    }
+
     private boolean createDefaultData(DefaultPosData defaultPosData) {
 
         PosDefaultDataHelper posDefaultDataHelper = new PosDefaultDataHelper(mContext);

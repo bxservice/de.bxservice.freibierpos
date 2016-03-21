@@ -63,6 +63,10 @@ public class DataProvider {
         return dataMapper.getOpenPosOrder(table);
     }
 
+    public List<POSOrder> getTableOrders (Table table) {
+        return dataMapper.getTableOrders(table);
+    }
+
     public DefaultPosData getDefaultData() {
         return dataMapper.getDefaultData(1);
     }

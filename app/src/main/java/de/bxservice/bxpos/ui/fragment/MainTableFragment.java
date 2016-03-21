@@ -98,7 +98,7 @@ public class MainTableFragment extends Fragment {
                 if (item.getTable().getStatus().equals(Table.FREE_STATUS))
                     ((MainActivity) getActivity()).showGuestNumberDialog();
                 else if (item.getTable().getStatus().equals(Table.BUSY_STATUS)) {
-                    ((MainActivity) getActivity()).editOrder(dataProvider.getPosOrder(item.getTable()));
+                    ((MainActivity) getActivity()).editOrder(dataProvider.getTableOrders(item.getTable()));
                 }
             }
         });
