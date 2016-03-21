@@ -70,7 +70,7 @@ public class OrderingItemsFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (and its listener)
-        mAdapter = new OrderingLineAdapter(order.getOrderingLines());
+        mAdapter = new OrderingLineAdapter(new ArrayList<>(order.getOrderingLines()));
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
