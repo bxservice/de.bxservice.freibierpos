@@ -480,6 +480,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                         .setAction("Action", null).show();
             } else {
                 voidSelectedItems(dialog.getReason());
+                dialog.dismiss();
             }
         }
     }
