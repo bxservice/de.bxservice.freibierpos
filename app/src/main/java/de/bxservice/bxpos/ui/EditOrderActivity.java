@@ -624,31 +624,15 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         int totalQty = 0;
 
-        for(POSOrderLine orderLine : getLines(status)) {
-            totalQty = totalQty + orderLine.getQtyOrdered();
+        switch (status) {
+            case POSOrderLine.ORDERING:
+                totalQty = order.getOrderingQty();
+                break;
+            case POSOrderLine.ORDERED:
+                totalQty = order.getOrderedQty();
         }
 
         return getString(R.string.quantity_summary, totalQty);
-    }
-
-    /**
-     * return the right array according to the status
-     * @param status
-     * @return
-     */
-    private ArrayList<POSOrderLine> getLines (String status) {
-
-        if (order == null)
-            return null;
-
-        switch (status) {
-            case POSOrderLine.ORDERING:
-                return order.getOrderingLines();
-            case POSOrderLine.ORDERED:
-                return order.getOrderedLines();
-        }
-
-        return null;
     }
 
     /**
