@@ -2,6 +2,7 @@ package de.bxservice.bxpos.logic.webservices;
 
 import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
+import org.idempiere.webservice.client.exceptions.WebServiceException;
 import org.idempiere.webservice.client.net.WebServiceClient;
 import org.idempiere.webservice.client.request.CompositeOperationRequest;
 import org.idempiere.webservice.client.request.CreateDataRequest;
@@ -24,6 +25,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
     private static final String DOCUMENT_NO_PREFIX = "BX-POS";
     private boolean success;
+    private boolean connectionError;
 
     public CreateOrderWebServiceAdapter(POSOrder order) {
         super(order);
@@ -99,6 +101,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 System.out.println(response.getErrorMessage());
                 success = false;
+                connectionError = false;
             } else {
                 for (int i = 0; i < response.getResponsesCount(); i++) {
                     if (response.getResponse(i).getStatus() == Enums.WebServiceResponseStatus.Error) {
@@ -111,11 +114,20 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
                 success = true;
             }
 
+        } catch (WebServiceException e) {
+            e.printStackTrace();
+            success=false;
+            connectionError = true;
         } catch (Exception e) {
             e.printStackTrace();
             success=false;
+            connectionError = false;
         }
 
+    }
+
+    public boolean isConnectionError() {
+        return connectionError;
     }
 
     public boolean isSuccess() {

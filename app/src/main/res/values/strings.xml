@@ -153,6 +153,7 @@
     <string name="error_no_connection_on_sync_order">No internet connection. Try again later</string>
 
     <string name="success_on_sync_order">Orders synchronized</string>
+    <string name="no_success_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronize</string>
