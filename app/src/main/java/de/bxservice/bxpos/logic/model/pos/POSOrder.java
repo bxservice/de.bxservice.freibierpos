@@ -498,6 +498,7 @@ public class POSOrder implements Serializable {
             newOrder.createOrder(ctx);
             newOrder.setStatus(SENT_STATUS);
             newOrder.setOrderedLines(toSplitLines);
+            newOrder.setTable(table);
 
             newOrder.createOrder(ctx);
 
@@ -505,8 +506,6 @@ public class POSOrder implements Serializable {
                 orderLine.setOrder(newOrder);
                 orderLine.updateLine(ctx);
             }
-            //TODO: When split left the same table -> multiple tanlñes
-            //newOrder.setTable(table);
 
         } else {
             for (POSOrderLine orderLine : toSplitLines) {
