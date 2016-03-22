@@ -188,6 +188,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         totalTextView = (TextView) findViewById(R.id.total_textView);
 
         setActiveTab();
+
+        if(order.getTable() != null)
+            order.getTable().freeTable(getBaseContext());
     }
 
     @Override

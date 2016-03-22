@@ -38,4 +38,9 @@ public class PosTableManagement implements ObjectManagement, Serializable {
     public boolean remove(Object object) {
         return true;
     }
+
+    public boolean isTableFree(Table table) {
+        return dataMapper.isTableFree(table);
+    }
+
 }

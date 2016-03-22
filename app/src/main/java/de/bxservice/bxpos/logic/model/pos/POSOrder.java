@@ -421,7 +421,6 @@ public class POSOrder implements Serializable {
         sync = isSynchronized;
         updateOrder(ctx);
 
-        //TODO: Wrong freeing table when offline sync -> multi order on table different behaviour
         if(table != null) {
             table.freeTable(ctx);
         }
