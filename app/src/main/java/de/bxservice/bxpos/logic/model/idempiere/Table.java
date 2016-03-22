@@ -79,8 +79,15 @@ public class Table implements Serializable {
     }
 
     public boolean freeTable(Context ctx) {
-        status = FREE_STATUS;
-        return updateTable(ctx);
+        tableManager = new PosTableManagement(ctx);
+
+        //Check if there are no more orders in the table -> if there are, don't free the table
+        if (tableManager.isTableFree(this)) {
+            status = FREE_STATUS;
+            return updateTable(ctx);
+        }
+
+        return false;
     }
 
     public boolean reserveTable(Context ctx) {

@@ -11,6 +11,8 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -155,6 +157,38 @@ public class PosTableHelper extends PosObjectHelper {
         }
 
         return tables;
+    }
+
+    /**
+     * Check if there are no more orders in the table
+     * if there are more -> return false
+     * @param table
+     * @return
+     */
+    public boolean isTableFree(Table table) {
+
+        int orders = 0;
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER + " WHERE "
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " = ? AND "
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " <> ? ";
+
+        Log.d(LOG_TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table.getTableID()), POSOrder.COMPLETE_STATUS});
+
+        if (c != null)
+            orders = c.getCount();
+
+        c.close();
+
+        //If there is at least 1 order in the table -> table is occupied
+        if (orders > 0)
+            return false;
+        else
+            return true;
     }
 
 }

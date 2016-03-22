@@ -444,4 +444,9 @@ public class DataMapper implements Serializable {
         return posDefaultDataHelper.getData(id);
     }
 
+    public boolean isTableFree(Table table) {
+        PosTableHelper tableHelper = new PosTableHelper(mContext);
+        return tableHelper.isTableFree(table);
+    }
+
 }
