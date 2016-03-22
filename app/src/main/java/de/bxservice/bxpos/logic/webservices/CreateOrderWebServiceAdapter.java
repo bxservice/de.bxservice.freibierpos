@@ -1,5 +1,7 @@
 package de.bxservice.bxpos.logic.webservices;
 
+import android.util.Log;
+
 import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.exceptions.WebServiceException;
@@ -20,6 +22,8 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
  * line and completing it in iDempiere
  */
 public class CreateOrderWebServiceAdapter extends AbstractWSObject {
+
+    private static final String TAG = "CreateOrderWebService";
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
@@ -99,22 +103,22 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             CompositeResponse response = client.sendRequest(compositeOperation); //TODO: Find the problem that calls iDempiere several times
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
-                System.out.println(response.getErrorMessage());
+                Log.e(TAG, "Error in web service" + response.getErrorMessage());
                 success = false;
                 connectionError = false;
             } else {
                 for (int i = 0; i < response.getResponsesCount(); i++) {
                     if (response.getResponse(i).getStatus() == Enums.WebServiceResponseStatus.Error) {
-                        System.out.println(response.getResponse(i).getErrorMessage());
+                        Log.e(TAG, "Error in web service" + response.getResponse(i).getErrorMessage());
                     } else {
-                        System.out.println("created successfully");
+                        Log.i(TAG, "Web service ran successfully");
                     }
-                    System.out.println();
                 }
                 success = true;
             }
 
         } catch (WebServiceException e) {
+            Log.e(TAG, "No connection to iDempiere error");
             e.printStackTrace();
             success=false;
             connectionError = true;
