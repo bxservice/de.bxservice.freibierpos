@@ -189,8 +189,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         setActiveTab();
 
-        if(order.getTable() != null)
-            order.getTable().freeTable(getBaseContext());
     }
 
     @Override
