@@ -30,8 +30,13 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
         for(POSOrder order : orders) {
             write = new DataWriter(order);
+            //If no success creating the order in iDempiere and the problem is the connection with the server
+            if (!write.isSuccess() && write.isConnectionError()) {
+                success = false;
+                break;
+            }
             order.payOrder(true, mActivity.getBaseContext());
-            success = write.isSuccess();
+            success = true;
         }
 
         return success;

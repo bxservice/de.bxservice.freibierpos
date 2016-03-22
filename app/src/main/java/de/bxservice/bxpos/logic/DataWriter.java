@@ -16,6 +16,7 @@ public class DataWriter {
     private static final String LOG_TAG = "Data Writer";
 
     private boolean success = false;
+    private boolean connectionError = false;
 
     public DataWriter(final POSOrder order) {
 
@@ -26,12 +27,16 @@ public class DataWriter {
             public void run() {
                 CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(order);
                 success = createOrderWS.isSuccess();
-
+                connectionError = createOrderWS.isConnectionError();
             }
         });
 
         createOrderThread.run();
 
+    }
+
+    public boolean isConnectionError() {
+        return connectionError;
     }
 
     public boolean isSuccess() {

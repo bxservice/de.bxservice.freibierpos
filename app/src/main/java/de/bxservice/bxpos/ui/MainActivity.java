@@ -331,6 +331,9 @@ public class MainActivity extends AppCompatActivity
         if(success)
             Toast.makeText(getBaseContext(), getString(R.string.success_on_sync_order),
                     Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order),
+                    Toast.LENGTH_LONG).show();
     }
 
     /**
