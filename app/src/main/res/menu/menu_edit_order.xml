@@ -13,24 +13,29 @@
         android:orderInCategory="200"
         app:showAsAction="never" />
 
+    <item android:id="@+id/new_order"
+        android:title="@string/new_order"
+        android:orderInCategory="300"
+        app:showAsAction="never" />
+
     <item android:id="@+id/split_order"
         android:title="@string/split_order"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         app:showAsAction="never" />
 
     <item android:id="@+id/join_orders"
         android:title="@string/join_orders"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         app:showAsAction="never" />
 
     <item android:id="@+id/change_table"
         android:title="@string/change_table"
-        android:orderInCategory="500"
+        android:orderInCategory="600"
         app:showAsAction="never" />
 
     <item android:id="@+id/add_item"
         android:title="@string/search"
-        android:orderInCategory="100"
+        android:orderInCategory="50"
         app:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_add" />
 
