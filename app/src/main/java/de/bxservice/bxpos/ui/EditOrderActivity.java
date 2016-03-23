@@ -65,8 +65,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     static final String ORDER_STATE = "orderState";
     public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
+    public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
+    public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
+
     static final int ADD_ITEMS_REQUEST  = 1;  // The request code
     static final int PAY_REQUEST = 2;  // The request code
+    static final int NEW_ORDER_REQUEST  = 3;  // The request code
 
     private View mainView;
     private POSOrder order;
@@ -239,6 +243,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
         if (id == R.id.join_orders) {
             showJoinOrdersDialog();
+            return true;
+        }
+        if (id == R.id.new_order) {
+            createNewOrder();
             return true;
         }
 
@@ -696,12 +704,27 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         super.finish();
     }
 
-    public void openAddItemsActivity() {
+    /**
+     * Click on add items menu item
+     */
+    private void openAddItemsActivity() {
         Intent intent = new Intent(this, CreateOrderActivity.class);
         intent.putExtra("caller","EditOrderActivity");
         intent.putExtra(EXTRA_ORDER, order);
 
         startActivityForResult(intent, ADD_ITEMS_REQUEST);
+    }
+
+    /**
+     * Click on new order menu item
+     */
+    private void createNewOrder() {
+        Intent intent = new Intent(this, CreateOrderActivity.class);
+        intent.putExtra("caller","MainActivity");
+        intent.putExtra(EXTRA_NUMBER_OF_GUESTS, 1); //Always one by default
+        intent.putExtra(EXTRA_ASSIGNED_TABLE, order.getTable());
+
+        startActivityForResult(intent, NEW_ORDER_REQUEST);
     }
 
     private void updateOrderingItems() {
@@ -739,11 +762,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
                 this.recreate();
             }
-        } else if(requestCode == PAY_REQUEST ) {
+        } else if (requestCode == PAY_REQUEST) {
             if (resultCode == RESULT_OK) {
                 setResult(RESULT_OK);
                 finish();
             }
+        } else if (requestCode == NEW_ORDER_REQUEST) {
+            finish();
         }
     }
 
