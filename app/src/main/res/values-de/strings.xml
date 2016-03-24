@@ -173,5 +173,7 @@
     <string name="void_approval_message">Approve %1$s voided items because of %2$s</string>
     <string name="assign_password">The admin PIN has not been assigned. Contact the administrator</string>
     <string name="wrong_password">Wrong password</string>
+    <string name="from_date">From: %1$s</string>
+    <string name="To_date">To: %1$s</string>
 
 </resources>

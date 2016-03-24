@@ -12,4 +12,22 @@
     tools:context="de.bxservice.bxpos.ui.ReportsActivity"
     tools:showIn="@layout/activity_reports">
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/from_button"
+        android:onClick="onButtonClick"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="48dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/to_button"
+        android:onClick="onButtonClick"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/from_button" />
+
 </RelativeLayout>
