@@ -155,17 +155,15 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, ViewOpenOrdersActivity.class);
             startActivityForResult(intent, OPEN_ORDER_REQUEST);
 
+        } else if (id == R.id.nav_report) {
+            Intent intent = new Intent(this, ReportsActivity.class);
+            startActivity(intent);
         } /*else if (id == R.id.nav_reservation) {
 
             Intent intent = new Intent(this, ManageReservationActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_report) {
-
-            Intent intent = new Intent(this, EditOrderActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_settings) {
+        }  else if (id == R.id.nav_settings) {
 
         }*/ else if (id == R.id.nav_send) {
             DataProvider dataProvider = new DataProvider(getBaseContext());
