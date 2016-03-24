@@ -170,6 +170,8 @@
     <string name="void_approval_message">¿Aprobar la anulacion de %1$s items porque %2$s</string>
     <string name="assign_password">El PIN no ha sido asignado. Pongase en contacto con el administrador.</string>
     <string name="wrong_password">Contraseña incorrecta</string>
+    <string name="from_date">Desde: %1$s</string>
+    <string name="to_date">Hasta: %1$s</string>
 
 </resources>
 
