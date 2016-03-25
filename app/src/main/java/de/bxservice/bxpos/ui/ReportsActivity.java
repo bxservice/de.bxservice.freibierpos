@@ -5,24 +5,34 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.report.ReportFactory;
+import de.bxservice.bxpos.ui.adapter.ReportTypeListAdapter;
+import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 import de.bxservice.bxpos.ui.dialog.DatePickerFragment;
 
 public class ReportsActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener {
 
+    //View components
     private Button  fromButton, toButton;
-    private boolean isFromDate;
+    private RecyclerView recyclerView;
+
     //The dates will are stored as int in yyyymmdd format
     private long fromDate, toDate;
+    private boolean isFromDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +41,9 @@ public class ReportsActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fromButton = (Button) findViewById(R.id.from_button);
-        toButton = (Button) findViewById(R.id.to_button);
+        fromButton   = (Button) findViewById(R.id.from_button);
+        toButton     = (Button) findViewById(R.id.to_button);
+        recyclerView = (RecyclerView) findViewById(R.id.report_types);
 
         Calendar c = Calendar.getInstance();
 
@@ -45,6 +56,21 @@ public class ReportsActivity extends AppCompatActivity implements
         fromDate = getFormattedDate(year, month, day, 0, 0); //From the beginning of the day
         toDate   = getFormattedDate(year, month, day,23,59); //To the end of the day
 
+        String[] reportTypeNames  = getResources().getStringArray(R.array.report_types_titles);
+        String[] reportTypeValues = getResources().getStringArray(R.array.report_types_values);
+
+        ReportFactory reports = new ReportFactory(getBaseContext(), reportTypeNames, reportTypeValues);
+        ReportTypeListAdapter mAdapter = new ReportTypeListAdapter(reports.getReports());
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getBaseContext());
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        recyclerView.setAdapter(mAdapter);
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.query_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +79,7 @@ public class ReportsActivity extends AppCompatActivity implements
                 System.out.println(new DataProvider(getBaseContext()).getPaidOrders(fromDate, toDate).size());
             }
         });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
