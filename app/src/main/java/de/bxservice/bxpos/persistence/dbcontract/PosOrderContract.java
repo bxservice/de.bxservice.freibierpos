@@ -16,6 +16,7 @@ public class PosOrderContract {
         public static final String TABLE_NAME               = "pos_order";
         public static final String COLUMN_NAME_ORDER_ID     = "orderid";
         public static final String COLUMN_NAME_CREATED_AT   = "created";
+        public static final String COLUMN_NAME_UPDATED_AT   = "updated";
         public static final String COLUMN_NAME_CREATED_BY   = "createdBy";
         public static final String COLUMN_NAME_ORDER_STATUS = "status";
         public static final String COLUMN_NAME_TABLE_ID     = "table_id";

@@ -424,7 +424,6 @@ public class POSOrder implements Serializable {
         if(table != null) {
             table.freeTable(ctx);
         }
-
     }
 
     public void uncompleteOrder() {

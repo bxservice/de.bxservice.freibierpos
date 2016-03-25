@@ -35,7 +35,8 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                 success = false;
                 break;
             }
-            order.payOrder(true, mActivity.getBaseContext());
+            order.setSync(true);
+            order.updateOrder(mActivity.getBaseContext());
             success = true;
         }
 

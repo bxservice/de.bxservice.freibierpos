@@ -515,7 +515,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        //When no internet connection
+        //Check if there is internet connection
         if (networkInfo != null && networkInfo.isConnected()) {
 
             showProgress(true);
@@ -608,8 +608,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @param success
      */
     public void postExecuteTask(boolean success) {
-        if(success)
+        if(success) {
+            order.payOrder(true, getBaseContext());
             finish();
+        }
         else {
             Snackbar snackbar = Snackbar
                     .make(mPayFormView, getString(R.string.no_success_on_sync_order), Snackbar.LENGTH_INDEFINITE)
