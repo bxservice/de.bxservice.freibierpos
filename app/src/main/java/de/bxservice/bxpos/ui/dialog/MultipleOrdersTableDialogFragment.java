@@ -32,9 +32,9 @@ public class MultipleOrdersTableDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    MultipleOrdersTableDialogListener mListener;
+    private MultipleOrdersTableDialogListener mListener;
     private ArrayList<POSOrder> mGridData;
-    POSOrder selectedOrder;
+    private POSOrder selectedOrder;
     private RecyclerView recyclerView;
 
     @Override
@@ -49,7 +49,7 @@ public class MultipleOrdersTableDialogFragment extends DialogFragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.multiple_orders_list);
 
-        // use a grid layout manager with 2 columns
+        // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);

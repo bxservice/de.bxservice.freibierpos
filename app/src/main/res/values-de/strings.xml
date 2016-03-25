@@ -176,4 +176,12 @@
     <string name="from_date">From: %1$s</string>
     <string name="To_date">To: %1$s</string>
 
+    <!-- Report types -->
+    <string-array name="report_types_titles">
+        <item>Sales</item>
+        <item>Void items</item>
+        <item>Table sales</item>
+    </string-array>
+
+
 </resources>
