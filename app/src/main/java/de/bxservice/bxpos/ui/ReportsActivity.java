@@ -32,8 +32,12 @@ public class ReportsActivity extends AppCompatActivity implements
         toButton = (Button) findViewById(R.id.to_button);
 
         Calendar c = Calendar.getInstance();
+        String fecha = String.valueOf(c.get(Calendar.MONTH));
+
+        System.out.println(fecha);
+
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
+        int month = c.get(Calendar.MONTH) + 1; //Calendar month returns the position of the month 0 being January
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         setFromButtonText(year, month, day);
@@ -83,12 +87,24 @@ public class ReportsActivity extends AppCompatActivity implements
     }
 
     private void setFromButtonText(int year, int month, int day) {
-        StringBuilder date = new StringBuilder().append(day).append(".").append(month).append(".").append(year);
+        StringBuilder date = new StringBuilder();
+        if(day < 10)
+            date.append("0");
+        date.append(day).append(".");
+        if(month < 10)
+            date.append("0");
+        date.append(month).append(".").append(year);
         fromButton.setText(getString(R.string.from_date, date));
     }
 
     private void setToButtonText(int year, int month, int day) {
-        StringBuilder date = new StringBuilder().append(day).append(".").append(month).append(".").append(year);
+        StringBuilder date = new StringBuilder();
+        if(day < 10)
+            date.append("0");
+        date.append(day).append(".");
+        if(month < 10)
+            date.append("0");
+        date.append(month).append(".").append(year);
         toButton.setText(getString(R.string.to_date, date));
     }
 
