@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Calendar;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -30,11 +28,8 @@ public class PosOrderLineHelper extends PosObjectHelper {
     public long createOrderLine(POSOrderLine orderLine) {
         SQLiteDatabase database = getWritableDatabase();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-
         ContentValues values = new ContentValues();
-        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, dateFormat.format(date));
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY, ""); //TODO: Get current user
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderLine.getOrder().getOrderId());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS, orderLine.getLineStatus());
@@ -93,6 +88,8 @@ public class PosOrderLineHelper extends PosObjectHelper {
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY, orderLine.getQtyOrdered());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK, orderLine.getProductRemark());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT, orderLine.getLineNetAmtInteger());
+
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_UPDATED_AT, Long.parseLong(getCurrentDate()));
 
         // updating row
         return db.update(Tables.TABLE_POSORDER_LINE, values,PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?",
@@ -213,5 +210,37 @@ public class PosOrderLineHelper extends PosObjectHelper {
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(Tables.TABLE_POSORDER_LINE, PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?", new String[] { String.valueOf(orderLine.getOrderLineId()) });
     }
+
+    /**
+     * Returns the current date in format
+     * yyyymmddhhmm
+     * @return
+     */
+    private String getCurrentDate() {
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1; //Calendar month returns the position of the month 0 being January
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+
+        StringBuilder date = new StringBuilder();
+        date.append(year);
+        if(month < 10)
+            date.append("0");
+        date.append(month);
+        if(day < 10)
+            date.append("0");
+        date.append(day);
+        if(hour < 10)
+            date.append("0");
+        date.append(hour);
+        if(minutes < 10)
+            date.append("0");
+        date.append(minutes);
+
+        return date.toString();
+    }
+
 
 }
