@@ -20,6 +20,8 @@ public class ReportsActivity extends AppCompatActivity implements
 
     private Button  fromButton, toButton;
     private boolean isFromDate;
+    //The dates will are stored as int in yyyymmdd format
+    private int fromDate, toDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,6 @@ public class ReportsActivity extends AppCompatActivity implements
         toButton = (Button) findViewById(R.id.to_button);
 
         Calendar c = Calendar.getInstance();
-        String fecha = String.valueOf(c.get(Calendar.MONTH));
-
-        System.out.println(fecha);
 
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1; //Calendar month returns the position of the month 0 being January
@@ -42,6 +41,7 @@ public class ReportsActivity extends AppCompatActivity implements
 
         setFromButtonText(year, month, day);
         setToButtonText(year, month, day);
+        fromDate = toDate = getFormattedDate(year, month, day);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.query_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +77,15 @@ public class ReportsActivity extends AppCompatActivity implements
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
 
-        if (isFromDate)
+        if (isFromDate) {
             setFromButtonText(year, month, day);
-        else
+            fromDate = getFormattedDate(year, month, day);
+        }
+        else {
             setToButtonText(year, month, day);
+            toDate = getFormattedDate(year, month, day);
+        }
 
     }
 
@@ -94,6 +97,7 @@ public class ReportsActivity extends AppCompatActivity implements
         if(month < 10)
             date.append("0");
         date.append(month).append(".").append(year);
+
         fromButton.setText(getString(R.string.from_date, date));
     }
 
@@ -107,5 +111,31 @@ public class ReportsActivity extends AppCompatActivity implements
         date.append(month).append(".").append(year);
         toButton.setText(getString(R.string.to_date, date));
     }
+
+    /**
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @return formatted date
+     */
+    private int getFormattedDate(int year, int month, int day) {
+        StringBuilder date = new StringBuilder();
+
+        date.append(year);
+
+        if(month < 10)
+            date.append("0");
+
+        date.append(month);
+
+        if(day < 10)
+            date.append("0");
+
+        date.append(day);
+
+        return Integer.parseInt(date.toString());
+    }
+
 
 }

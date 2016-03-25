@@ -27,7 +27,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -88,7 +88,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO:FK to users
                     ", " +
-                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT + " TEXT" +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT + " INTEGER" +
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " INTEGER REFERENCES "
                         + Tables.TABLE_TABLE + "(" + TableContract.TableDB.COLUMN_NAME_TABLE_ID + ") ON DELETE CASCADE" +  //FK to the table
@@ -111,7 +113,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS + " VARCHAR(64)" +
                     ", " +
-                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT + " TEXT" +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
+                    ", " +
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_UPDATED_AT + " INTEGER" +
                     ", " +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " INTEGER REFERENCES "
                         + Tables.TABLE_POSORDER + "(" + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + ") ON DELETE CASCADE" +  //FK to the order

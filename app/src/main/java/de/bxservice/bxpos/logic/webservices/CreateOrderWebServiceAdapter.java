@@ -27,7 +27,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
-    private static final String DOCUMENT_NO_PREFIX = "BX-POS";
+    private static final String DOCUMENT_NO_PREFIX = "BX*POS";
     private boolean success;
     private boolean connectionError;
 
