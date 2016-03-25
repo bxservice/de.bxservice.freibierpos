@@ -30,7 +30,7 @@ public class POSOrderLine implements Serializable {
     private int lineNo;
     private MProduct product;
     private int qtyOrdered;
-    private String productRemark;
+    private String productRemark = "";
     private boolean marked = false;
     private String lineStatus;
     private BigDecimal lineNetAmt = BigDecimal.ZERO; //qty*StpPrice

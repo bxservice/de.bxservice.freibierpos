@@ -59,6 +59,11 @@ public class DataProvider {
         return dataMapper.getUnsynchronizedOrders();
     }
 
+    public List<POSOrder> getPaidOrders(long fromDate, long toDate) {
+        return dataMapper.getPaidOrders(fromDate, toDate);
+    }
+
+
     public POSOrder getPosOrder(Table table) {
         return dataMapper.getOpenPosOrder(table);
     }

@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import java.util.Calendar;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.ui.dialog.DatePickerFragment;
 
 public class ReportsActivity extends AppCompatActivity implements
@@ -21,7 +22,7 @@ public class ReportsActivity extends AppCompatActivity implements
     private Button  fromButton, toButton;
     private boolean isFromDate;
     //The dates will are stored as int in yyyymmdd format
-    private int fromDate, toDate;
+    private long fromDate, toDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +42,19 @@ public class ReportsActivity extends AppCompatActivity implements
 
         setFromButtonText(year, month, day);
         setToButtonText(year, month, day);
-        fromDate = toDate = getFormattedDate(year, month, day);
+        fromDate = getFormattedDate(year, month, day, 0, 0); //From the beginning of the day
+        toDate   = getFormattedDate(year, month, day,23,59); //To the end of the day
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.query_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("From: " + fromDate + "To: " + toDate);
+                System.out.println(new DataProvider(getBaseContext()).getPaidOrders(fromDate, toDate).size());
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     /**
@@ -79,12 +84,12 @@ public class ReportsActivity extends AppCompatActivity implements
     public void onDateSet(DatePicker view, int year, int month, int day) {
 
         if (isFromDate) {
-            setFromButtonText(year, month, day);
-            fromDate = getFormattedDate(year, month, day);
+            setFromButtonText(year, month+1, day);
+            fromDate = getFormattedDate(year, month+1, day, 0, 0); //From the beginning of the day
         }
         else {
-            setToButtonText(year, month, day);
-            toDate = getFormattedDate(year, month, day);
+            setToButtonText(year, month+1, day);
+            toDate = getFormattedDate(year, month+1, day, 23, 59); //To the end of the day
         }
 
     }
@@ -119,22 +124,28 @@ public class ReportsActivity extends AppCompatActivity implements
      * @param day
      * @return formatted date
      */
-    private int getFormattedDate(int year, int month, int day) {
+    private long getFormattedDate(int year, int month, int day, int hour, int minute) {
         StringBuilder date = new StringBuilder();
 
         date.append(year);
 
         if(month < 10)
             date.append("0");
-
         date.append(month);
 
         if(day < 10)
             date.append("0");
-
         date.append(day);
 
-        return Integer.parseInt(date.toString());
+        if(hour < 10)
+            date.append("0");
+        date.append(hour);
+
+        if(minute < 10)
+            date.append("0");
+        date.append(minute);
+
+        return Long.parseLong(date.toString());
     }
 
 
