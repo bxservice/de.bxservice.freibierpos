@@ -11,10 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.report.Report;
 import de.bxservice.bxpos.logic.model.report.ReportFactory;
 import de.bxservice.bxpos.ui.adapter.ReportTypeListAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
@@ -57,7 +61,7 @@ public class ReportsActivity extends AppCompatActivity implements
         String[] reportTypeValues = getResources().getStringArray(R.array.report_types_values);
 
         ReportFactory reports = new ReportFactory(getBaseContext(), reportTypeNames, reportTypeValues);
-        ReportTypeListAdapter mAdapter = new ReportTypeListAdapter(reports.getReports());
+        final ReportTypeListAdapter mAdapter = new ReportTypeListAdapter(reports.getReports());
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getBaseContext());
@@ -74,6 +78,26 @@ public class ReportsActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 System.out.println("From: " + fromDate + "To: " + toDate);
                 System.out.println(new DataProvider(getBaseContext()).getPaidOrders(fromDate, toDate).size());
+
+                String data = "";
+                ArrayList<Report> stList = ((ReportTypeListAdapter) mAdapter).getReports();
+
+                for (int i = 0; i < stList.size(); i++) {
+                    Report singleStudent = stList.get(i);
+                    if (singleStudent.isSelected() == true) {
+                        singleStudent.setFromDate(fromDate);
+                        singleStudent.setToDate(toDate);
+                        data = data + "\n" + singleStudent.getName().toString();
+
+                        System.out.println(singleStudent.runReport().size());
+
+                    }
+
+                }
+
+                Toast.makeText(ReportsActivity.this,
+                        "Selected Students: \n" + data, Toast.LENGTH_LONG)
+                        .show();
             }
         });
 

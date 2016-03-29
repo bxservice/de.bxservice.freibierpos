@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
@@ -32,8 +34,23 @@ public class ReportTypeListAdapter extends RecyclerView.Adapter<ReportTypeListAd
             reportType = (CheckBox) itemView.findViewById(R.id.checkBox1);
         }
 
-        public void bindTable(Report report) {
+        public void bindTable(final Report report) {
             reportType.setText(report.getName());
+            reportType.setChecked(report.isSelected());
+
+            //in some cases, it will prevent unwanted situations
+            reportType.setOnCheckedChangeListener(null);
+
+            //if true, your checkbox will be selected, else unselected
+            reportType.setChecked(report.isSelected());
+
+            reportType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    //set your object's last status
+                    report.setIsSelected(isChecked);
+                }
+            });
         }
     }
 
@@ -76,6 +93,10 @@ public class ReportTypeListAdapter extends RecyclerView.Adapter<ReportTypeListAd
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public ArrayList<Report> getReports() {
+        return mDataset;
     }
 
 }

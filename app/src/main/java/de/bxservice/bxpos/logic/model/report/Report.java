@@ -14,6 +14,7 @@ public abstract class Report {
     int code;
     long fromDate, toDate;
     Context mContext;
+    boolean isSelected;
 
     public Report(Context mContext) {
         this.mContext = mContext;
@@ -55,5 +56,13 @@ public abstract class Report {
 
     public void setToDate(long toDate) {
         this.toDate = toDate;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

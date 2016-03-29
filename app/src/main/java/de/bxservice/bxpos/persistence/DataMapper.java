@@ -454,4 +454,15 @@ public class DataMapper implements Serializable {
         return tableHelper.isTableFree(table);
     }
 
+    /**
+     * Use for reports
+     * @param fromDate selected initial date
+     * @param toDate   selected final date
+     * @return         array with all the ordering lines void within the time frame
+     */
+    public List<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        return orderLineHelper.getVoidedItems(fromDate, toDate);
+    }
+
 }
