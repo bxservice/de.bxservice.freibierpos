@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.util.List;
 
+import de.bxservice.bxpos.logic.DataProvider;
+
 /**
  * Created by Diego Ruiz on 25/03/16.
  */
@@ -13,8 +15,12 @@ public class TableSalesReport extends Report {
         super(mContext);
     }
 
+    /**
+     * Get paid orders and display them by table afterwards
+     * @return
+     */
     @Override
     public List<?> reportPerformed() {
-        return null;
+        return new DataProvider(mContext).getPaidOrders(fromDate, toDate);
     }
 }

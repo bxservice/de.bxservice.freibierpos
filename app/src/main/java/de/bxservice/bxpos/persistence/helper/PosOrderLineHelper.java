@@ -212,6 +212,51 @@ public class PosOrderLineHelper extends PosObjectHelper {
     }
 
     /**
+     * Used for reports
+     * @param fromDate
+     * @param toDate
+     * @return Array list with all the voided lines within the time frame
+     */
+    public ArrayList<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
+
+        ArrayList<POSOrderLine> lines = new ArrayList<>();
+        StringBuilder selectQuery = new StringBuilder();
+
+        selectQuery.append("SELECT  * FROM ");
+        selectQuery.append(Tables.TABLE_POSORDER_LINE);
+        selectQuery.append(" WHERE ");
+        selectQuery.append(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS);
+        selectQuery.append(" = ? AND ");
+        selectQuery.append(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_UPDATED_AT);
+        selectQuery.append(" BETWEEN ? AND ? ");
+
+        Log.d(LOG_TAG, selectQuery.toString());
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {String.valueOf(POSOrderLine.VOIDED), String.valueOf(fromDate), String.valueOf(toDate)});
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosProductHelper productHelper = new PosProductHelper(mContext);
+            do {
+                POSOrderLine orderLine = new POSOrderLine();
+                orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
+                orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
+                orderLine.setLineNo(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO)));
+                orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
+                orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
+                orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
+                orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
+
+                lines.add(orderLine);
+            } while (c.moveToNext());
+            c.close();
+        }
+
+        return lines;
+    }
+
+    /**
      * Returns the current date in format
      * yyyymmddhhmm
      * @return

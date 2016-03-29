@@ -11,6 +11,7 @@ import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
@@ -63,6 +64,9 @@ public class DataProvider {
         return dataMapper.getPaidOrders(fromDate, toDate);
     }
 
+    public List<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
+        return dataMapper.getVoidedItems(fromDate, toDate);
+    }
 
     public POSOrder getPosOrder(Table table) {
         return dataMapper.getOpenPosOrder(table);
