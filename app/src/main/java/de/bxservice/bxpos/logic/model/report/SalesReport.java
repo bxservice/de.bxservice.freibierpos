@@ -3,6 +3,8 @@ package de.bxservice.bxpos.logic.model.report;
 import android.content.Context;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +41,12 @@ public class SalesReport extends Report {
         if(paidOrders != null) {
 
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            //Here is to remove the € sign because it has problems in HTML
+            DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
+            decimalFormatSymbols.setCurrencySymbol("");
+            ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+
+
             BigDecimal totalSold   = BigDecimal.ZERO;
             BigDecimal totalVoided = BigDecimal.ZERO;
             //TODO add discounted
@@ -56,15 +64,15 @@ public class SalesReport extends Report {
             //TODO: Remove hard coded strings
             //First row Net Sales
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\"> Net Sales: <span style=\"float:right;\">"
-                    + currencyFormat.format(totalSold) + "</span> </p>"));
+                    + currencyFormat.format(totalSold).trim() + " &euro;</span> </p>"));
 
             //Second row Voided items
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\"> Voided Items: <span style=\"float:right;\">"
-                    + currencyFormat.format(totalVoided) +"</span> </p>"));
+                    + currencyFormat.format(totalVoided).trim() +" &euro;</span> </p>"));
 
             //Total line
             htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"float:right;\">"
-                    + currencyFormat.format(totalSold.subtract(totalVoided)) + "</span> </p>"));
+                    + currencyFormat.format(totalSold.subtract(totalVoided)).trim() + " &euro; </span> </p>"));
 
         }
         else {
