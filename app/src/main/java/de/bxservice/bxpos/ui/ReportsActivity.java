@@ -204,5 +204,5 @@ public class ReportsActivity extends AppCompatActivity implements
         intent.putExtra("results", reportResults);
         startActivity(intent);
     }
-    
+
 }
