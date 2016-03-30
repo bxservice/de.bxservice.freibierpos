@@ -175,6 +175,7 @@
     <string name="wrong_password">Wrong password</string>
     <string name="from_date">From: %1$s</string>
     <string name="To_date">To: %1$s</string>
+    <string name="no_report_selected">You must select at least one report type</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

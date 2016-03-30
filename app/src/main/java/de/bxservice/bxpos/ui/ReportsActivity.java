@@ -1,6 +1,7 @@
 package de.bxservice.bxpos.ui;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.report.Report;
 import de.bxservice.bxpos.logic.model.report.ReportFactory;
 import de.bxservice.bxpos.ui.adapter.ReportTypeListAdapter;
@@ -34,6 +34,9 @@ public class ReportsActivity extends AppCompatActivity implements
     //The dates will are stored as int in yyyymmdd format
     private long fromDate, toDate;
     private boolean isFromDate;
+
+    //Components to call the result activity
+    private ArrayList<String> reportResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,28 +79,28 @@ public class ReportsActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("From: " + fromDate + "To: " + toDate);
-                System.out.println(new DataProvider(getBaseContext()).getPaidOrders(fromDate, toDate).size());
 
-                String data = "";
-                ArrayList<Report> stList = ((ReportTypeListAdapter) mAdapter).getReports();
+                boolean someSelected = false; //Check if there has been at least one selected
+                ArrayList<Report> selectedReports = mAdapter.getReports();
+                reportResults = new ArrayList<>();
 
-                for (int i = 0; i < stList.size(); i++) {
-                    Report singleStudent = stList.get(i);
-                    if (singleStudent.isSelected() == true) {
-                        singleStudent.setFromDate(fromDate);
-                        singleStudent.setToDate(toDate);
-                        data = data + "\n" + singleStudent.getName().toString();
+                for (Report report : selectedReports) {
 
-                        System.out.println(singleStudent.runReport().size());
-
+                    if (report.isSelected()) {
+                        someSelected = true;
+                        report.setFromDate(fromDate);
+                        report.setToDate(toDate);
+                        report.runReport();
+                        reportResults.add(report.getHtmlResult().toString());
                     }
-
                 }
 
-                Toast.makeText(ReportsActivity.this,
-                        "Selected Students: \n" + data, Toast.LENGTH_LONG)
-                        .show();
+                if (!someSelected)
+                    Toast.makeText(ReportsActivity.this,
+                            getString(R.string.no_report_selected), Toast.LENGTH_LONG)
+                            .show();
+                else
+                    startPrintResultActivity();
             }
         });
 
@@ -196,5 +199,10 @@ public class ReportsActivity extends AppCompatActivity implements
         return Long.parseLong(date.toString());
     }
 
-
+    private void startPrintResultActivity() {
+        Intent intent = new Intent(this, ReportResultActivity.class);
+        intent.putExtra("results", reportResults);
+        startActivity(intent);
+    }
+    
 }

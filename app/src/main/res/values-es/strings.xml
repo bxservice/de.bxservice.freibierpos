@@ -172,6 +172,7 @@
     <string name="wrong_password">Contraseña incorrecta</string>
     <string name="from_date">Desde: %1$s</string>
     <string name="to_date">Hasta: %1$s</string>
+    <string name="no_report_selected">Debe seleccionar por lo menos un tipo de reporte</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

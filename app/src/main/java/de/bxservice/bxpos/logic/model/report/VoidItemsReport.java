@@ -16,7 +16,7 @@ public class VoidItemsReport extends Report {
     }
 
     @Override
-    public List<?> reportPerformed() {
-        return new DataProvider(mContext).getVoidedItems(fromDate, toDate);
+    public void performReport() {
+        new DataProvider(mContext).getVoidedItems(fromDate, toDate);
     }
 }
