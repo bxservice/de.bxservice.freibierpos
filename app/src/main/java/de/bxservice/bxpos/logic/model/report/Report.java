@@ -2,7 +2,6 @@ package de.bxservice.bxpos.logic.model.report;
 
 import android.content.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,16 +14,18 @@ public abstract class Report {
     long fromDate, toDate;
     Context mContext;
     boolean isSelected;
+    StringBuilder htmlResult;
 
     public Report(Context mContext) {
         this.mContext = mContext;
+        htmlResult = new StringBuilder();
     }
 
-    public List<?> runReport() {
-        return reportPerformed();
+    public void runReport() {
+        performReport();
     }
 
-    public abstract List<?> reportPerformed();
+    public abstract void performReport();
 
     public int getCode() {
         return code;
@@ -64,5 +65,13 @@ public abstract class Report {
 
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    public StringBuilder getHtmlResult() {
+        return htmlResult;
+    }
+
+    public void setHtmlResult(StringBuilder htmlResult) {
+        this.htmlResult = htmlResult;
     }
 }

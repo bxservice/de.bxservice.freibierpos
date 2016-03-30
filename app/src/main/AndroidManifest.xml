@@ -104,6 +104,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.bxservice.bxpos.ui.MainActivity" />
         </activity>
+        <activity android:name=".ui.ReportResultActivity"></activity>
     </application>
 
 </manifest>

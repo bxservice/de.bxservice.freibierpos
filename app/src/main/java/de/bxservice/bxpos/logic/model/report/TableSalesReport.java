@@ -20,7 +20,7 @@ public class TableSalesReport extends Report {
      * @return
      */
     @Override
-    public List<?> reportPerformed() {
-        return new DataProvider(mContext).getPaidOrders(fromDate, toDate);
+    public void performReport() {
+        new DataProvider(mContext).getPaidOrders(fromDate, toDate);
     }
 }
