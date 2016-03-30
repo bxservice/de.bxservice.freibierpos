@@ -38,7 +38,6 @@ public class ReportResultActivity extends AppCompatActivity {
 
     /**
      * Get extras from the previous activity
-     * - Order
      */
     private void getExtras() {
 

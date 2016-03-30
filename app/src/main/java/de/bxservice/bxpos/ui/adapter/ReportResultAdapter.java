@@ -5,6 +5,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,16 +20,17 @@ public class ReportResultAdapter extends RecyclerView.Adapter<ReportResultAdapte
     private ArrayList<String> mDataset;
     public static class ReportResultViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView txtResult;
+        public WebView txtResult;
 
         public ReportResultViewHolder(View v) {
             super(v);
 
-            txtResult = (TextView) itemView.findViewById(R.id.result);
+            txtResult = (WebView) itemView.findViewById(R.id.result);
         }
 
         public void bindTable(String result) {
-            txtResult.setText(Html.fromHtml(result));
+            //txtResult.setText(Html.fromHtml(result));
+            txtResult.loadData(result, "text/html", null);
         }
     }
 
