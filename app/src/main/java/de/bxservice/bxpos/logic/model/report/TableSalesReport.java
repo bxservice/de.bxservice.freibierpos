@@ -51,7 +51,7 @@ public class TableSalesReport extends Report {
             BigDecimal totalVoided = BigDecimal.ZERO;
             int totalQty = 0;
 
-            String tableContent = htmlTemplate.getHtmlTable(tableSalesOrders.size());
+            String tableContent = htmlTemplate.getHtmlTable(tableSalesOrders.size() + 1);
 
             int i = 0;
             for(ReportGenericObject genericObject : tableSalesOrders) {
