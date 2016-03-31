@@ -470,13 +470,15 @@ public class POSOrder implements Serializable {
 
         updateOrder(ctx);
 
-        // Free the table of the merged order
-        if (originOrder.getTable() != null) {
-            originOrder.getTable().freeTable(ctx);
-        }
+        Table originTable = originOrder.getTable();
 
         //Delete the merged order from the db
         originOrder.remove(ctx);
+
+        // Free the table of the merged order
+        if (originTable != null) {
+            originTable.freeTable(ctx);
+        }
     }
 
     /**

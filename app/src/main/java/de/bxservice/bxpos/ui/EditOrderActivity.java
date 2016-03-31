@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
@@ -384,12 +385,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onDialogPositiveClick(SwitchTableDialogFragment dialog) {
 
         if (dialog.getTable() != null) {
-            //If table exists - free it up
-            if(order.getTable() != null)
-                order.getTable().freeTable(getBaseContext());
+
+            Table originalTable = order.getTable();
             order.setTable(dialog.getTable());
             order.getTable().occupyTable(getBaseContext());
             order.updateOrder(getBaseContext());
+
+            //If table exists - free it up
+            if(originalTable != null)
+                originalTable.freeTable(getBaseContext());
+
             orderChanged = true;
         }
     }
