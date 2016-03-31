@@ -471,4 +471,9 @@ public class DataMapper implements Serializable {
         return orderLineHelper.getVoidedReportRows(fromDate, toDate);
     }
 
+    public List<ReportGenericObject> getTableSalesReportRows(long fromDate, long toDate) {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getTableSalesReportRows(fromDate, toDate);
+    }
+
 }

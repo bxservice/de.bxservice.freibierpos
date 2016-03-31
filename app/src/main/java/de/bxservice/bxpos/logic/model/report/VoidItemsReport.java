@@ -9,8 +9,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
-import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
  * Created by Diego Ruiz on 25/03/16.
@@ -48,22 +48,35 @@ public class VoidItemsReport extends Report {
             BigDecimal totalVoided = BigDecimal.ZERO;
             int totalQty = 0;
 
-            for(ReportGenericObject o : voidedLines) {
-                totalVoided = totalVoided.add(o.getAmount());
-                totalQty = totalQty + Integer.parseInt(o.getQuantity());
+            String tableContent = htmlTemplate.getHtmlTable(voidedLines.size());
 
-                htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\">" + o.getDescription() + //left
-                        "<span style=\"text-align:center;\"> " + o.getQuantity() + //Center
-                        "<span style=\"text-align:right;\"> " + currencyFormat.format(o.getAmount()).trim() + " &euro;</span> </p>"));//Right
+            int i = 0;
+            for(ReportGenericObject genericObject : voidedLines) {
+                totalVoided = totalVoided.add(genericObject.getAmount());
+                totalQty = totalQty + Integer.parseInt(genericObject.getQuantity());
+
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getDescription());
+                i = i+1;
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getQuantity());
+                i = i+1;
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim());
+                i = i+1;
+
+                /*htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:center;\">" +
+                                        "<span style=\"float:left;\">"  + genericObject.getDescription()  + "</span>"
+                        + genericObject.getQuantity() +
+                        "<span style=\"float:right;\"> " + currencyFormat.format(genericObject.getAmount()).trim() + " &euro;</span> </p>"));//Right*/
             }
 
+            htmlResult.append(tableContent);
+
             //Total line
-            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"text-align:center;\"> " + String.valueOf(totalQty) + //Center
-                    "<span style=\"text-align:right;\"> " + currencyFormat.format(totalVoided).trim() + " &euro;</span> </p>"));//Right
+            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"text-align:center;\"> " + String.valueOf(totalQty) + "</span>" + //Center
+                    "<span style=\"float:right;\"> " + currencyFormat.format(totalVoided).trim() + " &euro;</span> </p>"));//Right
 
         }
         else {
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "No records"));
+            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
         }
 
     }

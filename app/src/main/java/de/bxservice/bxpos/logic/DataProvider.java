@@ -73,6 +73,10 @@ public class DataProvider {
         return dataMapper.getVoidedReportRows(fromDate, toDate);
     }
 
+    public List<ReportGenericObject> getTableSalesReportRows(long fromDate, long toDate) {
+        return dataMapper.getTableSalesReportRows(fromDate, toDate);
+    }
+
     public POSOrder getPosOrder(Table table) {
         return dataMapper.getOpenPosOrder(table);
     }

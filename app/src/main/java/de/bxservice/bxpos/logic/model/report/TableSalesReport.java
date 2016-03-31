@@ -6,20 +6,18 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
-import de.bxservice.bxpos.logic.model.pos.POSOrder;
-import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
  * Created by Diego Ruiz on 25/03/16.
  */
 public class TableSalesReport extends Report {
 
-    private List<POSOrder> paidOrders;
+    private List<ReportGenericObject> tableSalesOrders;
     private ReportHtmlTemplate htmlTemplate;
 
     public TableSalesReport(Context mContext) {
@@ -33,7 +31,7 @@ public class TableSalesReport extends Report {
      */
     @Override
     public void performReport() {
-        paidOrders = new DataProvider(mContext).getPaidOrders(fromDate, toDate);
+        tableSalesOrders = new DataProvider(mContext).getTableSalesReportRows(fromDate, toDate);
         setReportResult();
     }
 
@@ -43,44 +41,45 @@ public class TableSalesReport extends Report {
     private void setReportResult() {
 
         htmlResult.append(htmlTemplate.getHtmlTemplate().replace(ReportHtmlTemplate.TITLE_TAG, name));
-        if(paidOrders != null) {
-            /*
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        if(tableSalesOrders != null && !tableSalesOrders.isEmpty()) {
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
             //Here is to remove the € sign because it has problems in HTML
             DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
             decimalFormatSymbols.setCurrencySymbol("");
             ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
 
+            BigDecimal totalVoided = BigDecimal.ZERO;
+            int totalQty = 0;
 
-            BigDecimal amountTotal = BigDecimal.ZERO;
-            BigDecimal qtyTotal    = BigDecimal.ZERO;
+            String tableContent = htmlTemplate.getHtmlTable(tableSalesOrders.size());
 
-            for(POSOrder order : paidOrders) {
-                totalSold = totalSold.add(order.getTotallines());
+            int i = 0;
+            for(ReportGenericObject genericObject : tableSalesOrders) {
+                totalVoided = totalVoided.add(genericObject.getAmount());
+                totalQty = totalQty + Integer.parseInt(genericObject.getQuantity());
 
-                for (POSOrderLine orderLine : order.getOrderedLines()) {
-                    if(orderLine.getLineStatus().equals(POSOrderLine.VOIDED))
-                        totalVoided = totalVoided.add(orderLine.getLineNetAmt());
-                }
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getDescription());
+                i = i+1;
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getQuantity());
+                i = i+1;
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim());
+                i = i+1;
 
+                /*htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:center;\">" +
+                                        "<span style=\"float:left;\">"  + genericObject.getDescription()  + "</span>"
+                        + genericObject.getQuantity() +
+                        "<span style=\"float:right;\"> " + currencyFormat.format(genericObject.getAmount()).trim() + " &euro;</span> </p>"));//Right*/
             }
 
-            //TODO: Remove hard coded strings
-            //First row Net Sales
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\"> Net Sales: <span style=\"float:right;\">"
-                    + currencyFormat.format(totalSold).trim() + " &euro;</span> </p>"));
-
-            //Second row Voided items
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\"> Voided Items: <span style=\"float:right;\">"
-                    + currencyFormat.format(totalVoided).trim() +" &euro;</span> </p>"));
+            htmlResult.append(tableContent);
 
             //Total line
-            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"float:right;\">"
-                    + currencyFormat.format(totalSold.subtract(totalVoided)).trim() + " &euro; </span> </p>"));*/
+            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"text-align:center;\"> " + String.valueOf(totalQty) + "</span>" + //Center
+                    "<span style=\"float:right;\"> " + currencyFormat.format(totalVoided).trim() + " &euro;</span> </p>"));//Right
 
         }
         else {
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "No records"));
+            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
         }
 
     }
