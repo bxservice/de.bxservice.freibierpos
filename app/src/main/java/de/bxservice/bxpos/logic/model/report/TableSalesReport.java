@@ -64,19 +64,17 @@ public class TableSalesReport extends Report {
                 i = i+1;
                 tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim());
                 i = i+1;
-
-                /*htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:center;\">" +
-                                        "<span style=\"float:left;\">"  + genericObject.getDescription()  + "</span>"
-                        + genericObject.getQuantity() +
-                        "<span style=\"float:right;\"> " + currencyFormat.format(genericObject.getAmount()).trim() + " &euro;</span> </p>"));//Right*/
             }
 
+            //Total row
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, mContext.getString(R.string.total));
+            i = i+1;
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, String.valueOf(totalQty));
+            i = i+1;
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(totalVoided).trim());
+            i = i+1;
+
             htmlResult.append(tableContent);
-
-            //Total line
-            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"text-align:center;\"> " + String.valueOf(totalQty) + "</span>" + //Center
-                    "<span style=\"float:right;\"> " + currencyFormat.format(totalVoided).trim() + " &euro;</span> </p>"));//Right
-
         }
         else {
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
