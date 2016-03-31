@@ -79,9 +79,5 @@ public class SalesReport extends Report {
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "No records"));
         }
 
-
     }
-
-
-
 }

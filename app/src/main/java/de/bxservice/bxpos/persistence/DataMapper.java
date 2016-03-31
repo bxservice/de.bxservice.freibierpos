@@ -15,6 +15,7 @@ import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
+import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
@@ -463,6 +464,11 @@ public class DataMapper implements Serializable {
     public List<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
         return orderLineHelper.getVoidedItems(fromDate, toDate);
+    }
+
+    public List<ReportGenericObject> getVoidedReportRows(long fromDate, long toDate) {
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        return orderLineHelper.getVoidedReportRows(fromDate, toDate);
     }
 
 }
