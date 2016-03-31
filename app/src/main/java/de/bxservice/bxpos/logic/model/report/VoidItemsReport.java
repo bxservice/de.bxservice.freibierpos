@@ -59,7 +59,7 @@ public class VoidItemsReport extends Report {
                 i = i+1;
                 tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getQuantity());
                 i = i+1;
-                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim());
+                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim() + " &euro;");
                 i = i+1;
             }
 
@@ -68,7 +68,7 @@ public class VoidItemsReport extends Report {
             i = i+1;
             tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, String.valueOf(totalQty));
             i = i+1;
-            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(totalVoided).trim());
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(totalVoided).trim() + " &euro;");
             i = i+1;
 
             htmlResult.append(tableContent);
