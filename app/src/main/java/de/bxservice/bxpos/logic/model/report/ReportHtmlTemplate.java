@@ -25,6 +25,30 @@ public class ReportHtmlTemplate {
         return "<p>"+ ROW_TAG +"</p>";
     }
 
+    /**
+     * Get table with three columns
+     * @return
+     */
+    public String getHtmlTable(int numberOfRows) {
+        StringBuilder htmlTable = new StringBuilder();
+        htmlTable.append("<table style=\"width:100%\" border=\"0\">"); //No border
+
+        int j=0;
+        for (int i=0; i<numberOfRows; i++) {
+            htmlTable.append("<tr>");
+
+            htmlTable.append("<td align=\"left\">" + ROW_TAG + j++ + "</td>");
+            htmlTable.append("<td align=\"center\">" + ROW_TAG + j++ + "</td>");
+            htmlTable.append("<td align=\"right\">" + ROW_TAG + j++ + "</td>");
+
+            htmlTable.append("</tr>");
+        }
+
+        htmlTable.append("</table>");
+
+        return htmlTable.toString();
+    }
+
     public String getTotalLine(Context ctx) {
         String totalLine = ctx.getResources().getString(R.string.total);
         return "<p><b>" + totalLine +"</b>" + ROW_TAG + "</p>";

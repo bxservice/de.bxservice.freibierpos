@@ -9,6 +9,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -76,7 +77,7 @@ public class SalesReport extends Report {
 
         }
         else {
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "No records"));
+            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
         }
 
     }

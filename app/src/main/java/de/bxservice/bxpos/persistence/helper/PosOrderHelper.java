@@ -12,6 +12,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -319,6 +320,58 @@ public class PosOrderHelper extends PosObjectHelper {
                 orders.add(order);
             } while (c.moveToNext());
 
+            c.close();
+        }
+
+        return orders;
+    }
+
+    /**
+     * Get all paid orders within a time frame
+     * group by tables
+     * @param fromDate
+     * @param toDate
+     * @return
+     */
+    public ArrayList<ReportGenericObject> getTableSalesReportRows(long fromDate, long toDate) {
+
+        ArrayList<ReportGenericObject> orders = new ArrayList<>();
+        StringBuilder selectQuery = new StringBuilder();
+
+        selectQuery.append("SELECT ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + ",");
+        selectQuery.append("COUNT(" + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + "), ");
+        selectQuery.append("SUM(" + PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES + ") ");
+        selectQuery.append("FROM ");
+        selectQuery.append(Tables.TABLE_POSORDER);
+        selectQuery.append(" WHERE ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS);
+        selectQuery.append(" = ? AND ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID);
+        selectQuery.append(" NOT NULL AND ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT);
+        selectQuery.append(" BETWEEN ? AND ? ");
+        selectQuery.append("GROUP BY " + PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID);
+
+        Log.d(LOG_TAG, selectQuery.toString());
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), String.valueOf(fromDate), String.valueOf(toDate)});
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosTableHelper tableHelper = new PosTableHelper(mContext);
+            do {
+                ReportGenericObject reportObject = new ReportGenericObject();
+
+                if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
+                        c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
+                    reportObject.setDescription(tableHelper.getTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID))).getTableName());
+                reportObject.setQuantity(String.valueOf(c.getInt(1))); //SUM Qty
+                reportObject.setAmount(c.getInt(2));//SUM Amount
+
+                orders.add(reportObject);
+            } while (c.moveToNext());
             c.close();
         }
 
