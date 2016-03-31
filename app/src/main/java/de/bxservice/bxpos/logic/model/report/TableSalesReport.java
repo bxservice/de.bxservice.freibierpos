@@ -72,7 +72,6 @@ public class TableSalesReport extends Report {
             tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, String.valueOf(totalQty));
             i = i+1;
             tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(totalVoided).trim()  + " &euro;");
-            i = i+1;
 
             htmlResult.append(tableContent);
         }
