@@ -17,7 +17,7 @@ public class ReportHtmlTemplate {
 
     public String getHtmlTemplate() {
         htmlTemplate = new StringBuilder();
-        htmlTemplate.append("<h4 align=\"center\">"+ TITLE_TAG +"</h4>"); //Title
+        htmlTemplate.append("<h4 align=\"center\"><u>"+ TITLE_TAG +"</u></h4>"); //Title
         return htmlTemplate.toString();
     }
 

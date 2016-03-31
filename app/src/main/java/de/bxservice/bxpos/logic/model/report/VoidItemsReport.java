@@ -48,7 +48,7 @@ public class VoidItemsReport extends Report {
             BigDecimal totalVoided = BigDecimal.ZERO;
             int totalQty = 0;
 
-            String tableContent = htmlTemplate.getHtmlTable(voidedLines.size());
+            String tableContent = htmlTemplate.getHtmlTable(voidedLines.size()+1);
 
             int i = 0;
             for(ReportGenericObject genericObject : voidedLines) {
@@ -61,18 +61,17 @@ public class VoidItemsReport extends Report {
                 i = i+1;
                 tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim());
                 i = i+1;
-
-                /*htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:center;\">" +
-                                        "<span style=\"float:left;\">"  + genericObject.getDescription()  + "</span>"
-                        + genericObject.getQuantity() +
-                        "<span style=\"float:right;\"> " + currencyFormat.format(genericObject.getAmount()).trim() + " &euro;</span> </p>"));//Right*/
             }
 
-            htmlResult.append(tableContent);
+            //Total row
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, mContext.getString(R.string.total));
+            i = i+1;
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, String.valueOf(totalQty));
+            i = i+1;
+            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(totalVoided).trim());
+            i = i+1;
 
-            //Total line
-            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"text-align:center;\"> " + String.valueOf(totalQty) + "</span>" + //Center
-                    "<span style=\"float:right;\"> " + currencyFormat.format(totalVoided).trim() + " &euro;</span> </p>"));//Right
+            htmlResult.append(tableContent);
 
         }
         else {
