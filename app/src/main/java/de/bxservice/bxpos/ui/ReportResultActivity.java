@@ -13,6 +13,7 @@ import java.util.List;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.ui.adapter.OrderingLineAdapter;
 import de.bxservice.bxpos.ui.adapter.ReportResultAdapter;
+import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
 public class ReportResultActivity extends AppCompatActivity {
 
@@ -33,6 +34,8 @@ public class ReportResultActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getBaseContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
+
 
         ReportResultAdapter mGridAdapter = new ReportResultAdapter(reportResults);
 
