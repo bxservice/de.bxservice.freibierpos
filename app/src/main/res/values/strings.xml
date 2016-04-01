@@ -179,6 +179,7 @@
     <string name="no_records">No records</string>
     <string name="net_sales">Net sales</string>
     <string name="voided_items">Voided items</string>
+    <string name="sales">Sales</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

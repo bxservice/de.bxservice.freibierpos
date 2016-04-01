@@ -400,7 +400,7 @@ public class POSOrder implements Serializable {
 
         return total;
     }
-    
+
     /**
      * Gets an integer value from the db and converts it to a BigDecimal
      * last two digits are decimals

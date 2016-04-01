@@ -176,6 +176,7 @@
     <string name="no_records">No hay registros</string>
     <string name="net_sales">Ventas netas</string>
     <string name="voided_items">Items anulados</string>
+    <string name="sales">Ventas</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
