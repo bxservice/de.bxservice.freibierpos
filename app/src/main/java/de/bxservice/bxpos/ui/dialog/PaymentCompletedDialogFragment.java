@@ -29,7 +29,7 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    PaymentCompletedListener mListener;
+    private PaymentCompletedListener mListener;
 
     private BigDecimal total = BigDecimal.ZERO;
     private BigDecimal paidAmount = BigDecimal.ZERO;

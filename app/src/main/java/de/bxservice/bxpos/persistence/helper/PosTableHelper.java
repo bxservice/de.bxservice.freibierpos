@@ -21,7 +21,7 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosTableHelper extends PosObjectHelper {
 
-    static final String LOG_TAG = "Table Helper";
+    private static final String LOG_TAG = "Table Helper";
 
     public PosTableHelper(Context mContext) {
         super(mContext);
@@ -185,10 +185,7 @@ public class PosTableHelper extends PosObjectHelper {
         c.close();
 
         //If there is at least 1 order in the table -> table is occupied
-        if (orders > 0)
-            return false;
-        else
-            return true;
+        return orders <= 0;
     }
 
 }

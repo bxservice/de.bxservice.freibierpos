@@ -25,8 +25,7 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryProductPrice";
 
-    QueryDataRequest ws = new QueryDataRequest();
-    List<ProductPrice> productPriceList;
+    private List<ProductPrice> productPriceList;
 
     @Override
     public String getServiceType() {

@@ -26,7 +26,7 @@ public class KitchenNoteDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    KitchenDialogListener mListener;
+    private KitchenDialogListener mListener;
     private String note = "";
     private POSOrderLine orderLine;
 

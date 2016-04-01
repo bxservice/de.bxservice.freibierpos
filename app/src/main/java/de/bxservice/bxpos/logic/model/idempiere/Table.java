@@ -14,7 +14,7 @@ public class Table implements Serializable {
     //Table status
     public static final String FREE_STATUS     = "FREE";
     public static final String BUSY_STATUS     = "BUSY";
-    public static final String RESERVED_STATUS = "RESERVED";
+    private static final String RESERVED_STATUS = "RESERVED";
 
     public static final String BAY_Table_ID = "BAY_Table_ID";
 

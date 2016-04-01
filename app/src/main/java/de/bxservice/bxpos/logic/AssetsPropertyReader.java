@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 public class AssetsPropertyReader {
 
-    static final String LOG_TAG = "AssetsPropertyReader";
+    private static final String LOG_TAG = "AssetsPropertyReader";
 
     private Context context;
     private Properties properties;

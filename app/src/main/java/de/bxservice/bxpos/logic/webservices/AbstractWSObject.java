@@ -6,14 +6,14 @@ import org.idempiere.webservice.client.net.WebServiceClient;
 /**
  * Created by Diego Ruiz on 4/11/15.
  */
-public abstract class AbstractWSObject {
+abstract class AbstractWSObject {
 
     private LoginRequest login;
     private WebServiceClient client;
     private WebServiceRequestData wsData;
     private Object parameter;
 
-    public AbstractWSObject() {
+    protected AbstractWSObject() {
 
         wsData = WebServiceRequestData.getInstance();
 
@@ -37,7 +37,7 @@ public abstract class AbstractWSObject {
 
     }
 
-    public void initLogin(){
+    private void initLogin(){
         login = new LoginRequest();
 
         login.setUser(wsData.getUsername());
@@ -48,7 +48,7 @@ public abstract class AbstractWSObject {
         login.setWarehouseID(Integer.parseInt(wsData.getWarehouseId()));
     }
 
-    public void initClient(){
+    private void initClient(){
         client = new WebServiceClient();
 
         client.setAttempts(Integer.parseInt(wsData.getAttemptsNo()));
@@ -58,15 +58,15 @@ public abstract class AbstractWSObject {
         client.setUserAgentProduct("Android Test WS Client");
     }
 
-    public LoginRequest getLogin() {
+    protected LoginRequest getLogin() {
         return login;
     }
 
-    public WebServiceClient getClient() {
+    protected WebServiceClient getClient() {
         return client;
     }
 
-    public void runWebService() {
+    private void runWebService() {
         queryPerformed();
         /*saveRequestResponse();
         printTotal();
@@ -75,13 +75,13 @@ public abstract class AbstractWSObject {
 
     public abstract String getServiceType();
 
-    public abstract void queryPerformed();
+    protected abstract void queryPerformed();
 
-    public void setParameter(Object parameter) {
+    private void setParameter(Object parameter) {
         this.parameter = parameter;
     }
 
-    public Object getParameter() {
+    protected Object getParameter() {
         return parameter;
     }
 

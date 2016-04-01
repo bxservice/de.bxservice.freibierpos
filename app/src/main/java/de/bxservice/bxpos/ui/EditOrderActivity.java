@@ -64,7 +64,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private EditPagerAdapter mEditPagerAdapter;
 
-    static final String ORDER_STATE = "orderState";
+    private static final String ORDER_STATE = "orderState";
     public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";

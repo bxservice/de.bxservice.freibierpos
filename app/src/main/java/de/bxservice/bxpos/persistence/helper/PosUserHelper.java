@@ -15,7 +15,7 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosUserHelper extends PosObjectHelper {
 
-    static final String LOG_TAG = "User Helper";
+    private static final String LOG_TAG = "User Helper";
 
     public PosUserHelper(Context mContext) {
         super(mContext);

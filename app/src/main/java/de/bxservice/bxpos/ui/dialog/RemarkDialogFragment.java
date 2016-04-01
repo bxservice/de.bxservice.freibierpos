@@ -25,7 +25,7 @@ public class RemarkDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    RemarkDialogListener mListener;
+    private RemarkDialogListener mListener;
     private String note = "";
 
 

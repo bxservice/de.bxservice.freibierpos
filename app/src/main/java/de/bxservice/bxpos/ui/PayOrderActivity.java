@@ -39,7 +39,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         SurchargeDialogFragment.CourtesyDialogListener, DiscountDialogFragment.DiscountDialogListener,
         PaymentCompletedDialogFragment.PaymentCompletedListener, View.OnLongClickListener {
 
-    static final String LOG_TAG = "Pay Order Activity";
+    private static final String LOG_TAG = "Pay Order Activity";
 
     private POSOrder order;
 
@@ -104,7 +104,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         mProgressView = findViewById(R.id.pay_progress);
     }
 
-    public void initAmounts() {
+    private void initAmounts() {
         subtotal = order.getTotallines();
         surcharge = BigDecimal.ZERO;
         discount = BigDecimal.ZERO;
@@ -118,7 +118,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * Get extras from the previous activity
      * - Order
      */
-    public void getExtras() {
+    private void getExtras() {
         Intent intent = getIntent();
 
         if(intent != null) {
@@ -191,7 +191,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * Fill the parameters of the payment display
      * with the info of the order
      */
-    public void fillPaymentDisplay() {
+    private void fillPaymentDisplay() {
 
         subTotalTextView.setText(getSubtotalText());
         surchargeTextView.setText(getSurchargeText());
@@ -207,7 +207,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * of the order
      * @return
      */
-    public String getSubtotalText() {
+    private String getSubtotalText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.subtotal_value, currencyFormat.format(subtotal));
@@ -218,7 +218,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * to pay
      * @return
      */
-    public String getAmountToPayText() {
+    private String getAmountToPayText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.to_pay, currencyFormat.format(getAmountToPay()));
@@ -229,7 +229,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * of the order
      * @return
      */
-    public String getSurchargeText() {
+    private String getSurchargeText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.surcharge_value, currencyFormat.format(surcharge));
@@ -240,7 +240,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * of the order
      * @return
      */
-    public String getDiscountText() {
+    private String getDiscountText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.discount_value, currencyFormat.format(discount.negate()));
@@ -251,7 +251,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * that has to be given back to the customer
      * @return
      */
-    public String getChangeText() {
+    private String getChangeText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.change_value, currencyFormat.format(getChange()));
@@ -262,7 +262,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * that has to be given back to the customer
      * @return
      */
-    public String getPaidAmountText() {
+    private String getPaidAmountText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.paid_value, currencyFormat.format(paidAmount));
@@ -288,7 +288,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         this.paidAmount = paidAmount;
     }
 
-    public BigDecimal getChange() {
+    private BigDecimal getChange() {
         changeAmount = total.subtract(paidAmount);
         changeAmount = changeAmount.subtract(amountToPay);
         return changeAmount.negate();
@@ -311,19 +311,19 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * of the order
      * @return
      */
-    public String getTotalText() {
+    private String getTotalText() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
         return getString(R.string.total_value, currencyFormat.format(getTotal()));
     }
 
-    public BigDecimal getTotal() {
+    private BigDecimal getTotal() {
         total = subtotal.add(surcharge);
         total = total.subtract(discount);
         return total;
     }
 
-    public BigDecimal getAmountToPay() {
+    private BigDecimal getAmountToPay() {
         if(payAmount.toString().equals(""))
             amountToPay = BigDecimal.ZERO;
         else {
@@ -392,32 +392,32 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         updateDiscountField();
     }
 
-    public void updateSurchargeField() {
+    private void updateSurchargeField() {
         surchargeTextView.setText(getSurchargeText());
         updateTotalField();
     }
 
-    public void updateTotalField() {
+    private void updateTotalField() {
         totalTextView.setText(getTotalText());
         updateChangeField();
     }
 
-    public void updateDiscountField() {
+    private void updateDiscountField() {
         discountTextView.setText(getDiscountText());
         updateTotalField();
     }
 
-    public void updatePayField() {
+    private void updatePayField() {
         payTextView.setText(getAmountToPayText());
         updateChangeField();
     }
 
-    public void updatePaidField() {
+    private void updatePaidField() {
         paidTextView.setText(getPaidAmountText());
         updateChangeField();
     }
 
-    public void updateChangeField() {
+    private void updateChangeField() {
         changeTextView.setText(getChangeText());
     }
 

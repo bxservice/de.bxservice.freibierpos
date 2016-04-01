@@ -15,7 +15,7 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosDefaultDataHelper extends PosObjectHelper {
 
-    static final String LOG_TAG = "Default data Helper";
+    private static final String LOG_TAG = "Default data Helper";
 
     public PosDefaultDataHelper(Context mContext) {
         super(mContext);

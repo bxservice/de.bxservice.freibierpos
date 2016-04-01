@@ -23,7 +23,7 @@ import de.bxservice.bxpos.ui.adapter.GridOpenOrderViewAdapter;
 
 public class ViewOpenOrdersActivity extends AppCompatActivity {
 
-    static final int EDIT_ORDER_REQUEST = 2;  // The request code
+    private static final int EDIT_ORDER_REQUEST = 2;  // The request code
 
     private GridView gridview;
     private ArrayList<OpenOrderGridItem> mGridData;

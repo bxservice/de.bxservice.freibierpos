@@ -58,7 +58,7 @@ public class DiscountDialogFragment extends DialogFragment {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
 
-        subTotalLabel.setText(getString(R.string.subtotal_value, currencyFormat.format(getSubtotal())));
+        subTotalLabel.setText(getString(R.string.subtotal_value, currencyFormat.format(subtotal)));
 
         final EditText discountPercentText = (EditText) view.findViewById(R.id.discount_percent);
         final EditText discountAmountText = (EditText) view.findViewById(R.id.discount_amount);
@@ -161,10 +161,6 @@ public class DiscountDialogFragment extends DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement DiscountDialogListener");
         }
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
     }
 
     public void setSubtotal(BigDecimal subtotal) {

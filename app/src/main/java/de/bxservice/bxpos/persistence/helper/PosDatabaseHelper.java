@@ -185,7 +185,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "SELECT " + MetaColumns.BUILD + " FROM " + Tables.TABLE_META_INDEX + " LIMIT 1;";
 
 
-    public PosDatabaseHelper(Context context) {
+    private PosDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
