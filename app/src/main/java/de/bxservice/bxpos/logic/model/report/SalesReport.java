@@ -47,10 +47,11 @@ public class SalesReport extends Report {
             decimalFormatSymbols.setCurrencySymbol("");
             ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
 
-
             BigDecimal totalSold   = BigDecimal.ZERO;
             BigDecimal totalVoided = BigDecimal.ZERO;
             //TODO add discounted
+
+            htmlResult.append(htmlTemplate.getHtmlTableHeader());
 
             for(POSOrder order : paidOrders) {
                 totalSold = totalSold.add(order.getTotallines());
@@ -59,22 +60,29 @@ public class SalesReport extends Report {
                     if(orderLine.getLineStatus().equals(POSOrderLine.VOIDED))
                         totalVoided = totalVoided.add(orderLine.getLineNetAmt());
                 }
-
             }
 
-            //TODO: Remove hard coded strings
-            //First row Net Sales
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\"> Net Sales: <span style=\"float:right;\">"
-                    + currencyFormat.format(totalSold).trim() + " &euro;</span> </p>"));
+            //Net sales row
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.net_sales)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
 
-            //Second row Voided items
-            htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, "<p style=\"text-align:left;\"> Voided Items: <span style=\"float:right;\">"
-                    + currencyFormat.format(totalVoided).trim() +" &euro;</span> </p>"));
+            //Voided items row
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.voided_items)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalVoided).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
 
-            //Total line
-            htmlResult.append(htmlTemplate.getTotalLine(mContext).replace(ReportHtmlTemplate.ROW_TAG, "<span style=\"float:right;\">"
-                    + currencyFormat.format(totalSold.subtract(totalVoided)).trim() + " &euro; </span> </p>"));
+            //Total row
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.total)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold.subtract(totalVoided)).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
 
+
+            //Close HTML table
+            htmlResult.append(htmlTemplate.getHtmlTableClose());
         }
         else {
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
