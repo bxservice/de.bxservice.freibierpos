@@ -275,16 +275,6 @@ public class POSOrder implements Serializable {
     }
 
     /**
-     * Recreates the orderLines array
-     */
-    public void recreateOrderLines(ArrayList<POSOrderLine> newOrderLines) {
-        clearOrderLines();
-        for (POSOrderLine orderLine: newOrderLines) {
-            addItem(orderLine.getProduct(), null);
-        }
-    }
-
-    /**
      * Clear all the objects related to order lines
      */
 
@@ -410,11 +400,7 @@ public class POSOrder implements Serializable {
 
         return total;
     }
-
-    public void setTotallines(BigDecimal totallines) {
-        this.totallines = totallines;
-    }
-
+    
     /**
      * Gets an integer value from the db and converts it to a BigDecimal
      * last two digits are decimals
