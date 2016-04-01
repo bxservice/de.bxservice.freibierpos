@@ -4,21 +4,15 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
-import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.ui.EditOrderActivity;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
-import de.bxservice.bxpos.ui.adapter.OnDataChangeListener;
 import de.bxservice.bxpos.ui.adapter.OrderedLineAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 

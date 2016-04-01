@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
