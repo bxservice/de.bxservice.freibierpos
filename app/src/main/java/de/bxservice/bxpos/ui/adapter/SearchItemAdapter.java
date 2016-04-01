@@ -100,7 +100,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 final FilterResults oReturn = new FilterResults();
-                final ArrayList<NewOrderGridItem> results = new ArrayList<NewOrderGridItem>();
+                final ArrayList<NewOrderGridItem> results = new ArrayList<>();
 
                 if (orig == null)
                     orig = mDataset;
