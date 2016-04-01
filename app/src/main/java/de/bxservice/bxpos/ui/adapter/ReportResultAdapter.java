@@ -1,12 +1,10 @@
 package de.bxservice.bxpos.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
