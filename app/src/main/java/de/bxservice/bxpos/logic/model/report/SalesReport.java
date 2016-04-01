@@ -28,15 +28,15 @@ public class SalesReport extends Report {
     }
 
     @Override
-    public void performReport() {
+    protected void performReport() {
         paidOrders = new DataProvider(mContext).getPaidOrders(fromDate, toDate);
-        setReportResult();
     }
 
     /**
      * Set the result with the html template
      */
-    private void setReportResult() {
+    @Override
+    protected void setReportResult() {
 
         htmlResult.append(htmlTemplate.getHtmlTemplate().replace(ReportHtmlTemplate.TITLE_TAG, name));
         if(paidOrders != null) {

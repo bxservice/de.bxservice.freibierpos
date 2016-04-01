@@ -30,15 +30,15 @@ public class TableSalesReport extends Report {
      * @return
      */
     @Override
-    public void performReport() {
+    protected void performReport() {
         tableSalesOrders = new DataProvider(mContext).getTableSalesReportRows(fromDate, toDate);
-        setReportResult();
     }
 
     /**
      * Set the result with the html template
      */
-    private void setReportResult() {
+    @Override
+    protected void setReportResult() {
 
         htmlResult.append(htmlTemplate.getHtmlTemplate().replace(ReportHtmlTemplate.TITLE_TAG, name));
         if(tableSalesOrders != null && !tableSalesOrders.isEmpty()) {

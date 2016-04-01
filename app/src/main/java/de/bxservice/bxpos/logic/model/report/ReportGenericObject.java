@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 
 /**
  * This class is a generic class to load a report data
- * with 3 variables
+ * with 3 variables.
+ * The database query loads directly to this kind of object
+ * instead of having to group or filter in the code
+ * improving performance and memory use
  * Created by Diego Ruiz on 31/03/16.
  */
 public class ReportGenericObject {
