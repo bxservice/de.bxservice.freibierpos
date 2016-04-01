@@ -48,32 +48,37 @@ public class TableSalesReport extends Report {
             decimalFormatSymbols.setCurrencySymbol("");
             ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
 
-            BigDecimal totalVoided = BigDecimal.ZERO;
+            BigDecimal totalSold = BigDecimal.ZERO;
             int totalQty = 0;
 
-            String tableContent = htmlTemplate.getHtmlTable(tableSalesOrders.size() + 1);
+            //Open HTML table
+            htmlResult.append(htmlTemplate.getHtmlTableHeader());
 
-            int i = 0;
+            //Every iteration creates a table row
             for(ReportGenericObject genericObject : tableSalesOrders) {
-                totalVoided = totalVoided.add(genericObject.getAmount());
+
+                htmlResult.append(htmlTemplate.getHtmlRowOpen());
+
+                totalSold = totalSold.add(genericObject.getAmount());
                 totalQty = totalQty + Integer.parseInt(genericObject.getQuantity());
 
-                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getDescription());
-                i = i+1;
-                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, genericObject.getQuantity());
-                i = i+1;
-                tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(genericObject.getAmount()).trim()  + " &euro;" );
-                i = i+1;
+                htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, genericObject.getDescription()));
+                htmlResult.append(htmlTemplate.getHtmlColumn("center").replace(ReportHtmlTemplate.ROW_TAG, genericObject.getQuantity()));
+                htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(genericObject.getAmount()).trim() + " &euro;"));
+
+                htmlResult.append(htmlTemplate.getHtmlRowClose());
             }
-
             //Total row
-            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, mContext.getString(R.string.total));
-            i = i+1;
-            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, String.valueOf(totalQty));
-            i = i+1;
-            tableContent = tableContent.replace(ReportHtmlTemplate.ROW_TAG + i, currencyFormat.format(totalVoided).trim()  + " &euro;");
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
 
-            htmlResult.append(tableContent);
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.total)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("center").replace(ReportHtmlTemplate.ROW_TAG, String.valueOf(totalQty)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold).trim() + " &euro;"));
+
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
+
+            //Close HTML table
+            htmlResult.append(htmlTemplate.getHtmlTableClose());
         }
         else {
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
