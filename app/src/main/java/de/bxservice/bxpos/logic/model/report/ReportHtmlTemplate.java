@@ -5,7 +5,7 @@ import android.content.Context;
 import de.bxservice.bxpos.R;
 
 /**
- * Default tempalte for reports in the app
+ * Default template for reports in the app
  * Created by Diego Ruiz on 30/03/16.
  */
 public class ReportHtmlTemplate {
@@ -15,6 +15,11 @@ public class ReportHtmlTemplate {
 
     private StringBuilder htmlTemplate;
 
+    /**
+     * Gets the initial html template
+     * with the header
+     * @return
+     */
     public String getHtmlTemplate() {
         htmlTemplate = new StringBuilder();
         htmlTemplate.append("<h4 align=\"center\"><u>"+ TITLE_TAG +"</u></h4>"); //Title
@@ -26,27 +31,44 @@ public class ReportHtmlTemplate {
     }
 
     /**
-     * Get table with three columns
+     * Get header of a table
      * @return
      */
-    public String getHtmlTable(int numberOfRows) {
-        StringBuilder htmlTable = new StringBuilder();
-        htmlTable.append("<table style=\"width:100%\" border=\"0\">"); //No border
+    public String getHtmlTableHeader() {
+        return "<table style=\"width:100%\" border=\"0\">"; //Table with no border
+    }
 
-        int j=0;
-        for (int i=0; i<numberOfRows; i++) {
-            htmlTable.append("<tr>");
+    /**
+     * Get closing tag of a table
+     * @return
+     */
+    public String getHtmlTableClose() {
+        return "</table>";
+    }
 
-            htmlTable.append("<td align=\"left\">" + ROW_TAG + j++ + "</td>");
-            htmlTable.append("<td align=\"center\">" + ROW_TAG + j++ + "</td>");
-            htmlTable.append("<td align=\"right\">" + ROW_TAG + j++ + "</td>");
+    /**
+     * Open a table row
+     * @return
+     */
+    public String getHtmlRowOpen() {
+        return "<tr>";
+    }
 
-            htmlTable.append("</tr>");
-        }
+    /**
+     * Close a table row
+     * @return
+     */
+    public String getHtmlRowClose() {
+        return "</tr>";
+    }
 
-        htmlTable.append("</table>");
-
-        return htmlTable.toString();
+    /**
+     * Get a column
+     * @param alignment it must be left - center or right
+     * @return
+     */
+    public String getHtmlColumn(String alignment) {
+        return "<td align=\""+ alignment +"\">" + ROW_TAG + "</td>";
     }
 
     public String getTotalLine(Context ctx) {
