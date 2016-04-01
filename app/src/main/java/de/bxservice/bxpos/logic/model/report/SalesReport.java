@@ -67,14 +67,8 @@ public class SalesReport extends Report {
 
             //Net sales row
             htmlResult.append(htmlTemplate.getHtmlRowOpen());
-            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.net_sales)));
-            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold).trim() + " &euro;"));
-            htmlResult.append(htmlTemplate.getHtmlRowClose());
-
-            //Voided items row
-            htmlResult.append(htmlTemplate.getHtmlRowOpen());
-            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.void_item)));
-            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalVoided).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.sales)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold.add(totalDiscounted)).trim() + " &euro;"));
             htmlResult.append(htmlTemplate.getHtmlRowClose());
 
             //Discounted items row
@@ -83,18 +77,29 @@ public class SalesReport extends Report {
             htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalDiscounted).trim() + " &euro;"));
             htmlResult.append(htmlTemplate.getHtmlRowClose());
 
+            //Net sales row -> Sales - discounted
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.net_sales)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
+
             //Surcharged items row
             htmlResult.append(htmlTemplate.getHtmlRowOpen());
             htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.set_extra)));
             htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSurcharged).trim() + " &euro;"));
             htmlResult.append(htmlTemplate.getHtmlRowClose());
 
-            //Total row
+            //Total row -> net sales + surcharges
             htmlResult.append(htmlTemplate.getHtmlRowOpen());
             htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.total)));
-            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold.subtract(totalVoided)).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSold.add(totalSurcharged)).trim() + " &euro;"));
             htmlResult.append(htmlTemplate.getHtmlRowClose());
 
+            //Voided items row -> only informative
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.void_item)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalVoided).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
 
             //Close HTML table
             htmlResult.append(htmlTemplate.getHtmlTableClose());
