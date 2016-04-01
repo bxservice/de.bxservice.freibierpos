@@ -1,11 +1,13 @@
 package de.bxservice.bxpos.ui;
 
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 
 import java.util.ArrayList;
 
@@ -51,6 +53,16 @@ public class ReportResultActivity extends AppCompatActivity {
 
         if(intent != null) {
             reportResults = (ArrayList<String>) intent.getSerializableExtra("results");
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }else{
+            return super.onKeyDown(keyCode, event);
         }
     }
 
