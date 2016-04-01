@@ -315,6 +315,20 @@ public class POSOrder implements Serializable {
         this.discount = discount;
     }
 
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    /**
+     * Gets an integer value from the db and converts it to a BigDecimal
+     * last two digits are decimals
+     * @param discount
+     */
+    public void setDiscountFromInt(Integer discount) {
+        double doubleValue = (double) discount / 100;
+        this.discount = BigDecimal.valueOf(doubleValue);
+    }
+
     /**
      * Returns the total surcharge
      * in an integer to be save in the database
@@ -326,6 +340,20 @@ public class POSOrder implements Serializable {
 
     public void setSurcharge(BigDecimal surcharge) {
         this.surcharge = surcharge;
+    }
+
+    public BigDecimal getSurcharge() {
+        return surcharge;
+    }
+
+    /**
+     * Gets an integer value from the db and converts it to a BigDecimal
+     * last two digits are decimals
+     * @param surcharge
+     */
+    public void setSurchargeFromInt(Integer surcharge) {
+        double doubleValue = (double) surcharge / 100;
+        this.surcharge = BigDecimal.valueOf(doubleValue);
     }
 
     /**
