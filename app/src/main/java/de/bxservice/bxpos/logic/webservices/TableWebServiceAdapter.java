@@ -39,8 +39,8 @@ public class TableWebServiceAdapter extends AbstractWSObject{
 
         WebServiceClient client = getClient();
 
-        tableList = new ArrayList<Table>();
-        tableGroupList = new ArrayList<TableGroup>();
+        tableList = new ArrayList<>();
+        tableGroupList = new ArrayList<>();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);

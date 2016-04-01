@@ -134,7 +134,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
             total = total.add(orderLine.getLineNetAmt());
         }
 
-        int newTotalQty = 0;
+        int newTotalQty;
         BigDecimal newTotal = BigDecimal.ZERO;
 
         newTotalQty = selectedLines.size();
