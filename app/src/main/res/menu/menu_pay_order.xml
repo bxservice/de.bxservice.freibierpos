@@ -9,14 +9,14 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
-    <item android:id="@+id/add_note"
-        android:title="@string/note"
-        android:orderInCategory="200"
-        app:showAsAction="never" />
-
     <item android:id="@+id/add_discount"
         android:title="@string/add_discount"
         android:orderInCategory="200"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/add_note"
+        android:title="@string/note"
+        android:orderInCategory="300"
         app:showAsAction="never" />
 
 </menu>

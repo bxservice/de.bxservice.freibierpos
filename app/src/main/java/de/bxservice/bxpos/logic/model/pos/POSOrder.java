@@ -50,6 +50,8 @@ public class POSOrder implements Serializable {
     private int guestNumber = 0;
     private String status;
     private BigDecimal totallines = BigDecimal.ZERO;
+    private BigDecimal discount   = BigDecimal.ZERO;
+    private BigDecimal surcharge  = BigDecimal.ZERO;
     private boolean sync = false;
 
     public void addItem(MProduct product, Context ctx) {
@@ -298,6 +300,32 @@ public class POSOrder implements Serializable {
 
     public void setOrderId(long orderId) {
         this.orderId = orderId;
+    }
+
+    /**
+     * Returns the discount value
+     * in an integer to be save in the database
+     * @return
+     */
+    public Integer getDiscountInteger() {
+        return discount.multiply(BigDecimal.valueOf(100)).intValue(); //total * 100
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    /**
+     * Returns the total surcharge
+     * in an integer to be save in the database
+     * @return
+     */
+    public Integer getSurchargeInteger() {
+        return surcharge.multiply(BigDecimal.valueOf(100)).intValue(); //total * 100
+    }
+
+    public void setSurcharge(BigDecimal surcharge) {
+        this.surcharge = surcharge;
     }
 
     /**

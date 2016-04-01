@@ -24,6 +24,9 @@ public class PosOrderContract {
         public static final String COLUMN_NAME_REMARK       = "remark";
         public static final String COLUMN_NAME_TOTALLINES   = "totallines";
         public static final String COLUMN_NAME_SYNCHRONIZED = "isSynchronized";
+        public static final String COLUMN_NAME_SURCHARGE    = "surcharge";
+        public static final String COLUMN_NAME_DISCOUNT     = "discount";
+
 
     }
 
