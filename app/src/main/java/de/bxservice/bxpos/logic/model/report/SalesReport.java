@@ -49,12 +49,15 @@ public class SalesReport extends Report {
 
             BigDecimal totalSold   = BigDecimal.ZERO;
             BigDecimal totalVoided = BigDecimal.ZERO;
-            //TODO add discounted
+            BigDecimal totalDiscounted = BigDecimal.ZERO;
+            BigDecimal totalSurcharged = BigDecimal.ZERO;
 
             htmlResult.append(htmlTemplate.getHtmlTableHeader());
 
             for(POSOrder order : paidOrders) {
                 totalSold = totalSold.add(order.getTotallines());
+                totalDiscounted = totalDiscounted.add(order.getDiscount());
+                totalSurcharged = totalSurcharged.add(order.getSurcharge());
 
                 for (POSOrderLine orderLine : order.getOrderedLines()) {
                     if(orderLine.getLineStatus().equals(POSOrderLine.VOIDED))
@@ -70,8 +73,20 @@ public class SalesReport extends Report {
 
             //Voided items row
             htmlResult.append(htmlTemplate.getHtmlRowOpen());
-            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.voided_items)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.void_item)));
             htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalVoided).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
+
+            //Discounted items row
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.add_discount)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalDiscounted).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlRowClose());
+
+            //Surcharged items row
+            htmlResult.append(htmlTemplate.getHtmlRowOpen());
+            htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.set_extra)));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalSurcharged).trim() + " &euro;"));
             htmlResult.append(htmlTemplate.getHtmlRowClose());
 
             //Total row
