@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity
         newOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                           /* Toast.makeText(getBaseContext(), Integer.toString(getNumberOfGuests())+" "+getSelectedTable(),
-                        Toast.LENGTH_SHORT).show();*/
                 numberOfGuests = 0;
                 selectedTable = null;
                 createOrder();
@@ -224,18 +222,6 @@ public class MainActivity extends AppCompatActivity
         ordersDialog.show(getFragmentManager(), "MultipleOrdersTableDialogFragment");
     }
 
-    public int getNumberOfGuests() {
-        return numberOfGuests;
-    }
-
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
-    }
-
-    public Table getSelectedTable() {
-        return selectedTable;
-    }
-
     public void setSelectedTable(Table selectedTable) {
         this.selectedTable = selectedTable;
     }
@@ -284,7 +270,6 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("draftOrder", order);
         startActivityForResult(intent, EDIT_ORDER_REQUEST);
     }
-
 
     /**
      * On destroy closes the db connection
