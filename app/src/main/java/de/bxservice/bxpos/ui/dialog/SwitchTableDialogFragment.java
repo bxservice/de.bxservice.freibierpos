@@ -31,7 +31,7 @@ public class SwitchTableDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    SwitchTableDialogListener mListener;
+    private SwitchTableDialogListener mListener;
     private ArrayList<Table> mGridData;
     private RecyclerView recyclerView;
     private Table table;

@@ -22,7 +22,7 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryProductCategory";
 
-    List<ProductCategory> productCategoryList;
+    private List<ProductCategory> productCategoryList;
 
     @Override
     public String getServiceType() {

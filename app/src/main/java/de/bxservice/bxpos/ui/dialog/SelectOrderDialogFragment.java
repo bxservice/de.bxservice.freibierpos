@@ -33,7 +33,7 @@ public class SelectOrderDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    SelectOrderDialogListener mListener;
+    private SelectOrderDialogListener mListener;
     private ArrayList<POSOrder> mGridData;
     private RecyclerView recyclerView;
     private POSOrder order;

@@ -177,7 +177,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
      * Remove items that is at the passed position
      * @param position
      */
-    public void removeData(int position) {
+    private void removeData(int position) {
         mDataset.remove(position);
         notifyItemRemoved(position);
         if(mOnDataChangeListener != null){
@@ -189,7 +189,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
      * Remove items that is at the passed position
      * @param position
      */
-    public void copyData(int position) {
+    private void copyData(int position) {
         POSOrderLine orderLine = mDataset.get(position);
         mDataset.add(orderLine);
         notifyItemInserted(position);
@@ -232,7 +232,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         notifyItemMoved(fromPosition, toPosition);*/
     }
 
-    OnDataChangeListener mOnDataChangeListener;
+    private OnDataChangeListener mOnDataChangeListener;
 
     public void setOnDataChangeListener(OnDataChangeListener onDataChangeListener){
         mOnDataChangeListener = onDataChangeListener;

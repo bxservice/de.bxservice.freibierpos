@@ -19,7 +19,7 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosTableGroupHelper extends PosObjectHelper {
 
-    static final String LOG_TAG = "Table Group Helper";
+    private static final String LOG_TAG = "Table Group Helper";
 
     public PosTableGroupHelper(Context mContext) {
         super(mContext);

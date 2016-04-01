@@ -25,8 +25,8 @@ public class GuestNumberDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    GuestNumberDialogListener mListener;
-    int numberOfGuests = 1;
+    private GuestNumberDialogListener mListener;
+    private int numberOfGuests = 1;
 
     public int getNumberOfGuests() {
         return numberOfGuests;

@@ -27,7 +27,7 @@ public class VoidReasonDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    VoidReasonDialogListener mListener;
+    private VoidReasonDialogListener mListener;
     private String reason = "";
     private int noItems = 0;
     private EditText voidReason;

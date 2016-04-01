@@ -32,9 +32,9 @@ public class SurchargeDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    CourtesyDialogListener mListener;
+    private CourtesyDialogListener mListener;
 
-    public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 
     private BigDecimal subtotal = BigDecimal.ZERO;
     private BigDecimal surchargeAmount = BigDecimal.ZERO;

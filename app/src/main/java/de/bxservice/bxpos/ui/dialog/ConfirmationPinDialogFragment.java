@@ -25,7 +25,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    ConfirmationPinDialogListener mListener;
+    private ConfirmationPinDialogListener mListener;
     private String reason = "";
     private String pinCode = "";
     private int noItems = 0;

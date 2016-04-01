@@ -47,7 +47,7 @@ import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
  */
 public class LoginActivity extends AppCompatActivity  {
 
-    static final String LOG_TAG = "Login Activity";
+    private static final String LOG_TAG = "Login Activity";
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.

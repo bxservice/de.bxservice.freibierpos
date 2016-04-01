@@ -115,7 +115,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
      * Associate the tables to their corresponding group based on search key
      * If there are no groups - a default one is created
      */
-    public void associateGroupsAndTables(){
+    private void associateGroupsAndTables(){
 
         if (tableList != null && !tableList.isEmpty()) {
             //If there are no table groups - create a default one

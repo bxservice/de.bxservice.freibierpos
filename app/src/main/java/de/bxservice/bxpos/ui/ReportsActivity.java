@@ -127,7 +127,7 @@ public class ReportsActivity extends AppCompatActivity implements
         }
     }
 
-    public void showDatePickerDialog() {
+    private void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }

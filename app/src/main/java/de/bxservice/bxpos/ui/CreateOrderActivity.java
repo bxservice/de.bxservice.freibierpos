@@ -64,7 +64,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     //RecyclerView attributes for search functionality
     private RecyclerView recyclerView;
     private SearchItemAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
     private ArrayList<NewOrderGridItem> items = new ArrayList<>();
     private HashMap<NewOrderGridItem, MProduct> itemProductHashMap;
     private SearchView mSearchView;
@@ -113,7 +112,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         initSearchListItems();
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(mLayoutManager);
@@ -386,8 +385,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     @Override
     public void onDialogPositiveClick(RemarkDialogFragment dialog) {
         // User touched the dialog's positive button
-        String note = dialog.getNote();
-        remarkNote = note;
+        remarkNote = dialog.getNote();;
         updateDraftOrder();
     }
 
@@ -415,7 +413,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         posOrder.addItem(product, getBaseContext());
     }
 
-    public void updateDraftOrder() {
+    private void updateDraftOrder() {
 
         if(posOrder != null) {
 
@@ -487,7 +485,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * Opens the confirmation activity passing the draft order
      * as parameter
      */
-    public void openConfirmationActivity() {
+    private void openConfirmationActivity() {
         if("MainActivity".equals(caller)) {
             Intent intent = new Intent(this, EditOrderActivity.class);
             intent.putExtra("draftOrder", posOrder);
@@ -503,7 +501,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     /**
      * Refresh the quantity ordered on the product items buttons
      */
-    public void updateOrderLinesQuantity() {
+    private void updateOrderLinesQuantity() {
         mCreateOrderPagerAdapter.refreshAllQty(getSupportFragmentManager());
     }
 

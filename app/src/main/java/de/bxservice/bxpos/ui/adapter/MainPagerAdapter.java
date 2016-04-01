@@ -14,7 +14,7 @@ import de.bxservice.bxpos.ui.fragment.MainTableFragment;
  */
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    DataProvider dataProvider;
+    private DataProvider dataProvider;
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);

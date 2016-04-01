@@ -35,7 +35,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
     }
 
     // Use this instance of the interface to deliver action events
-    SplitOrderDialogListener mListener;
+    private SplitOrderDialogListener mListener;
     private ArrayList<POSOrderLine> mGridData;
     private ArrayList<POSOrderLine> selectedLines;
     private RecyclerView recyclerView;

@@ -19,7 +19,7 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosProductPriceHelper extends PosObjectHelper {
 
-    static final String LOG_TAG = "Product Price Helper";
+    private static final String LOG_TAG = "Product Price Helper";
 
     public PosProductPriceHelper(Context mContext) {
         super(mContext);

@@ -245,12 +245,9 @@ public class MainActivity extends AppCompatActivity
     // Fragment.onAttach() callback, which it uses to call the following methods
     @Override
     public void onDialogPositiveClick(GuestNumberDialogFragment dialog) {
-
         // User touched the dialog's positive button
-        int guests = dialog.getNumberOfGuests();
-        numberOfGuests = guests;
+        numberOfGuests = dialog.getNumberOfGuests();
         createOrder();
-
     }
 
     @Override

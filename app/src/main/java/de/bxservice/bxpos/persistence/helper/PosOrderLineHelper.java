@@ -21,7 +21,7 @@ import de.bxservice.bxpos.persistence.definition.Tables;
  */
 public class PosOrderLineHelper extends PosObjectHelper {
 
-    static final String LOG_TAG = "Order Line Helper";
+    private static final String LOG_TAG = "Order Line Helper";
 
     public PosOrderLineHelper(Context mContext) {
         super(mContext);

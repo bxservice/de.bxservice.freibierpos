@@ -16,7 +16,7 @@ import de.bxservice.bxpos.ui.fragment.FoodMenuFragment;
 public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
-    DataProvider dataProvider;
+    private DataProvider dataProvider;
 
     public CreateOrderPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
