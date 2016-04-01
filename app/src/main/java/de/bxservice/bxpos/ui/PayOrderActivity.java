@@ -365,8 +365,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     public void onDialogPositiveClick(SurchargeDialogFragment dialog) {
         // User touched the dialog's positive button
         surcharge = dialog.getSurchargeAmount();
-        //order.setSurcharge(); //TODO Create
-        //order.updateOrder(getBaseContext());
+        order.setSurcharge(surcharge);
         updateSurchargeField();
     }
 
@@ -387,8 +386,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         // User touched the dialog's positive button
         discount = dialog.getDiscountAmount();
         discountReason = dialog.getReason();
-        //order.setSurcharge(); //TODO Create
-        //order.updateOrder(getBaseContext());
+        order.setDiscount(discount);
         updateDiscountField();
     }
 

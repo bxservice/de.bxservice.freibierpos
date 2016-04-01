@@ -96,6 +96,11 @@ public class PosOrderHelper extends PosObjectHelper {
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS, order.getGuestNumber());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK, order.getOrderRemark());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES, order.getTotallinesInteger());
+        //These two values are only updated when paid
+        if (order.getStatus().equals(POSOrder.COMPLETE_STATUS)) {
+            values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE, order.getSurchargeInteger());
+            values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT, order.getDiscountInteger());
+        }
 
         int flag = (order.isSync()) ? 1 : 0;
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED, flag);
