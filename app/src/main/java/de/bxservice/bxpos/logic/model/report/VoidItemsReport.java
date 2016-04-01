@@ -26,15 +26,15 @@ public class VoidItemsReport extends Report {
     }
 
     @Override
-    public void performReport() {
+    protected void performReport() {
         voidedLines = new DataProvider(mContext).getVoidedReportRows(fromDate, toDate);
-        setReportResult();
     }
 
     /**
      * Set the result with the html template
      */
-    private void setReportResult() {
+    @Override
+    protected void setReportResult() {
 
         htmlResult.append(htmlTemplate.getHtmlTemplate().replace(ReportHtmlTemplate.TITLE_TAG, name));
         if(voidedLines != null && !voidedLines.isEmpty()) {

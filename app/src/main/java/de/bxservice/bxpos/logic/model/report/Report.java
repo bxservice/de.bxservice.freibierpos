@@ -21,9 +21,12 @@ public abstract class Report {
 
     public void runReport() {
         performReport();
+        setReportResult();
     }
 
-    public abstract void performReport();
+    protected abstract void performReport();
+
+    protected abstract void setReportResult();
 
     public int getCode() {
         return code;
