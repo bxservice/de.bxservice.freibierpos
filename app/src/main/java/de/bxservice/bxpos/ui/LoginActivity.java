@@ -237,11 +237,20 @@ public class LoginActivity extends AppCompatActivity  {
 
             // If the credentials are the offline user - show the corresponding activity
             PosUser offlineUser = getOfflineUser();
-            if(username.equals(offlineUser.getUsername())) { //TODO: Not validating the pwd
-                Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
-                startActivity(intent);
-                finish();
-                return;
+            if(username.equals(offlineUser.getUsername())) {
+                //When the credentials are correct -> display the settings activity
+                if(offlineUser.authenticateHash(password)) {
+                    Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+                else {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                    return;
+                }
+
             }
 
             //Check if network connection is available
