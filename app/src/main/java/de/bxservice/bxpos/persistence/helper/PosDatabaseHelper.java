@@ -27,7 +27,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 15;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -49,7 +49,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     UserContract.User.COLUMN_NAME_USERNAME + " VARCHAR(64) NOT NULL UNIQUE" +
                     ", " +
-                    UserContract.User.COLUMN_NAME_PASSWORD + " VARCHAR(64) NOT NULL" +
+                    UserContract.User.COLUMN_NAME_PASSWORD + " VARCHAR(256) NOT NULL" +
+                    ", " +
+                    UserContract.User.COLUMN_NAME_SALT + " VARCHAR(256) " +
                     ")";
 
     private static final String CREATE_TABLE_TABLE =

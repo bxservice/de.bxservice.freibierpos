@@ -237,7 +237,7 @@ public class LoginActivity extends AppCompatActivity  {
 
             // If the credentials are the offline user - show the corresponding activity
             PosUser offlineUser = getOfflineUser();
-            if(username.equals(offlineUser.getUsername())) {
+            if(username.equals(offlineUser.getUsername())) { //TODO: Not validating the pwd
                 Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
                 startActivity(intent);
                 finish();

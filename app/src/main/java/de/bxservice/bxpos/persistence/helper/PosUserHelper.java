@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.pos.PosUser;
+import de.bxservice.bxpos.logic.util.SecureEngine;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -26,9 +27,16 @@ public class PosUserHelper extends PosObjectHelper {
 
         ContentValues values = new ContentValues();
         values.put(UserContract.User.COLUMN_NAME_USERNAME, user.getUsername());
-        values.put(UserContract.User.COLUMN_NAME_PASSWORD, user.getPassword());
 
-        // insert row
+        SecureEngine secureEngine = new SecureEngine();
+        String hashedPassword = secureEngine.protectText(user.getPassword());
+
+        if(hashedPassword != null) {
+            values.put(UserContract.User.COLUMN_NAME_PASSWORD, hashedPassword); //Save the encrypted password in the database
+            values.put(UserContract.User.COLUMN_NAME_SALT, secureEngine.getSalt()); //Save the encrypted password in the database
+        } else {
+            values.put(UserContract.User.COLUMN_NAME_PASSWORD, user.getPassword()); //Save the encrypted password in the database
+        }
 
         return database.insert(Tables.TABLE_USER, null, values);
     }
@@ -54,7 +62,8 @@ public class PosUserHelper extends PosObjectHelper {
         PosUser td = new PosUser();
         td.setId(c.getInt(c.getColumnIndex(UserContract.User.COLUMN_NAME_USER_ID)));
         td.setUsername((c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME))));
-        td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD)));
+        td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD))); //Read the encrypted password
+        td.setSalt(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_SALT)));
 
         c.close();
 
@@ -82,7 +91,8 @@ public class PosUserHelper extends PosObjectHelper {
         PosUser td = new PosUser();
         td.setId(c.getInt(c.getColumnIndex(UserContract.User.COLUMN_NAME_USER_ID)));
         td.setUsername((c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME))));
-        td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD)));
+        td.setPassword(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_PASSWORD))); //Read the encrypted password
+        td.setSalt(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_SALT)));
 
         c.close();
 
@@ -97,7 +107,15 @@ public class PosUserHelper extends PosObjectHelper {
 
         ContentValues values = new ContentValues();
         values.put(UserContract.User.COLUMN_NAME_USERNAME, user.getUsername());
-        values.put(UserContract.User.COLUMN_NAME_PASSWORD, user.getPassword());
+
+        SecureEngine secureEngine = new SecureEngine();
+        String hashedPassword = secureEngine.protectText(user.getPassword());
+        if(hashedPassword != null) {
+            values.put(UserContract.User.COLUMN_NAME_PASSWORD, hashedPassword); //Save the encrypted password in the database
+            values.put(UserContract.User.COLUMN_NAME_SALT, secureEngine.getSalt()); //Save the encrypted password in the database
+        } else {
+            values.put(UserContract.User.COLUMN_NAME_PASSWORD, user.getPassword()); //Save the encrypted password in the database
+        }
 
         // updating row
         return db.update(Tables.TABLE_USER, values, UserContract.User.COLUMN_NAME_USER_ID + " = ?",
