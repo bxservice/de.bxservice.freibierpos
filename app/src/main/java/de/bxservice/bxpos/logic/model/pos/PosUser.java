@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic.model.pos;
 import android.content.Context;
 
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
+import de.bxservice.bxpos.logic.util.SecureEngine;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
@@ -13,6 +14,7 @@ public class PosUser extends UserContract.User {
     private int id;
     private String username;
     private String password;
+    private String salt;
     private PosUserManagement userManager;
 
     public int getId() {
@@ -55,6 +57,10 @@ public class PosUser extends UserContract.User {
 
     }
 
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public boolean changePassword(String password, Context ctx) {
         this.password = password;
         return updateUser(ctx);
@@ -63,6 +69,13 @@ public class PosUser extends UserContract.User {
     public boolean updateUser(Context ctx) {
         userManager = new PosUserManagement(ctx);
         return userManager.update(this);
+    }
+
+    /**
+     * check if hashed password matches
+     */
+    public boolean authenticateHash (String password2)  {
+        return SecureEngine.isMatchHash(password, salt, password2);
     }
 
 }
