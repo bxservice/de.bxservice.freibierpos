@@ -302,7 +302,9 @@ public class LoginActivity extends AppCompatActivity  {
                         snackbar.show();
                     } else {
                         //No internet connection but the user is known
-                        offlineLogin(loggedUser);
+                        if (loggedUser.authenticateHash(password)) {
+                            offlineLogin(loggedUser, password);
+                        }
                     }
                 }
             }
@@ -314,10 +316,10 @@ public class LoginActivity extends AppCompatActivity  {
      * login loading the data that was synchronized before
      * @param loggedUser
      */
-    private void offlineLogin(PosUser loggedUser) {
+    private void offlineLogin(PosUser loggedUser, String plainPwd) {
 
         wsData.setUsername(loggedUser.getUsername());
-        wsData.setPassword(loggedUser.getPassword());
+        wsData.setPassword(plainPwd);
 
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
@@ -431,9 +433,11 @@ public class LoginActivity extends AppCompatActivity  {
                     //Username does not exist and no internet connection
                     if(loggedUser != null) {
                         //No connection to the server but the user is known
-                        Log.i(LOG_TAG, "No connection to the server - offline login");
-                        offlineLogin(loggedUser);
-                        return;
+                        if (loggedUser.authenticateHash(mPassword)) {
+                            Log.i(LOG_TAG, "No connection to the server - offline login");
+                            offlineLogin(loggedUser, mPassword);
+                            return;
+                        }
                     }
                 }
 
