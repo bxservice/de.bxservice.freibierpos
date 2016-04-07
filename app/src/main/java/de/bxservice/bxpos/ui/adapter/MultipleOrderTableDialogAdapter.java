@@ -37,7 +37,7 @@ public class MultipleOrderTableDialogAdapter extends RecyclerView.Adapter<Multip
             txtTotal = (TextView) itemView.findViewById(R.id.total_amount);
         }
 
-        public void bindTable(POSOrder order) {
+        public void bindOrder(POSOrder order) {
             txtOrderId.setText(String.valueOf(order.getOrderId()));
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
             txtTotal.setText(currencyFormat.format(order.getTotallines()));
@@ -76,7 +76,7 @@ public class MultipleOrderTableDialogAdapter extends RecyclerView.Adapter<Multip
     @Override
     public void onBindViewHolder(MultipleOrderTableDialogViewHolder holder, int position) {
         POSOrder order = mDataset.get(position);
-        holder.bindTable(order);
+        holder.bindOrder(order);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
