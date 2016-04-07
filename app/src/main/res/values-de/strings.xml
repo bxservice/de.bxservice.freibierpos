@@ -188,5 +188,10 @@
         <item>Table sales</item>
     </string-array>
 
+    <!-- Payment types -->
+    <string-array name="payment_types_names">
+        <item>Bargeld</item>
+        <item>Kreditkarte</item>
+    </string-array>
 
 </resources>

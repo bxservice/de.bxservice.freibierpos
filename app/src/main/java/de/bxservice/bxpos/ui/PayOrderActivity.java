@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,11 +26,15 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
+import de.bxservice.bxpos.ui.adapter.PaymentTypeAdapter;
+import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 import de.bxservice.bxpos.ui.dialog.SurchargeDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
 import de.bxservice.bxpos.ui.dialog.PaymentCompletedDialogFragment;
@@ -42,9 +48,11 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private static final String LOG_TAG = "Pay Order Activity";
 
     private POSOrder order;
+    private ArrayList<String> items;
 
     private View mPayFormView;
     private View mProgressView;
+    private RecyclerView recyclerView;
 
     private TextView subTotalTextView;
     private TextView surchargeTextView;
@@ -92,6 +100,20 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         paidTextView = (TextView) findViewById(R.id.paid_textview);
         changeTextView = (TextView) findViewById(R.id.change_textView);
         discountTextView = (TextView) findViewById(R.id.discount_textview);
+
+        recyclerView = (RecyclerView) findViewById(R.id.payment_types);
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST));
+
+        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.payment_types_names)));
+
+        PaymentTypeAdapter mAdapter = new PaymentTypeAdapter(items);
+        recyclerView.setAdapter(mAdapter);
 
         deleteButton = findViewById(R.id.del);
 
