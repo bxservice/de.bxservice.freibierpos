@@ -40,7 +40,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         super(order);
     }
 
-bx
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;
