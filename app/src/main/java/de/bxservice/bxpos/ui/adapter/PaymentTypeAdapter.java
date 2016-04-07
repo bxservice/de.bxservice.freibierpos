@@ -20,16 +20,18 @@ public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.
 
     public static class PaymentTypeViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView txtResult;
+        public TextView txtPayment;
 
         public PaymentTypeViewHolder(View v) {
             super(v);
 
-            txtResult = (TextView) itemView.findViewById(R.id.type);
+            txtPayment = (TextView) itemView.findViewById(R.id.type);
         }
 
-        public void bindTable(String paymentType) {
-            txtResult.setText(paymentType);
+        public void bindPaymentType(String paymentType, int position) {
+            txtPayment.setText(paymentType);
+            if (position == 0)
+                txtPayment.setSelected(true);
         }
     }
 
@@ -44,6 +46,12 @@ public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.
 
     @Override
     public void onClick(View view) {
+        //Allow only one selected at the same time
+        ViewGroup row = (ViewGroup) view.getParent();
+        for(int itemPos = 0; itemPos < row.getChildCount(); itemPos++) {
+            row.getChildAt(itemPos).setSelected(false);
+        }
+        view.setSelected(true);
         if (listener != null)
             listener.onClick(view);
     }
@@ -71,7 +79,7 @@ public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.
     @Override
     public void onBindViewHolder(PaymentTypeViewHolder holder, int position) {
         String result = mDataset.get(position);
-        holder.bindTable(result);
+        holder.bindPaymentType(result, position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

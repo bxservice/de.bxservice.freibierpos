@@ -137,7 +137,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         recyclerView.setAdapter(mAdapter);
 
         deleteButton = findViewById(R.id.del);
-
         deleteButton.setOnLongClickListener(this);
 
         initAmounts();
