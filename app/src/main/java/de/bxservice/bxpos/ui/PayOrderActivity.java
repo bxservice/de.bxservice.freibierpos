@@ -129,8 +129,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 int position = recyclerView.getChildAdapterPosition(v);
 
                 String selectedItem = mAdapter.getSelectedItem(position);
-                System.out.println("Selected item "+ selectedItem);
-                System.out.println(paymentNamesValues.get(selectedItem));
                 order.setPaymentRule(paymentNamesValues.get(selectedItem));
 
             }
