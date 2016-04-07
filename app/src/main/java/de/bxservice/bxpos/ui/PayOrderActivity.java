@@ -112,7 +112,19 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.payment_types_names)));
 
-        PaymentTypeAdapter mAdapter = new PaymentTypeAdapter(items);
+        final PaymentTypeAdapter mAdapter = new PaymentTypeAdapter(items);
+
+        mAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int position = recyclerView.getChildAdapterPosition(v);
+
+                String selectedItem = mAdapter.getSelectedItem(position);
+                System.out.println("ASDASDASDA "+ selectedItem);
+            }
+        });
+
         recyclerView.setAdapter(mAdapter);
 
         deleteButton = findViewById(R.id.del);

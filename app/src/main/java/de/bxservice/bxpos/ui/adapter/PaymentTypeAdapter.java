@@ -13,9 +13,11 @@ import de.bxservice.bxpos.R;
 /**
  * Created by Diego Ruiz on 7/04/16.
  */
-public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.PaymentTypeViewHolder> {
+public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.PaymentTypeViewHolder> implements View.OnClickListener {
 
     private ArrayList<String> mDataset;
+    private View.OnClickListener listener;
+
     public static class PaymentTypeViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtResult;
@@ -36,12 +38,28 @@ public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.
         mDataset = myDataset;
     }
 
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null)
+            listener.onClick(view);
+    }
+
+    public String getSelectedItem(int position) {
+        return mDataset.get(position);
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public PaymentTypeViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.payment_type_item_layout, parent, false);
+
+        v.setOnClickListener(this);
 
         //Half of the screen width
         v.getLayoutParams().width = parent.getWidth()/2;
