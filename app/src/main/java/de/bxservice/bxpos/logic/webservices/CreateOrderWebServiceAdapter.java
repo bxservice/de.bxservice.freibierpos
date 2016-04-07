@@ -13,6 +13,7 @@ import org.idempiere.webservice.client.response.CompositeResponse;
 
 import de.bxservice.bxpos.logic.DataProvider;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
+import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
@@ -27,6 +28,10 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
+    private static final String CREATE_ORDER_SERVICE_TYPE = "CreateSalesOrder";
+    private static final String CREATE_ORDER_LINE_SERVICE_TYPE = "CreateSalesOrderLine";
+    private static final String DOC_ACTION_SERVICE_TYPE = "DocActionOrder";
+
     private static final String DOCUMENT_NO_PREFIX = "BX*POS"; //TODO: Define the prefix that will be used
     private boolean success;
     private boolean connectionError;
@@ -35,7 +40,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         super(order);
     }
 
-
+bx
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;
@@ -51,7 +56,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         compositeOperation.setServiceType(SERVICE_TYPE);
 
         CreateDataRequest createOrder = new CreateDataRequest();
-        createOrder.setServiceType("CreateSalesOrder");
+        createOrder.setServiceType(CREATE_ORDER_SERVICE_TYPE);
 
         String orgId = getLogin().getOrgID().toString();
 
@@ -62,14 +67,13 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("M_Warehouse_ID", String.valueOf(defaultPosData.getDefaultWarehouse()));
         data.addField("AD_Org_ID", orgId);
         data.addField("C_Currency_ID", String.valueOf(defaultPosData.getDefaultCurrency()));
-        data.addField("C_DocTypeTarget_ID", "135"); //PosOrder
-        data.addField("C_DocType_ID", "135"); //PosOrder
+        data.addField("C_DocTypeTarget_ID", IOrder.DocTypeSO); //PosOrder
+        data.addField("C_DocType_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("Description", order.getOrderRemark());
         data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
-        data.addField("PaymentRule", "B"); //Cash //TODO: Multi payment type
+        data.addField("PaymentRule", IOrder.PAYMENTRULE_Cash); //Cash //TODO: Multi payment type
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
-        //data.addField("SalesRep_ID", "101"); //Removed because before save puts the context user that send the ws request
         createOrder.setDataRow(data);
 
         compositeOperation.addOperation(createOrder);
@@ -77,7 +81,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         for(POSOrderLine orderLine : order.getOrderedLines()) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
-            createOrderLine.setServiceType("CreateSalesOrderLine");
+            createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
             DataRow dataLine = new DataRow();
             dataLine.addField("AD_Org_ID", orgId);
             dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
@@ -92,7 +96,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         SetDocActionRequest docAction = new SetDocActionRequest();
         docAction.setDocAction(Enums.DocAction.Complete);
-        docAction.setServiceType("DocActionOrder");
+        docAction.setServiceType(DOC_ACTION_SERVICE_TYPE);
         docAction.setRecordIDVariable("@C_Order.C_Order_ID");
 
         compositeOperation.addOperation(docAction);
