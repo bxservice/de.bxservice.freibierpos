@@ -27,7 +27,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -104,6 +104,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE + " NUMERIC" +
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT + " NUMERIC" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_PAYMENT_RULE + " VARCHAR(2)" +
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED + " INTEGER" +
                     ")";
