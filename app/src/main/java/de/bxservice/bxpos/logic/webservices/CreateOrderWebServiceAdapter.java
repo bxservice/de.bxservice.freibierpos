@@ -32,7 +32,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String CREATE_ORDER_LINE_SERVICE_TYPE = "CreateSalesOrderLine";
     private static final String DOC_ACTION_SERVICE_TYPE = "DocActionOrder";
 
-    private static final String DOCUMENT_NO_PREFIX = "BX*POS"; //TODO: Define the prefix that will be used
+    private static final String DOCUMENT_NO_PREFIX = "BX**POS"; //TODO: Define the prefix that will be used
     private boolean success;
     private boolean connectionError;
 
@@ -72,7 +72,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("Description", order.getOrderRemark());
         data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
-        data.addField("PaymentRule", IOrder.PAYMENTRULE_Cash); //Cash //TODO: Multi payment type
+        data.addField("PaymentRule", order.getPaymentRule()); //Cash //TODO: Multi payment type
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
         createOrder.setDataRow(data);
 

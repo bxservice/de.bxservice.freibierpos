@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
+import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 
@@ -49,6 +50,7 @@ public class POSOrder implements Serializable {
     private Table table;
     private int guestNumber = 0;
     private String status;
+    private String paymentRule = IOrder.PAYMENTRULE_Cash; //Default cash payments
     private BigDecimal totallines = BigDecimal.ZERO;
     private BigDecimal discount   = BigDecimal.ZERO;
     private BigDecimal surcharge  = BigDecimal.ZERO;
@@ -69,7 +71,6 @@ public class POSOrder implements Serializable {
                     newItem = false;
                     orderLine.createLine(ctx);
                 }
-
             }
         }
 
@@ -290,6 +291,17 @@ public class POSOrder implements Serializable {
 
     public void setOrderId(long orderId) {
         this.orderId = orderId;
+    }
+
+    public String getPaymentRule() {
+        return paymentRule;
+    }
+
+    public void setPaymentRule(String paymentRule) {
+        if (paymentRule.equals(IOrder.PAYMENTRULE_Cash) ||
+                paymentRule.equals(IOrder.PAYMENTRULE_CreditCard) ||
+                paymentRule.equals(IOrder.PAYMENTRULE_MixedPOSPayment))
+            this.paymentRule = paymentRule;
     }
 
     /**
