@@ -185,6 +185,11 @@
         <item>Ventas por mesa</item>
     </string-array>
 
+    <!-- Payment types -->
+    <string-array name="payment_types_names">
+        <item>Efectivo</item>
+        <item>Tarjeta de crédito</item>
+    </string-array>
 
 </resources>
 

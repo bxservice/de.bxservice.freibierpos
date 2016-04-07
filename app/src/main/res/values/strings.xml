@@ -193,4 +193,10 @@
         <item>2</item>
     </string-array>
 
+    <!-- Payment types -->
+    <string-array name="payment_types_names">
+        <item>Cash</item>
+        <item>Credit card</item>
+    </string-array>
+
 </resources>
