@@ -28,9 +28,11 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.ui.adapter.PaymentTypeAdapter;
@@ -48,7 +50,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private static final String LOG_TAG = "Pay Order Activity";
 
     private POSOrder order;
-    private ArrayList<String> items;
 
     private View mPayFormView;
     private View mProgressView;
@@ -74,6 +75,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private View deleteButton;
 
     //TODO: Add the payment option methods supported by iDempiere
+    //Payment options
+    private ArrayList<String> paymentTypes;
+    private HashMap<String, String> paymentNamesValues;
 
     private CreateOrderTask createOrderTask;
 
@@ -110,9 +114,13 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST));
 
-        items = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.payment_types_names)));
+        paymentTypes = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.payment_types_names)));
+        paymentNamesValues = new HashMap<>();
 
-        final PaymentTypeAdapter mAdapter = new PaymentTypeAdapter(items);
+        paymentNamesValues.put(paymentTypes.get(0), IOrder.PAYMENTRULE_Cash);
+        paymentNamesValues.put(paymentTypes.get(1), IOrder.PAYMENTRULE_CreditCard);
+
+        final PaymentTypeAdapter mAdapter = new PaymentTypeAdapter(paymentTypes);
 
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +129,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 int position = recyclerView.getChildAdapterPosition(v);
 
                 String selectedItem = mAdapter.getSelectedItem(position);
-                System.out.println("ASDASDASDA "+ selectedItem);
+                System.out.println("Selected item "+ selectedItem);
+                System.out.println(paymentNamesValues.get(selectedItem));
+                order.setPaymentRule(paymentNamesValues.get(selectedItem));
+
             }
         });
 

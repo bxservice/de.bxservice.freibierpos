@@ -298,9 +298,9 @@ public class POSOrder implements Serializable {
     }
 
     public void setPaymentRule(String paymentRule) {
-        if (paymentRule.equals(IOrder.PAYMENTRULE_Cash) ||
-                paymentRule.equals(IOrder.PAYMENTRULE_CreditCard) ||
-                paymentRule.equals(IOrder.PAYMENTRULE_MixedPOSPayment))
+        if (IOrder.PAYMENTRULE_Cash.equals(paymentRule) ||
+                IOrder.PAYMENTRULE_CreditCard.equals(paymentRule) ||
+                IOrder.PAYMENTRULE_MixedPOSPayment.equals(paymentRule))
             this.paymentRule = paymentRule;
     }
 
