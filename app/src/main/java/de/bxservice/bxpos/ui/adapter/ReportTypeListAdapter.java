@@ -34,7 +34,7 @@ public class ReportTypeListAdapter extends RecyclerView.Adapter<ReportTypeListAd
             reportType = (CheckBox) itemView.findViewById(R.id.checkBox1);
         }
 
-        public void bindTable(final Report report) {
+        public void bindReportType(final Report report) {
             reportType.setText(report.getName());
             reportType.setChecked(report.isSelected());
 
@@ -86,7 +86,7 @@ public class ReportTypeListAdapter extends RecyclerView.Adapter<ReportTypeListAd
     @Override
     public void onBindViewHolder(ReportTypeListViewHolder holder, int position) {
         Report report = mDataset.get(position);
-        holder.bindTable(report);
+        holder.bindReportType(report);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

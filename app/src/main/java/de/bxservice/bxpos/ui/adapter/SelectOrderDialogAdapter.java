@@ -35,7 +35,7 @@ public class SelectOrderDialogAdapter extends RecyclerView.Adapter<SelectOrderDi
             txtTable = (TextView) itemView.findViewById(R.id.table_name);
         }
 
-        public void bindTable(POSOrder order) {
+        public void bindOrder(POSOrder order) {
             txtOrder.setText(String.valueOf(order.getOrderId()));
             if (order.getTable() != null)
                 txtTable.setText(order.getTable().getTableName());
@@ -76,7 +76,7 @@ public class SelectOrderDialogAdapter extends RecyclerView.Adapter<SelectOrderDi
     @Override
     public void onBindViewHolder(JoinOrdersDialogViewHolder holder, int position) {
         POSOrder order = mDataset.get(position);
-        holder.bindTable(order);
+        holder.bindOrder(order);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

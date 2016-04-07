@@ -26,7 +26,7 @@ public class ReportResultAdapter extends RecyclerView.Adapter<ReportResultAdapte
             txtResult = (WebView) itemView.findViewById(R.id.result);
         }
 
-        public void bindTable(String result) {
+        public void bindReportResult(String result) {
             //txtResult.setText(Html.fromHtml(result));
             txtResult.loadData(result, "text/html", null);
         }
@@ -51,7 +51,7 @@ public class ReportResultAdapter extends RecyclerView.Adapter<ReportResultAdapte
     @Override
     public void onBindViewHolder(ReportResultViewHolder holder, int position) {
         String result = mDataset.get(position);
-        holder.bindTable(result);
+        holder.bindReportResult(result);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
