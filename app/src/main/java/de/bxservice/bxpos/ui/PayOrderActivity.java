@@ -78,6 +78,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     //Payment options
     private ArrayList<String> paymentTypes;
     private HashMap<String, String> paymentNamesValues;
+    private String selectedPaymentType;
 
     private CreateOrderTask createOrderTask;
 
@@ -119,6 +120,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         paymentNamesValues.put(paymentTypes.get(0), IOrder.PAYMENTRULE_Cash);
         paymentNamesValues.put(paymentTypes.get(1), IOrder.PAYMENTRULE_CreditCard);
+        selectedPaymentType = IOrder.PAYMENTRULE_Cash; //Cash by default
 
         final PaymentTypeAdapter mAdapter = new PaymentTypeAdapter(paymentTypes);
 
@@ -129,7 +131,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 int position = recyclerView.getChildAdapterPosition(v);
 
                 String selectedItem = mAdapter.getSelectedItem(position);
-                order.setPaymentRule(paymentNamesValues.get(selectedItem));
+                selectedPaymentType = paymentNamesValues.get(selectedItem);
 
             }
         });
@@ -539,6 +541,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         }
 
         orderPaid = true;
+        order.setPaymentRule(selectedPaymentType);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
