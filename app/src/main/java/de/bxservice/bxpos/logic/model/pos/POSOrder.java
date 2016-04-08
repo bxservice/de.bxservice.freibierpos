@@ -42,7 +42,8 @@ public class POSOrder implements Serializable {
     private HashMap<Integer, Integer> orderlineProductQtyHashMap = new HashMap<>();
 
     private ArrayList<POSOrderLine> orderingLines = new ArrayList<>();
-    private ArrayList<POSOrderLine> orderedLines = new ArrayList<>();
+    private ArrayList<POSOrderLine> orderedLines  = new ArrayList<>();
+    private ArrayList<POSPayment>   payments      = new ArrayList<>();
     private String orderRemark = "";
 
     private int currentLineNo = 10;
@@ -273,6 +274,14 @@ public class POSOrder implements Serializable {
                 status.equals(COMPLETE_STATUS))
         this.status = status;
 
+    }
+
+    public ArrayList<POSPayment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(ArrayList<POSPayment> payments) {
+        this.payments = payments;
     }
 
     /**

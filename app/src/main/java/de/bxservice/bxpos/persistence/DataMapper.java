@@ -14,11 +14,13 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.POSPayment;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
+import de.bxservice.bxpos.persistence.helper.PosPaymentHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductCategoryHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductPriceHelper;
@@ -51,22 +53,24 @@ public class DataMapper implements Serializable {
 
         if(object instanceof PosUser)
             success = createPosUser((PosUser) object);
-        if(object instanceof POSOrder)
+        else if(object instanceof POSOrder)
             success = createPosOrder((POSOrder) object);
-        if(object instanceof POSOrderLine)
+        else if(object instanceof POSOrderLine)
             success = createPosOrderLine((POSOrderLine) object);
-        if(object instanceof Table)
+        else if(object instanceof Table)
             success = createTable((Table) object);
-        if(object instanceof TableGroup)
+        else if(object instanceof TableGroup)
             success = createTableGroup((TableGroup) object);
-        if(object instanceof ProductCategory)
+        else if(object instanceof ProductCategory)
             success = createProductCategory((ProductCategory) object);
-        if(object instanceof ProductPrice)
+        else if(object instanceof ProductPrice)
             success = createProductPrice((ProductPrice) object);
-        if(object instanceof MProduct)
+        else if(object instanceof MProduct)
             success = createProduct((MProduct) object);
-        if(object instanceof DefaultPosData)
+        else if(object instanceof DefaultPosData)
             success = createDefaultData((DefaultPosData) object);
+        else if(object instanceof POSPayment)
+            success = createPayment((POSPayment) object);
 
         return success;
     }
@@ -81,14 +85,16 @@ public class DataMapper implements Serializable {
 
         if(object instanceof PosUser)
             success = updatePosUser((PosUser) object);
-        if(object instanceof POSOrder)
+        else if(object instanceof POSOrder)
             success = updatePosOrder((POSOrder) object);
-        if(object instanceof POSOrderLine)
+        else if(object instanceof POSOrderLine)
             success = updatePosOrderLine((POSOrderLine) object);
-        if(object instanceof Table)
+        else if(object instanceof Table)
             success = updateTable((Table) object);
-        if(object instanceof DefaultPosData)
+        else if(object instanceof DefaultPosData)
             success = updateDefaultData((DefaultPosData) object);
+        else if(object instanceof POSPayment)
+            success = updatePayment((POSPayment) object);
         /*if(object instanceof TableGroup)
             success = createTableGroup((TableGroup) object);
         if(object instanceof ProductCategory)
@@ -113,8 +119,10 @@ public class DataMapper implements Serializable {
             success = createPosUser((PosUser) object);*/
         if(object instanceof POSOrder)
             success = removePosOrder((POSOrder) object);
-        if(object instanceof POSOrderLine)
+        else if(object instanceof POSOrderLine)
             success = removePosOrderLine((POSOrderLine) object);
+        else if(object instanceof POSPayment)
+            success = removePayment((POSPayment) object);
         /*if(object instanceof Table)
             success = createTable((Table) object);
         if(object instanceof TableGroup)
@@ -183,6 +191,21 @@ public class DataMapper implements Serializable {
         }
         orderLine.setOrderLineId((int) orderLineId);
         Log.i(LOG_TAG, "order line created");
+        return true;
+    }
+
+    private boolean createPayment(POSPayment payment) {
+
+        PosPaymentHelper paymentHelper = new PosPaymentHelper(mContext);
+
+        long paymentId = paymentHelper.createPayment(payment);
+
+        if (paymentId == -1) {
+            Log.e(LOG_TAG, "Cannot create payment");
+            return false;
+        }
+        payment.setPaymentId((int) paymentId);
+        Log.i(LOG_TAG, "payment created");
         return true;
     }
 
@@ -309,6 +332,18 @@ public class DataMapper implements Serializable {
         return true;
     }
 
+    private boolean updatePayment(POSPayment payment) {
+
+        PosPaymentHelper paymentHelper = new PosPaymentHelper(mContext);
+
+        if (paymentHelper.updatePayment(payment) == -1) {
+            Log.e(LOG_TAG, "Cannot update payment");
+            return false;
+        }
+        Log.i(LOG_TAG, "Payment updated");
+        return true;
+    }
+
     public long getTotalTableGroups() {
         PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
 
@@ -399,6 +434,18 @@ public class DataMapper implements Serializable {
             return false;
         }
         Log.i(LOG_TAG, "order line deleted " + orderLine.getOrderLineId());
+        return true;
+    }
+
+    private boolean removePayment(POSPayment payment) {
+
+        PosPaymentHelper paymentHelper = new PosPaymentHelper(mContext);
+
+        if (paymentHelper.deletePayment(payment) == -1) {
+            Log.e(LOG_TAG, "Cannot delete payment");
+            return false;
+        }
+        Log.i(LOG_TAG, "payment deleted " + payment.getPaymentId());
         return true;
     }
 

@@ -11,6 +11,7 @@ import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
+import de.bxservice.bxpos.persistence.dbcontract.PosPaymentContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
@@ -27,7 +28,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -136,6 +137,25 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO + " INTEGER" +
                     ", " +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT + " NUMERIC" +
+                    ")";
+
+    private static final String CREATE_POSPAYMENT_TABLE =
+            "CREATE TABLE " + Tables.TABLE_POSPAYMENT +
+                    "(" +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO: FK
+                    ", " +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE + " INTEGER" +
+                    ", " +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_AMOUNT + " NUMERIC" +
+                    ", " +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
+                    ", " +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_UPDATED_AT + " INTEGER" +
+                    ", " +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_ORDER_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_POSORDER + "(" + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + ") ON DELETE CASCADE" +  //FK to the order
                     ")";
 
     private static final String CREATE_PRODUCT_TABLE =
@@ -273,6 +293,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER_LINE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSPAYMENT);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_CATEGORY);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_PRICE);
@@ -292,6 +313,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PRODUCT_PRICE_TABLE);
         db.execSQL(CREATE_POSORDER_TABLE);
         db.execSQL(CREATE_POSORDER_LINE_TABLE);
+        db.execSQL(CREATE_POSPAYMENT_TABLE);
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
