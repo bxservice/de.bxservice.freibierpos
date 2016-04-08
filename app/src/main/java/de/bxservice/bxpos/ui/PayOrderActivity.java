@@ -131,8 +131,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 int position = recyclerView.getChildAdapterPosition(v);
 
                 String selectedItem = mAdapter.getSelectedItem(position);
-                selectedPaymentType = paymentNamesValues.get(selectedItem);
-
+                setSelectedPaymentType(paymentNamesValues.get(selectedItem));
             }
         });
 
@@ -374,6 +373,25 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             amountToPay = new BigDecimal(payAmount.toString());
         }
         return amountToPay;
+    }
+
+    /**
+     * Sets the selected payment type if there was a partial payment before
+     * sets Mixed payment
+     * @param selectedPayment value selected from the list
+     */
+    public void setSelectedPaymentType(String selectedPayment) {
+
+        if(selectedPaymentType.equals(selectedPayment))
+            return;
+
+        //If there are no payments already made
+        if(paidAmount.equals(BigDecimal.ZERO)) {
+            selectedPaymentType = selectedPayment;
+        } else {
+            //selectedPaymentType = IOrder.PAYMENTRULE_MixedPOSPayment;
+        }
+
     }
 
     private void showRemarkDialog() {
