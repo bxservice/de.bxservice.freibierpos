@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 
 /**
  * Created by Diego Ruiz on 22/02/16.
@@ -48,7 +48,7 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
 
         final TextView totalText = (TextView) view.findViewById(R.id.total);
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         totalText.setText(getString(R.string.total_value, currencyFormat.format(total)));
 

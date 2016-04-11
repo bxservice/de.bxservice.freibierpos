@@ -2,6 +2,8 @@ package de.bxservice.bxpos.logic.model.idempiere;
 
 import android.content.Context;
 
+import java.util.Locale;
+
 import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 
 /**
@@ -13,6 +15,8 @@ public class DefaultPosData {
 
     //Manager in charge to communicate with the database - not mixing the model and db layers
     private PosDefaultDataManagement dataManager;
+
+    public static final Locale LOCALE = Locale.GERMANY;
 
     private int defaultBPartner = 0;
     private int defaultPriceList = 0;

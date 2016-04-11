@@ -31,7 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
@@ -162,9 +163,9 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private void initSearchListItems() {
 
         ProductPrice productPrice;
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
-        DataProvider dataProvider = new DataProvider(getBaseContext());
+        PosProductManagement dataProvider = new PosProductManagement(getBaseContext());
 
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
@@ -385,7 +386,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     @Override
     public void onDialogPositiveClick(RemarkDialogFragment dialog) {
         // User touched the dialog's positive button
-        remarkNote = dialog.getNote();;
+        remarkNote = dialog.getNote();
         updateDraftOrder();
     }
 

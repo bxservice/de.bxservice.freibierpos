@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosReportManagement;
 
 /**
  * Created by Diego Ruiz on 25/03/16.
@@ -31,7 +31,7 @@ public class TableSalesReport extends Report {
      */
     @Override
     protected void performReport() {
-        tableSalesOrders = new DataProvider(mContext).getTableSalesReportRows(fromDate, toDate);
+        tableSalesOrders = new PosReportManagement(mContext).getTableSalesReportRows(fromDate, toDate);
     }
 
     /**

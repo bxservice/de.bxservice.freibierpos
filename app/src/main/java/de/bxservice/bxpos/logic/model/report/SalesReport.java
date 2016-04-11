@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
@@ -29,7 +29,7 @@ public class SalesReport extends Report {
 
     @Override
     protected void performReport() {
-        paidOrders = new DataProvider(mContext).getPaidOrders(fromDate, toDate);
+        paidOrders = new PosOrderManagement(mContext).getPaidOrders(fromDate, toDate);
     }
 
     /**

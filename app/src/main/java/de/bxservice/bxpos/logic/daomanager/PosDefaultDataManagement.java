@@ -39,5 +39,7 @@ public class PosDefaultDataManagement implements ObjectManagement, Serializable 
         return dataMapper.remove(object);
     }
 
-
+    public DefaultPosData getDefaultData() {
+        return dataMapper.getDefaultData(1);
+    }
 }

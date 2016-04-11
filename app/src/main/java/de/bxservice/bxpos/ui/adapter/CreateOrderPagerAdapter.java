@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosProductCategoryManagement;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.ui.fragment.FoodMenuFragment;
 
@@ -16,12 +16,12 @@ import de.bxservice.bxpos.ui.fragment.FoodMenuFragment;
 public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
-    private DataProvider dataProvider;
+    private PosProductCategoryManagement dataProvider;
 
     public CreateOrderPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
-        dataProvider = new DataProvider(mContext);
+        dataProvider = new PosProductCategoryManagement(mContext);
     }
 
     @Override

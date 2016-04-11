@@ -31,7 +31,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
@@ -163,9 +163,9 @@ public class MainActivity extends AppCompatActivity
         }  else if (id == R.id.nav_settings) {
 
         }*/ else if (id == R.id.nav_send) {
-            DataProvider dataProvider = new DataProvider(getBaseContext());
+            PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
 
-            final List<POSOrder> unsynchronizedOrders = dataProvider.getUnsynchronizedOrders();
+            final List<POSOrder> unsynchronizedOrders = orderManager.getUnsynchronizedOrders();
 
             if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
                 new AlertDialog.Builder(this)
@@ -336,8 +336,8 @@ public class MainActivity extends AppCompatActivity
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            DataProvider dataProvider = new DataProvider(getBaseContext());
-                            final List<POSOrder> unsynchronizedOrders = dataProvider.getUnsynchronizedOrders();
+                            PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
+                            final List<POSOrder> unsynchronizedOrders = orderManager.getUnsynchronizedOrders();
 
                             if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
                                 synchronizePendingOrders(unsynchronizedOrders, true);

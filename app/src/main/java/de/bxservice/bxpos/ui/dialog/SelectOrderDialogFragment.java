@@ -14,7 +14,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
 import de.bxservice.bxpos.ui.adapter.SelectOrderDialogAdapter;
@@ -108,16 +108,16 @@ public class SelectOrderDialogFragment extends DialogFragment {
      * init the grid data with all the tables
      */
     private void initGridData() {
-        DataProvider dataProvider = new DataProvider(getActivity().getBaseContext());
+        PosOrderManagement orderManager = new PosOrderManagement(getActivity().getBaseContext());
         //If the order is != null don't add it to the array. Avoid join an order with itself
         if (order != null) {
             mGridData = new ArrayList<>();
-            for (POSOrder currentOrder : dataProvider.getAllOpenOrders()) {
+            for (POSOrder currentOrder : orderManager.getAllOpenOrders()) {
                 if(order.getOrderId() != currentOrder.getOrderId())
                     mGridData.add(currentOrder);
             }
         } else {
-            mGridData = new ArrayList<>(dataProvider.getAllOpenOrders());
+            mGridData = new ArrayList<>(orderManager.getAllOpenOrders());
         }
     }
 

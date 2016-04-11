@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
@@ -251,7 +251,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getSubtotalText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.subtotal_value, currencyFormat.format(subtotal));
     }
@@ -262,7 +262,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getAmountToPayText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.to_pay, currencyFormat.format(getAmountToPay()));
     }
@@ -273,7 +273,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getSurchargeText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.surcharge_value, currencyFormat.format(surcharge));
     }
@@ -284,7 +284,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getDiscountText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.discount_value, currencyFormat.format(discount.negate()));
     }
@@ -295,7 +295,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getChangeText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.change_value, currencyFormat.format(getChange()));
     }
@@ -306,7 +306,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getPaidAmountText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.paid_value, currencyFormat.format(paidAmount));
     }
@@ -355,7 +355,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getTotalText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         return getString(R.string.total_value, currencyFormat.format(getTotal()));
     }

@@ -10,7 +10,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 
 /**
@@ -39,7 +39,7 @@ public class MultipleOrderTableDialogAdapter extends RecyclerView.Adapter<Multip
 
         public void bindOrder(POSOrder order) {
             txtOrderId.setText(String.valueOf(order.getOrderId()));
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
             txtTotal.setText(currencyFormat.format(order.getTotallines()));
         }
     }
