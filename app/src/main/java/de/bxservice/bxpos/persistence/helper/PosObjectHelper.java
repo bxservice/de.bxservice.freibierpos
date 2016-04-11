@@ -22,6 +22,7 @@ public abstract class PosObjectHelper {
     protected SQLiteDatabase getReadableDatabase() {
         return PosDatabaseHelper.getInstance(mContext).getReadableDatabase();
     }
+
     protected SQLiteDatabase getWritableDatabase() {
         try {
             return PosDatabaseHelper.getInstance(mContext).getWritableDatabase();
