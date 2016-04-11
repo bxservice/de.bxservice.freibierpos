@@ -16,6 +16,8 @@ public class POSPayment implements Serializable {
     //IDs from iDempiere
     private static final int CASH_TENDER_TYPE_ID        = 1000000;
     private static final int CREDIT_CARD_TENDER_TYPE_ID = 1000001;
+    private static final String CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE = "C";
+    private static final String CASH_PAYMENT_TENDER_TYPE_VALUE        = "X";
 
     private PosPaymentManagement paymentManager;
 
@@ -82,6 +84,17 @@ public class POSPayment implements Serializable {
                 return IOrder.PAYMENTRULE_CreditCard;
             default:
                 return IOrder.PAYMENTRULE_Cash;
+        }
+    }
+
+    public String getPaymentTenderType() {
+        switch(POSTenderTypeID) {
+            case CASH_TENDER_TYPE_ID:
+                return CASH_PAYMENT_TENDER_TYPE_VALUE;
+            case CREDIT_CARD_TENDER_TYPE_ID:
+                return CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE;
+            default:
+                return CASH_PAYMENT_TENDER_TYPE_VALUE;
         }
     }
 
