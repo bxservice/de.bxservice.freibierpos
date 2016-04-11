@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosReportManagement;
 
 /**
  * Created by Diego Ruiz on 25/03/16.
@@ -27,7 +27,7 @@ public class VoidItemsReport extends Report {
 
     @Override
     protected void performReport() {
-        voidedLines = new DataProvider(mContext).getVoidedReportRows(fromDate, toDate);
+        voidedLines = new PosReportManagement(mContext).getVoidedReportRows(fromDate, toDate);
     }
 
     /**

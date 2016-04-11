@@ -11,7 +11,7 @@ import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
 
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -60,7 +60,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         String orgId = getLogin().getOrgID().toString();
 
-        DefaultPosData defaultPosData = new DataProvider(null).getDefaultData();
+        DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
 
         DataRow data = new DataRow();
         data.addField("C_BPartner_ID", String.valueOf(defaultPosData.getDefaultBPartner()));

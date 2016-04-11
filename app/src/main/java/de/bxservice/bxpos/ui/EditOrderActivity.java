@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -659,7 +659,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if (order == null)
             return "";
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         switch (status) {
             case POSOrderLine.ORDERING:

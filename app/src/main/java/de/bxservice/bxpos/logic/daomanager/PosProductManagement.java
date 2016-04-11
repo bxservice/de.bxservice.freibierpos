@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic.daomanager;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
@@ -42,5 +43,9 @@ public class PosProductManagement implements ObjectManagement, Serializable {
 
     public ProductPrice getProductPrice(MProduct product) {
         return dataMapper.getProductPriceByProduct(product);
+    }
+
+    public List<MProduct> getAllProducts() {
+        return dataMapper.getAllProducts();
     }
 }

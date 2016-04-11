@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic.daomanager;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.persistence.DataMapper;
@@ -37,5 +38,13 @@ public class PosTableGroupManagement implements ObjectManagement, Serializable {
     @Override
     public boolean remove(Object object) {
         return true;
+    }
+
+    public long getTotalTableGroups() {
+        return dataMapper.getTotalTableGroups();
+    }
+
+    public List<TableGroup> getAllTableGroups() {
+        return dataMapper.getAllTableGroups();
     }
 }

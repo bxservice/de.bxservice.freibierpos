@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
+import de.bxservice.bxpos.logic.daomanager.PosTableGroupManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.ui.MainActivity;
@@ -33,7 +34,6 @@ public class MainTableFragment extends Fragment {
     private GridView grid;
     private GridTableViewAdapter mGridAdapter;
     private ArrayList<TableGridItem> mGridData;
-    private DataProvider dataProvider;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -60,9 +60,9 @@ public class MainTableFragment extends Fragment {
 
         grid = (GridView) rootView.findViewById(R.id.tableView);
 
-        dataProvider = new DataProvider(getActivity().getBaseContext());
+        PosTableGroupManagement tableGroupManager = new PosTableGroupManagement(getActivity().getBaseContext());
 
-        List<TableGroup> tableGroupList = dataProvider.getAllTableGroups();
+        List<TableGroup> tableGroupList = tableGroupManager.getAllTableGroups();
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
         mGridData = new ArrayList<>();
@@ -98,7 +98,8 @@ public class MainTableFragment extends Fragment {
                 if (item.getTable().getStatus().equals(Table.FREE_STATUS))
                     ((MainActivity) getActivity()).showGuestNumberDialog();
                 else if (item.getTable().getStatus().equals(Table.BUSY_STATUS)) {
-                    ((MainActivity) getActivity()).editOrder(dataProvider.getTableOrders(item.getTable()));
+                    PosOrderManagement orderManager = new PosOrderManagement(getActivity().getBaseContext());
+                    ((MainActivity) getActivity()).editOrder(orderManager.getTableOrders(item.getTable()));
                 }
             }
         });

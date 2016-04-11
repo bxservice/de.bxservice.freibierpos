@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 
 /**
  * Created by Diego Ruiz on 22/02/16.
@@ -55,7 +55,7 @@ public class SurchargeDialogFragment extends DialogFragment {
 
         final TextView subTotalLabel = (TextView) view.findViewById(R.id.sub_total);
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         subTotalLabel.setText(getString(R.string.subtotal_value, currencyFormat.format(subtotal)));
 

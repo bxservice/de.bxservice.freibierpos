@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic.daomanager;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.persistence.DataMapper;
@@ -41,6 +42,10 @@ public class PosTableManagement implements ObjectManagement, Serializable {
 
     public boolean isTableFree(Table table) {
         return dataMapper.isTableFree(table);
+    }
+
+    public List<Table> getAllTables() {
+        return dataMapper.getAllTables();
     }
 
 }

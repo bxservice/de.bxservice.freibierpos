@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.daomanager.PosTableGroupManagement;
 import de.bxservice.bxpos.ui.fragment.MainTableFragment;
 
 /**
@@ -14,11 +14,11 @@ import de.bxservice.bxpos.ui.fragment.MainTableFragment;
  */
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    private DataProvider dataProvider;
+    private PosTableGroupManagement dataProvider;
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        dataProvider = new DataProvider(context);
+        dataProvider = new PosTableGroupManagement(context);
     }
 
     @Override

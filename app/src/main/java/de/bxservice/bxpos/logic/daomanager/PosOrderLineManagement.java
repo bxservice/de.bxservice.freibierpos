@@ -3,6 +3,7 @@ package de.bxservice.bxpos.logic.daomanager;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.persistence.DataMapper;
@@ -38,6 +39,10 @@ public class PosOrderLineManagement implements ObjectManagement, Serializable {
     @Override
     public boolean remove(Object object) {
         return dataMapper.remove(object);
+    }
+
+    public List<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
+        return dataMapper.getVoidedItems(fromDate, toDate);
     }
 
 }

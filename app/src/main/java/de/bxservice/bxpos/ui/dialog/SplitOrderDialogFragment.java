@@ -17,7 +17,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataProvider;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
@@ -127,7 +127,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
 
         int totalQty = 0;
         BigDecimal total = BigDecimal.ZERO;
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DataProvider.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
 
         for(POSOrderLine orderLine : mGridData) {
             totalQty = totalQty + orderLine.getQtyOrdered();
