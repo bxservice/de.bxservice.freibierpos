@@ -606,6 +606,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         if (networkInfo != null && networkInfo.isConnected()) {
 
             showProgress(true);
+            if(order.getPayments() != null && order.getPayments().size() > 1)
+                order.setPaymentRule(IOrder.PAYMENTRULE_MixedPOSPayment);
             createOrderTask = new CreateOrderTask(this);
             createOrderTask.execute(order);
 

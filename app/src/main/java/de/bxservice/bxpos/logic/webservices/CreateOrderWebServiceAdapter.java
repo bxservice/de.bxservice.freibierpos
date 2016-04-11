@@ -16,6 +16,7 @@ import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.POSPayment;
 
 /**
  * Created by Diego Ruiz on 12/02/16.
@@ -30,9 +31,10 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String SERVICE_TYPE = "CompositeCreateOrder";
     private static final String CREATE_ORDER_SERVICE_TYPE = "CreateSalesOrder";
     private static final String CREATE_ORDER_LINE_SERVICE_TYPE = "CreateSalesOrderLine";
+    private static final String CREATE_PAYMENT_SERVICE_TYPE = "CreatePosPayment";
     private static final String DOC_ACTION_SERVICE_TYPE = "DocActionOrder";
 
-    private static final String DOCUMENT_NO_PREFIX = "BX**POS"; //TODO: Define the prefix that will be used
+    private static final String DOCUMENT_NO_PREFIX = "BX***POS"; //TODO: Define the prefix that will be used
     private boolean success;
     private boolean connectionError;
 
@@ -92,6 +94,23 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             createOrderLine.setDataRow(dataLine);
 
             compositeOperation.addOperation(createOrderLine);
+        }
+
+        if(IOrder.PAYMENTRULE_MixedPOSPayment.equals(order.getPaymentRule())) {
+
+            for(POSPayment payment : order.getPayments()) {
+                CreateDataRequest createOrderLine = new CreateDataRequest();
+                createOrderLine.setServiceType(CREATE_PAYMENT_SERVICE_TYPE);
+                DataRow dataLine = new DataRow();
+                dataLine.addField("AD_Org_ID", orgId);
+                dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
+                dataLine.addField("PayAmt", String.valueOf(payment.getPaymentAmount()));
+                dataLine.addField("C_POSTenderType_ID", String.valueOf(payment.getPOSTenderTypeID()));
+                dataLine.addField("TenderType", payment.getPaymentTenderType());
+                createOrderLine.setDataRow(dataLine);
+
+                compositeOperation.addOperation(createOrderLine);
+            }
         }
 
         SetDocActionRequest docAction = new SetDocActionRequest();
