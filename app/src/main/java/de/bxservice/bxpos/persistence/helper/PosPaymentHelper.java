@@ -100,35 +100,4 @@ public class PosPaymentHelper extends PosObjectHelper {
         return payments;
     }
 
-    /**
-     * Returns the current date in format
-     * yyyymmddhhmm
-     * @return
-     */
-    private String getCurrentDate() {
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1; //Calendar month returns the position of the month 0 being January
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minutes = c.get(Calendar.MINUTE);
-
-        StringBuilder date = new StringBuilder();
-        date.append(year);
-        if(month < 10)
-            date.append("0");
-        date.append(month);
-        if(day < 10)
-            date.append("0");
-        date.append(day);
-        if(hour < 10)
-            date.append("0");
-        date.append(hour);
-        if(minutes < 10)
-            date.append("0");
-        date.append(minutes);
-
-        return date.toString();
-    }
-
 }
