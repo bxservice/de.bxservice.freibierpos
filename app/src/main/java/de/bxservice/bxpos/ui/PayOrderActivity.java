@@ -75,7 +75,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     //Numeric pad buttons
     private View deleteButton;
 
-    //TODO: Add the payment option methods supported by iDempiere
     //Payment options
     private ArrayList<POSPayment> payments;
     private ArrayList<String> paymentTypes;
