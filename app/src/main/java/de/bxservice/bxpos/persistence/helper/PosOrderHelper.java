@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
@@ -327,6 +328,11 @@ public class PosOrderHelper extends PosObjectHelper {
 
                 Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
                 order.setSync(flag);
+
+                if(IOrder.PAYMENTRULE_MixedPOSPayment.equals(order.getPaymentRule())) {
+                    PosPaymentHelper paymentHelper = new PosPaymentHelper(mContext);
+                    order.setPayments(paymentHelper.getAllPayments(order));
+                }
 
                 // adding to orders list
                 orders.add(order);
