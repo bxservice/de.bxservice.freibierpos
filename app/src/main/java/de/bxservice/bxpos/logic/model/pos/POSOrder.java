@@ -480,6 +480,19 @@ public class POSOrder implements Serializable {
      * @param isSynchronized
      */
     public void payOrder(boolean isSynchronized, Context ctx) {
+
+        if(payments != null && !payments.isEmpty()) {
+            if(payments.size() == 1)
+                paymentRule = payments.get(0).getTenderType();
+            else {
+                paymentRule = IOrder.PAYMENTRULE_MixedPOSPayment;
+                for(POSPayment payment : payments) {
+                    payment.setOrder(this);
+                    payment.createPayment(ctx);
+                }
+            }
+        }
+
         status = COMPLETE_STATUS;
         sync = isSynchronized;
         updateOrder(ctx);

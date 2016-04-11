@@ -34,6 +34,7 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSPayment;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.ui.adapter.PaymentTypeAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
@@ -76,6 +77,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
     //TODO: Add the payment option methods supported by iDempiere
     //Payment options
+    private ArrayList<POSPayment> payments;
     private ArrayList<String> paymentTypes;
     private HashMap<String, String> paymentNamesValues;
     private String selectedPaymentType;
@@ -131,7 +133,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 int position = recyclerView.getChildAdapterPosition(v);
 
                 String selectedItem = mAdapter.getSelectedItem(position);
-                setSelectedPaymentType(paymentNamesValues.get(selectedItem));
+                selectedPaymentType = paymentNamesValues.get(selectedItem);
             }
         });
 
@@ -375,25 +377,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         return amountToPay;
     }
 
-    /**
-     * Sets the selected payment type if there was a partial payment before
-     * sets Mixed payment
-     * @param selectedPayment value selected from the list
-     */
-    public void setSelectedPaymentType(String selectedPayment) {
-
-        if(selectedPaymentType.equals(selectedPayment))
-            return;
-
-        //If there are no payments already made
-        if(paidAmount.equals(BigDecimal.ZERO)) {
-            selectedPaymentType = selectedPayment;
-        } else {
-            //selectedPaymentType = IOrder.PAYMENTRULE_MixedPOSPayment;
-        }
-
-    }
-
     private void showRemarkDialog() {
         RemarkDialogFragment remarkDialog = new RemarkDialogFragment();
         remarkDialog.setNote(order.getOrderRemark());
@@ -511,19 +494,62 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
     private void onPay() {
 
-        paidAmount = paidAmount.add(getAmountToPay());
+        BigDecimal partialPayment = getAmountToPay();
+        paidAmount = paidAmount.add(partialPayment);
 
         //Paid amount not bigger than the total
         if (paidAmount.compareTo(getTotal()) == -1) {
             onClear();
+            performPartialPayment(partialPayment);
             updatePaidField();
         }
         //Paid amount bigger than the total or same as total
         if (paidAmount.compareTo(getTotal()) == 1 || paidAmount.compareTo(getTotal()) == 0) {
             onClear();
+            //If there were smaller payments before
+            if(payments != null)
+                performPartialPayment(partialPayment);
+
             updatePaidField();
             completePayment();
         }
+    }
+
+    /**
+     * Perform a partial payment
+     * @param partialAmount
+     */
+    private void performPartialPayment(BigDecimal partialAmount) {
+
+        if(payments == null)
+            payments = new ArrayList<>();
+
+        //Change -> if the last payment exceeds the amount needed, place the right amount in the payment
+        BigDecimal change = BigDecimal.ZERO;
+        if(getChange().compareTo(BigDecimal.ZERO) == 1) {
+            change = getChange();
+        }
+
+        POSPayment previousPayment = null;
+
+        if(!payments.isEmpty()) {
+            for(POSPayment oldPayment : payments) {
+                if(oldPayment.getTenderType().equals(selectedPaymentType)) {
+                    previousPayment = oldPayment;
+                }
+            }
+        }
+
+        if(previousPayment == null) {
+            POSPayment partialPayment = new POSPayment();
+            partialPayment.setPaymentAmount(partialAmount.subtract(change));
+            partialPayment.setCashTenderTypeId(selectedPaymentType);
+            payments.add(partialPayment);
+        }
+        else {
+            previousPayment.setPaymentAmount(previousPayment.getPaymentAmount().add(partialAmount.subtract(change)));
+        }
+
     }
 
     private void completePayment() {
@@ -559,6 +585,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         }
 
         orderPaid = true;
+        order.setPayments(payments);
         order.setPaymentRule(selectedPaymentType);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
