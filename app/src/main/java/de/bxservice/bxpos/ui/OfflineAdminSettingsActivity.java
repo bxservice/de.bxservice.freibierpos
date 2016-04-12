@@ -28,6 +28,9 @@ import de.bxservice.bxpos.R;
  */
 public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
 
+    //Restaurant
+    public static final String KEY_ORDER_PREFIX = "pref_order_prefix";
+
     //General
     public static final String KEY_PREF_URL = "pref_serverurl";
     public static final String KEY_ORG_ID = "pref_org";

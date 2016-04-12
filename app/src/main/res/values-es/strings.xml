@@ -177,6 +177,9 @@
     <string name="net_sales">Ventas netas</string>
     <string name="voided_items">Items anulados</string>
     <string name="sales">Ventas</string>
+    <string name="pref_header_restaurant">Restaurante</string>
+    <string name="order_prefix">Prefijo de orden</string>
+    <string name="prefix">Prefijo</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
