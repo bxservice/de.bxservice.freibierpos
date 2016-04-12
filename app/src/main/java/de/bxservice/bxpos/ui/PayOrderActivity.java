@@ -312,42 +312,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         return getString(R.string.paid_value, currencyFormat.format(paidAmount));
     }
 
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getSurcharge() {
-        return surcharge;
-    }
-
-    public BigDecimal getPaidAmount() {
-        return paidAmount;
-    }
-
-    public void setPaidAmount(BigDecimal paidAmount) {
-        this.paidAmount = paidAmount;
-    }
-
     private BigDecimal getChange() {
         changeAmount = total.subtract(paidAmount);
         changeAmount = changeAmount.subtract(amountToPay);
         return changeAmount.negate();
-    }
-
-    public void setSurcharge(BigDecimal surcharge) {
-        this.surcharge = surcharge;
-    }
-
-    public BigDecimal getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
     }
 
     /**
