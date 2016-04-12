@@ -28,7 +28,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 18;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -89,7 +89,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK + " VARCHAR(64)" +
                     ", " +
-                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO:FK to users
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " INTEGER REFERENCES "
+                        + Tables.TABLE_USER + "(" + UserContract.User.COLUMN_NAME_USER_ID + ") ON DELETE CASCADE" +  //FK to user
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
                     ", " +
@@ -116,7 +117,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     "(" +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " INTEGER PRIMARY KEY" +
                     ", " +
-                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO: FK
+                    PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY + " INTEGER REFERENCES "
+                    + Tables.TABLE_USER + "(" + UserContract.User.COLUMN_NAME_USER_ID + ") ON DELETE CASCADE" +  //FK to user
                     ", " +
                     PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK + " VARCHAR(64)" +
                     ", " +
@@ -144,7 +146,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     "(" +
                     PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_ID + " INTEGER PRIMARY KEY" +
                     ", " +
-                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_BY + " VARCHAR(64) NOT NULL" + //TODO: FK
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_BY + " INTEGER REFERENCES "
+                    + Tables.TABLE_USER + "(" + UserContract.User.COLUMN_NAME_USER_ID + ") ON DELETE CASCADE" +  //FK to user
                     ", " +
                     PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE + " INTEGER" +
                     ", " +

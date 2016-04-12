@@ -34,7 +34,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String CREATE_PAYMENT_SERVICE_TYPE = "CreatePosPayment";
     private static final String DOC_ACTION_SERVICE_TYPE = "DocActionOrder";
 
-    private static final String DOCUMENT_NO_PREFIX = "BX***POS"; //TODO: Define the prefix that will be used
+    private static final String DOCUMENT_NO_PREFIX = "BX+*POS"; //TODO: Define the prefix that will be used
     private boolean success;
     private boolean connectionError;
 

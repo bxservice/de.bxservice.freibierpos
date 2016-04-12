@@ -13,6 +13,7 @@ import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -30,9 +31,12 @@ public class PosOrderHelper extends PosObjectHelper {
     public long createOrder(POSOrder order) {
         SQLiteDatabase database = getWritableDatabase();
 
+        PosUserHelper userHelper = new PosUserHelper(mContext);
+        int userId = userHelper.getUserId(WebServiceRequestData.getInstance().getUsername());
+
         ContentValues values = new ContentValues();
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));
-        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY, ""); //TODO: Get current user
+        values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY, userId);
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS, order.getStatus());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS, order.getGuestNumber());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK, order.getOrderRemark());
