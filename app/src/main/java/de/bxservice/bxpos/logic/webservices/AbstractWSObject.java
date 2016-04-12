@@ -32,7 +32,7 @@ abstract class AbstractWSObject {
             initLogin();
             initClient();
             setParameter(parameter);
-            runWebService();
+            //runWebService();
         }
 
     }

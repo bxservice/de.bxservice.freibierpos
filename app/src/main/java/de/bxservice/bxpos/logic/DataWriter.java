@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.logic;
 
+import android.content.Context;
 import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -18,14 +19,14 @@ public class DataWriter {
     private boolean success = false;
     private boolean connectionError = false;
 
-    public DataWriter(final POSOrder order) {
+    public DataWriter(final POSOrder order, final Context context) {
 
         Log.i(LOG_TAG, "Data Writer accessed");
 
         Thread createOrderThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(order);
+                CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(order, context);
                 success = createOrderWS.isSuccess();
                 connectionError = createOrderWS.isConnectionError();
             }
