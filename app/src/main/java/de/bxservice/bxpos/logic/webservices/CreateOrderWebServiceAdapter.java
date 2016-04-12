@@ -1,5 +1,8 @@
 package de.bxservice.bxpos.logic.webservices;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.DataRow;
@@ -17,6 +20,7 @@ import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
+import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 
 /**
  * Created by Diego Ruiz on 12/02/16.
@@ -34,12 +38,15 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String CREATE_PAYMENT_SERVICE_TYPE = "CreatePosPayment";
     private static final String DOC_ACTION_SERVICE_TYPE = "DocActionOrder";
 
-    private static final String DOCUMENT_NO_PREFIX = "BX+*POS"; //TODO: Define the prefix that will be used
+    private static final String DOCUMENT_NO_PREFIX = "BXS-POS";
     private boolean success;
     private boolean connectionError;
+    private Context mContext;
 
-    public CreateOrderWebServiceAdapter(POSOrder order) {
+    public CreateOrderWebServiceAdapter(POSOrder order, Context ctx) {
         super(order);
+        mContext = ctx;
+        queryPerformed();
     }
 
 
@@ -63,6 +70,8 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         String orgId = getLogin().getOrgID().toString();
 
         DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, DOCUMENT_NO_PREFIX);
 
         DataRow data = new DataRow();
         data.addField("C_BPartner_ID", String.valueOf(defaultPosData.getDefaultBPartner()));
@@ -72,7 +81,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("C_DocTypeTarget_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("C_DocType_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("Description", order.getOrderRemark());
-        data.addField("DocumentNo", DOCUMENT_NO_PREFIX + order.getOrderId());
+        data.addField("DocumentNo", orderPrefix + order.getOrderId());
         data.addField("IsSOTrx", "Y"); //Sales OrderPaymentRule
         data.addField("PaymentRule", order.getPaymentRule());
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
