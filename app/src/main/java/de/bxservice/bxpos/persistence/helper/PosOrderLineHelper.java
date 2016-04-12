@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -28,9 +29,12 @@ public class PosOrderLineHelper extends PosObjectHelper {
     public long createOrderLine(POSOrderLine orderLine) {
         SQLiteDatabase database = getWritableDatabase();
 
+        PosUserHelper userHelper = new PosUserHelper(mContext);
+        int userId = userHelper.getUserId(WebServiceRequestData.getInstance().getUsername());
+
         ContentValues values = new ContentValues();
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));
-        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY, ""); //TODO: Get current user
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY, userId);
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderLine.getOrder().getOrderId());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS, orderLine.getLineStatus());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID, orderLine.getProduct().getProductID());
