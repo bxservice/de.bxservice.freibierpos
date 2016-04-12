@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_header_restaurant"
+        android:key="pref_key_restaurant_settings">
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue="@string/bx_pos"
+            android:inputType="text"
+            android:key="pref_order_prefix"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:hint="@string/prefix"
+            android:title="@string/order_prefix" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/pref_header_general"
         android:key="pref_key_storage_settings">

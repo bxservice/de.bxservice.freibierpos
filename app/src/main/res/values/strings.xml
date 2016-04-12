@@ -180,6 +180,9 @@
     <string name="net_sales">Net sales</string>
     <string name="voided_items">Voided items</string>
     <string name="sales">Sales</string>
+    <string name="pref_header_restaurant">Restaurant</string>
+    <string name="order_prefix">Order prefix</string>
+    <string name="prefix">Prefix</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
