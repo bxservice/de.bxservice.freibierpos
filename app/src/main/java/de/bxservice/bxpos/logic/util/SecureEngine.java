@@ -71,10 +71,9 @@ public class SecureEngine {
         //	see also Util.toHex
         int size = bytes.length;
         StringBuilder buffer = new StringBuilder(size*2);
-        for(int i=0; i<size; i++)
-        {
+        for (byte aByte : bytes) {
             // convert byte to an int
-            int x = bytes[i];
+            int x = aByte;
             // account for int being a signed type and byte being unsigned
             if (x < 0)
                 x += 256;
