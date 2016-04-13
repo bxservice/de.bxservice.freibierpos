@@ -75,6 +75,7 @@
     <string name="subtotal_value">Subtotal: %1$s</string>
     <string name="total">Total</string>
     <string name="total_value">Total: %1$s</string>
+    <string name="quantity_summary">Cantidad: %1$s</string>
 
     <!-- Strings related to roles -->
     <string name="role">Rol</string>
@@ -152,6 +153,7 @@
     <string name="error_no_connection_on_sync_order">No hay conexión a internet. Intente más adelante</string>
 
     <string name="success_on_sync_order">Órdenes sincronizadas</string>
+    <string name="no_success_on_sync_order">Su dispositivo no se puede comunicar con iDempiere. Intente más adelante</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Sincronizar</string>
@@ -164,6 +166,7 @@
     <string name="pref_header_data_security">Seguridad</string>
     <string name="pref_summary_void_approval">Solicitar un PIN cuando se anulan items</string>
     <string name="pref_title_void_approval">Bloquear anular items</string>
+    <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">Una razón debe ser introducida</string>
     <string name="approve_void">Confirmación de anulación</string>
     <string name="void_summary">¿Anular %1$s items?</string>
@@ -186,6 +189,11 @@
         <item>Ventas</item>
         <item>Items anulados</item>
         <item>Ventas por mesa</item>
+    </string-array>
+    <string-array name="report_types_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <!-- Payment types -->
