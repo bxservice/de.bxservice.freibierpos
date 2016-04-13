@@ -68,13 +68,14 @@
 
     <!-- Strings related to orders -->
     <string name="empty_order"> Die auftrag ist leer</string>
-    <string name="ordering"> BESTELLUNG</string>
-    <string name="ordered"> BESTELLT</string>
-    <string name="quantity"> Menge</string>
+    <string name="ordering">BESTELLUNG</string>
+    <string name="ordered">BESTELLT</string>
+    <string name="quantity">Menge</string>
     <string name="subtotal">Zwischensumme</string>
     <string name="subtotal_value">Zwischensumme: %1$s</string>
     <string name="total">Gesamt</string>
     <string name="total_value">Gesamt: %1$s</string>
+    <string name="quantity_summary">Menge: %1$s</string>
 
 
     <!-- Strings related to roles -->
@@ -155,6 +156,7 @@
     <string name="error_no_connection_on_sync_order">Keine Internetverbindung. Versuchen Sie es später noch einmal</string>
 
     <string name="success_on_sync_order">Bestellungen synchronisiert</string>
+    <string name="no_success_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronisieren</string>
@@ -167,6 +169,7 @@
     <string name="pref_header_data_security">Security</string>
     <string name="pref_summary_void_approval">Request a PIN when an item is voided</string>
     <string name="pref_title_void_approval">Block void items</string>
+    <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">A reason must be introduced</string>
     <string name="approve_void">Void approval</string>
     <string name="void_summary">Void %1$s items?</string>
@@ -189,6 +192,11 @@
         <item>Sales</item>
         <item>Void items</item>
         <item>Table sales</item>
+    </string-array>
+    <string-array name="report_types_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <!-- Payment types -->
