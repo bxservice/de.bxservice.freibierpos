@@ -65,16 +65,16 @@ public class DefaultPosData {
         dataManager = new PosDefaultDataManagement(ctx);
 
         if (dataManager.get(1) == null)
-            return createData(ctx);
+            return createData();
         else
-            return updateData(ctx);
+            return updateData();
     }
 
-    private boolean createData (Context ctx) {
+    private boolean createData () {
         return dataManager.create(this);
     }
 
-    private boolean updateData (Context ctx) {
+    private boolean updateData () {
         return dataManager.update(this);
     }
 
