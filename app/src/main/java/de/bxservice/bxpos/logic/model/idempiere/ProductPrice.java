@@ -66,10 +66,7 @@ public class ProductPrice {
      * @return
      */
     public Integer getIntegerStdPrice() {
-        Integer total;
-        total = Integer.valueOf(stdPrice.multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
-
-        return total;
+        return stdPrice.multiply(BigDecimal.valueOf(100)).intValue(); //total * 100
     }
 
     /**

@@ -90,10 +90,7 @@ public class POSOrderLine implements Serializable {
      * @return
      */
     public Integer getLineNetAmtInteger() {
-        Integer total;
-        total = Integer.valueOf(getLineNetAmt().multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
-
-        return total;
+        return getLineNetAmt().multiply(BigDecimal.valueOf(100)).intValue(); //total * 100
     }
 
     /**
