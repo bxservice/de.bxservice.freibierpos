@@ -416,10 +416,7 @@ public class POSOrder implements Serializable {
      * @return
      */
     public Integer getTotallinesInteger() {
-        Integer total;
-        total = Integer.valueOf(getTotallines().multiply(BigDecimal.valueOf(100)).intValue()); //total * 100
-
-        return total;
+        return getTotallines().multiply(BigDecimal.valueOf(100)).intValue(); //total * 100
     }
 
     /**
