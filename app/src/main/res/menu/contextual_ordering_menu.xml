@@ -2,8 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+
     <item
-    android:id="@+id/ctx_item_delete"
+        android:id="@+id/ctx_complimentary_item"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_card_giftcard_white_24dp"
+        android:title="@string/complimentary"
+        android:titleCondensed="@string/complimentary">
+    </item>
+
+    <item
+        android:id="@+id/ctx_item_delete"
         android:icon="@drawable/ic_delete_white_24dp"
         app:showAsAction="ifRoom|withText"
         android:title="@string/delete"

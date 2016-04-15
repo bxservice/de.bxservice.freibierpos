@@ -978,6 +978,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     showKitchenNoteDialog();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
+                case R.id.ctx_complimentary_item:
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
                 default:
                     return false;
             }
