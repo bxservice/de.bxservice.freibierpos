@@ -141,6 +141,13 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
         holder.bindOrderLine(orderLine);
         holder.itemView.setActivated(selectedItems.get(position, false));
+        holder.setIsRecyclable(false);
+        
+        //Show in a special color the voided lines
+        if(orderLine.isComplimentaryProduct()) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#BAFBAF"));
+            holder.itemView.setClickable(false);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
