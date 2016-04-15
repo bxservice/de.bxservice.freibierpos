@@ -183,6 +183,7 @@
     <string name="pref_header_restaurant">Restaurant</string>
     <string name="order_prefix">Order prefix</string>
     <string name="prefix">Prefix</string>
+    <string name="complimentary">Complimentary</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

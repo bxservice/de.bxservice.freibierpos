@@ -183,6 +183,7 @@
     <string name="pref_header_restaurant">Restaurante</string>
     <string name="order_prefix">Prefijo de orden</string>
     <string name="prefix">Prefijo</string>
+    <string name="complimentary">Cortesía</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
