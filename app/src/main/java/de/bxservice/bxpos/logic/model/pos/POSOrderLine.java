@@ -108,10 +108,6 @@ public class POSOrderLine implements Serializable {
         lineNetAmt = BigDecimal.valueOf(doubleValue);
     }
 
-    public void setLineNetAmt(BigDecimal lineNetAmt) {
-        this.lineNetAmt = lineNetAmt;
-    }
-
     public String getLineTotalAmt() {
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
@@ -148,22 +144,6 @@ public class POSOrderLine implements Serializable {
 
     public void setComplimentaryProduct(boolean complimentaryProduct) {
         isComplimentaryProduct = complimentaryProduct;
-    }
-
-    public boolean sendOrder (Context ctx) {
-
-        lineManager = new PosOrderLineManagement(ctx);
-        boolean result;
-
-        completeLine();
-
-        result = lineManager.create(this);
-
-        if(!result)
-            uncompleteLine();
-
-        return result;
-
     }
 
     public void completeLine() {
