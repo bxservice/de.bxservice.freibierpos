@@ -4,6 +4,12 @@
     <color name="colorPrimaryDark">#497799</color>
     <color name="colorAccent">#3a6d99</color>
 
+    <!-- Background color for complimentary lines. -->"
+    <color name="complimentaryLineColor">#BAFBAF</color>
+
+    <!-- Background color for voided lines. -->"
+    <color name="voidedLineColor">#FF4646</color>
+
     <!-- Background color for the numeric pad. -->
     <color name="pad_numeric_background_color">#434343</color>
 

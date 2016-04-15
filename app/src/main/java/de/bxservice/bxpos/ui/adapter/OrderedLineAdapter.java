@@ -1,6 +1,7 @@
 package de.bxservice.bxpos.ui.adapter;
 
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.util.TypedValue;
@@ -135,7 +136,7 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
 
         //Show in a special color the voided lines
         if(orderLine.getQtyOrdered() < 0) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#FF4646"));
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.voidedLineColor));
             holder.itemView.setClickable(false);
         }
     }

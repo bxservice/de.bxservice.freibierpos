@@ -2,6 +2,7 @@ package de.bxservice.bxpos.ui.adapter;
 
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.util.TypedValue;
@@ -142,10 +143,10 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
         holder.bindOrderLine(orderLine);
         holder.itemView.setActivated(selectedItems.get(position, false));
         holder.setIsRecyclable(false);
-        
+
         //Show in a special color the voided lines
         if(orderLine.isComplimentaryProduct()) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#BAFBAF"));
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.complimentaryLineColor));
             holder.itemView.setClickable(false);
         }
     }
