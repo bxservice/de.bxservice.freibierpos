@@ -14,6 +14,8 @@ import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
 
+import java.math.BigDecimal;
+
 import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
@@ -100,6 +102,11 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             dataLine.addField("Description", orderLine.getProductRemark());
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
             dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
+            if(orderLine.isComplimentaryProduct()) {
+                dataLine.addField("PriceEntered", String.valueOf(BigDecimal.ZERO));
+                dataLine.addField("PriceActual", String.valueOf(BigDecimal.ZERO));
+                dataLine.addField("PriceList", String.valueOf(orderLine.getProduct().getProductPriceValue()));
+            }
             createOrderLine.setDataRow(dataLine);
 
             compositeOperation.addOperation(createOrderLine);

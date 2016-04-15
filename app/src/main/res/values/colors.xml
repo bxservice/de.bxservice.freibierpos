@@ -5,7 +5,7 @@
     <color name="colorAccent">#3a6d99</color>
 
     <!-- Background color for complimentary lines. -->"
-    <color name="complimentaryLineColor">#BAFBAF</color>
+    <color name="complimentaryLineColor">#63A882</color>
 
     <!-- Background color for voided lines. -->"
     <color name="voidedLineColor">#FF4646</color>
