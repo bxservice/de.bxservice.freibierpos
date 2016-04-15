@@ -895,6 +895,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                                 POSOrderLine orderLine = order.getOrderingLines().get(selectedItemPositions.get(i));
                                 orderLine.setComplimentaryProduct(true);
                                 orderLine.updateLine(getBaseContext());
+                                EditOrderActivity.this.recreate();
                             }
                         }
                     }
