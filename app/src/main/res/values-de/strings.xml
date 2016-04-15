@@ -187,6 +187,8 @@
     <string name="order_prefix">Order prefix</string>
     <string name="prefix">Prefix</string>
     <string name="complimentary">Gratis</string>
+    <string name="give_complimentary_product">Are you sure you want to give this item for free?</string>
+    <string name="give">Give</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
