@@ -35,6 +35,9 @@ public class POSOrderLine implements Serializable {
     private String lineStatus;
     private BigDecimal lineNetAmt = BigDecimal.ZERO; //qty*StpPrice
 
+    //Defines if the order line is a free product
+    private boolean isComplimentaryProduct = false;
+
 
     public MProduct getProduct() {
         return product;
@@ -135,6 +138,14 @@ public class POSOrderLine implements Serializable {
 
     public void setLineNo(int lineNo) {
         this.lineNo = lineNo;
+    }
+
+    public boolean isComplimentaryProduct() {
+        return isComplimentaryProduct;
+    }
+
+    public void setComplimentaryProduct(boolean complimentaryProduct) {
+        isComplimentaryProduct = complimentaryProduct;
     }
 
     public boolean sendOrder (Context ctx) {

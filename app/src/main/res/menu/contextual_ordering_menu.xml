@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
-    <item
-        android:id="@+id/ctx_complimentary_item"
-        app:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_card_giftcard_white_24dp"
-        android:title="@string/complimentary"
-        android:titleCondensed="@string/complimentary">
-    </item>
 
     <item
         android:id="@+id/ctx_item_delete"
         android:icon="@drawable/ic_delete_white_24dp"
-        app:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="@string/delete"
         android:titleCondensed="@string/delete">
     </item>
@@ -22,17 +13,26 @@
     <item
         android:id="@+id/ctx_item_copy"
         android:icon="@drawable/abc_ic_menu_copy_mtrl_am_alpha"
-        app:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="@string/copy"
         android:titleCondensed="@string/copy">
     </item>
 
     <item
         android:id="@+id/ctx_item_note"
-        app:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:icon="@drawable/ic_note_add_white_24dp"
         android:title="@string/note"
         android:titleCondensed="@string/note">
     </item>
+
+    <item
+        android:id="@+id/ctx_complimentary_item"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_card_giftcard_white_24dp"
+        android:title="@string/complimentary"
+        android:titleCondensed="@string/complimentary">
+    </item>
+
 
 </menu>

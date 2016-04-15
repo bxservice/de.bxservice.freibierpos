@@ -184,6 +184,8 @@
     <string name="order_prefix">Prefijo de orden</string>
     <string name="prefix">Prefijo</string>
     <string name="complimentary">Cortesía</string>
+    <string name="give_complimentary_product">¿Esta seguro que desea regalar este producto?</string>
+    <string name="give">Regalar</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

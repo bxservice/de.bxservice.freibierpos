@@ -882,6 +882,24 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
+    private void setItemsAsComplimentary() {
+        final List<Integer> selectedItemPositions = getSelectedItems();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.give_complimentary_product)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.give, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        if(selectedItemPositions != null && !selectedItemPositions.isEmpty()) {
+                            for(int i = 0; i< selectedItemPositions.size(); i++) {
+                                POSOrderLine orderLine = order.getOrderingLines().get(selectedItemPositions.get(i));
+                                orderLine.setComplimentaryProduct(true);
+                            }
+                        }
+                    }
+                }).create().show();
+    }
+
     /**
      * Check all the lines selected and see if they can be voided
      * @return
@@ -979,6 +997,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 case R.id.ctx_complimentary_item:
+                    setItemsAsComplimentary();
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:
