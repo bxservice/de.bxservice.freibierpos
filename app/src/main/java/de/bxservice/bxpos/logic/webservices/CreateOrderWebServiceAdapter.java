@@ -103,7 +103,9 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
             dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
             if(orderLine.isComplimentaryProduct()) {
+                //Set the price to zero for complimentary products
                 dataLine.addField("PriceEntered", String.valueOf(BigDecimal.ZERO));
+                //Send these two values to avoid iDempiere of setting the price in the beforeSave method
                 dataLine.addField("PriceActual", String.valueOf(BigDecimal.ZERO));
                 dataLine.addField("PriceList", String.valueOf(orderLine.getProduct().getProductPriceValue()));
             }
