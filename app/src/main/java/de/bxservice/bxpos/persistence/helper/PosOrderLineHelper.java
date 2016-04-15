@@ -43,8 +43,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK, orderLine.getProductRemark());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT, orderLine.getLineNetAmtInteger());
 
-        // insert row
+        int flag = (orderLine.isComplimentaryProduct()) ? 1 : 0;
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY, flag);
 
+        // insert row
         return database.insert(Tables.TABLE_POSORDER_LINE, null, values);
     }
 
@@ -95,6 +97,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_UPDATED_AT, Long.parseLong(getCurrentDate()));
 
+        int flag = (orderLine.isComplimentaryProduct()) ? 1 : 0;
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY, flag);
+
         // updating row
         return db.update(Tables.TABLE_POSORDER_LINE, values,PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?",
                 new String[] { String.valueOf(orderLine.getOrderLineId()) });
@@ -129,6 +134,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
                 orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
                 orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
                 orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY)) != 0);
+                orderLine.setComplimentaryProduct(flag);
 
                 lines.add(orderLine);
             } while (c.moveToNext());
@@ -200,6 +208,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
                 orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
                 orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
                 orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY)) != 0);
+                orderLine.setComplimentaryProduct(flag);
 
                 lines.add(orderLine);
             } while (c.moveToNext());
