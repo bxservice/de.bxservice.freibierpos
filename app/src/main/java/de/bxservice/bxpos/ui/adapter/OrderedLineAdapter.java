@@ -139,6 +139,11 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
             holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.voidedLineColor));
             holder.itemView.setClickable(false);
         }
+        //Show in a special color the voided lines
+        else if(orderLine.isComplimentaryProduct()) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.complimentaryLineColor));
+            holder.itemView.setClickable(false);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
