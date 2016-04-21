@@ -1,11 +1,10 @@
-package de.bxservice.bxpos.logic;
+package de.bxservice.bxpos.logic.print;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class BluetoothPrinterService {
     private int readBufferPosition;
     private volatile boolean stopWorker;
 
-    // Unique UUID for this application, you may use different
+    // Unique UUID for this application
     private static final UUID MY_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805f9b34fb");
 
@@ -47,7 +46,6 @@ public class BluetoothPrinterService {
         try {
             findBT();
             openBT();
-            sendData();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -108,12 +106,11 @@ public class BluetoothPrinterService {
     }
 
     /*
-     * after opening a connection to bluetooth printer device,
+     * After opening a connection to bluetooth printer device,
      * we have to listen and check if a data were sent to be printed.
     */
     private void beginListenForData() {
         try {
-            //final Handler handler = new Handler();
 
             // this is the ASCII code for a newline character
             final byte delimiter = 10;
@@ -149,16 +146,8 @@ public class BluetoothPrinterService {
                                         );
 
                                         // specify US-ASCII encoding
-                                        final String data = new String(encodedBytes, "US-ASCII");
                                         readBufferPosition = 0;
 
-                                        // tell the user data were sent to bluetooth printer device
-                                        /*handler.post(new Runnable() {
-                                            public void run() {
-                                                Log.i(TAG, data);
-                                            }
-                                        });
-*/
                                     } else {
                                         readBuffer[readBufferPosition++] = b;
                                     }
@@ -181,20 +170,14 @@ public class BluetoothPrinterService {
     }
 
     // Method that sends the text to be printed by the bluetooth printer
-    void sendData() throws IOException {
+    public void sendData(byte[] out) {
         try {
-
-            // the text typed by the user
-            String msg = "TESTING";
-            msg += "\n";
-
-            mmOutputStream.write(msg.getBytes());
-
+            mmOutputStream.write(out);
             // tell the user data were sent
             Log.i(TAG, "Data sent");
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e(TAG, "Exception during write", e);
         }
     }
 

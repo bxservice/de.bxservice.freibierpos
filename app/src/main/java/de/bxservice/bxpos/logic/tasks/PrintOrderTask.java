@@ -5,8 +5,11 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 
-import de.bxservice.bxpos.logic.BluetoothPrinterService;
+import de.bxservice.bxpos.logic.print.BluetoothPrinterService;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.print.CPCLPrinter;
+import de.bxservice.bxpos.logic.print.POSPrinter;
+import de.bxservice.bxpos.logic.print.POSPrinterFactory;
 
 /**
  * Created by Diego Ruiz on 20/04/16.
@@ -25,9 +28,12 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
     protected Boolean doInBackground(POSOrder... orders) {
 
         boolean success = true;
-
+        POSPrinterFactory printerFactory = new POSPrinterFactory();
+        POSPrinter printer = printerFactory.getPrinter("CPCL");
+        bt = new BluetoothPrinterService(mActivity);
         for(POSOrder order : orders) {
-            bt = new BluetoothPrinterService(mActivity);
+            bt.sendData(printer.print().getBytes());
+
         }
 
         return success;
@@ -37,7 +43,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
     protected void onPostExecute(final Boolean success) {
         if(bt != null) {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(20000);
                 bt.closeBT();
             } catch(IOException e) {
 
