@@ -25,13 +25,11 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.BluetoothPrinterService;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
