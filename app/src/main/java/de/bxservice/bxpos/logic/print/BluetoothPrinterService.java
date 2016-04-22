@@ -93,6 +93,7 @@ public class BluetoothPrinterService {
 
             // Standard SerialPortService ID
             mmSocket = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
+            //TODO: Add validation if the device is available
             mmSocket.connect();
             mmOutputStream = mmSocket.getOutputStream();
             mmInputStream = mmSocket.getInputStream();
@@ -101,7 +102,7 @@ public class BluetoothPrinterService {
             Log.i(TAG, "Bluetooth Opened");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Bluetooth not connected", e);
         }
     }
 
@@ -193,6 +194,13 @@ public class BluetoothPrinterService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isConnected() {
+        if(mmSocket == null)
+            return false;
+
+        return mmSocket.isConnected();
     }
 
 }

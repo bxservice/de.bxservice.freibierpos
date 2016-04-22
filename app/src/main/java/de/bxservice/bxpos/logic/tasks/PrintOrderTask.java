@@ -29,11 +29,12 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
         boolean success = true;
         POSPrinterFactory printerFactory = new POSPrinterFactory();
-        POSPrinter printer = printerFactory.getPrinter("CPCL");
         bt = new BluetoothPrinterService(mActivity);
         for(POSOrder order : orders) {
-            bt.sendData(printer.print().getBytes());
-
+            if(bt.isConnected()) {
+                POSPrinter printer = printerFactory.getPrinter("CPCL", order);
+                bt.sendData(printer.print().getBytes());
+            }
         }
 
         return success;
@@ -44,7 +45,8 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         if(bt != null) {
             try {
                 Thread.sleep(20000);
-                bt.closeBT();
+                if(bt.isConnected())
+                    bt.closeBT();
             } catch(IOException e) {
 
             } catch(InterruptedException ex) {
