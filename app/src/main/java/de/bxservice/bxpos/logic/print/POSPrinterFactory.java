@@ -1,5 +1,7 @@
 package de.bxservice.bxpos.logic.print;
 
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
+
 /**
  * Factory that creates the string object to be
  * printed based on the selected printer
@@ -7,12 +9,12 @@ package de.bxservice.bxpos.logic.print;
  */
 public class POSPrinterFactory {
 
-    public POSPrinter getPrinter(String printerType) {
+    public POSPrinter getPrinter(String printerType, POSOrder order) {
         if(printerType == null)
             return null;
 
         if(printerType.equalsIgnoreCase("CPCL"))
-            return new CPCLPrinter();
+            return new CPCLPrinter(order);
 
         return null;
     }
