@@ -11,6 +11,7 @@ import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * This represents the draft order - contains
@@ -620,6 +621,10 @@ public class POSOrder implements Serializable {
         voidLine.createLine(null);
 
         return true;
+    }
+
+    public String getServerName() {
+        return WebServiceRequestData.getInstance().getUsername();
     }
 
 }

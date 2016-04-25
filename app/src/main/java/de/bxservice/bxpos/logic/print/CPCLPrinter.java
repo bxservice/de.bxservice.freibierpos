@@ -71,7 +71,8 @@ public class CPCLPrinter extends AbstractPOSPrinter {
      * Print the kitchen receipt
      * Returns a string with %s
      * 1 - Order string
-     * 2 - Type
+     * 2 - Table
+     * 3 - Table Number
      * 3 - Server
      * 4 - Guests
      */
@@ -88,8 +89,8 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append("\r\n");
         ticket.append("%s #: "+ order.getOrderId() +"\r\n");
         ticket.append( "! U1 SETLP 7 0 24\r\n");
-        ticket.append( "%s: Dine-in\r\n");         //TODO: Fill right value
-        ticket.append("%s: Garden\r\n"); //TODO: Fill right value
+        ticket.append( "%s: %s\r\n");
+        ticket.append("%s: " + order.getServerName() +"\r\n");
         ticket.append( "%s: "+ order.getGuestNumber() +"\r\n");
         ticket.append("\r\n");
         ticket.append( "! U1 SETLP 5 2 46\r\n");
