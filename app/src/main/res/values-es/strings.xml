@@ -186,6 +186,7 @@
     <string name="complimentary">Cortesía</string>
     <string name="give_complimentary_product">¿Esta seguro que desea regalar este producto?</string>
     <string name="give">Regalar</string>
+    <string name="type">Tipo</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

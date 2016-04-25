@@ -64,6 +64,20 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "! U1 PRESENT-AT\r\n" +
                 "! U1 PRINT\r\n";*/
 
+        return null;
+    }
+
+    /**
+     * Print the kitchen receipt
+     * Returns a string with %s
+     * 1 - Order string
+     * 2 - Type
+     * 3 - Server
+     * 4 - Guests
+     */
+    @Override
+    public String printKitchen() {
+        //TODO: Filter only kitchen items
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
 
@@ -72,15 +86,18 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append("! U1 JOURNAL\r\n");
         ticket.append("! U1 SETLP 5 3 86\r\n");
         ticket.append("\r\n");
-        ticket.append("Order #: "+ order.getOrderId() +"\r\n");
+        ticket.append("%s #: "+ order.getOrderId() +"\r\n");
         ticket.append( "! U1 SETLP 7 0 24\r\n");
-        ticket.append( "Type: Dine-in\r\n");
-        ticket.append("Server: Garden\r\n");
-        ticket.append( "Guests: "+ order.getGuestNumber() +"\r\n");
+        ticket.append( "%s: Dine-in\r\n");         //TODO: Fill right value
+        ticket.append("%s: Garden\r\n"); //TODO: Fill right value
+        ticket.append( "%s: "+ order.getGuestNumber() +"\r\n");
         ticket.append("\r\n");
         ticket.append( "! U1 SETLP 5 2 46\r\n");
-        for(POSOrderLine line : order.getOrderedLines())
+        for(POSOrderLine line : order.getOrderedLines()) {
             ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "\r\n");
+            if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
+                ticket.append("    " + line.getProductRemark() + "\r\n");
+        }
         ticket.append("\r\n");
         ticket.append( "! U1 SETLP 7 0 24\r\n");
         ticket.append(dateFormat.format(cal.getTime())+"\r\n");//2014/08/06 16:00:22
@@ -89,15 +106,6 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
         return ticket.toString();
 
-    }
-
-    public void sendCommand(String paramString) {
-
-    }
-
-    @Override
-    public String printKitchen() {
-        return null;
     }
 
     @Override
