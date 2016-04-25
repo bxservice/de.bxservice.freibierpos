@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 
+import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.print.BluetoothPrinterService;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.print.CPCLPrinter;
@@ -33,7 +34,11 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         for(POSOrder order : orders) {
             if(bt.isConnected()) {
                 POSPrinter printer = printerFactory.getPrinter("CPCL", order);
-                bt.sendData(printer.print().getBytes());
+                bt.sendData(String.format(printer.printKitchen(),
+                        new Object[] { mActivity.getResources().getString(R.string.order),
+                                mActivity.getResources().getString(R.string.type),
+                                mActivity.getResources().getString(R.string.waiter_role),
+                                mActivity.getResources().getString(R.string.guests)}).getBytes());
                 //bt.sendData("\r\n PRINT\r\n".getBytes());
             }
         }
