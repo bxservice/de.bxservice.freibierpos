@@ -34,6 +34,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
             if(bt.isConnected()) {
                 POSPrinter printer = printerFactory.getPrinter("CPCL", order);
                 bt.sendData(printer.print().getBytes());
+                //bt.sendData("\r\n PRINT\r\n".getBytes());
             }
         }
 
