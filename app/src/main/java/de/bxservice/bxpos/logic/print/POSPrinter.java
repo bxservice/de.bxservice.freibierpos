@@ -5,4 +5,7 @@ package de.bxservice.bxpos.logic.print;
  */
 public interface POSPrinter {
     String print();
+    String printKitchen();
+    String printBar();
+    String printReceipt();
 }

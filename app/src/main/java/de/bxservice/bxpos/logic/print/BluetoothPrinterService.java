@@ -19,6 +19,7 @@ import java.util.UUID;
 public class BluetoothPrinterService {
 
     private static final String TAG = "BluetoothPrinterService";
+    private static int MAX_DATA_TO_WRITE_TO_STREAM_AT_ONCE = 1024;
 
     private Activity activity;
 
@@ -174,11 +175,44 @@ public class BluetoothPrinterService {
     public void sendData(byte[] out) {
         try {
             mmOutputStream.write(out);
+            mmOutputStream.flush();
             // tell the user data were sent
             Log.i(TAG, "Data sent");
+            //write(out, 0, out.length);
 
         } catch (IOException e) {
             Log.e(TAG, "Exception during write", e);
+        }
+    }
+
+    public void write(byte[] paramArrayOfByte, int paramInt1, int paramInt2) throws IOException {
+        if ((this.mmOutputStream == null) || (!isConnected())) {
+            throw new IOException("The connection is not open");
+        }
+
+        int i = paramInt2;
+        paramInt2 = paramInt1;
+        paramInt1 = i;
+        while (paramInt1 > 0) {
+            try
+            {
+                if (paramInt1 > MAX_DATA_TO_WRITE_TO_STREAM_AT_ONCE) {}
+                for (i = MAX_DATA_TO_WRITE_TO_STREAM_AT_ONCE;; i = paramInt1)
+                {
+                    this.mmOutputStream.write(paramArrayOfByte, paramInt2, i);
+                    this.mmOutputStream.flush();
+                    Thread.sleep(10L);
+                    paramInt2 += i;
+                    paramInt1 -= i;
+                    break;
+                }
+                return;
+            }
+            catch (IOException e)
+            {
+                throw new IOException("Error writing to connection: " + e.getMessage());
+            }
+            catch (InterruptedException localInterruptedException) {}
         }
     }
 
