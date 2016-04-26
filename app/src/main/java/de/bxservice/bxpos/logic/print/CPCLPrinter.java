@@ -11,6 +11,7 @@ import java.util.Locale;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 
 /**
  * Created by Diego Ruiz on 21/04/16.
@@ -167,19 +168,25 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "T 0 2 10 206 "+ dateFormat.format(cal.getTime()) +"\r\n" +  //Date
                 "LINE 0 235 550 235 1\r\n" +
                 "POSTFEED 0\r\n\r\n" +
-                //"FORM \r\n\r\n" +
                 "PRINT\r\n";
 
         ticket.append(label);
 
         ticket.append( "! U1 SETLP 7 0 24\r\n");
-        for(POSOrderLine line : order.getOrderedLines()) {
+        //If single lines for every product -> Configurable
+        /*for(POSOrderLine line : order.getOrderedLines()) {
             ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
                     currencyFormat.format(line.getLineNetAmt()) + "\r\n");
             if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
                 ticket.append("    " + line.getProductRemark() + "\r\n");
+        }*/
+
+        //If summarized lines for receipts
+        for(ReportGenericObject line : order.getSummarizeLines()) {
+            ticket.append(line.getQuantity() + "  " + line.getDescription() + "            "+
+                    currencyFormat.format(line.getAmount()) + "\r\n");
         }
-        //ticket.append("! U1 PRINT\r\n");
+
 
         //footer
         label = "! 0 200 200 180 1\r\n" +
