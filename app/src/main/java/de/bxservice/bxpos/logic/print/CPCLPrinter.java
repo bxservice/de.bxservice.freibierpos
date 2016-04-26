@@ -149,7 +149,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         Calendar cal = Calendar.getInstance();
 
         //header
-        String label = "! 0 200 200 240 1\r\n" +
+        String label = "! 0 200 200 250 1\r\n" +
                 "PW 550\r\n" +
                 "COUNTRY GERMANY\r\n" +
                 "CENTER\r\n" +
@@ -157,16 +157,16 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "T 5 1 25 66 %s\r\n" + //Restaurant address
                 "T 5 1 25 112 %s\r\n" + //Restaurant city
                 "LEFT\r\n" +
-                "T 7 0 10 158 %s: %s\r\n" + //Receipt Number
+                "T 7 0 10 162 %s: %s\r\n" + //Receipt Number
                 "RIGHT\r\n" +
-                "T 7 0 400 158 %s: %s\r\n" + //Table Number
+                "T 7 0 400 162 %s: %s\r\n" + //Table Number
                 "LEFT\r\n" +
-                "T 7 0 10 182 %s: "+ order.getServerName() +"\r\n" + //Server name
+                "T 7 0 10 186 %s: "+ order.getServerName() +"\r\n" + //Server name
                 "RIGHT\r\n" +
-                "T 7 0 400 182 %s: "+ order.getGuestNumber() +"\r\n" +  //# of guests
+                "T 7 0 400 186 %s: "+ order.getGuestNumber() +"\r\n" +  //# of guests
                 "RIGHT\r\n" +
-                "T 0 2 10 206 "+ dateFormat.format(cal.getTime()) +"\r\n" +  //Date
-                "LINE 0 235 550 235 1\r\n" +
+                "T 0 2 10 210 "+ dateFormat.format(cal.getTime()) +"\r\n" +  //Date
+                "LINE 0 245 550 245 1\r\n" +
                 "POSTFEED 0\r\n\r\n" +
                 "PRINT\r\n";
 
@@ -182,14 +182,14 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         }*/
 
         //If summarized lines for receipts
+        String format = "  %-3s%-32s%7s";
         for(ReportGenericObject line : order.getSummarizeLines()) {
-            ticket.append(line.getQuantity() + "  " + line.getDescription() + "            "+
-                    currencyFormat.format(line.getAmount()) + "\r\n");
+            ticket.append(String.format(format, line.getQuantity(), line.getDescription(),currencyFormat.format(line.getAmount())) + "\r\n");
         }
 
 
         //footer
-        label = "! 0 200 200 180 1\r\n" +
+        label = "! 0 200 200 200 1\r\n" +
                 "LEFT\r\n" +
                 "LINE 0 0 550 0 2\r\n" +
                 "T 7 1 25 15 %s\r\n" + //Total label
@@ -204,7 +204,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "RIGHT\r\n" +
                 "T 7 1 400 95 " + currencyFormat.format(order.getChangeAmt()) +"\r\n" + //back
                 "CENTER\r\n" +
-                "T 7 1 10 125 %s\r\n" + //Footer message
+                "T 7 1 10 150 %s\r\n" + //Footer message
                 "POSTFEED 20\r\n" +
                 "FORM \r\n\r\n"+
                 "PRINT\r\n";
