@@ -140,11 +140,9 @@ public class CPCLPrinter extends AbstractPOSPrinter {
     public String printReceipt() {
         StringBuilder ticket = new StringBuilder();
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
-        //Here is to remove the € sign because it has problems in CPCL language
-        DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
-        decimalFormatSymbols.setCurrencySymbol("");
-        ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(DefaultPosData.LOCALE);
+        currencyFormat.setMaximumFractionDigits(2);
+        currencyFormat.setMinimumFractionDigits(2);
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -177,7 +175,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append( "! U1 SETLP 7 0 24\r\n");
         for(POSOrderLine line : order.getOrderedLines()) {
             ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
-                    currencyFormat.format(line.getLineNetAmt()).trim() + "\r\n");
+                    currencyFormat.format(line.getLineNetAmt()) + "\r\n");
             if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
                 ticket.append("    " + line.getProductRemark() + "\r\n");
         }
@@ -189,15 +187,15 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "LINE 0 0 550 0 2\r\n" +
                 "T 7 1 25 15 %s\r\n" + //Total label
                 "RIGHT\r\n" +
-                "T 7 1 400 15 "+ currencyFormat.format(order.getTotallines()).trim() +"\r\n" + //Total value
+                "T 7 1 400 15 "+ currencyFormat.format(order.getTotallines()) +"\r\n" + //Total value
                 "LEFT\r\n" +
                 "T 7 1 25 55 %s\r\n" + //Received
                 "RIGHT\r\n" +
-                "T 7 1 400 55 " + order.getCashAmt() +"\r\n" + //Received value
+                "T 7 1 400 55 " + currencyFormat.format(order.getCashAmt()) +"\r\n" + //Received value
                 "LEFT\r\n" +
                 "T 7 1 25 95 %s\r\n" + //back label
                 "RIGHT\r\n" +
-                "T 7 1 400 95 " + order.getChangeAmt() +"\r\n" + //back
+                "T 7 1 400 95 " + currencyFormat.format(order.getChangeAmt()) +"\r\n" + //back
                 "CENTER\r\n" +
                 "T 7 1 10 125 %s\r\n" + //Footer message
                 "POSTFEED 20\r\n" +
