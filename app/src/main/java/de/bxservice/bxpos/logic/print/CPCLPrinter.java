@@ -116,6 +116,65 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
     @Override
     public String printReceipt() {
-        return null;
+        StringBuilder ticket = new StringBuilder();
+
+        //header
+        String label = String.format("! 0 200 200 240 1\r\n" +
+                "PW 550\r\n" +
+                "COUNTRY GERMANY\r\n" +
+                "CENTER\r\n" +
+                "T 4 0 25 20 %s\r\n" + //Restaurant name
+                "T 5 1 25 66 %s\r\n" + //Restaurant address
+                "T 5 1 25 112 %s\r\n" + //Restaurant city
+                "LEFT\r\n" +
+                "T 7 0 10 158 Bon: 1010101 \r\n" + //Receipt Number
+                "RIGHT\r\n" +
+                "T 7 0 400 158 Table: T3\r\n" + //Table Number
+                "LEFT\r\n" +
+                "T 7 0 10 182 Server: Steve \r\n" + //Server name
+                "RIGHT\r\n" +
+                "T 7 0 400 182 Guests: 5\r\n" +  //# of guests
+                "RIGHT\r\n" +
+                "T 0 2 10 206 24/25/2016 15:06;24\r\n" +  //Date
+                "LINE 0 235 550 235 1\r\n" +
+                "POSTFEED 0\r\n" +
+                "FORM \r\n\r\n"+
+                "PRINT\r\n", new Object[] { "Bx Service GmbH", "Bleichpfad 20", "47799 Krefeld"});
+
+        ticket.append(label);
+
+        ticket.append( "! U1 SETLP 7 0 24\r\n");
+        for(POSOrderLine line : order.getOrderedLines()) {
+            ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
+                    line.getLineTotalAmt() + " EUR\r\n");
+            if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
+                ticket.append("    " + line.getProductRemark() + "\r\n");
+        }
+        //ticket.append("! U1 PRINT\r\n");
+
+        //footer
+        label = String.format("! 0 200 200 180 1\r\n" +
+                "LEFT\r\n" +
+                "LINE 0 0 550 0 2\r\n" +
+                "T 7 1 25 15 Total\r\n" + //Total label
+                "RIGHT\r\n" +
+                "T 7 1 400 15 11,15\r\n" + //Total value
+                "LEFT\r\n" +
+                "T 7 1 25 55 Cash\r\n" + //Received
+                "RIGHT\r\n" +
+                "T 7 1 400 55 15,15\r\n" + //Total value
+                "LEFT\r\n" +
+                "T 7 1 25 95 Back\r\n" + //back label
+                "RIGHT\r\n" +
+                "T 7 1 400 95 4,15\r\n" + //back
+                "CENTER\r\n" +
+                "T 7 1 10 125 We hope to see you soon again\r\n" + //Server name
+                "POSTFEED 20\r\n" +
+                "FORM \r\n\r\n"+
+                "PRINT\r\n", new Object[] { "Bx Service GmbH", "Bleichpfad 20", "47799 Krefeld"});
+
+        ticket.append(label);
+
+        return ticket.toString();
     }
 }

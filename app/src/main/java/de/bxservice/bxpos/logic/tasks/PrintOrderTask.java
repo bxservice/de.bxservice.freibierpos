@@ -34,12 +34,13 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         for(POSOrder order : orders) {
             if(bt.isConnected()) {
                 POSPrinter printer = printerFactory.getPrinter("CPCL", order);
-                bt.sendData(String.format(printer.printKitchen(),
+                /*bt.sendData(String.format(printer.printKitchen(),
                         new Object[] { mActivity.getResources().getString(R.string.order),
                                 mActivity.getResources().getString(R.string.table),
                                 order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
                                 mActivity.getResources().getString(R.string.waiter_role),
-                                mActivity.getResources().getString(R.string.guests)}).getBytes());
+                                mActivity.getResources().getString(R.string.guests)}).getBytes());*/
+                bt.sendData(printer.printReceipt().getBytes());
             }
         }
 
