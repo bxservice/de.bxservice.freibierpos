@@ -11,6 +11,7 @@ import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
@@ -198,6 +199,37 @@ public class POSOrder implements Serializable {
 
     public void setOrderedLines(ArrayList<POSOrderLine> orderedLines) {
         this.orderedLines = orderedLines;
+    }
+
+    public ArrayList<ReportGenericObject> getSummarizeLines() {
+        ArrayList<ReportGenericObject> summarizeLines = new ArrayList<>();
+        HashMap<String, Integer>    productQtyHashMap = new HashMap<>();
+        HashMap<String, BigDecimal> productAmtHashMap = new HashMap<>();
+
+        for(POSOrderLine line : orderedLines) {
+
+            if (productQtyHashMap.isEmpty() || productQtyHashMap.get(line.getProduct().getProductName()) == null) {
+                productQtyHashMap.put(line.getProduct().getProductName(), line.getQtyOrdered());
+            } else {
+                productQtyHashMap.put(line.getProduct().getProductName(), productQtyHashMap.get(line.getProduct().getProductName()) + line.getQtyOrdered());
+            }
+
+            if (productAmtHashMap.isEmpty() || productAmtHashMap.get(line.getProduct().getProductName()) == null) {
+                productAmtHashMap.put(line.getProduct().getProductName(), line.getLineNetAmt());
+            } else {
+                productAmtHashMap.put(line.getProduct().getProductName(), productAmtHashMap.get(line.getProduct().getProductName()).add(line.getLineNetAmt()));
+            }
+        }
+
+        for(String key : productQtyHashMap.keySet()) {
+            ReportGenericObject line = new ReportGenericObject();
+            line.setQuantity(String.valueOf(productQtyHashMap.get(key)));
+            line.setDescription(key);
+            line.setAmount(productAmtHashMap.get(key));
+            summarizeLines.add(line);
+        }
+
+        return summarizeLines;
     }
 
     /**
