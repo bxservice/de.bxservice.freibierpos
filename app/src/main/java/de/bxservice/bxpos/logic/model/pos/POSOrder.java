@@ -56,6 +56,8 @@ public class POSOrder implements Serializable {
     private BigDecimal totallines = BigDecimal.ZERO;
     private BigDecimal discount   = BigDecimal.ZERO;
     private BigDecimal surcharge  = BigDecimal.ZERO;
+    private BigDecimal cashAmt    = BigDecimal.ZERO;
+    private BigDecimal changeAmt  = BigDecimal.ZERO;
     private boolean sync = false;
 
     public void addItem(MProduct product, Context ctx) {
@@ -378,6 +380,22 @@ public class POSOrder implements Serializable {
             totallines = orderLine.getLineNetAmt().add(totallines);
         }
         return totallines;
+    }
+
+    public BigDecimal getChangeAmt() {
+        return changeAmt;
+    }
+
+    public void setChangeAmt(BigDecimal changeAmt) {
+        this.changeAmt = changeAmt;
+    }
+
+    public BigDecimal getCashAmt() {
+        return cashAmt;
+    }
+
+    public void setCashAmt(BigDecimal cashAmt) {
+        this.cashAmt = cashAmt;
     }
 
     /**

@@ -187,6 +187,8 @@
     <string name="give_complimentary_product">Are you sure you want to give this item for free?</string>
     <string name="give">Give</string>
     <string name="type">Type</string>
+    <string name="receipt">Receipt</string>
+    <string name="cash">Cash</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
