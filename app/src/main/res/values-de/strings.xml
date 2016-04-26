@@ -137,7 +137,7 @@
     <string name="close">Schließen</string>
 
     <string name="reason">Grund</string>
-    <string name="change">Veränderung</string>
+    <string name="change">Züruck </string>
     <string name="change_value">Veränderung: %1$s</string>
     <string name="to_pay">Bezahlen: %1$s</string>
     <string name="surcharge_value">Surcharge: %1$s</string>
@@ -190,6 +190,8 @@
     <string name="give_complimentary_product">Are you sure you want to give this item for free?</string>
     <string name="give">Give</string>
     <string name="type">Type</string>
+    <string name="receipt">Bon</string>
+    <string name="cash">Bar</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

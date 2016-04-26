@@ -36,6 +36,7 @@ import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
+import de.bxservice.bxpos.logic.tasks.PrintOrderTask;
 import de.bxservice.bxpos.ui.adapter.PaymentTypeAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 import de.bxservice.bxpos.ui.dialog.SurchargeDialogFragment;
@@ -537,8 +538,14 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      */
     @Override
     public void onDialogPositiveClick(PaymentCompletedDialogFragment dialog) {
-        // User touched the dialog's positive button
+        order.setCashAmt(paidAmount);
+        order.setChangeAmt(getChange());
         attemptSynchronizeOrder();
+    }
+
+    private void printOrder() {
+        PrintOrderTask createOrderTask = new PrintOrderTask(this);
+        createOrderTask.execute(order);
     }
 
     /**
@@ -562,6 +569,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         if (!"0".equals(syncConnPref)) {
             Log.i(LOG_TAG, "Sync configuration - order sent to queue");
             order.payOrder(false, getBaseContext());
+            printOrder();
             finish();
             return;
         }
@@ -603,6 +611,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                             @Override
                             public void onClick(View view) {
                                 order.payOrder(false, getBaseContext());
+                                printOrder();
                                 finish();
                             }
                         });
@@ -667,6 +676,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     public void postExecuteTask(boolean success) {
         if(success) {
             order.payOrder(true, getBaseContext());
+            printOrder();
             finish();
         }
         else {

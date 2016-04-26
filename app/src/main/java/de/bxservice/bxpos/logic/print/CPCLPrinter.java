@@ -1,9 +1,14 @@
 package de.bxservice.bxpos.logic.print;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
@@ -114,12 +119,38 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         return null;
     }
 
+    /**
+     * Returns a string with several %s to format
+     * 1 - Restaurant Name
+     * 2 - Address
+     * 3 - City
+     * 4 - Receipt label
+     * 5 - Receipt Number
+     * 6 - Table string
+     * 7 - Table name
+     * 8 - Server string
+     * 9 - Guests string
+     * 10 - Total String
+     * 11 - Cash string
+     * 12 - Back string
+     * 13 - Footer description
+     * @return String for receipt printing
+     */
     @Override
     public String printReceipt() {
         StringBuilder ticket = new StringBuilder();
 
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
+        //Here is to remove the € sign because it has problems in CPCL language
+        DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
+        decimalFormatSymbols.setCurrencySymbol("");
+        ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+
         //header
-        String label = String.format("! 0 200 200 240 1\r\n" +
+        String label = "! 0 200 200 240 1\r\n" +
                 "PW 550\r\n" +
                 "COUNTRY GERMANY\r\n" +
                 "CENTER\r\n" +
@@ -127,51 +158,51 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "T 5 1 25 66 %s\r\n" + //Restaurant address
                 "T 5 1 25 112 %s\r\n" + //Restaurant city
                 "LEFT\r\n" +
-                "T 7 0 10 158 Bon: 1010101 \r\n" + //Receipt Number
+                "T 7 0 10 158 %s: %s\r\n" + //Receipt Number
                 "RIGHT\r\n" +
-                "T 7 0 400 158 Table: T3\r\n" + //Table Number
+                "T 7 0 400 158 %s: %s\r\n" + //Table Number
                 "LEFT\r\n" +
-                "T 7 0 10 182 Server: Steve \r\n" + //Server name
+                "T 7 0 10 182 %s: "+ order.getServerName() +"\r\n" + //Server name
                 "RIGHT\r\n" +
-                "T 7 0 400 182 Guests: 5\r\n" +  //# of guests
+                "T 7 0 400 182 %s: "+ order.getGuestNumber() +"\r\n" +  //# of guests
                 "RIGHT\r\n" +
-                "T 0 2 10 206 24/25/2016 15:06;24\r\n" +  //Date
+                "T 0 2 10 206 "+ dateFormat.format(cal.getTime()) +"\r\n" +  //Date
                 "LINE 0 235 550 235 1\r\n" +
-                "POSTFEED 0\r\n" +
-                "FORM \r\n\r\n"+
-                "PRINT\r\n", new Object[] { "Bx Service GmbH", "Bleichpfad 20", "47799 Krefeld"});
+                "POSTFEED 0\r\n\r\n" +
+                //"FORM \r\n\r\n" +
+                "PRINT\r\n";
 
         ticket.append(label);
 
         ticket.append( "! U1 SETLP 7 0 24\r\n");
         for(POSOrderLine line : order.getOrderedLines()) {
             ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
-                    line.getLineTotalAmt() + " EUR\r\n");
+                    currencyFormat.format(line.getLineNetAmt()).trim() + "\r\n");
             if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
                 ticket.append("    " + line.getProductRemark() + "\r\n");
         }
         //ticket.append("! U1 PRINT\r\n");
 
         //footer
-        label = String.format("! 0 200 200 180 1\r\n" +
+        label = "! 0 200 200 180 1\r\n" +
                 "LEFT\r\n" +
                 "LINE 0 0 550 0 2\r\n" +
-                "T 7 1 25 15 Total\r\n" + //Total label
+                "T 7 1 25 15 %s\r\n" + //Total label
                 "RIGHT\r\n" +
-                "T 7 1 400 15 11,15\r\n" + //Total value
+                "T 7 1 400 15 "+ currencyFormat.format(order.getTotallines()).trim() +"\r\n" + //Total value
                 "LEFT\r\n" +
-                "T 7 1 25 55 Cash\r\n" + //Received
+                "T 7 1 25 55 %s\r\n" + //Received
                 "RIGHT\r\n" +
-                "T 7 1 400 55 15,15\r\n" + //Total value
+                "T 7 1 400 55 " + order.getCashAmt() +"\r\n" + //Received value
                 "LEFT\r\n" +
-                "T 7 1 25 95 Back\r\n" + //back label
+                "T 7 1 25 95 %s\r\n" + //back label
                 "RIGHT\r\n" +
-                "T 7 1 400 95 4,15\r\n" + //back
+                "T 7 1 400 95 " + order.getChangeAmt() +"\r\n" + //back
                 "CENTER\r\n" +
-                "T 7 1 10 125 We hope to see you soon again\r\n" + //Server name
+                "T 7 1 10 125 %s\r\n" + //Footer message
                 "POSTFEED 20\r\n" +
                 "FORM \r\n\r\n"+
-                "PRINT\r\n", new Object[] { "Bx Service GmbH", "Bleichpfad 20", "47799 Krefeld"});
+                "PRINT\r\n";
 
         ticket.append(label);
 
