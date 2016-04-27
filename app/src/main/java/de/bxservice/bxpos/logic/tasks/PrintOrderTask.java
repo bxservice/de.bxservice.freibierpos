@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import java.io.IOException;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.daomanager.PosOrgInfoManagement;
+import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
 import de.bxservice.bxpos.logic.print.BluetoothPrinterService;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.print.POSPrinter;
@@ -44,11 +46,13 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                                     mActivity.getResources().getString(R.string.guests)}).getBytes());
                 }
                 else if(mActivity instanceof PayOrderActivity) {
+                    PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
+                    OrgInfo orgInfo = orgInfoManager.get(1); //Get org info to print in the receipt
                     //TODO: Get the right data from iDempiere
                     bt.sendData(String.format(printer.printReceipt(),
-                            new Object[] { "Bx Service GmbH",
-                                    "Bleichpfad 20",
-                                    "47799 Krefeld",
+                            new Object[] { orgInfo.getName(),
+                                    orgInfo.getAddress1(),
+                                    orgInfo.getPostalCode() + " " + orgInfo.getCity(),
                                     mActivity.getResources().getString(R.string.receipt),
                                     order.getOrderId(),
                                     mActivity.getResources().getString(R.string.table),
