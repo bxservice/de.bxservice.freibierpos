@@ -8,6 +8,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -20,6 +21,7 @@ import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
+import de.bxservice.bxpos.persistence.helper.PosOrgInfoDataHelper;
 import de.bxservice.bxpos.persistence.helper.PosPaymentHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductCategoryHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductHelper;
@@ -71,6 +73,8 @@ public class DataMapper implements Serializable {
             success = createDefaultData((DefaultPosData) object);
         else if(object instanceof POSPayment)
             success = createPayment((POSPayment) object);
+        else if(object instanceof OrgInfo)
+            success = createOrgInfo((OrgInfo) object);
 
         return success;
     }
@@ -95,6 +99,8 @@ public class DataMapper implements Serializable {
             success = updateDefaultData((DefaultPosData) object);
         else if(object instanceof POSPayment)
             success = updatePayment((POSPayment) object);
+        else if(object instanceof OrgInfo)
+            success = updateOrgInfo((OrgInfo) object);
         /*if(object instanceof TableGroup)
             success = createTableGroup((TableGroup) object);
         if(object instanceof ProductCategory)
@@ -521,6 +527,43 @@ public class DataMapper implements Serializable {
     public List<ReportGenericObject> getTableSalesReportRows(long fromDate, long toDate) {
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
         return orderHelper.getTableSalesReportRows(fromDate, toDate);
+    }
+
+    private boolean createOrgInfo(OrgInfo orgInfo) {
+
+        PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
+
+        if (posOrgInfoDataHelper.createData(orgInfo) == -1) {
+            Log.e(LOG_TAG, "Cannot create org info");
+            return false;
+        }
+        Log.i(LOG_TAG, "Organization info created");
+        return true;
+    }
+
+    private boolean updateOrgInfo(OrgInfo orgInfo) {
+
+        PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
+
+        if (posOrgInfoDataHelper.updateData(orgInfo) != -1) {
+            Log.i(LOG_TAG, "Org info updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update org info");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Return org info if exists
+     * @param id
+     * @return
+     */
+    public OrgInfo getOrgInfo(long id) {
+        PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
+        return posOrgInfoDataHelper.getOrgInfo(id);
     }
 
 }

@@ -2,6 +2,7 @@ package de.bxservice.bxpos.persistence.definition;
 
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
+import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosPaymentContract;
@@ -38,5 +39,8 @@ public interface Tables {
 
     //Data to send request to iDempiere
     String TABLE_DEFAULT_POS_DATA = DefaultPosDataContract.DefaultDataDB.TABLE_NAME;
+
+    //Organization info from iDempiere
+    String TABLE_ORG_INFO = OrgInfoContract.OrgInfoDB.TABLE_NAME;
 
 }

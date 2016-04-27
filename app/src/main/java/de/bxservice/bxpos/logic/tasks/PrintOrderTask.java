@@ -44,6 +44,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                                     mActivity.getResources().getString(R.string.guests)}).getBytes());
                 }
                 else if(mActivity instanceof PayOrderActivity) {
+                    //TODO: Get the right data from iDempiere
                     bt.sendData(String.format(printer.printReceipt(),
                             new Object[] { "Bx Service GmbH",
                                     "Bleichpfad 20",
@@ -69,6 +70,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
     protected void onPostExecute(final Boolean success) {
         if(bt != null) {
             try {
+                //TODO: Fix the problem of closing the thread
                 Thread.sleep(10000);
                 if(bt.isConnected())
                     bt.closeBT();
