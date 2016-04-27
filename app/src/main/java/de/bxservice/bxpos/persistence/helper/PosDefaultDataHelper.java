@@ -53,7 +53,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
     }
 
     /*
-    * get single user
+    * get single instance
     */
     public DefaultPosData getData(long data_id) {
         SQLiteDatabase db = getReadableDatabase();

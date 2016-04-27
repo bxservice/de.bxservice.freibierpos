@@ -8,11 +8,13 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.webservices.DefaultPosDataWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.OrgInfoWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
@@ -34,6 +36,7 @@ public class DataReader {
     private List<MProduct> productList = new ArrayList<>();
     private List<ProductPrice> productPriceList = new ArrayList<>();
     private DefaultPosData defaultData = null;
+    private OrgInfo orgInfo = null;
     private boolean error = false;
     private Context mContext;
 
@@ -83,6 +86,17 @@ public class DataReader {
 
         tablePosData.run();
 
+        Thread orgInfoThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OrgInfoWebServiceAdapter dataWS = new OrgInfoWebServiceAdapter();
+                orgInfo = dataWS.getOrgInfo();
+                persistOrgInfo();
+            }
+        });
+
+        orgInfoThread.run();
+
     }
 
     /**
@@ -90,6 +104,13 @@ public class DataReader {
      */
     private void persistPosData() {
         defaultData.saveData(mContext);
+    }
+
+    /**
+     * Save default data in the database
+     */
+    private void persistOrgInfo() {
+        orgInfo.saveData(mContext);
     }
 
     /**

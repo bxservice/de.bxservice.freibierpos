@@ -9,6 +9,7 @@ import android.util.Log;
 
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
+import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosPaymentContract;
@@ -28,7 +29,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 19;
+    private static final int DATABASE_VERSION = 20;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -209,6 +210,25 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE + " INTEGER NOT NULL" +
                     ")";
 
+    private static final String CREATE_ORG_INFO_TABLE =
+            "CREATE TABLE " + Tables.TABLE_ORG_INFO +
+                    "(" +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_ORG_INFO_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS1 + " VARCHAR(64)" +
+                    ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS2 + " VARCHAR(64)" +
+                    ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_CITY + " VARCHAR(64)" +
+                    ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_PHONE + " VARCHAR(64)" +
+                    ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_POSTAL + " VARCHAR(64)" +
+                    ")";
+
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -305,6 +325,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TABLE_GROUP);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_DEFAULT_POS_DATA);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_ORG_INFO);
 
     }
 
@@ -320,6 +341,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_POSORDER_LINE_TABLE);
         db.execSQL(CREATE_POSPAYMENT_TABLE);
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
+        db.execSQL(CREATE_ORG_INFO_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");
