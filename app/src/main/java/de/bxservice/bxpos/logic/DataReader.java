@@ -118,9 +118,9 @@ public class DataReader {
      */
     private void persistTables() {
         for(TableGroup tg : tableGroupList) {
-            tg.createTableGroup(mContext);
+            tg.save(mContext);
             for(Table table : tg.getTables()) {
-                table.createTable(mContext);
+                table.save(mContext);
             }
         }
     }
@@ -130,13 +130,13 @@ public class DataReader {
      */
     private void persistProductAttributes() {
         for(ProductCategory productCategory : productCategoryList)
-            productCategory.createProductCategory(mContext);
+            productCategory.save(mContext);
 
         for(MProduct product : productList)
-            product.createProduct(mContext);
+            product.save(mContext);
 
         for(ProductPrice productPrice : productPriceList)
-            productPrice.createProductPrice(mContext);
+            productPrice.save(mContext);
     }
 
     public static synchronized DataReader getInstance(Context ctx) {

@@ -48,7 +48,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                 else if(mActivity instanceof PayOrderActivity) {
                     PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
                     OrgInfo orgInfo = orgInfoManager.get(1); //Get org info to print in the receipt
-                    //TODO: Get the right data from iDempiere
+                    //TODO: Get footer from iDempiere
                     bt.sendData(String.format(printer.printReceipt(),
                             new Object[] { orgInfo.getName(),
                                     orgInfo.getAddress1(),

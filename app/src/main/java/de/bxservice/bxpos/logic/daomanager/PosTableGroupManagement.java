@@ -22,7 +22,7 @@ public class PosTableGroupManagement implements ObjectManagement, Serializable {
 
     @Override
     public boolean update(Object object) {
-        return true;
+        return dataMapper.update(object);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PosTableGroupManagement implements ObjectManagement, Serializable {
 
     @Override
     public TableGroup get(long id){
-        return null;
+        return dataMapper.getTableGroup(id);
     }
 
     @Override

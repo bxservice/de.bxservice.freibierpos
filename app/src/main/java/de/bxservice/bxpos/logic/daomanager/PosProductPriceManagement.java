@@ -21,7 +21,7 @@ public class PosProductPriceManagement implements ObjectManagement, Serializable
 
     @Override
     public boolean update(Object object) {
-        return true;
+        return dataMapper.update(object);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class PosProductPriceManagement implements ObjectManagement, Serializable
 
     @Override
     public ProductPrice get(long id){
-        return null;
+        return dataMapper.getProductPrice(id);
     }
 
     @Override

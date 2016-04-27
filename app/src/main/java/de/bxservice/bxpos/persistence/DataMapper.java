@@ -101,14 +101,14 @@ public class DataMapper implements Serializable {
             success = updatePayment((POSPayment) object);
         else if(object instanceof OrgInfo)
             success = updateOrgInfo((OrgInfo) object);
-        /*if(object instanceof TableGroup)
-            success = createTableGroup((TableGroup) object);
+        if(object instanceof TableGroup)
+            success = updateTableGroup((TableGroup) object);
         if(object instanceof ProductCategory)
-            success = createProductCategory((ProductCategory) object);
+            success = updateProductCategory((ProductCategory) object);
         if(object instanceof ProductPrice)
-            success = createProductPrice((ProductPrice) object);
+            success = updateProductPrice((ProductPrice) object);
         if(object instanceof MProduct)
-            success = createProduct((MProduct) object);*/
+            success = updateProduct((MProduct) object);
 
         return success;
     }
@@ -251,6 +251,18 @@ public class DataMapper implements Serializable {
         return true;
     }
 
+    private boolean updateTableGroup(TableGroup tableGroup) {
+
+        PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
+
+        if (tableGroupHelper.updateTableGroup(tableGroup) == -1) {
+            Log.e(LOG_TAG, "Cannot update " + tableGroup.getName());
+            return false;
+        }
+        Log.i(LOG_TAG, tableGroup.getName() + " updated");
+        return true;
+    }
+
     private boolean createProductCategory(ProductCategory productCategory) {
 
         PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
@@ -260,6 +272,20 @@ public class DataMapper implements Serializable {
             return false;
         }
         Log.i(LOG_TAG, productCategory.getName() + " created");
+        return true;
+    }
+
+    private boolean updateProductCategory(ProductCategory data) {
+        PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
+
+        if (productCategoryHelper.updateProductCategory(data) != -1) {
+            Log.i(LOG_TAG, "Product category updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update category");
+            return false;
+        }
+
         return true;
     }
 
@@ -275,6 +301,20 @@ public class DataMapper implements Serializable {
         return true;
     }
 
+    private boolean updateProductPrice(ProductPrice productPrice) {
+        PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
+
+        if (productPriceHelper.updateProductPrice(productPrice) != -1) {
+            Log.i(LOG_TAG, "Product price updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update product price");
+            return false;
+        }
+
+        return true;
+    }
+
     private boolean createProduct(MProduct product) {
 
         PosProductHelper productHelper = new PosProductHelper(mContext);
@@ -284,6 +324,20 @@ public class DataMapper implements Serializable {
             return false;
         }
         Log.i(LOG_TAG, product.getProductName() + " created");
+        return true;
+    }
+
+    private boolean updateProduct(MProduct data) {
+        PosProductHelper productHelper = new PosProductHelper(mContext);
+
+        if (productHelper.updateProduct(data) != -1) {
+            Log.i(LOG_TAG, "Product updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update product");
+            return false;
+        }
+
         return true;
     }
 
@@ -377,6 +431,11 @@ public class DataMapper implements Serializable {
         return tableHelper.getTable(id);
     }
 
+    public TableGroup getTableGroup(long id) {
+        PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
+        return tableGroupHelper.getTableGroup(id);
+    }
+
     public long getTotalCategories() {
         PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
 
@@ -387,6 +446,26 @@ public class DataMapper implements Serializable {
         }
         Log.i(LOG_TAG, numRows + " product categories found");
         return numRows;
+    }
+
+    /**
+     * Return product category if exist
+     * @param id
+     * @return
+     */
+    public ProductCategory getProductCategory(long id) {
+        PosProductCategoryHelper productCategoryHelper = new PosProductCategoryHelper(mContext);
+        return productCategoryHelper.getProductCategory(id);
+    }
+
+    /**
+     * Return product if exist
+     * @param id
+     * @return
+     */
+    public MProduct getProduct(long id) {
+        PosProductHelper productHelper = new PosProductHelper(mContext);
+        return productHelper.getProduct(id);
     }
 
     public List<ProductCategory> getAllCategories() {
@@ -417,6 +496,11 @@ public class DataMapper implements Serializable {
     public ProductPrice getProductPriceByProduct(MProduct product) {
         PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
         return productPriceHelper.getProductPriceByProduct(product);
+    }
+
+    public ProductPrice getProductPrice(long id) {
+        PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
+        return productPriceHelper.getProductPrice(id);
     }
 
     private boolean removePosOrder(POSOrder order) {

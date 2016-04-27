@@ -58,8 +58,10 @@ public class PosTableHelper extends PosObjectHelper {
 
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table_id)});
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else
+            return null;
 
         PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
 

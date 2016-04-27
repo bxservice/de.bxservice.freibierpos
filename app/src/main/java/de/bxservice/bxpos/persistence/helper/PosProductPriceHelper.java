@@ -38,7 +38,6 @@ public class PosProductPriceHelper extends PosObjectHelper {
         values.put(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE, productPrice.getIntegerStdPrice());
 
         // insert row
-
         return db.insert(Tables.TABLE_PRODUCT_PRICE, null, values);
     }
 
@@ -49,14 +48,17 @@ public class PosProductPriceHelper extends PosObjectHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_PRICE + " WHERE "
-                + ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " = " + productPrice_id;
+                + ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " = ?";
 
         Log.d(LOG_TAG, selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] { String.valueOf(productPrice_id) });
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else
+            return null;
+
 
         PosProductHelper productHelper = new PosProductHelper(mContext);
 
@@ -103,7 +105,7 @@ public class PosProductPriceHelper extends PosObjectHelper {
     /*
     * Updating a product price
     */
-    public int updateProductPrice (ProductPrice productPrice) {
+    public int updateProductPrice(ProductPrice productPrice) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();

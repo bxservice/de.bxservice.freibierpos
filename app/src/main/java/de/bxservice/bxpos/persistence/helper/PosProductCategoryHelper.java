@@ -36,7 +36,6 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME, productCategory.getName());
 
         // insert row
-
         return db.insert(Tables.TABLE_PRODUCT_CATEGORY, null, values);
     }
 
@@ -47,14 +46,16 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_CATEGORY + " WHERE "
-                + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " = " + productCategory_id;
+                + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " = ?";
 
         Log.d(LOG_TAG, selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] { String.valueOf(productCategory_id) });
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else
+            return null;
 
         ProductCategory productCategory = new ProductCategory(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)),
                 c.getString(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME)));
