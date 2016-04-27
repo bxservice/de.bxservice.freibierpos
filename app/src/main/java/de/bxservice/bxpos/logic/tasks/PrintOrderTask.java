@@ -75,7 +75,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         if(bt != null) {
             try {
                 //TODO: Fix the problem of closing the thread
-                Thread.sleep(10000);
+                Thread.sleep(5000);
                 if(bt.isConnected())
                     bt.closeBT();
             } catch(IOException e) {
@@ -84,6 +84,5 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
             }
         }
-
     }
 }
