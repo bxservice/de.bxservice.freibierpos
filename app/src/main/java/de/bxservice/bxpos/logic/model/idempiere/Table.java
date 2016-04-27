@@ -68,8 +68,15 @@ public class Table implements Serializable {
         this.belongingGroup = belongingGroup;
     }
 
-    public boolean createTable(Context ctx) {
+    public boolean save(Context ctx) {
         tableManager = new PosTableManagement(ctx);
+        if (tableManager.get(tableID) == null)
+            return createTable();
+        else
+            return updateTable();
+    }
+
+    private boolean createTable(){
         return tableManager.create(this);
     }
 
@@ -97,6 +104,10 @@ public class Table implements Serializable {
 
     public boolean updateTable(Context ctx) {
         tableManager = new PosTableManagement(ctx);
+        return updateTable();
+    }
+
+    private boolean updateTable() {
         return tableManager.update(this);
     }
 }

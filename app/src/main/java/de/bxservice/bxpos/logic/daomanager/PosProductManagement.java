@@ -23,7 +23,7 @@ public class PosProductManagement implements ObjectManagement, Serializable {
 
     @Override
     public boolean update(Object object) {
-        return true;
+        return dataMapper.update(object);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PosProductManagement implements ObjectManagement, Serializable {
 
     @Override
     public MProduct get(long id){
-        return null;
+        return dataMapper.getProduct(id);
     }
 
     @Override

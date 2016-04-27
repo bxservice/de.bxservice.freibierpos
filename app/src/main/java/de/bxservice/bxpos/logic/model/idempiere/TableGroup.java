@@ -51,8 +51,20 @@ public class TableGroup implements Serializable {
         this.tableGroupID = tableGroupID;
     }
 
-    public boolean createTableGroup(Context ctx) {
+    public boolean save(Context ctx) {
         tableGroupManager = new PosTableGroupManagement(ctx);
+
+        if (tableGroupManager.get(tableGroupID) == null)
+            return createTableGroup();
+        else
+            return updateTableGroup();
+    }
+
+    private boolean updateTableGroup() {
+        return tableGroupManager.update(this);
+    }
+
+    private boolean createTableGroup() {
         return tableGroupManager.create(this);
     }
 }

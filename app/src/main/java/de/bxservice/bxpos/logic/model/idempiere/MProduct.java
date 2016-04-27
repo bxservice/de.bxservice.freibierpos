@@ -55,12 +55,29 @@ public class MProduct implements Serializable {
     }
 
     /**
-     * Communicates with the manager to create the product in the database
+     * Save if the object does not exist it creates it
+     * otherwise it updates it
      * @param ctx
      * @return
      */
-    public boolean createProduct(Context ctx) {
+    public boolean save(Context ctx) {
         productManager = new PosProductManagement(ctx);
+
+        if (productManager.get(productID) == null)
+            return createProduct();
+        else
+            return updateProduct();
+    }
+
+    private boolean updateProduct() {
+        return productManager.update(this);
+    }
+
+    /**
+     * Communicates with the manager to create the product in the database
+     * @return
+     */
+    private boolean createProduct() {
         return productManager.create(this);
     }
 

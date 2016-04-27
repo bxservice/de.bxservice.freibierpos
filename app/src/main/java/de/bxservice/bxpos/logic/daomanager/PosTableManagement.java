@@ -32,7 +32,7 @@ public class PosTableManagement implements ObjectManagement, Serializable {
 
     @Override
     public Table get(long id){
-        return null;
+        return dataMapper.getTable(id);
     }
 
     @Override

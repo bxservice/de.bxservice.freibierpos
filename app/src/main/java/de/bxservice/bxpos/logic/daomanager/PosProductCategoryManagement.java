@@ -22,7 +22,7 @@ public class PosProductCategoryManagement implements ObjectManagement, Serializa
 
     @Override
     public boolean update(Object object) {
-        return true;
+        return dataMapper.update(object);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PosProductCategoryManagement implements ObjectManagement, Serializa
 
     @Override
     public ProductCategory get(long id){
-        return null/*dataMapper.getProductCategory(id);*/;
+        return dataMapper.getProductCategory(id);
     }
 
     @Override

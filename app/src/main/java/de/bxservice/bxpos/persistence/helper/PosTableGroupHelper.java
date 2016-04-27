@@ -37,7 +37,6 @@ public class PosTableGroupHelper extends PosObjectHelper {
         values.put(GroupTableContract.GroupTableDB.COLUMN_NAME_VALUE, tableGroup.getValue());
 
         // insert row
-
         return db.insert(Tables.TABLE_TABLE_GROUP, null, values);
     }
 
@@ -48,14 +47,16 @@ public class PosTableGroupHelper extends PosObjectHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_TABLE_GROUP + " WHERE "
-                + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + " = " + tablegroup_id;
+                + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + " =?";
 
         Log.d(LOG_TAG, selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] { String.valueOf(tablegroup_id) });
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else
+            return null;
 
         TableGroup tableGroup = new TableGroup();
         tableGroup.setTableGroupID(c.getInt(c.getColumnIndex(GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID)));

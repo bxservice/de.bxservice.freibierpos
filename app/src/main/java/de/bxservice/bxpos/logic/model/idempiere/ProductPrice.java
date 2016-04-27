@@ -79,8 +79,26 @@ public class ProductPrice {
         stdPrice = BigDecimal.valueOf(doubleValue);
     }
 
-    public boolean createProductPrice(Context ctx) {
+    /**
+     * Save if the object does not exist it creates it
+     * otherwise it updates it
+     * @param ctx
+     * @return
+     */
+    public boolean save(Context ctx) {
         productPriceManager = new PosProductPriceManagement(ctx);
+
+        if (productPriceManager.get(productPriceID) == null)
+            return createProductPrice();
+        else
+            return updateProductPrice();
+    }
+
+    private boolean updateProductPrice() {
+        return productPriceManager.update(this);
+    }
+
+    private boolean createProductPrice() {
         return productPriceManager.create(this);
     }
 }

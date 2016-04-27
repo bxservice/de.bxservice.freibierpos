@@ -52,8 +52,26 @@ public class ProductCategory {
         this.products = products;
     }
 
-    public boolean createProductCategory(Context ctx) {
+    /**
+     * Save if the object does not exist it creates it
+     * otherwise it updates it
+     * @param ctx
+     * @return
+     */
+    public boolean save(Context ctx) {
         productCategoryManager = new PosProductCategoryManagement(ctx);
+
+        if (productCategoryManager.get(productCategoryID) == null)
+            return createProductCategory();
+        else
+            return updateProductCategory();
+    }
+
+    private boolean updateProductCategory() {
+        return productCategoryManager.update(this);
+    }
+
+    private boolean createProductCategory() {
         return productCategoryManager.create(this);
     }
 }

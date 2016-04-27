@@ -36,7 +36,6 @@ public class PosProductHelper extends PosObjectHelper {
         values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
 
         // insert row
-
         return db.insert(Tables.TABLE_PRODUCT, null, values);
     }
 
@@ -47,14 +46,16 @@ public class PosProductHelper extends PosObjectHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " WHERE "
-                + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = " + product_id;
+                + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = ?";
 
         Log.d(LOG_TAG, selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, new String[] { String.valueOf(product_id) });
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else
+            return null;
 
         MProduct product = new MProduct();
         product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
