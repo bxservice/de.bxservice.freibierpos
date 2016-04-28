@@ -691,4 +691,12 @@ public class DataMapper implements Serializable {
         return outputDeviceHelper.getDevice(id);
     }
 
+    /**
+     * Return target device if exists
+     * @return
+     */
+    public POSOutputDevice getOutputDevice(String target) {
+        PosOutputDeviceHelper outputDeviceHelper = new PosOutputDeviceHelper(mContext);
+        return outputDeviceHelper.getDevice(target);
+    }
 }

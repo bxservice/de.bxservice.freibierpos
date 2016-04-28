@@ -55,7 +55,7 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
     }
 
     /*
-    * get single instance of org info
+    * get device by id
     */
     public POSOutputDevice getDevice(long data_id) {
         SQLiteDatabase db = getReadableDatabase();
@@ -76,6 +76,39 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
 
         POSOutputDevice device = new POSOutputDevice();
         device.setOutputDeviceId((int) data_id);
+        device.setConnectionType(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_CONNECTION)));
+        device.setDeviceType(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_DEVICE_TYPE)));
+        device.setDocTarget(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET)));
+        device.setPrinterLanguage(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_LANGUAGE)));
+        device.setPrinterName(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_NAME)));
+
+        c.close();
+
+        return device;
+    }
+
+    /*
+    * get kitchen device if configured
+    */
+    public POSOutputDevice getDevice(String target) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_OUTPUT_DEVICE + " WHERE "
+                + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET + " = ?";
+
+        Log.d(LOG_TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {target});
+
+        if (c != null && c.getCount() > 0)
+            c.moveToFirst();
+        else {
+            Log.i(LOG_TAG, "No output device found for the target: " + target);
+            return null;
+        }
+
+        POSOutputDevice device = new POSOutputDevice();
+        device.setOutputDeviceId(c.getInt(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_OUTPUT_DEVICE_ID)));
         device.setConnectionType(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_CONNECTION)));
         device.setDeviceType(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_DEVICE_TYPE)));
         device.setDocTarget(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET)));

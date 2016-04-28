@@ -30,8 +30,12 @@ public class PosOutputDeviceManagement implements ObjectManagement, Serializable
     }
 
     @Override
-    public POSOutputDevice get(long id){
+    public POSOutputDevice get(long id) {
         return dataMapper.getOutputDevice(id);
+    }
+
+    public POSOutputDevice getDevice(String target) {
+        return dataMapper.getOutputDevice(target);
     }
 
     @Override
