@@ -983,13 +983,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN_BAR);
         }
 
-        if(printOrderDevice != null) {
-            PrintOrderTask createOrderTask = new PrintOrderTask(this);
+        if(printOrderDevice != null && printOrderDevice.getDeviceType().equalsIgnoreCase(POSOutputDeviceValues.DEVICE_PRINTER)) {
+            PrintOrderTask createOrderTask = new PrintOrderTask(this, printOrderDevice);
             createOrderTask.execute(order);
         }
-
-
-
     }
 
     /**

@@ -548,10 +548,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
     private void printOrder() {
         PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
-        POSOutputDevice printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_RECEIPT);
+        POSOutputDevice printReceiptDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_RECEIPT);
 
-        if(printOrderDevice != null) {
-            PrintOrderTask createOrderTask = new PrintOrderTask(this);
+        if(printReceiptDevice != null && printReceiptDevice.getDeviceType().equalsIgnoreCase(POSOutputDeviceValues.DEVICE_PRINTER)) {
+            PrintOrderTask createOrderTask = new PrintOrderTask(this, printReceiptDevice);
             createOrderTask.execute(order);
         }
 

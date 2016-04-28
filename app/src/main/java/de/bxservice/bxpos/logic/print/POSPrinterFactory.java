@@ -13,7 +13,7 @@ public class POSPrinterFactory {
         if(printerType == null)
             return null;
 
-        if(printerType.equalsIgnoreCase("CPCL"))
+        if(printerType.equalsIgnoreCase(POSOutputDeviceValues.LANGUAGE_CPCL))
             return new CPCLPrinter(order);
 
         return null;

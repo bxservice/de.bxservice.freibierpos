@@ -42,10 +42,10 @@ public class BluetoothPrinterService {
             .fromString("00001101-0000-1000-8000-00805f9b34fb");
 
 
-    public BluetoothPrinterService(Activity mActivity) {
+    public BluetoothPrinterService(Activity mActivity, String printerName) {
         activity = mActivity;
         try {
-            findBT();
+            findBT(printerName);
             openBT();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -53,7 +53,7 @@ public class BluetoothPrinterService {
     }
 
     // Method that finds a bluetooth printer device
-    private void findBT() {
+    private void findBT(String printerName) {
 
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -74,7 +74,7 @@ public class BluetoothPrinterService {
 
                     // RPP300 is the name of the bluetooth printer device
                     // we got this name from the list of paired devices
-                    if (device.getName().equals("Zebra01")) {
+                    if (device.getName().equals(printerName/*"Zebra01"*/)) {
                         mmDevice = device;
                         break;
                     }
