@@ -10,6 +10,8 @@ import de.bxservice.bxpos.logic.daomanager.PosOrgInfoManagement;
 import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.print.BluetoothPrinterService;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.print.POSOutputDevice;
+import de.bxservice.bxpos.logic.print.POSOutputDeviceValues;
 import de.bxservice.bxpos.logic.print.POSPrinter;
 import de.bxservice.bxpos.logic.print.POSPrinterFactory;
 import de.bxservice.bxpos.ui.EditOrderActivity;
@@ -21,11 +23,13 @@ import de.bxservice.bxpos.ui.PayOrderActivity;
 public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
     private Activity mActivity;
+    private POSOutputDevice printerDevice;
     private BluetoothPrinterService bt;
 
 
-    public PrintOrderTask(Activity callerActivity) {
+    public PrintOrderTask(Activity callerActivity, POSOutputDevice device) {
         mActivity = callerActivity;
+        printerDevice = device;
     }
 
     @Override
@@ -33,10 +37,14 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
         boolean success = true;
         POSPrinterFactory printerFactory = new POSPrinterFactory();
-        bt = new BluetoothPrinterService(mActivity);
+
+        //If bluetooth device
+        if(printerDevice.getConnectionType().equals(POSOutputDeviceValues.CONNECTION_BLUETOOTH))
+            bt = new BluetoothPrinterService(mActivity, printerDevice.getPrinterName());
+
         for(POSOrder order : orders) {
-            if(bt.isConnected()) {
-                POSPrinter printer = printerFactory.getPrinter("CPCL", order);
+            if(bt != null && bt.isConnected()) {
+                POSPrinter printer = printerFactory.getPrinter(printerDevice.getPrinterLanguage(), order);
                 if(mActivity instanceof EditOrderActivity) {
                     bt.sendData(String.format(printer.printKitchen(),
                             new Object[] { mActivity.getResources().getString(R.string.order),
