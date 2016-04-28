@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.io.Serializable;
 
-import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
+import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
@@ -30,7 +30,7 @@ public class PosOrgInfoManagement implements ObjectManagement, Serializable {
     }
 
     @Override
-    public OrgInfo get(long id){
+    public RestaurantInfo get(long id){
         return dataMapper.getOrgInfo(id);
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
-import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
+import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -36,7 +36,7 @@ public class DataReader {
     private List<MProduct> productList = new ArrayList<>();
     private List<ProductPrice> productPriceList = new ArrayList<>();
     private DefaultPosData defaultData = null;
-    private OrgInfo orgInfo = null;
+    private RestaurantInfo restaurantInfo = null;
     private boolean error = false;
     private Context mContext;
 
@@ -90,7 +90,7 @@ public class DataReader {
             @Override
             public void run() {
                 OrgInfoWebServiceAdapter dataWS = new OrgInfoWebServiceAdapter();
-                orgInfo = dataWS.getOrgInfo();
+                restaurantInfo = dataWS.getRestaurantInfo();
                 persistOrgInfo();
             }
         });
@@ -110,7 +110,7 @@ public class DataReader {
      * Save default data in the database
      */
     private void persistOrgInfo() {
-        orgInfo.saveData(mContext);
+        restaurantInfo.saveData(mContext);
     }
 
     /**

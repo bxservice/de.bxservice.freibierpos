@@ -9,7 +9,7 @@ import org.idempiere.webservice.client.net.WebServiceClient;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
-import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
+import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 
 /**
  * Created by Diego Ruiz on 27/04/16.
@@ -18,7 +18,7 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "QueryOrgInfo";
-    private OrgInfo orgInfo;
+    private RestaurantInfo restaurantInfo;
 
     @Override
     public String getServiceType() {
@@ -38,7 +38,7 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
         ws.setDataRow(data);
 
         WebServiceClient client = getClient();
-        orgInfo = new OrgInfo();
+        restaurantInfo = new RestaurantInfo();
 
         try {
             WindowTabDataResponse response = client.sendRequest(ws);
@@ -60,17 +60,17 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
 
                         //Org info from iDempiere
                         if ("Address1".equalsIgnoreCase(field.getColumn()))
-                            orgInfo.setAddress1(field.getValue());
+                            restaurantInfo.setAddress1(field.getValue());
                         else if ("Address2".equalsIgnoreCase(field.getColumn()))
-                            orgInfo.setAddress2(field.getValue());
+                            restaurantInfo.setAddress2(field.getValue());
                         else if ("City".equalsIgnoreCase(field.getColumn()))
-                            orgInfo.setCity(field.getValue());
+                            restaurantInfo.setCity(field.getValue());
                         else if ("Name".equalsIgnoreCase(field.getColumn()))
-                            orgInfo.setName(field.getValue());
+                            restaurantInfo.setName(field.getValue());
                         else if ("Phone".equalsIgnoreCase(field.getColumn()))
-                            orgInfo.setPhone(field.getValue());
+                            restaurantInfo.setPhone(field.getValue());
                         else if ("Postal".equalsIgnoreCase(field.getColumn()))
-                            orgInfo.setPostalCode(field.getValue());
+                            restaurantInfo.setPostalCode(field.getValue());
                     }
                 }
             }
@@ -80,7 +80,7 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
         }
     }
 
-    public OrgInfo getOrgInfo() {
-        return orgInfo;
+    public RestaurantInfo getRestaurantInfo() {
+        return restaurantInfo;
     }
 }
