@@ -31,10 +31,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.daomanager.PosOutputDeviceManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
+import de.bxservice.bxpos.logic.print.POSOutputDevice;
+import de.bxservice.bxpos.logic.print.POSOutputDeviceValues;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.logic.tasks.PrintOrderTask;
 import de.bxservice.bxpos.ui.adapter.PaymentTypeAdapter;
@@ -544,8 +547,14 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     private void printOrder() {
-        PrintOrderTask createOrderTask = new PrintOrderTask(this);
-        createOrderTask.execute(order);
+        PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
+        POSOutputDevice printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_RECEIPT);
+
+        if(printOrderDevice != null) {
+            PrintOrderTask createOrderTask = new PrintOrderTask(this);
+            createOrderTask.execute(order);
+        }
+
     }
 
     /**

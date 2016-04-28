@@ -37,6 +37,7 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
+import de.bxservice.bxpos.logic.print.POSOutputDeviceValues;
 import de.bxservice.bxpos.logic.tasks.PrintOrderTask;
 import de.bxservice.bxpos.ui.adapter.EditPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.ConfirmationPinDialogFragment;
@@ -975,12 +976,20 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void printOrder() {
         PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
-        POSOutputDevice printOrderDevice = outputDeviceManager.get(0);
+        POSOutputDevice printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN);
+
+        //If no kitchen printer configured - try Kitchen/Bar
+        if(printOrderDevice == null) {
+            printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN_BAR);
+        }
 
         if(printOrderDevice != null) {
             PrintOrderTask createOrderTask = new PrintOrderTask(this);
             createOrderTask.execute(order);
         }
+
+
+
     }
 
     /**
