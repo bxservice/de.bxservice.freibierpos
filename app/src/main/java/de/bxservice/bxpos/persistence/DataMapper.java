@@ -8,7 +8,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
-import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
+import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -73,8 +73,8 @@ public class DataMapper implements Serializable {
             success = createDefaultData((DefaultPosData) object);
         else if(object instanceof POSPayment)
             success = createPayment((POSPayment) object);
-        else if(object instanceof OrgInfo)
-            success = createOrgInfo((OrgInfo) object);
+        else if(object instanceof RestaurantInfo)
+            success = createOrgInfo((RestaurantInfo) object);
 
         return success;
     }
@@ -99,8 +99,8 @@ public class DataMapper implements Serializable {
             success = updateDefaultData((DefaultPosData) object);
         else if(object instanceof POSPayment)
             success = updatePayment((POSPayment) object);
-        else if(object instanceof OrgInfo)
-            success = updateOrgInfo((OrgInfo) object);
+        else if(object instanceof RestaurantInfo)
+            success = updateOrgInfo((RestaurantInfo) object);
         if(object instanceof TableGroup)
             success = updateTableGroup((TableGroup) object);
         if(object instanceof ProductCategory)
@@ -613,11 +613,11 @@ public class DataMapper implements Serializable {
         return orderHelper.getTableSalesReportRows(fromDate, toDate);
     }
 
-    private boolean createOrgInfo(OrgInfo orgInfo) {
+    private boolean createOrgInfo(RestaurantInfo restaurantInfo) {
 
         PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
 
-        if (posOrgInfoDataHelper.createData(orgInfo) == -1) {
+        if (posOrgInfoDataHelper.createData(restaurantInfo) == -1) {
             Log.e(LOG_TAG, "Cannot create org info");
             return false;
         }
@@ -625,11 +625,11 @@ public class DataMapper implements Serializable {
         return true;
     }
 
-    private boolean updateOrgInfo(OrgInfo orgInfo) {
+    private boolean updateOrgInfo(RestaurantInfo restaurantInfo) {
 
         PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
 
-        if (posOrgInfoDataHelper.updateData(orgInfo) != -1) {
+        if (posOrgInfoDataHelper.updateData(restaurantInfo) != -1) {
             Log.i(LOG_TAG, "Org info updated");
         }
         else {
@@ -645,7 +645,7 @@ public class DataMapper implements Serializable {
      * @param id
      * @return
      */
-    public OrgInfo getOrgInfo(long id) {
+    public RestaurantInfo getOrgInfo(long id) {
         PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
         return posOrgInfoDataHelper.getOrgInfo(id);
     }

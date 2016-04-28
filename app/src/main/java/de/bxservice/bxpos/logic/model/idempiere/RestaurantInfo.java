@@ -7,7 +7,7 @@ import de.bxservice.bxpos.logic.daomanager.PosOrgInfoManagement;
 /**
  * Created by Diego Ruiz on 27/04/16.
  */
-public class OrgInfo {
+public class RestaurantInfo {
 
     private PosOrgInfoManagement dataManager;
 

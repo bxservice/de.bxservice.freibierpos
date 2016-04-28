@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import de.bxservice.bxpos.logic.model.idempiere.OrgInfo;
+import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -21,7 +21,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
         super(mContext);
     }
 
-    public long createData(OrgInfo data) {
+    public long createData(RestaurantInfo data) {
         SQLiteDatabase database = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -39,7 +39,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
     /*
     * Updating the default data
     */
-    public int updateData (OrgInfo data) {
+    public int updateData (RestaurantInfo data) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -58,7 +58,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
     /*
     * get single instance of org info
     */
-    public OrgInfo getOrgInfo(long data_id) {
+    public RestaurantInfo getOrgInfo(long data_id) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_ORG_INFO + " WHERE "
@@ -73,17 +73,17 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
         else
             return null;
 
-        OrgInfo orgInfo = new OrgInfo();
-        orgInfo.setName(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_NAME)));
-        orgInfo.setAddress1(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS1)));
-        orgInfo.setAddress2(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS2)));
-        orgInfo.setCity(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_CITY)));
-        orgInfo.setPhone(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_PHONE)));
-        orgInfo.setPostalCode(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_POSTAL)));
+        RestaurantInfo restaurantInfo = new RestaurantInfo();
+        restaurantInfo.setName(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_NAME)));
+        restaurantInfo.setAddress1(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS1)));
+        restaurantInfo.setAddress2(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS2)));
+        restaurantInfo.setCity(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_CITY)));
+        restaurantInfo.setPhone(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_PHONE)));
+        restaurantInfo.setPostalCode(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_POSTAL)));
 
         c.close();
 
-        return orgInfo;
+        return restaurantInfo;
     }
 
 }
