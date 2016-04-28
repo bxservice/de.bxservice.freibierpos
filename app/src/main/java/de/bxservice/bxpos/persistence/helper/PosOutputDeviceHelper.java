@@ -31,6 +31,7 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
         values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_LANGUAGE, device.getPrinterLanguage());
         values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_NAME, device.getPrinterName());
         values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET, device.getDocTarget());
+        values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PAGE_WIDTH, device.getPageWidth());
 
         // insert row
         return database.insert(Tables.TABLE_OUTPUT_DEVICE, null, values);
@@ -48,6 +49,7 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
         values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_LANGUAGE, device.getPrinterLanguage());
         values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_NAME, device.getPrinterName());
         values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET, device.getDocTarget());
+        values.put(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PAGE_WIDTH, device.getPageWidth());
 
         // updating row
         return db.update(Tables.TABLE_OUTPUT_DEVICE, values, OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_OUTPUT_DEVICE_ID + " = ?",
@@ -81,6 +83,7 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
         device.setDocTarget(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET)));
         device.setPrinterLanguage(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_LANGUAGE)));
         device.setPrinterName(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_NAME)));
+        device.setPageWidth(c.getInt(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PAGE_WIDTH)));
 
         c.close();
 
@@ -114,6 +117,7 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
         device.setDocTarget(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET)));
         device.setPrinterLanguage(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_LANGUAGE)));
         device.setPrinterName(c.getString(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PRINTER_NAME)));
+        device.setPageWidth(c.getInt(c.getColumnIndex(OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PAGE_WIDTH)));
 
         c.close();
 

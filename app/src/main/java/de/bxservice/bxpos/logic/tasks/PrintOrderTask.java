@@ -58,7 +58,8 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                     RestaurantInfo restaurantInfo = orgInfoManager.get(1); //Get org info to print in the receipt
                     //TODO: Get footer from iDempiere
                     bt.sendData(String.format(printer.printReceipt(),
-                            new Object[] { restaurantInfo.getName(),
+                            new Object[] { printerDevice.getPageWidth(),
+                                    restaurantInfo.getName(),
                                     restaurantInfo.getAddress1(),
                                     restaurantInfo.getPostalCode() + " " + restaurantInfo.getCity(),
                                     mActivity.getResources().getString(R.string.receipt),
