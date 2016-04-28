@@ -119,6 +119,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
     /**
      * Returns a string with several %s to format
+     * 0 - Page Width
      * 1 - Restaurant Name
      * 2 - Address
      * 3 - City
@@ -147,7 +148,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
         //header
         String label = "! 0 200 200 250 1\r\n" +
-                "PW 550\r\n" +
+                "PW %s\r\n" +
                 "COUNTRY GERMANY\r\n" +
                 "CENTER\r\n" +
                 "T 4 0 25 20 %s\r\n" + //Restaurant name

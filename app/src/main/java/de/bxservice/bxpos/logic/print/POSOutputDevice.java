@@ -1,5 +1,7 @@
 package de.bxservice.bxpos.logic.print;
 
+import android.content.Context;
+
 import de.bxservice.bxpos.logic.daomanager.PosOutputDeviceManagement;
 
 /**
@@ -15,6 +17,7 @@ public class POSOutputDevice {
     private String docTarget;
     private String printerLanguage;
     private String printerName;
+    private int    pageWidth;
 
     public int getOutputDeviceId() {
         return outputDeviceId;
@@ -64,4 +67,28 @@ public class POSOutputDevice {
         this.printerName = printerName;
     }
 
+    public int getPageWidth() {
+        return pageWidth;
+    }
+
+    public void setPageWidth(int pageWidth) {
+        this.pageWidth = pageWidth;
+    }
+
+    public boolean save(Context ctx) {
+        deviceManager = new PosOutputDeviceManagement(ctx);
+
+        if (deviceManager.get(outputDeviceId) == null)
+            return createOutputDevice();
+        else
+            return updateOutputDevice();
+    }
+
+    private boolean updateOutputDevice() {
+        return deviceManager.update(this);
+    }
+
+    private boolean createOutputDevice() {
+        return deviceManager.create(this);
+    }
 }

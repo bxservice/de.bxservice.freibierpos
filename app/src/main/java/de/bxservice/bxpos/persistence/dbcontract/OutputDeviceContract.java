@@ -21,5 +21,6 @@ public class OutputDeviceContract {
         public static final String COLUMN_NAME_TARGET           = "target";
         public static final String COLUMN_NAME_DEVICE_TYPE      = "deviceType";
         public static final String COLUMN_NAME_CONNECTION       = "connection";
+        public static final String COLUMN_NAME_PAGE_WIDTH       = "pageWidth";
     }
 }
