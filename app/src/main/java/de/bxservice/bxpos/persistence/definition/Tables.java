@@ -3,6 +3,7 @@ package de.bxservice.bxpos.persistence.definition;
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
+import de.bxservice.bxpos.persistence.dbcontract.OutputDeviceContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosPaymentContract;
@@ -42,5 +43,8 @@ public interface Tables {
 
     //Organization info from iDempiere
     String TABLE_ORG_INFO = OrgInfoContract.OrgInfoDB.TABLE_NAME;
+
+    //Output device
+    String TABLE_OUTPUT_DEVICE = OutputDeviceContract.OutputDeviceDB.TABLE_NAME;
 
 }

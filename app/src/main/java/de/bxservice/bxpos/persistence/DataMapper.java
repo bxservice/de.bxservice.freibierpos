@@ -18,10 +18,12 @@ import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
+import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrgInfoDataHelper;
+import de.bxservice.bxpos.persistence.helper.PosOutputDeviceHelper;
 import de.bxservice.bxpos.persistence.helper.PosPaymentHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductCategoryHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductHelper;
@@ -75,6 +77,8 @@ public class DataMapper implements Serializable {
             success = createPayment((POSPayment) object);
         else if(object instanceof RestaurantInfo)
             success = createOrgInfo((RestaurantInfo) object);
+        else if(object instanceof POSOutputDevice)
+            success = createOutputDevice((POSOutputDevice) object);
 
         return success;
     }
@@ -101,14 +105,16 @@ public class DataMapper implements Serializable {
             success = updatePayment((POSPayment) object);
         else if(object instanceof RestaurantInfo)
             success = updateOrgInfo((RestaurantInfo) object);
-        if(object instanceof TableGroup)
+        else if(object instanceof TableGroup)
             success = updateTableGroup((TableGroup) object);
-        if(object instanceof ProductCategory)
+        else if(object instanceof ProductCategory)
             success = updateProductCategory((ProductCategory) object);
-        if(object instanceof ProductPrice)
+        else if(object instanceof ProductPrice)
             success = updateProductPrice((ProductPrice) object);
-        if(object instanceof MProduct)
+        else if(object instanceof MProduct)
             success = updateProduct((MProduct) object);
+        else if(object instanceof POSOutputDevice)
+            success = updateOutputDevice((POSOutputDevice) object);
 
         return success;
     }
@@ -648,6 +654,41 @@ public class DataMapper implements Serializable {
     public RestaurantInfo getOrgInfo(long id) {
         PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
         return posOrgInfoDataHelper.getOrgInfo(id);
+    }
+
+    private boolean createOutputDevice(POSOutputDevice outputDevice) {
+        PosOutputDeviceHelper outputDeviceHelper = new PosOutputDeviceHelper(mContext);
+
+        if (outputDeviceHelper.createData(outputDevice) == -1) {
+            Log.e(LOG_TAG, "Cannot save output device");
+            return false;
+        }
+        Log.i(LOG_TAG, "Output device saved");
+        return true;
+    }
+
+    private boolean updateOutputDevice(POSOutputDevice outputDevice) {
+        PosOutputDeviceHelper outputDeviceHelper = new PosOutputDeviceHelper(mContext);
+
+        if (outputDeviceHelper.updateData(outputDevice) != -1) {
+            Log.i(LOG_TAG, "Output device updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update Output device");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+    * Return device if exists
+    * @param id
+    * @return
+    */
+    public POSOutputDevice getOutputDevice(long id) {
+        PosOutputDeviceHelper outputDeviceHelper = new PosOutputDeviceHelper(mContext);
+        return outputDeviceHelper.getDevice(id);
     }
 
 }
