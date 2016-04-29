@@ -48,6 +48,17 @@ public class DataReader {
 
         mContext = ctx;
 
+        Thread outputDeviceThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OutputDeviceWebServiceAdapter deviceWS = new OutputDeviceWebServiceAdapter();
+                outputDeviceList = deviceWS.getOutputDeviceList();
+                persistDeviceList();
+            }
+        });
+
+        outputDeviceThread.run();
+
         Thread productCategoryThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -99,17 +110,6 @@ public class DataReader {
         });
 
         orgInfoThread.run();
-
-        Thread outputDeviceThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                OutputDeviceWebServiceAdapter deviceWS = new OutputDeviceWebServiceAdapter();
-                outputDeviceList = deviceWS.getOutputDeviceList();
-                persistDeviceList();
-            }
-        });
-
-        outputDeviceThread.run();
 
     }
 

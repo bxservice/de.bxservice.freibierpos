@@ -16,6 +16,7 @@ public class ProductCategory {
 
     private int productCategoryID;
     private String name;
+    private int outputDeviceId;
     private List<MProduct> products = new ArrayList<>();
     private PosProductCategoryManagement productCategoryManager;
 
@@ -50,6 +51,14 @@ public class ProductCategory {
 
     public void setProducts(List<MProduct> products) {
         this.products = products;
+    }
+
+    public int getOutputDeviceId() {
+        return outputDeviceId;
+    }
+
+    public void setOutputDeviceId(int outputDeviceId) {
+        this.outputDeviceId = outputDeviceId;
     }
 
     /**

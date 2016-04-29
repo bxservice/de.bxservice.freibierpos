@@ -18,6 +18,7 @@ public class MProduct implements Serializable {
     private int productID;
     private String productName;
     private int productCategoryId;
+    private int outputDeviceId;
     private PosProductManagement productManager;
 
     public int getProductID() {
@@ -52,6 +53,14 @@ public class MProduct implements Serializable {
     public ProductPrice getProductPrice(Context ctx) {
         productManager = new PosProductManagement(ctx);
         return productManager.getProductPrice(this);
+    }
+
+    public int getOutputDeviceId() {
+        return outputDeviceId;
+    }
+
+    public void setOutputDeviceId(int outputDeviceId) {
+        this.outputDeviceId = outputDeviceId;
     }
 
     /**

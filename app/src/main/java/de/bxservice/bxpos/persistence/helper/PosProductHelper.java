@@ -34,6 +34,8 @@ public class PosProductHelper extends PosObjectHelper {
         values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID, product.getProductID());
         values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, product.getProductCategoryId());
         values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
+        if (product.getOutputDeviceId() != 0)
+            values.put(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID, product.getOutputDeviceId());
 
         // insert row
         return db.insert(Tables.TABLE_PRODUCT, null, values);
@@ -61,6 +63,7 @@ public class PosProductHelper extends PosObjectHelper {
         product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
         product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
         product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
+        product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
 
         c.close();
 
@@ -76,6 +79,8 @@ public class PosProductHelper extends PosObjectHelper {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, product.getProductCategoryId());
         values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
+        if (product.getOutputDeviceId() != 0)
+            values.put(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID, product.getOutputDeviceId());
 
         // updating row
         return db.update(Tables.TABLE_PRODUCT, values, ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = ?",
@@ -106,6 +111,7 @@ public class PosProductHelper extends PosObjectHelper {
                 product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
                 product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
                 product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
+                product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
 
                 products.add(product);
             } while (c.moveToNext());
@@ -137,6 +143,7 @@ public class PosProductHelper extends PosObjectHelper {
                 product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
                 product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
                 product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
+                product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
 
                 products.add(product);
             } while (c.moveToNext());
