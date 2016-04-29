@@ -30,7 +30,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 24;
+    private static final int DATABASE_VERSION = 26;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -174,6 +174,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER REFERENCES "
                         + Tables.TABLE_PRODUCT_CATEGORY + "(" + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + ") ON DELETE CASCADE" +  //FK to the product category
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_OUTPUT_DEVICE + "(" + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_OUTPUT_DEVICE_ID + ") " +  //FK to the output device
                     ")";
 
     private static final String CREATE_PRODUCT_CATEGORY_TABLE =
@@ -182,6 +185,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER PRIMARY KEY" +
                     ", " +
                     ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    ProductCategoryContract.ProductCategoryDB.COLUMN_OUTPUT_DEVICE_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_OUTPUT_DEVICE + "(" + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_OUTPUT_DEVICE_ID + ") " +  //FK to the output device
                     ")";
 
     private static final String CREATE_PRODUCT_PRICE_TABLE =
@@ -353,6 +359,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_GROUPTABLE_TABLE);
         db.execSQL(CREATE_TABLE_TABLE);
+        db.execSQL(CREATE_OUTPUT_DEVICE_TABLE);
         db.execSQL(CREATE_PRODUCT_CATEGORY_TABLE);
         db.execSQL(CREATE_PRODUCT_TABLE);
         db.execSQL(CREATE_PRODUCT_PRICE_TABLE);
@@ -361,7 +368,6 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_POSPAYMENT_TABLE);
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(CREATE_ORG_INFO_TABLE);
-        db.execSQL(CREATE_OUTPUT_DEVICE_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");

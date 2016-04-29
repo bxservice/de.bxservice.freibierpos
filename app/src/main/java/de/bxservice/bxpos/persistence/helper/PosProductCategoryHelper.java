@@ -34,6 +34,8 @@ public class PosProductCategoryHelper extends PosObjectHelper {
         ContentValues values = new ContentValues();
         values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, productCategory.getProductCategoryID());
         values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME, productCategory.getName());
+        if (productCategory.getOutputDeviceId() != 0)
+            values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_OUTPUT_DEVICE_ID, productCategory.getOutputDeviceId());
 
         // insert row
         return db.insert(Tables.TABLE_PRODUCT_CATEGORY, null, values);
@@ -59,6 +61,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
 
         ProductCategory productCategory = new ProductCategory(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)),
                 c.getString(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME)));
+        productCategory.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_OUTPUT_DEVICE_ID)));
 
         c.close();
 
@@ -73,6 +76,8 @@ public class PosProductCategoryHelper extends PosObjectHelper {
 
         ContentValues values = new ContentValues();
         values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME, productCategory.getName());
+        if (productCategory.getOutputDeviceId() != 0)
+            values.put(ProductCategoryContract.ProductCategoryDB.COLUMN_OUTPUT_DEVICE_ID, productCategory.getOutputDeviceId());
 
         // updating row
         return db.update(Tables.TABLE_PRODUCT_CATEGORY, values, ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " = ?",
@@ -99,6 +104,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
                 productCategory.setProductCategoryID(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
                 productCategory.setName(c.getString(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME)));
                 productCategory.setProducts(productHelper.getAllProducts(productCategory));
+                productCategory.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_OUTPUT_DEVICE_ID)));
 
                 // adding to category list
                 productCategories.add(productCategory);

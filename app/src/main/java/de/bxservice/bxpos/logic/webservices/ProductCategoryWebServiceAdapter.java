@@ -49,12 +49,14 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
                 Log.i("info", "Total rows: " + response.getNumRows());
                 String categoryName;
                 int categoryID;
+                int outputDeviceID;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
                     Log.i("info", "Row: " + (i + 1));
                     categoryName = null;
                     categoryID = 0;
+                    outputDeviceID = 0;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
@@ -65,11 +67,14 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
                             categoryName = field.getValue();
                         else if (ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()))
                             categoryID = Integer.valueOf(field.getValue());
+                        else if ("BXS_POSOutputDevice_ID".equalsIgnoreCase(field.getColumn()) && !field.getValue().isEmpty())
+                            outputDeviceID = Integer.valueOf(field.getValue());
 
                     }
 
                     if(categoryName != null &&  categoryID!= 0){
                         ProductCategory p = new ProductCategory(categoryID, categoryName);
+                        p.setOutputDeviceId(outputDeviceID);
                         productCategoryList.add(p);
                     }
 
