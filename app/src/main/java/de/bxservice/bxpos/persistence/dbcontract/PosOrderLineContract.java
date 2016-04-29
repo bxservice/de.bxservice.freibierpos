@@ -27,5 +27,6 @@ public class PosOrderLineContract {
         public static final String COLUMN_NAME_REMARK           = "remark";
         public static final String COLUMN_NAME_LINENETAMT       = "lineNetAmt";
         public static final String COLUMN_NAME_COMPLIMENTARY    = "complimentary";
+        public static final String COLUMN_NAME_ISPRINTED        = "isPrinted";
     }
 }

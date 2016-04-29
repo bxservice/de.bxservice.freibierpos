@@ -50,6 +50,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
         int flag = (orderLine.isComplimentaryProduct()) ? 1 : 0;
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY, flag);
 
+        flag = (orderLine.isPrinted()) ? 1 : 0;
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED, flag);
+
         // insert row
         return database.insert(Tables.TABLE_POSORDER_LINE, null, values);
     }
@@ -57,7 +60,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
     /*
    * get single order line
    */
-    public POSOrderLine getOrderLine (long orderline_id) {
+    public POSOrderLine getOrderLine(long orderline_id) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " WHERE "
@@ -88,7 +91,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
     /*
     * Updating a order line
     */
-    public int updateOrderLine (POSOrderLine orderLine) {
+    public int updateOrderLine(POSOrderLine orderLine) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -103,6 +106,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
         int flag = (orderLine.isComplimentaryProduct()) ? 1 : 0;
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY, flag);
+
+        flag = (orderLine.isPrinted()) ? 1 : 0;
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED, flag);
 
         // updating row
         return db.update(Tables.TABLE_POSORDER_LINE, values,PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?",
@@ -141,6 +147,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 Boolean flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY)) != 0);
                 orderLine.setComplimentaryProduct(flag);
+
+                flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED)) != 0);
+                orderLine.setPrinted(flag);
 
                 lines.add(orderLine);
             } while (c.moveToNext());
@@ -215,6 +224,9 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 Boolean flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY)) != 0);
                 orderLine.setComplimentaryProduct(flag);
+
+                flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED)) != 0);
+                orderLine.setPrinted(flag);
 
                 lines.add(orderLine);
             } while (c.moveToNext());
@@ -306,6 +318,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
         selectQuery.append(" AND d." + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET + " =?");
         selectQuery.append(" WHERE ");
         selectQuery.append(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ?");
+        selectQuery.append(" AND " + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED + " = ?");
         selectQuery.append(" UNION ");
         //Check for printer in product category
         selectQuery.append("SELECT  ol.* FROM ");
@@ -322,12 +335,13 @@ public class PosOrderLineHelper extends PosObjectHelper {
         selectQuery.append(" AND d." + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_TARGET + " =?");
         selectQuery.append(" WHERE ");
         selectQuery.append(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID + " = ?");
+        selectQuery.append(" AND " + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED + " = ?");
 
         Log.d(LOG_TAG, selectQuery.toString());
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {target, String.valueOf(order.getOrderId()),
-                target, String.valueOf(order.getOrderId())});
+        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {target, String.valueOf(order.getOrderId()), String.valueOf(0),
+                target, String.valueOf(order.getOrderId()), String.valueOf(0)});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
@@ -341,6 +355,11 @@ public class PosOrderLineHelper extends PosObjectHelper {
                 orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
                 orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
                 orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED)) != 0);
+                orderLine.setPrinted(flag);
+
+                orderLine.setOrder(order);
 
                 lines.add(orderLine);
             } while (c.moveToNext());

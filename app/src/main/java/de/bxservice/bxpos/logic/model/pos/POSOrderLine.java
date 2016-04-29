@@ -32,6 +32,7 @@ public class POSOrderLine implements Serializable {
     private int qtyOrdered;
     private String productRemark = "";
     private boolean marked = false;
+    private boolean printed = false;
     private String lineStatus;
     private BigDecimal lineNetAmt = BigDecimal.ZERO; //qty*StpPrice
 
@@ -69,6 +70,14 @@ public class POSOrderLine implements Serializable {
 
     public void setMarked(boolean marked) {
         this.marked = marked;
+    }
+
+    public boolean isPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(boolean printed) {
+        this.printed = printed;
     }
 
     public String getLineStatus() {
