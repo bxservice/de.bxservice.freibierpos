@@ -16,12 +16,10 @@ import java.util.UUID;
 /**
  * Created by Diego Ruiz on 20/04/16.
  */
-public class BluetoothPrinterService {
+public class BluetoothPrinterService extends AbstractPOSPrinterService {
 
     private static final String TAG = "BluetoothPrinterService";
     private static int MAX_DATA_TO_WRITE_TO_STREAM_AT_ONCE = 1024;
-
-    private Activity activity;
 
     // android built in classes for bluetooth operations
     private BluetoothAdapter mBluetoothAdapter;
@@ -43,17 +41,11 @@ public class BluetoothPrinterService {
 
 
     public BluetoothPrinterService(Activity mActivity, String printerName) {
-        activity = mActivity;
-        try {
-            findBT(printerName);
-            openBT();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        super(mActivity, printerName);
     }
 
     // Method that finds a bluetooth printer device
-    private void findBT(String printerName) {
+    public void findDevice(String printerName) {
 
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -89,7 +81,7 @@ public class BluetoothPrinterService {
     }
 
     // tries to open a connection to the bluetooth printer device
-    private void openBT() throws IOException {
+    public void openConnection() throws IOException {
         try {
 
             // Standard SerialPortService ID
@@ -217,7 +209,7 @@ public class BluetoothPrinterService {
     }
 
     // Close the connection to bluetooth printer to avoid battery consumption
-    public void closeBT() throws IOException {
+    public void closeConnection() throws IOException {
         try {
             stopWorker = true;
             mmOutputStream.flush();
