@@ -124,6 +124,8 @@ public class CPCLPrinter extends AbstractPOSPrinter {
             ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "\r\n");
             if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
                 ticket.append("    " + line.getProductRemark() + "\r\n");
+            line.setPrinted(true);
+            line.updateLine(null);
         }
 
         ticket.append("\r\n");
