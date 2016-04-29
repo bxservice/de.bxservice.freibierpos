@@ -978,15 +978,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
         POSOutputDevice printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN);
 
-        //If no kitchen printer configured - try Kitchen/Bar
-        if(printOrderDevice == null) {
-            printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN_BAR);
-        }
-
-        if(printOrderDevice != null && printOrderDevice.getDeviceType().equalsIgnoreCase(POSOutputDeviceValues.DEVICE_PRINTER)) {
+        //If kitchen printer is configured -> print kitchen
+        if(printOrderDevice != null &&
+                printOrderDevice.getDeviceType().equalsIgnoreCase(POSOutputDeviceValues.DEVICE_PRINTER) &&  //If it is a printer
+                order.getPrintKitchenLines(getBaseContext()).size() > 0) { //If there are lines to print
             PrintOrderTask createOrderTask = new PrintOrderTask(this, printOrderDevice);
             createOrderTask.execute(order);
         }
+
     }
 
     /**

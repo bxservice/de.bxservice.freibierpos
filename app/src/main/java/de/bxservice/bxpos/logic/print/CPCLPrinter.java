@@ -3,7 +3,9 @@ package de.bxservice.bxpos.logic.print;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -14,6 +16,9 @@ import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
  * Created by Diego Ruiz on 21/04/16.
  */
 public class CPCLPrinter extends AbstractPOSPrinter {
+
+    private static final String KITCHEN_RECEIPT = "KITCHEN";
+    private static final String BAR_RECEIPT     = "BAR";
 
     public CPCLPrinter(POSOrder order) {
         super(order);
@@ -81,7 +86,16 @@ public class CPCLPrinter extends AbstractPOSPrinter {
      */
     @Override
     public String printKitchen() {
-        //TODO: Filter only kitchen items
+        return getPrintout(KITCHEN_RECEIPT);
+
+    }
+
+    @Override
+    public String printBar() {
+        return getPrintout(BAR_RECEIPT);
+    }
+
+    private String getPrintout(String target) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
 
@@ -97,11 +111,21 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append( "%s: "+ order.getGuestNumber() +"\r\n");
         ticket.append("\r\n");
         ticket.append( "! U1 SETLP 5 2 46\r\n");
-        for(POSOrderLine line : order.getOrderedLines()) {
+
+        List<POSOrderLine> lines = new ArrayList<>();
+
+        if(target.equals(KITCHEN_RECEIPT)) {
+            lines = order.getPrintKitchenLines(null);
+        } else if (target.equals(BAR_RECEIPT)) {
+            lines = order.getPrintBarLines(null);
+        }
+
+        for(POSOrderLine line : lines) {
             ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "\r\n");
             if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
                 ticket.append("    " + line.getProductRemark() + "\r\n");
         }
+
         ticket.append("\r\n");
         ticket.append( "! U1 SETLP 7 0 24\r\n");
         ticket.append(dateFormat.format(cal.getTime())+"\r\n");//2014/08/06 16:00:22
@@ -109,12 +133,6 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append("! U1 PRINT\r\n");
 
         return ticket.toString();
-
-    }
-
-    @Override
-    public String printBar() {
-        return null;
     }
 
     /**
