@@ -18,7 +18,6 @@ public interface POSOutputDeviceValues {
 
     /** Output Target */
     String TARGET_KITCHEN     = "K";
-    String TARGET_KITCHEN_BAR = "M";
     String TARGET_BAR         = "B";
     String TARGET_RECEIPT     = "R";
 

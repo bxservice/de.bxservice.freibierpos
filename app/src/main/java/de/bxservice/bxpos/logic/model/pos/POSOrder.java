@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
@@ -230,6 +231,24 @@ public class POSOrder implements Serializable {
         }
 
         return summarizeLines;
+    }
+
+    /**
+     *
+     * @return Array list with all the lines that are printed in the kitchen
+     */
+    public List<POSOrderLine> getPrintKitchenLines(Context ctx) {
+        if(orderManager == null)
+            orderManager = new PosOrderManagement(ctx);
+
+        return orderManager.getPrintKitchenLines(this);
+    }
+
+    public List<POSOrderLine> getPrintBarLines(Context ctx) {
+        if(orderManager == null)
+            orderManager = new PosOrderManagement(ctx);
+
+        return orderManager.getPrintBarLines(this);
     }
 
     /**

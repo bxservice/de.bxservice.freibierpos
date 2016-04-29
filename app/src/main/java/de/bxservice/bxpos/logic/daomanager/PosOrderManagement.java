@@ -1,12 +1,14 @@
 package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
+import android.widget.ListView;
 
 import java.io.Serializable;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
@@ -63,5 +65,13 @@ public class PosOrderManagement implements ObjectManagement, Serializable {
 
     public List<POSOrder> getTableOrders (Table table) {
         return dataMapper.getTableOrders(table);
+    }
+
+    public List<POSOrderLine> getPrintKitchenLines(POSOrder order) {
+        return dataMapper.getPrintKitchenLines(order);
+    }
+
+    public List<POSOrderLine> getPrintBarLines(POSOrder order) {
+        return dataMapper.getPrintBarLines(order);
     }
 }

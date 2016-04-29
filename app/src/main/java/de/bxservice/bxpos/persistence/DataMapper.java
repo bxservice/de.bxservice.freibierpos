@@ -609,6 +609,16 @@ public class DataMapper implements Serializable {
         return orderLineHelper.getVoidedItems(fromDate, toDate);
     }
 
+    public List<POSOrderLine> getPrintKitchenLines(POSOrder order) {
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        return orderLineHelper.getPrintKitchenLines(order);
+    }
+
+    public List<POSOrderLine> getPrintBarLines(POSOrder order) {
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        return orderLineHelper.getPrintBarLines(order);
+    }
+
     public List<ReportGenericObject> getVoidedReportRows(long fromDate, long toDate) {
         PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
         return orderLineHelper.getVoidedReportRows(fromDate, toDate);
