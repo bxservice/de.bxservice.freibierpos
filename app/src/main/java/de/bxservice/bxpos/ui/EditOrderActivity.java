@@ -698,11 +698,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     @Override
     public void finish() {
-        /*try {
-            bt.closeBT();
-        }catch(IOException e) {
-
-        }*/
         //When new items want to be added - persist the changes in guests and notes
         if (caller.equals("CreateOrderActivity") && addNewItemsOnBack) {
             Intent data = new Intent();
