@@ -70,10 +70,13 @@ public class Table implements Serializable {
 
     public boolean save(Context ctx) {
         tableManager = new PosTableManagement(ctx);
-        if (tableManager.get(tableID) == null)
+        Table originalTable = tableManager.get(tableID);
+        if (originalTable == null)
             return createTable();
-        else
+        else {
+            status = originalTable.getStatus();
             return updateTable();
+        }
     }
 
     private boolean createTable(){

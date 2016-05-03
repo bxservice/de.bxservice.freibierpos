@@ -499,7 +499,7 @@ public class POSOrder implements Serializable {
         this.totallines = BigDecimal.valueOf(doubleValue);
     }
 
-    public boolean sendOrder (Context ctx) {
+    public boolean sendOrder(Context ctx) {
 
         orderManager = new PosOrderManagement(ctx);
         boolean result;

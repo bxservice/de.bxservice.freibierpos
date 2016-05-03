@@ -54,7 +54,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                                     mActivity.getResources().getString(R.string.waiter_role),
                                     mActivity.getResources().getString(R.string.guests)}).getBytes());
                 } else if(mActivity instanceof PayOrderActivity) {
-                    
+
                     PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
                     RestaurantInfo restaurantInfo = orgInfoManager.get(1); //Get org info to print in the receipt
                     //TODO: Get footer from iDempiere
