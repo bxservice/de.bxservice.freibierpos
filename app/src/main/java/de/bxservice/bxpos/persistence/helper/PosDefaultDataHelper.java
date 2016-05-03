@@ -29,6 +29,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST, data.getDefaultPriceList());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_CURRENCY, data.getDefaultCurrency());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE, data.getDefaultWarehouse());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID, data.getDiscountId());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID, data.getSurchargeId());
 
         // insert row
 
@@ -46,6 +48,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST, data.getDefaultPriceList());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_CURRENCY, data.getDefaultCurrency());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE, data.getDefaultWarehouse());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID, data.getDiscountId());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID, data.getSurchargeId());
 
         // updating row
         return db.update(Tables.TABLE_DEFAULT_POS_DATA, values, DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " = ?",
@@ -75,6 +79,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setDefaultWarehouse(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE)));
         defaultData.setDefaultCurrency(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_CURRENCY)));
         defaultData.setDefaultPriceList(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST)));
+        defaultData.setDiscountId(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID)));
+        defaultData.setSurchargeId(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID)));
 
         c.close();
 

@@ -20,6 +20,8 @@ public class DefaultPosDataContract {
         public static final String COLUMN_NAME_PRICE_LIST = "defaultPriceList";
         public static final String COLUMN_NAME_CURRENCY = "defaultCurrency";
         public static final String COLUMN_NAME_WAREHOUSE = "defaultWarehouse";
+        public static final String COLUMN_NAME_DISCOUNT_ID = "discountID";
+        public static final String COLUMN_NAME_SURCHARGE_ID = "surchargeID";
 
     }
 
