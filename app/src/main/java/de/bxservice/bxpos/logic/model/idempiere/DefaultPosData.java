@@ -22,6 +22,8 @@ public class DefaultPosData {
     private int defaultPriceList = 0;
     private int defaultCurrency = 0;
     private int defaultWarehouse = 0;
+    private int discountId = 0;
+    private int surchargeId = 0;
 
    public int getDefaultBPartner() {
         return defaultBPartner;
@@ -53,6 +55,22 @@ public class DefaultPosData {
 
     public void setDefaultWarehouse(int defaultWarehouse) {
         this.defaultWarehouse = defaultWarehouse;
+    }
+
+    public int getDiscountId() {
+        return discountId;
+    }
+
+    public void setDiscountId(int discountId) {
+        this.discountId = discountId;
+    }
+
+    public int getSurchargeId() {
+        return surchargeId;
+    }
+
+    public void setSurchargeId(int surchargeId) {
+        this.surchargeId = surchargeId;
     }
 
     /**

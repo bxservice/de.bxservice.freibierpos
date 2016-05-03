@@ -114,6 +114,41 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             compositeOperation.addOperation(createOrderLine);
         }
 
+        //If there is surcharge paid and the surcharge is send to iDempiere
+        if(order.getSurchargeInteger() != 0 && defaultPosData.getSurchargeId() != 0) {
+            CreateDataRequest createOrderLine = new CreateDataRequest();
+            createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
+
+            DataRow dataLine = new DataRow();
+            dataLine.addField("AD_Org_ID", orgId);
+            dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
+            dataLine.addField("C_Charge_ID", String.valueOf(defaultPosData.getSurchargeId()));
+            dataLine.addField("PriceEntered", String.valueOf(order.getSurcharge()));
+            dataLine.addField("PriceActual", String.valueOf(order.getSurcharge()));
+            dataLine.addField("QtyOrdered", String.valueOf(1));
+            dataLine.addField("QtyEntered", String.valueOf(1));
+            createOrderLine.setDataRow(dataLine);
+
+            compositeOperation.addOperation(createOrderLine);
+        }
+
+        //If there is discount applied and the discount is send to iDempiere
+        if(order.getDiscountInteger() != 0 && defaultPosData.getDiscountId() != 0) {
+            CreateDataRequest createOrderLine = new CreateDataRequest();
+            createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
+            DataRow dataLine = new DataRow();
+            dataLine.addField("AD_Org_ID", orgId);
+            dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
+            dataLine.addField("C_Charge_ID", String.valueOf(defaultPosData.getDiscountId()));
+            dataLine.addField("PriceEntered", String.valueOf(order.getDiscount().negate()));
+            dataLine.addField("PriceActual", String.valueOf(order.getDiscount().negate()));
+            dataLine.addField("QtyOrdered", String.valueOf(1));
+            dataLine.addField("QtyEntered", String.valueOf(1));
+            createOrderLine.setDataRow(dataLine);
+
+            compositeOperation.addOperation(createOrderLine);
+        }
+
         if(IOrder.PAYMENTRULE_MixedPOSPayment.equals(order.getPaymentRule())) {
 
             for(POSPayment payment : order.getPayments()) {
