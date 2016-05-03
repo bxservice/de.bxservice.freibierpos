@@ -80,7 +80,7 @@ public class PosTableHelper extends PosObjectHelper {
     /*
     * Updating a table
     */
-    public int updateTable (Table table) {
+    public int updateTable(Table table) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
