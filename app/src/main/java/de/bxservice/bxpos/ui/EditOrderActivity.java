@@ -981,6 +981,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             createOrderTask.execute(order);
         }
 
+        printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_BAR);
+
+        //If bar printer is configured -> print bar
+        if(printOrderDevice != null &&
+                printOrderDevice.getDeviceType().equalsIgnoreCase(POSOutputDeviceValues.DEVICE_PRINTER) &&  //If it is a printer
+                order.getPrintBarLines(getBaseContext()).size() > 0) { //If there are lines to print
+            PrintOrderTask createOrderTask = new PrintOrderTask(this, printOrderDevice);
+            createOrderTask.execute(order);
+        }
+
     }
 
     /**
