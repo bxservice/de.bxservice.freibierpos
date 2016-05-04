@@ -189,6 +189,7 @@
     <string name="type">Type</string>
     <string name="receipt">Receipt</string>
     <string name="cash">Cash</string>
+    <string name="logout">Logout</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

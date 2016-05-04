@@ -187,8 +187,9 @@
     <string name="give_complimentary_product">¿Esta seguro que desea regalar este producto?</string>
     <string name="give">Regalar</string>
     <string name="type">Tipo</string>
-    <string name="receipt">Receipt</string>
+    <string name="receipt">Recibo</string>
     <string name="cash">Efectivo</string>
+    <string name="logout">Cerrar sesion</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

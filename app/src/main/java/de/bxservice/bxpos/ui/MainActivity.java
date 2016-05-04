@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity
     private int numberOfGuests = 0;
     private Table selectedTable = null;
 
-    private SharedPreferences sharedPref;
     private String syncConnPref;
 
     @Override
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
         callAsynchronousTask();
     }
@@ -181,6 +180,10 @@ public class MainActivity extends AppCompatActivity
             else
                 Toast.makeText(getBaseContext(), getString(R.string.no_unsync_orders),
                         Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_logout) {
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
+            finish();
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -191,7 +194,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * If there are orders to be synchronized. Checks if there is internet connection
      * and synchronizes them
-     * @param unsynchronizedOrders
+     * @param unsynchronizedOrders Array list with the orders that has not been synchronized with iDempiere
      */
     private void synchronizePendingOrders(List<POSOrder> unsynchronizedOrders, boolean automatic) {
         //Check if network connection is available
@@ -304,7 +307,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * gets call after the create order task finishes
-     * @param success
+     * @param success flag to check if the sync was successful
      */
     public void postExecuteTask(boolean success) {
         if(success)

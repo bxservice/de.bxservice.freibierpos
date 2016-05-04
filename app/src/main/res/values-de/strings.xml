@@ -192,6 +192,7 @@
     <string name="type">Type</string>
     <string name="receipt">Bon</string>
     <string name="cash">Bar</string>
+    <string name="logout">Ausloggen</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
