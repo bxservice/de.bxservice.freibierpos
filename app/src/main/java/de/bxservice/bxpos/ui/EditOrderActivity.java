@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.daomanager.PosOutputDeviceManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -134,7 +135,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             public void onClick(View view) {
                 if (order.sendOrder(getApplicationContext())) {
                     orderSent = true;
-                    printOrder(false);
+                    DefaultPosData defaultPosData = new PosDefaultDataManagement(getBaseContext()).getDefaultData();
+
+                    //If the option is marked in POS Terminal -> Print
+                    if(defaultPosData.isPrintAfterSent())
+                        printOrder(false);
+
                     finish();
                 } else
                     Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
