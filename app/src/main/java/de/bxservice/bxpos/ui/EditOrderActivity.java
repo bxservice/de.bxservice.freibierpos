@@ -257,6 +257,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             printOrder(true);
             return true;
         }
+        if (id == R.id.void_order) {
+            showVoidOrderReasonDialog();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -336,17 +340,29 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void showVoidReasonDialog() {
         VoidReasonDialogFragment voidReasonDialog = new VoidReasonDialogFragment();
+        voidReasonDialog.setVoidOrder(false);
         voidReasonDialog.setNoItems(positionItemsToVoid.size());
         voidReasonDialog.show(getFragmentManager(), "VoidReasonDialogFragment");
     }
 
-    private void showConfirmationPINDialog(String reason) {
-        ConfirmationPinDialogFragment confirmationPinDialog = new ConfirmationPinDialogFragment();
-        confirmationPinDialog.setReason(reason);
-        confirmationPinDialog.setNoItems(positionItemsToVoid.size());
-        confirmationPinDialog.show(getFragmentManager(), "ConfirmationPinDialogFragment");
+    private void showVoidOrderReasonDialog() {
+        VoidReasonDialogFragment voidReasonDialog = new VoidReasonDialogFragment();
+        voidReasonDialog.setVoidOrder(true);
+        voidReasonDialog.show(getFragmentManager(), "VoidReasonDialogFragment");
     }
 
+    private void showConfirmationPINDialog(String reason, boolean voidOrder) {
+        ConfirmationPinDialogFragment confirmationPinDialog = new ConfirmationPinDialogFragment();
+        confirmationPinDialog.setVoidOrder(voidOrder);
+        confirmationPinDialog.setReason(reason);
+
+        if(voidOrder)
+            confirmationPinDialog.setNoItems((int) order.getOrderId());
+        else
+            confirmationPinDialog.setNoItems(positionItemsToVoid.size());
+
+        confirmationPinDialog.show(getFragmentManager(), "ConfirmationPinDialogFragment");
+    }
 
     /**
      * Click set on guest number dialog
@@ -471,9 +487,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             boolean blockVoid = sharedPref.getBoolean(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED, true);
 
             if(blockVoid) {
-                showConfirmationPINDialog(dialog.getReason());
+                showConfirmationPINDialog(dialog.getReason(), dialog.isVoidOrder());
             } else {
-                voidSelectedItems(dialog.getReason());
+                if(dialog.isVoidOrder())
+                    voidOrder(dialog.getReason());
+                else
+                    voidSelectedItems(dialog.getReason());
             }
         }
         dialog.dismiss();
@@ -500,7 +519,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 Snackbar.make(mainView, R.string.wrong_password, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
-                voidSelectedItems(dialog.getReason());
+                if(dialog.isVoidOrder())
+                    voidOrder(dialog.getReason());
+                else
+                    voidSelectedItems(dialog.getReason());
                 dialog.dismiss();
             }
         }
@@ -936,6 +958,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
 
         return false;
+    }
+
+    private void voidOrder(String reason) {
+        order.voidOrder(getBaseContext(), reason);
+        orderChanged = true;
+        finish();
     }
 
     private void voidSelectedItems(String reason) {

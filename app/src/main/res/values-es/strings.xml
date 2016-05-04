@@ -40,7 +40,7 @@
     <string name="new_order">Nueva orden</string>
     <string name="unable_split">No se puede dividir una orden con menos de un item</string>
     <string name="split_all_Error">No se pueden seleccionar todos los items para dividir</string>
-    <string name="void_title">Anular items</string>
+    <string name="void_title">Anular</string>
     <string name="select_order">Seleccionar orden</string>
 
     <!-- Strings related to login -->
@@ -193,6 +193,7 @@
     <string name="print_order">Imprimir orden</string>
     <string name="no_print_items">No hay items a imprimir</string>
     <string name="no_printing_device">No se encontro dispositivo de imrpesión</string>
+    <string name="void_order">Anular orden</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

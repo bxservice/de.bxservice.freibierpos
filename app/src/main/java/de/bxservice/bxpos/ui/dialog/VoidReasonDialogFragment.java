@@ -30,6 +30,8 @@ public class VoidReasonDialogFragment extends DialogFragment {
     private VoidReasonDialogListener mListener;
     private String reason = "";
     private int noItems = 0;
+    //Flag to know if the void is for an order or an order line
+    private boolean voidOrder = false;
     private EditText voidReason;
 
     @Override
@@ -44,7 +46,10 @@ public class VoidReasonDialogFragment extends DialogFragment {
 
         final TextView voidSummaryText = (TextView) view.findViewById(R.id.void_summary);
 
-        voidSummaryText.setText(getString(R.string.void_summary, noItems));
+        if(voidOrder)
+            voidSummaryText.setText(getString(R.string.void_order));
+        else
+            voidSummaryText.setText(getString(R.string.void_summary, noItems));
 
         voidReason = (EditText) view.findViewById(R.id.reason_text);
 
@@ -67,6 +72,14 @@ public class VoidReasonDialogFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    public boolean isVoidOrder() {
+        return voidOrder;
+    }
+
+    public void setVoidOrder(boolean voidOrder) {
+        this.voidOrder = voidOrder;
     }
 
     @Override
