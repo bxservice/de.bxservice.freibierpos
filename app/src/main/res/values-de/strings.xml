@@ -193,6 +193,9 @@
     <string name="receipt">Bon</string>
     <string name="cash">Bar</string>
     <string name="logout">Ausloggen</string>
+    <string name="print_order">Print order</string>
+    <string name="no_print_items">There are no items to print</string>
+    <string name="no_printing_device">No printing device found</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
