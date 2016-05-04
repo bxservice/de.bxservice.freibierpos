@@ -195,7 +195,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             return true;
         }
         if (id == R.id.set_extra) {
-            //TODO: Customize tip as a charge in iDempiere (Configurable)
             showCourtesyDialog();
             return true;
         }
@@ -204,7 +203,6 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             return true;
         }
         if (id == R.id.add_discount) {
-            //TODO: Discount as a new line in iDempiere - Configurable
             showDiscountDialog();
             return true;
         }
