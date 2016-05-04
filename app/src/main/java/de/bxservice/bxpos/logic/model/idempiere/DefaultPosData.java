@@ -24,6 +24,8 @@ public class DefaultPosData {
     private int defaultWarehouse = 0;
     private int discountId = 0;
     private int surchargeId = 0;
+    private boolean printAfterSent = false;
+    private boolean combineItems   = false;
 
    public int getDefaultBPartner() {
         return defaultBPartner;
@@ -71,6 +73,22 @@ public class DefaultPosData {
 
     public void setSurchargeId(int surchargeId) {
         this.surchargeId = surchargeId;
+    }
+
+    public boolean isCombineItems() {
+        return combineItems;
+    }
+
+    public void setCombineItems(boolean combineItems) {
+        this.combineItems = combineItems;
+    }
+
+    public boolean isPrintAfterSent() {
+        return printAfterSent;
+    }
+
+    public void setPrintAfterSent(boolean printAfterSent) {
+        this.printAfterSent = printAfterSent;
     }
 
     /**
