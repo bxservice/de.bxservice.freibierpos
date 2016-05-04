@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -130,20 +131,24 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append(label);
 
         ticket.append( "! U1 SETLP 7 0 24\r\n");
+
+        DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
+
         //If single lines for every product -> Configurable
-        /*for(POSOrderLine line : order.getOrderedLines()) {
-            ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
-                    currencyFormat.format(line.getLineNetAmt()) + "\r\n");
-            if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
-                ticket.append("    " + line.getProductRemark() + "\r\n");
-        }*/
-
-        //If summarized lines for receipts
-        String format = "  %-3s%-32s%7s";
-        for(ReportGenericObject line : order.getSummarizeLines()) {
-            ticket.append(String.format(format, line.getQuantity(), line.getDescription(),currencyFormat.format(line.getAmount())) + "\r\n");
+        if(!defaultPosData.isCombineItems()) {
+            for(POSOrderLine line : order.getOrderedLines()) {
+                ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
+                        currencyFormat.format(line.getLineNetAmt()) + "\r\n");
+                if(line.getProductRemark() != null && !line.getProductRemark().isEmpty())
+                    ticket.append("    " + line.getProductRemark() + "\r\n");
+            }
+        } else {
+            //If summarized lines for receipts
+            String format = "  %-3s%-32s%7s";
+            for(ReportGenericObject line : order.getSummarizeLines()) {
+                ticket.append(String.format(format, line.getQuantity(), line.getDescription(),currencyFormat.format(line.getAmount())) + "\r\n");
+            }
         }
-
 
         //footer
         StringBuilder footer = new StringBuilder();
