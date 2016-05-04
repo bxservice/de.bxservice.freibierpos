@@ -17,66 +17,12 @@ import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
  */
 public class CPCLPrinter extends AbstractPOSPrinter {
 
-    private static final String KITCHEN_RECEIPT = "KITCHEN";
-    private static final String BAR_RECEIPT     = "BAR";
-
     public CPCLPrinter(POSOrder order) {
         super(order);
     }
 
-
-    @Override
-    public String print() {
-
-        /*return String.format("! 0 200 200 600 1\r\n" +
-                "PW 550\r\n" +
-                "TONE 0\r\n" +
-                "SPEED 2\r\n" +
-                "ON-FEED IGNORE\r\n" +
-                "NO-PACE\r\n" +
-                "POSTFEED 50\r\n" +
-                "JOURNAL\r\n" +
-                //"BOX 0 0 376 797 5\r\n" +
-                "T 5 1 25 20 Type:\r\n" +
-                "T 5 1 90 20 %s\r\n" +
-                "T 5 1 25 75 Server:\r\n" +
-                "T 5 1 110 75 %s\r\n" +
-                "T 5 1 25 130 Guest:\r\n" +
-                "T 5 1 100 130 %s\r\n" +
-                "T 5 1 300 20 Table\r\n" +
-                "T 5 3 300 75 %s\r\n" +
-                "LINE 25 175 530 175 1\r\n" +
-                "T 5 0 35 421 Address:\r\n" +
-                "T 5 0 35 342 Last Name:\r\n" +
-                "T 5 0 35 257 First Name:\r\n" +
-                "T 5 0 35 175 Plate #:\r\n" +
-                "T 5 0 64 290 %s\r\n" +
-                "T 5 0 64 374 %s\r\n" +
-                "T 5 0 64 466 %s\r\n" +
-                "T 5 0 64 558 %s\r\n" +
-                "FORM \r\n\r\n"+
-                "PRINT\r\n", new Object[] { "Dine-in", "Garden", "5", "Table 1","Carlos", "Ruiz", "AAA 2356", "None" });
-
-                /*return "! U1 JOURNAL\r\n" +
-                "! U1 SETLP 5 2 24\r\n" +
-                "Order #: "+ order.getOrderId() +"\r\n" +
-                "Type: Dine-in\r\n" +
-                "Server: Garden\r\n" +
-                "Guests: "+ order.getGuestNumber() +"\r\n" +
-                //"! U1 LINE 25 175 530 175 1\r\n" +
-                "! U1 SETLP 5 0 24\r\n" +
-
-                "! U1 SETLP 7 0 24\r\n" +
-                order.getOrderedLines().get(0).getQtyOrdered() + "  " + order.getOrderedLines().get(0).getProduct().getProductName() + "\r\n" +
-                order.getOrderedLines().get(1).getQtyOrdered() + "  " + order.getOrderedLines().get(1).getProduct().getProductName() + "\r\n" +
-                "! U1 PRESENT-AT\r\n" +
-                "! U1 PRINT\r\n";*/
-
-        return null;
-    }
-
     /**
-     * Print the kitchen receipt
+     * Print the tickets
      * Returns a string with %s
      * 1 - Order string
      * 2 - Table
@@ -85,17 +31,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
      * 4 - Guests
      */
     @Override
-    public String printKitchen() {
-        return getPrintout(KITCHEN_RECEIPT);
-
-    }
-
-    @Override
-    public String printBar() {
-        return getPrintout(BAR_RECEIPT);
-    }
-
-    private String getPrintout(String target) {
+    public String printTicket(String target) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
 

@@ -47,7 +47,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                 POSPrinter printer = printerFactory.getPrinter(printerDevice.getPrinterLanguage(), order);
 
                 if(mActivity instanceof EditOrderActivity) {
-                    bt.sendData(String.format(printer.printKitchen(),
+                    bt.sendData(String.format(printer.printTicket(printerDevice.getDocTarget()),
                             new Object[] { mActivity.getResources().getString(R.string.order),
                                     mActivity.getResources().getString(R.string.table),
                                     order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
