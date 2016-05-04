@@ -189,7 +189,10 @@
     <string name="type">Tipo</string>
     <string name="receipt">Recibo</string>
     <string name="cash">Efectivo</string>
-    <string name="logout">Cerrar sesion</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="print_order">Imprimir orden</string>
+    <string name="no_print_items">No hay items a imprimir</string>
+    <string name="no_printing_device">No se encontro dispositivo de imrpesión</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

@@ -1,4 +1,4 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.bxservice.bxpos.ui.EditOrderActivity">
@@ -31,6 +31,11 @@
     <item android:id="@+id/change_table"
         android:title="@string/change_table"
         android:orderInCategory="600"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/print_order"
+        android:title="@string/print_order"
+        android:orderInCategory="700"
         app:showAsAction="never" />
 
     <item android:id="@+id/add_item"

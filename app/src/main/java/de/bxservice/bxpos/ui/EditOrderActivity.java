@@ -134,7 +134,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             public void onClick(View view) {
                 if (order.sendOrder(getApplicationContext())) {
                     orderSent = true;
-                    printOrder();
+                    printOrder(false);
                     finish();
                 } else
                     Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
@@ -251,6 +251,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
         if (id == R.id.new_order) {
             createNewOrder();
+            return true;
+        }
+        if (id == R.id.print_order) {
+            printOrder(true);
             return true;
         }
 
@@ -969,8 +973,34 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         startActivityForResult(intent, PAY_REQUEST);
     }
 
-    private void printOrder() {
+    /**
+     * Print the order items
+     * @param showMessage - flag to decide if info message should be displayed
+     */
+    private void printOrder(boolean showMessage) {
+
         PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
+
+        //Check if there are configured printers
+        if(outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN) == null &&
+                outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_BAR) == null) {
+            if(showMessage)
+                Toast.makeText(getBaseContext(), getString(R.string.no_printing_device),
+                        Toast.LENGTH_LONG).show();
+
+            return;
+        }
+
+        //Check if there are items to print
+        if(order.getPrintKitchenLines(getBaseContext()).size() == 0 &&
+                order.getPrintBarLines(getBaseContext()).size() == 0) {
+            if(showMessage)
+                Toast.makeText(getBaseContext(), getString(R.string.no_print_items),
+                        Toast.LENGTH_LONG).show();
+
+            return;
+        }
+
         POSOutputDevice printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN);
 
         //If kitchen printer is configured -> print kitchen

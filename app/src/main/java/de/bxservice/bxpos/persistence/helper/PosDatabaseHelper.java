@@ -30,7 +30,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 28;
+    private static final int DATABASE_VERSION = 30;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
