@@ -22,6 +22,8 @@ public class DefaultPosDataContract {
         public static final String COLUMN_NAME_WAREHOUSE = "defaultWarehouse";
         public static final String COLUMN_NAME_DISCOUNT_ID = "discountID";
         public static final String COLUMN_NAME_SURCHARGE_ID = "surchargeID";
+        public static final String COLUMN_NAME_COMBINE_ITEMS = "combineItems";
+        public static final String COLUMN_NAME_PRINT_AFTER_SEND = "printAfter";
 
     }
 

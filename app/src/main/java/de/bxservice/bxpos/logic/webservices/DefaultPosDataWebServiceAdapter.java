@@ -66,6 +66,11 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                             defaultPosData.setDiscountId(Integer.valueOf(field.getValue()));
                         else if ("BXS_POSSurcharge_ID".equalsIgnoreCase(field.getColumn()) && !field.getValue().isEmpty())
                             defaultPosData.setSurchargeId(Integer.valueOf(field.getValue()));
+                        else if ("BXS_CombineItems".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setCombineItems("Y".equalsIgnoreCase(field.getValue()));
+                        else if ("BXS_PrintAfterSend".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setPrintAfterSent("Y".equalsIgnoreCase(field.getValue()));
+
                     }
                 }
             }

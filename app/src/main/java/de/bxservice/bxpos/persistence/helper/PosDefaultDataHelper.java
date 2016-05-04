@@ -32,8 +32,13 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID, data.getDiscountId());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID, data.getSurchargeId());
 
-        // insert row
+        int flag = (data.isCombineItems()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
 
+        flag = (data.isPrintAfterSent()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND, flag);
+
+        // insert row
         return database.insert(Tables.TABLE_DEFAULT_POS_DATA, null, values);
     }
 
@@ -50,6 +55,12 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE, data.getDefaultWarehouse());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID, data.getDiscountId());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID, data.getSurchargeId());
+
+        int flag = (data.isCombineItems()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
+
+        flag = (data.isPrintAfterSent()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND, flag);
 
         // updating row
         return db.update(Tables.TABLE_DEFAULT_POS_DATA, values, DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " = ?",
@@ -81,6 +92,12 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setDefaultPriceList(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST)));
         defaultData.setDiscountId(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID)));
         defaultData.setSurchargeId(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID)));
+
+        Boolean flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS)) != 0);
+        defaultData.setCombineItems(flag);
+
+        flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND)) != 0);
+        defaultData.setPrintAfterSent(flag);
 
         c.close();
 
