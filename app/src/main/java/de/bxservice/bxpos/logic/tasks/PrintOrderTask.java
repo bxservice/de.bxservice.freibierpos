@@ -69,6 +69,8 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                                     order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
                                     mActivity.getResources().getString(R.string.waiter_role),
                                     mActivity.getResources().getString(R.string.guests),
+                                    mActivity.getResources().getString(R.string.subtotal),
+                                    mActivity.getResources().getString(R.string.set_extra),
                                     mActivity.getResources().getString(R.string.total),
                                     mActivity.getResources().getString(R.string.cash),
                                     mActivity.getResources().getString(R.string.change),

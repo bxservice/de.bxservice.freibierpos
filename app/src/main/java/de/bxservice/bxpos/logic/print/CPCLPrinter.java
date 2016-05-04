@@ -1,5 +1,6 @@
 package de.bxservice.bxpos.logic.print;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -85,10 +86,12 @@ public class CPCLPrinter extends AbstractPOSPrinter {
      * 7 - Table name
      * 8 - Server string
      * 9 - Guests string
-     * 10 - Total String
-     * 11 - Cash string
-     * 12 - Back string
-     * 13 - Footer description
+     * 10 - Amount String
+     * 11 - Charges String
+     * 12 - Total String
+     * 13 - Cash string
+     * 14 - Back string
+     * 15 - Footer description
      * @return String for receipt printing
      */
     @Override
@@ -102,7 +105,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
 
-        //header
+        //header T font size x y data
         String label = "! 0 200 200 250 1\r\n" +
                 "PW %s\r\n" +
                 "COUNTRY GERMANY\r\n" +
@@ -143,7 +146,51 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
 
         //footer
-        label = "! 0 200 200 200 1\r\n" +
+        StringBuilder footer = new StringBuilder();
+        int height = 300;
+
+        int posY = 15;
+
+        footer.append("! 0 200 200 " + height +" 1\r\n"); //offset - 200 - 200 - height -qty
+        footer.append("LEFT\r\n");
+        footer.append("LINE 0 0 550 0 2\r\n");
+
+        footer.append("T 7 1 25 " + posY + " %s\r\n"); //Amount label
+        footer.append("RIGHT\r\n");
+        footer.append("T 7 1 400 " + posY + " " + currencyFormat.format(order.getTotallines()) +"\r\n"); //Amount of the lines
+        posY = posY + 40;
+
+        footer.append("LEFT\r\n");
+        footer.append("T 7 1 25 " + posY + " %s\r\n"); //Charge label
+        footer.append("RIGHT\r\n");
+        footer.append("T 7 1 400 " + posY + " " + currencyFormat.format(order.getSurcharge()) +"\r\n"); //Charge amount
+        posY = posY + 40;
+
+        footer.append("LEFT\r\n");
+        footer.append("T 7 1 25 " + posY + " %s\r\n"); //Total label
+        footer.append("RIGHT\r\n");
+        footer.append("T 7 1 400 " + posY + " " + currencyFormat.format(order.getTotallines().add(order.getSurcharge())) +"\r\n"); //Total amount
+
+        posY = posY + 40;
+        footer.append("LEFT\r\n");
+        footer.append("T 7 1 25 " + posY + " %s\r\n");
+        footer.append("RIGHT\r\n");
+        footer.append("T 7 1 400 " + posY + " " + currencyFormat.format(order.getCashAmt()) +"\r\n"); //Received amount
+
+        posY = posY + 40;
+        footer.append("LEFT\r\n");
+        footer.append("T 7 1 25 " + posY + " %s\r\n"); //back label
+        footer.append("RIGHT\r\n");
+        footer.append("T 7 1 400 " + posY + " " + currencyFormat.format(order.getChangeAmt()) +"\r\n"); //back amount
+
+        posY = posY + 45;
+        footer.append("CENTER\r\n"); //back amount
+        footer.append("T 7 1 10 "+ posY + " %s\r\n"); //Footer message
+        footer.append("POSTFEED 20\r\n");
+        footer.append("FORM \r\n\r\n");
+        footer.append("PRINT\r\n");
+
+        /*label = "! 0 200 200 200 1\r\n" +
                 "LEFT\r\n" +
                 "LINE 0 0 550 0 2\r\n" +
                 "T 7 1 25 15 %s\r\n" + //Total label
@@ -161,9 +208,9 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "T 7 1 10 150 %s\r\n" + //Footer message
                 "POSTFEED 20\r\n" +
                 "FORM \r\n\r\n"+
-                "PRINT\r\n";
+                "PRINT\r\n";*/
 
-        ticket.append(label);
+        ticket.append(footer.toString());
 
         return ticket.toString();
     }
