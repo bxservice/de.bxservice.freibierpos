@@ -175,11 +175,11 @@ public class PosTableHelper extends PosObjectHelper {
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER + " WHERE "
                 + PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID + " = ? AND "
-                + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " <> ? ";
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " NOT IN (?,?) ";
 
         Log.d(LOG_TAG, selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table.getTableID()), POSOrder.COMPLETE_STATUS});
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table.getTableID()), POSOrder.COMPLETE_STATUS, POSOrder.VOID_STATUS});
 
         if (c != null)
             orders = c.getCount();

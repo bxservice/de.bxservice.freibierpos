@@ -38,6 +38,11 @@
         android:orderInCategory="700"
         app:showAsAction="never" />
 
+    <item android:id="@+id/void_order"
+        android:title="@string/void_order"
+        android:orderInCategory="800"
+        app:showAsAction="never" />
+
     <item android:id="@+id/add_item"
         android:title="@string/search"
         android:orderInCategory="50"

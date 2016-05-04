@@ -29,6 +29,8 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
     private String reason = "";
     private String pinCode = "";
     private int noItems = 0;
+    //Flag to know if the void is for an order or an order line
+    private boolean voidOrder = false;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,7 +44,10 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
 
         final TextView voidSummaryText = (TextView) view.findViewById(R.id.void_summary);
 
-        voidSummaryText.setText(getString(R.string.void_approval_message, noItems, reason));
+        if(voidOrder)
+            voidSummaryText.setText(getString(R.string.void_order_approval_message, noItems, reason));
+        else
+            voidSummaryText.setText(getString(R.string.void_approval_message, noItems, reason));
 
         final EditText enteredCode = (EditText) view.findViewById(R.id.pin_text);
 
@@ -84,6 +89,14 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement ConfirmationPinDialogListener");
         }
+    }
+
+    public boolean isVoidOrder() {
+        return voidOrder;
+    }
+
+    public void setVoidOrder(boolean voidOrder) {
+        this.voidOrder = voidOrder;
     }
 
     public String getPinCode() {

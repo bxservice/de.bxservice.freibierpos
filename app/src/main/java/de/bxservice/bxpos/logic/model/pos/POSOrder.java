@@ -28,6 +28,7 @@ public class POSOrder implements Serializable {
     //Order status
     public static final String DRAFT_STATUS    = "DRAFT";
     public static final String SENT_STATUS     = "SENT";
+    public static final String VOID_STATUS     = "VOID";
     public static final String COMPLETE_STATUS = "COMPLETE";
 
     /**
@@ -325,6 +326,7 @@ public class POSOrder implements Serializable {
 
         if (status.equals(DRAFT_STATUS) ||
                 status.equals(SENT_STATUS) ||
+                status.equals(VOID_STATUS) ||
                 status.equals(COMPLETE_STATUS))
         this.status = status;
 
@@ -688,6 +690,26 @@ public class POSOrder implements Serializable {
 
         orderedLines.add(position + 1, voidLine);
         voidLine.createLine(null);
+
+        return true;
+    }
+
+    public boolean voidOrder(Context ctx, String reason) {
+        status = VOID_STATUS;
+        updateOrder(ctx);
+
+        for(POSOrderLine orderingLine : orderingLines) {
+            orderingLine.remove(ctx);
+        }
+
+        for(POSOrderLine orderedLine : orderedLines) {
+            orderedLine.voidLine(reason);
+            orderedLine.updateLine(ctx);
+        }
+
+        if(table != null) {
+            table.freeTable(ctx);
+        }
 
         return true;
     }
