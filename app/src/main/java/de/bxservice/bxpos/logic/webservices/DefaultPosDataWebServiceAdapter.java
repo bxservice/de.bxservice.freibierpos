@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
@@ -28,11 +28,11 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
     public void queryPerformed() {
 
         QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
+        ws.setWebServiceType(getServiceType());
         ws.setLogin(getLogin());
         ws.setLimit(1); //Only one row
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
         defaultPosData = new DefaultPosData();
 
         try {
@@ -55,21 +55,21 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
 
                         //Default data from C_POS
                         if ("C_BPartnerCashTrx_ID".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setDefaultBPartner(Integer.valueOf(field.getValue()));
+                            defaultPosData.setDefaultBPartner(Integer.valueOf(field.getStringValue()));
                         else if ("M_PriceList_ID".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setDefaultPriceList(Integer.valueOf(field.getValue()));
+                            defaultPosData.setDefaultPriceList(Integer.valueOf(field.getStringValue()));
                         else if ("C_Currency_ID".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setDefaultCurrency(Integer.valueOf(field.getValue()));
+                            defaultPosData.setDefaultCurrency(Integer.valueOf(field.getStringValue()));
                         else if ("M_Warehouse_ID".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setDefaultWarehouse(Integer.valueOf(field.getValue()));
-                        else if ("BXS_POSDiscount_ID".equalsIgnoreCase(field.getColumn()) && !field.getValue().isEmpty())
-                            defaultPosData.setDiscountId(Integer.valueOf(field.getValue()));
-                        else if ("BXS_POSSurcharge_ID".equalsIgnoreCase(field.getColumn()) && !field.getValue().isEmpty())
-                            defaultPosData.setSurchargeId(Integer.valueOf(field.getValue()));
+                            defaultPosData.setDefaultWarehouse(Integer.valueOf(field.getStringValue()));
+                        else if ("BXS_POSDiscount_ID".equalsIgnoreCase(field.getColumn()) && !field.getStringValue().isEmpty())
+                            defaultPosData.setDiscountId(Integer.valueOf(field.getStringValue()));
+                        else if ("BXS_POSSurcharge_ID".equalsIgnoreCase(field.getColumn()) && !field.getStringValue().isEmpty())
+                            defaultPosData.setSurchargeId(Integer.valueOf(field.getStringValue()));
                         else if ("BXS_CombineItems".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setCombineItems("Y".equalsIgnoreCase(field.getValue()));
+                            defaultPosData.setCombineItems("Y".equalsIgnoreCase(field.getStringValue()));
                         else if ("BXS_PrintAfterSend".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setPrintAfterSent("Y".equalsIgnoreCase(field.getValue()));
+                            defaultPosData.setPrintAfterSent("Y".equalsIgnoreCase(field.getStringValue()));
 
                     }
                 }

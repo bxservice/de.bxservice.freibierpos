@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
@@ -32,10 +32,10 @@ public class OutputDeviceWebServiceAdapter extends AbstractWSObject{
     public void queryPerformed() {
 
         QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
+        ws.setWebServiceType(getServiceType());
         ws.setLogin(getLogin());
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
 
         outputDeviceList = new ArrayList<>();
 
@@ -60,19 +60,19 @@ public class OutputDeviceWebServiceAdapter extends AbstractWSObject{
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
                         if("BXS_POSOutputDevice_ID".equalsIgnoreCase(field.getColumn()))
-                            device.setOutputDeviceId(Integer.parseInt(field.getValue()));
+                            device.setOutputDeviceId(Integer.parseInt(field.getStringValue()));
                         else if("BXS_DeviceType".equalsIgnoreCase(field.getColumn()))
-                            device.setDeviceType(field.getValue());
+                            device.setDeviceType(field.getStringValue());
                         else if("BXS_OutputTarget".equalsIgnoreCase(field.getColumn()))
-                            device.setDocTarget(field.getValue());
+                            device.setDocTarget(field.getStringValue());
                         else if("BXS_ConnectionType".equalsIgnoreCase(field.getColumn()))
-                            device.setConnectionType(field.getValue());
+                            device.setConnectionType(field.getStringValue());
                         else if("BXS_POSPageWidth".equalsIgnoreCase(field.getColumn()))
-                            device.setPageWidth(Integer.parseInt(field.getValue()));
+                            device.setPageWidth(Integer.parseInt(field.getStringValue()));
                         else if("BXS_PrinterLanguage".equalsIgnoreCase(field.getColumn()))
-                            device.setPrinterLanguage(field.getValue());
+                            device.setPrinterLanguage(field.getStringValue());
                         else if("PrinterName".equalsIgnoreCase(field.getColumn()))
-                            device.setPrinterName(field.getValue());
+                            device.setPrinterName(field.getStringValue());
                     }
 
                     outputDeviceList.add(device);

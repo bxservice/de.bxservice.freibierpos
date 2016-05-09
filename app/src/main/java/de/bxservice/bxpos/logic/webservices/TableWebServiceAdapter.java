@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
@@ -34,10 +34,10 @@ public class TableWebServiceAdapter extends AbstractWSObject{
     public void queryPerformed() {
 
         QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
+        ws.setWebServiceType(getServiceType());
         ws.setLogin(getLogin());
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
 
         tableList = new ArrayList<>();
         tableGroupList = new ArrayList<>();
@@ -69,15 +69,15 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
                         if("Name".equalsIgnoreCase(field.getColumn()))
-                            name = field.getValue();
+                            name = field.getStringValue();
                         else if (Table.BAY_Table_ID.equalsIgnoreCase(field.getColumn()))
-                            tableId = Integer.valueOf(field.getValue());
+                            tableId = Integer.valueOf(field.getStringValue());
                         else if ("IsSummary".equalsIgnoreCase(field.getColumn())) {
-                            if("Y".equalsIgnoreCase(field.getValue()))
+                            if("Y".equalsIgnoreCase(field.getStringValue()))
                                 isSummary = true;
                         }
                         else if ("Value".equalsIgnoreCase(field.getColumn()))
-                            value = field.getValue();
+                            value = field.getStringValue();
 
                     }
 

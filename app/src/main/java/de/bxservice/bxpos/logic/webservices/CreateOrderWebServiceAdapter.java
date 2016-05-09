@@ -8,13 +8,11 @@ import android.util.Log;
 import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.exceptions.WebServiceException;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.CompositeOperationRequest;
 import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
-
-import java.math.BigDecimal;
 
 import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
@@ -59,15 +57,15 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
     @Override
     public void queryPerformed() {
-
+        
         POSOrder order = (POSOrder) getParameter();
 
         CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
         compositeOperation.setLogin(getLogin());
-        compositeOperation.setServiceType(SERVICE_TYPE);
+        compositeOperation.setWebServiceType(SERVICE_TYPE);
 
         CreateDataRequest createOrder = new CreateDataRequest();
-        createOrder.setServiceType(CREATE_ORDER_SERVICE_TYPE);
+        createOrder.setWebServiceType(CREATE_ORDER_SERVICE_TYPE);
 
         String orgId = getLogin().getOrgID().toString();
 
@@ -94,7 +92,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         for (POSOrderLine orderLine : order.getOrderedLines()) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
-            createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
+            createOrderLine.setWebServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
             DataRow dataLine = new DataRow();
             dataLine.addField("AD_Org_ID", orgId);
             dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
@@ -117,7 +115,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         //If there is surcharge paid and the surcharge is send to iDempiere
         if(order.getSurchargeInteger() != 0 && defaultPosData.getSurchargeId() != 0) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
-            createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
+            createOrderLine.setWebServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
 
             DataRow dataLine = new DataRow();
             dataLine.addField("AD_Org_ID", orgId);
@@ -135,7 +133,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         //If there is discount applied and the discount is send to iDempiere
         if(order.getDiscountInteger() != 0 && defaultPosData.getDiscountId() != 0) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
-            createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
+            createOrderLine.setWebServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
             DataRow dataLine = new DataRow();
             dataLine.addField("AD_Org_ID", orgId);
             dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
@@ -152,32 +150,31 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         if(IOrder.PAYMENTRULE_MixedPOSPayment.equals(order.getPaymentRule())) {
 
             for(POSPayment payment : order.getPayments()) {
-                CreateDataRequest createOrderLine = new CreateDataRequest();
-                createOrderLine.setServiceType(CREATE_PAYMENT_SERVICE_TYPE);
+                CreateDataRequest createPayment = new CreateDataRequest();
+                createPayment.setWebServiceType(CREATE_PAYMENT_SERVICE_TYPE);
                 DataRow dataLine = new DataRow();
                 dataLine.addField("AD_Org_ID", orgId);
                 dataLine.addField("C_Order_ID", "@C_Order.C_Order_ID");
                 dataLine.addField("PayAmt", String.valueOf(payment.getPaymentAmount()));
                 dataLine.addField("C_POSTenderType_ID", String.valueOf(payment.getPOSTenderTypeID()));
                 dataLine.addField("TenderType", payment.getPaymentTenderType());
-                createOrderLine.setDataRow(dataLine);
+                createPayment.setDataRow(dataLine);
 
-                compositeOperation.addOperation(createOrderLine);
+                compositeOperation.addOperation(createPayment);
             }
         }
 
         SetDocActionRequest docAction = new SetDocActionRequest();
         docAction.setDocAction(Enums.DocAction.Complete);
-        docAction.setServiceType(DOC_ACTION_SERVICE_TYPE);
+        docAction.setWebServiceType(DOC_ACTION_SERVICE_TYPE);
         docAction.setRecordIDVariable("@C_Order.C_Order_ID");
 
         compositeOperation.addOperation(docAction);
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
 
         try {
             CompositeResponse response = client.sendRequest(compositeOperation); //TODO: Find the problem that calls iDempiere several times
-
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 Log.e(TAG, "Error in web service" + response.getErrorMessage());
                 success = false;
