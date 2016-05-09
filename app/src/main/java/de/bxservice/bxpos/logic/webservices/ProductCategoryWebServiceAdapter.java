@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
@@ -33,10 +33,10 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
     public void queryPerformed() {
 
         QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
+        ws.setWebServiceType(getServiceType());
         ws.setLogin(getLogin());
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
         productCategoryList = new ArrayList<>();
 
         try {
@@ -64,11 +64,11 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
                         if("Name".equalsIgnoreCase(field.getColumn()))
-                            categoryName = field.getValue();
+                            categoryName = field.getStringValue();
                         else if (ProductCategory.M_Product_Category_ID.equalsIgnoreCase(field.getColumn()))
-                            categoryID = Integer.valueOf(field.getValue());
-                        else if ("BXS_POSOutputDevice_ID".equalsIgnoreCase(field.getColumn()) && !field.getValue().isEmpty())
-                            outputDeviceID = Integer.valueOf(field.getValue());
+                            categoryID = Integer.valueOf(field.getStringValue());
+                        else if ("BXS_POSOutputDevice_ID".equalsIgnoreCase(field.getColumn()) && !field.getStringValue().isEmpty())
+                            outputDeviceID = Integer.valueOf(field.getStringValue());
 
                     }
 

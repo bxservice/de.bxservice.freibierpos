@@ -5,7 +5,7 @@ import android.util.Log;
 import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
@@ -29,7 +29,7 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
     public void queryPerformed() {
 
         QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
+        ws.setWebServiceType(getServiceType());
         ws.setLogin(getLogin());
         ws.setLimit(1); //Only one row
 
@@ -37,7 +37,7 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
         data.addField("AD_Org_ID", getLogin().getOrgID().toString());
         ws.setDataRow(data);
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
         restaurantInfo = new RestaurantInfo();
 
         try {
@@ -60,17 +60,17 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
 
                         //Org info from iDempiere
                         if ("Address1".equalsIgnoreCase(field.getColumn()))
-                            restaurantInfo.setAddress1(field.getValue());
+                            restaurantInfo.setAddress1(field.getStringValue());
                         else if ("Address2".equalsIgnoreCase(field.getColumn()))
-                            restaurantInfo.setAddress2(field.getValue());
+                            restaurantInfo.setAddress2(field.getStringValue());
                         else if ("City".equalsIgnoreCase(field.getColumn()))
-                            restaurantInfo.setCity(field.getValue());
+                            restaurantInfo.setCity(field.getStringValue());
                         else if ("Name".equalsIgnoreCase(field.getColumn()))
-                            restaurantInfo.setName(field.getValue());
+                            restaurantInfo.setName(field.getStringValue());
                         else if ("Phone".equalsIgnoreCase(field.getColumn()))
-                            restaurantInfo.setPhone(field.getValue());
+                            restaurantInfo.setPhone(field.getStringValue());
                         else if ("Postal".equalsIgnoreCase(field.getColumn()))
-                            restaurantInfo.setPostalCode(field.getValue());
+                            restaurantInfo.setPostalCode(field.getStringValue());
                     }
                 }
             }

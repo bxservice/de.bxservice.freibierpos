@@ -1,7 +1,7 @@
 package de.bxservice.bxpos.logic.webservices;
 
 import org.idempiere.webservice.client.base.LoginRequest;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 
 /**
  * Created by Diego Ruiz on 4/11/15.
@@ -9,7 +9,7 @@ import org.idempiere.webservice.client.net.WebServiceClient;
 abstract class AbstractWSObject {
 
     private LoginRequest login;
-    private WebServiceClient client;
+    private WebServiceConnection client;
     private WebServiceRequestData wsData;
     private Object parameter;
 
@@ -49,20 +49,20 @@ abstract class AbstractWSObject {
     }
 
     private void initClient(){
-        client = new WebServiceClient();
+        client = new WebServiceConnection();
 
         client.setAttempts(Integer.parseInt(wsData.getAttemptsNo()));
         client.setTimeout(Integer.parseInt(wsData.getTimeout()));
         client.setAttemptsTimeout(Integer.parseInt(wsData.getAttemptsTimeout()));
-        client.setWebServiceUrl(wsData.getUrlBase());
-        client.setUserAgentProduct("Android Test WS Client");
+        client.setUrl(wsData.getUrlBase());
+        client.setAppName("FreiBier POS");
     }
 
     protected LoginRequest getLogin() {
         return login;
     }
 
-    protected WebServiceClient getClient() {
+    protected WebServiceConnection getClient() {
         return client;
     }
 

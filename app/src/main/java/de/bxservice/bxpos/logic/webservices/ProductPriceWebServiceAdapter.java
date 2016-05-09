@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
@@ -36,10 +36,10 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
     public void queryPerformed() {
 
         QueryDataRequest ws = new QueryDataRequest();
-        ws.setServiceType(getServiceType());
+        ws.setWebServiceType(getServiceType());
         ws.setLogin(getLogin());
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
         productPriceList = new ArrayList<>();
 
         try {
@@ -69,13 +69,13 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
                         Log.i("info", "Column: " + field.getColumn() + " = " + field.getValue());
 
                         if("M_PriceList_Version_ID".equalsIgnoreCase(field.getColumn()))
-                            priceListVersionId = Integer.valueOf(field.getValue());
+                            priceListVersionId = Integer.valueOf(field.getStringValue());
                         else if (ProductPrice.M_ProductPrice_ID.equalsIgnoreCase(field.getColumn()))
-                            productPriceId = Integer.valueOf(field.getValue());
+                            productPriceId = Integer.valueOf(field.getStringValue());
                         else if (MProduct.M_Product_ID.equalsIgnoreCase(field.getColumn()))
-                            productId = Integer.valueOf(field.getValue());
+                            productId = Integer.valueOf(field.getStringValue());
                         else if ("PriceStd".equalsIgnoreCase(field.getColumn()))
-                            price = new BigDecimal(field.getValue());
+                            price = new BigDecimal(field.getStringValue());
 
                     }
 

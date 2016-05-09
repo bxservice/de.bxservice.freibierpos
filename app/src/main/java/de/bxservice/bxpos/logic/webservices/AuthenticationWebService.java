@@ -3,7 +3,7 @@ package de.bxservice.bxpos.logic.webservices;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.Enums;
-import org.idempiere.webservice.client.net.WebServiceClient;
+import org.idempiere.webservice.client.net.WebServiceConnection;
 import org.idempiere.webservice.client.request.CompositeOperationRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
 
@@ -27,9 +27,9 @@ public class AuthenticationWebService extends AbstractWSObject{
 
         CompositeOperationRequest compositeOperation = new CompositeOperationRequest();
         compositeOperation.setLogin(getLogin());
-        compositeOperation.setServiceType(getServiceType());
+        compositeOperation.setWebServiceType(getServiceType());
 
-        WebServiceClient client = getClient();
+        WebServiceConnection client = getClient();
 
         try {
             CompositeResponse response = client.sendRequest(compositeOperation);
