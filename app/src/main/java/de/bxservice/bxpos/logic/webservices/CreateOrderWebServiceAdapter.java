@@ -92,7 +92,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         compositeOperation.addOperation(createOrder);
 
 
-        for(POSOrderLine orderLine : order.getOrderedLines()) {
+        for (POSOrderLine orderLine : order.getOrderedLines()) {
             CreateDataRequest createOrderLine = new CreateDataRequest();
             createOrderLine.setServiceType(CREATE_ORDER_LINE_SERVICE_TYPE);
             DataRow dataLine = new DataRow();
@@ -102,13 +102,13 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             dataLine.addField("Description", orderLine.getProductRemark());
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
             dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
-            if(orderLine.isComplimentaryProduct()) {
-                //Set the price to zero for complimentary products
-                dataLine.addField("PriceEntered", String.valueOf(BigDecimal.ZERO));
-                //Send these two values to avoid iDempiere of setting the price in the beforeSave method
-                dataLine.addField("PriceActual", String.valueOf(BigDecimal.ZERO));
-                dataLine.addField("PriceList", String.valueOf(orderLine.getProduct().getProductPriceValue()));
-            }
+
+            //Send the price to iDempiere - the price to zero for complimentary products
+            dataLine.addField("PriceEntered", String.valueOf(orderLine.getLineNetAmt()));
+            //Send these two values to avoid iDempiere of setting the price in the beforeSave method
+            dataLine.addField("PriceActual", String.valueOf(orderLine.getLineNetAmt()));
+            dataLine.addField("PriceList", String.valueOf(orderLine.getProduct().getProductPriceValue()));
+
             createOrderLine.setDataRow(dataLine);
 
             compositeOperation.addOperation(createOrderLine);
