@@ -9,6 +9,7 @@ import android.util.Log;
 
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
+import de.bxservice.bxpos.persistence.dbcontract.KitchenNoteContract;
 import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
 import de.bxservice.bxpos.persistence.dbcontract.OutputDeviceContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
@@ -30,7 +31,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 31;
+    private static final int DATABASE_VERSION = 32;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -263,6 +264,19 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_PAGE_WIDTH + " INTEGER" +
                     ")";
 
+    private static final String CREATE_KITCHEN_NOTE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_KITCHEN_NOTE +
+                    "(" +
+                    KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_KITCHEN_NOTE_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_CREATED_BY + " INTEGER REFERENCES "
+                    + Tables.TABLE_USER + "(" + UserContract.User.COLUMN_NAME_USER_ID + ") ON DELETE CASCADE" +  //FK to user
+                    ", " +
+                    KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_NOTE + " VARCHAR(64)" +
+                    ", " +
+                    KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
+                    ")";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -361,6 +375,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_DEFAULT_POS_DATA);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_ORG_INFO);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_OUTPUT_DEVICE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_KITCHEN_NOTE);
 
     }
 
@@ -378,6 +393,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_POSPAYMENT_TABLE);
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(CREATE_ORG_INFO_TABLE);
+        db.execSQL(CREATE_KITCHEN_NOTE_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");

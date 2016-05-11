@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+
+import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.daomanager.PosKitchenNoteManagement;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
@@ -41,9 +45,17 @@ public class KitchenNoteDialogFragment extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         View view = inflater.inflate(R.layout.kitchen_note_dialog, null);
 
-        final EditText remarkNote = (EditText) view.findViewById(R.id.kitchen_note);
+        final AutoCompleteTextView remarkNoteTextView = (AutoCompleteTextView) view.findViewById(R.id.kitchen_note);
 
-        remarkNote.setText(note);
+        remarkNoteTextView.setText(note);
+
+        // Get the string array
+        final PosKitchenNoteManagement kitchenNoteManager = new PosKitchenNoteManagement(view.getContext());
+        ArrayList<String> notes = kitchenNoteManager.getKitchenNotes();
+
+        // Create the adapter and set it to the AutoCompleteTextView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, notes);
+        remarkNoteTextView.setAdapter(adapter);
 
         builder.setTitle(R.string.kitchen_note);
         builder.setView(view)
@@ -51,7 +63,8 @@ public class KitchenNoteDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        note = remarkNote.getText().toString();
+                        note = remarkNoteTextView.getText().toString();
+                        kitchenNoteManager.create(note);
                         mListener.onDialogPositiveClick(KitchenNoteDialogFragment.this);
                     }
                 })
