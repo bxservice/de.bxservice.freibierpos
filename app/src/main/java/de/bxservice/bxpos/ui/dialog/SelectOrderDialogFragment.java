@@ -27,6 +27,7 @@ import de.bxservice.bxpos.ui.adapter.SelectOrderDialogAdapter;
 public class SelectOrderDialogFragment extends DialogFragment {
 
     private static final String IS_JOIN = "isJoin";
+    private static final String ORDER = "order";
 
     public interface SelectOrderDialogListener {
         void onDialogPositiveClick(SelectOrderDialogFragment dialog);
@@ -43,8 +44,10 @@ public class SelectOrderDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         //On rotation screen
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             isJoin = savedInstanceState.getBoolean(IS_JOIN);
+            order = (POSOrder) savedInstanceState.getSerializable(ORDER);
+        }
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -156,6 +159,7 @@ public class SelectOrderDialogFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_JOIN, isJoin);
+        outState.putSerializable(ORDER, order);
     }
 
 }
