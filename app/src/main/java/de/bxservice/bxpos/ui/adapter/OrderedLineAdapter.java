@@ -132,7 +132,7 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
 
         holder.bindOrderLine(orderLine);
         holder.itemView.setActivated(selectedItems.get(position, false));
-        holder.setIsRecyclable(false);
+        //holder.setIsRecyclable(false);
 
         //Show in a special color the voided lines
         if(orderLine.getQtyOrdered() < 0) {
@@ -143,6 +143,13 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
         else if(orderLine.isComplimentaryProduct()) {
             holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.complimentaryLineColor));
             holder.itemView.setClickable(false);
+        }
+        else if(holder.itemView.isActivated())
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimaryDark));
+        else {
+            TypedValue outValue = new TypedValue();
+            holder.itemView.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            holder.itemView.setBackgroundResource(outValue.resourceId);
         }
     }
 
