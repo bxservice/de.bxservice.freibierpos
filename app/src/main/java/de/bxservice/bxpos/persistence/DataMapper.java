@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
@@ -20,6 +21,7 @@ import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
+import de.bxservice.bxpos.persistence.helper.PosKitchenNoteHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrgInfoDataHelper;
@@ -79,6 +81,8 @@ public class DataMapper implements Serializable {
             success = createOrgInfo((RestaurantInfo) object);
         else if(object instanceof POSOutputDevice)
             success = createOutputDevice((POSOutputDevice) object);
+        else if(object instanceof String)
+            success = createKitchenNote((String) object);
 
         return success;
     }
@@ -664,6 +668,27 @@ public class DataMapper implements Serializable {
     public RestaurantInfo getOrgInfo(long id) {
         PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
         return posOrgInfoDataHelper.getOrgInfo(id);
+    }
+
+    private boolean createKitchenNote(String note) {
+        PosKitchenNoteHelper kitchenNoteHelper = new PosKitchenNoteHelper(mContext);
+
+        if (kitchenNoteHelper.createKitchenNote(note) == -1) {
+            Log.e(LOG_TAG, "Cannot save note");
+            return false;
+        }
+        Log.i(LOG_TAG, "Kitchen note saved");
+        return true;
+    }
+
+    public boolean noteExist(String note) {
+        PosKitchenNoteHelper kitchenNoteHelper = new PosKitchenNoteHelper(mContext);
+        return kitchenNoteHelper.noteExist(note);
+    }
+
+    public ArrayList<String> getKitchenNotes() {
+        PosKitchenNoteHelper kitchenNoteHelper = new PosKitchenNoteHelper(mContext);
+        return kitchenNoteHelper.getKitchenNotes();
     }
 
     private boolean createOutputDevice(POSOutputDevice outputDevice) {

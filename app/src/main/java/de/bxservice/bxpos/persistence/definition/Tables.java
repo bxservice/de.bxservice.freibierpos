@@ -2,6 +2,7 @@ package de.bxservice.bxpos.persistence.definition;
 
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
+import de.bxservice.bxpos.persistence.dbcontract.KitchenNoteContract;
 import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
 import de.bxservice.bxpos.persistence.dbcontract.OutputDeviceContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
@@ -22,7 +23,7 @@ public interface Tables {
     String TABLE_META_INDEX = "meta_index";
 
     //Access tables
-    String TABLE_USER          = UserContract.User.TABLE_NAME;
+    String TABLE_USER = UserContract.User.TABLE_NAME;
 
     //Physical space tables
     String TABLE_TABLE         = TableContract.TableDB.TABLE_NAME;
@@ -34,9 +35,9 @@ public interface Tables {
     String TABLE_POSPAYMENT    = PosPaymentContract.POSPaymentDB.TABLE_NAME;
 
     //Product management tables
-    String TABLE_PRODUCT = ProductContract.ProductDB.TABLE_NAME;
+    String TABLE_PRODUCT          = ProductContract.ProductDB.TABLE_NAME;
     String TABLE_PRODUCT_CATEGORY = ProductCategoryContract.ProductCategoryDB.TABLE_NAME;
-    String TABLE_PRODUCT_PRICE = ProductPriceContract.ProductPriceDB.TABLE_NAME;
+    String TABLE_PRODUCT_PRICE    = ProductPriceContract.ProductPriceDB.TABLE_NAME;
 
     //Data to send request to iDempiere
     String TABLE_DEFAULT_POS_DATA = DefaultPosDataContract.DefaultDataDB.TABLE_NAME;
@@ -46,5 +47,8 @@ public interface Tables {
 
     //Output device
     String TABLE_OUTPUT_DEVICE = OutputDeviceContract.OutputDeviceDB.TABLE_NAME;
+
+    //Kitchen notes
+    String TABLE_KITCHEN_NOTE = KitchenNoteContract.KitchenNoteDB.TABLE_NAME;
 
 }
