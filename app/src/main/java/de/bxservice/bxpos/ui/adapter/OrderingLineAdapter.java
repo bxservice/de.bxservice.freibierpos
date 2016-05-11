@@ -142,12 +142,21 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
 
         holder.bindOrderLine(orderLine);
         holder.itemView.setActivated(selectedItems.get(position, false));
-        holder.setIsRecyclable(false);
+        //holder.setIsRecyclable(false);
 
         //Show in a special color the voided lines
         if(orderLine.isComplimentaryProduct()) {
             holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.complimentaryLineColor));
             holder.itemView.setClickable(false);
+        } else {
+            if(holder.itemView.isActivated())
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimaryDark));
+            else {
+                TypedValue outValue = new TypedValue();
+                holder.itemView.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+                holder.itemView.setBackgroundResource(outValue.resourceId);
+
+            }
         }
     }
 
@@ -188,6 +197,7 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
     private void removeData(int position) {
         mDataset.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeRemoved(position, mDataset.size());
         if(mOnDataChangeListener != null){
             mOnDataChangeListener.onItemDeleted(position);
         }
