@@ -155,7 +155,6 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
                 TypedValue outValue = new TypedValue();
                 holder.itemView.getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
                 holder.itemView.setBackgroundResource(outValue.resourceId);
-
             }
         }
     }
