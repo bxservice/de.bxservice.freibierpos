@@ -10,7 +10,7 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "GOKU!!!";
+    private static final String TAG = "Messaging Service";
 
 
     @Override
