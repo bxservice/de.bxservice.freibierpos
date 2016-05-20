@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "860738623254",
+    "firebase_url": "https://bx-service-pos.firebaseio.com",
+    "project_id": "bx-service-pos",
+    "storage_bucket": "bx-service-pos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860738623254:android:82ef8f665d1cc0a3",
+        "android_client_info": {
+          "package_name": "gcm.play.android.de.bxservice.gcmnotifications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860738623254-ujeraglgda7232hv0ngo5ne4477ibmod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt33Ck_25KlQ4MFWiv03y-OfyB1gSbwXs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860738623254:android:bba28737dafb4639",
+        "android_client_info": {
+          "package_name": "de.bxservice.bxpos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860738623254-ujeraglgda7232hv0ngo5ne4477ibmod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt33Ck_25KlQ4MFWiv03y-OfyB1gSbwXs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
