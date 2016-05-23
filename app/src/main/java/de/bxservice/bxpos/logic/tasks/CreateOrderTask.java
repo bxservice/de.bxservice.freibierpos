@@ -24,13 +24,13 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
     @Override
     protected Boolean doInBackground(POSOrder... orders) {
 
-        DataWriter write;
+        DataWriter writer = new DataWriter();
         boolean success = true;
 
         for(POSOrder order : orders) {
-            write = new DataWriter(order, mActivity.getBaseContext());
+            writer.writeOrder(order, mActivity.getBaseContext());
             //If no success creating the order in iDempiere and the problem is the connection with the server
-            if (!write.isSuccess() && write.isConnectionError()) {
+            if (!writer.isSuccess() && writer.isConnectionError()) {
                 success = false;
                 break;
             }

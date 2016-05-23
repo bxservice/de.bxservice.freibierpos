@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.webservices.CreateDeviceTokenWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.CreateOrderWebServiceAdapter;
 
 /**
@@ -19,9 +20,8 @@ public class DataWriter {
     private boolean success = false;
     private boolean connectionError = false;
 
-    public DataWriter(final POSOrder order, final Context context) {
-
-        Log.i(LOG_TAG, "Data Writer accessed");
+    public void writeOrder(final POSOrder order, final Context context) {
+        Log.i(LOG_TAG, "Write order");
 
         Thread createOrderThread = new Thread(new Runnable() {
             @Override
@@ -33,7 +33,21 @@ public class DataWriter {
         });
 
         createOrderThread.run();
+    }
 
+    public void writeDeviceToken(final String token) {
+        Log.i(LOG_TAG, "Write token");
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CreateDeviceTokenWebServiceAdapter createTokenWS = new CreateDeviceTokenWebServiceAdapter(token);
+                success = createTokenWS.isSuccess();
+                connectionError = createTokenWS.isConnectionError();
+            }
+        });
+
+        thread.run();
     }
 
     public boolean isConnectionError() {
