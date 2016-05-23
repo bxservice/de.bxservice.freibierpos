@@ -457,38 +457,6 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     /**
-     * params, progress, result
-     */
-    /*private class InitiateData extends AsyncTask<Context, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Context... contexts) {
-
-            DataReader data = new DataReader(getBaseContext());
-
-            return data.isDataComplete() && !data.isError();
-
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecuteReadData(Boolean result) {
-            showProgress(false);
-
-            if (result) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Snackbar snackbar = Snackbar
-                        .make(mLoginFormView, getString(R.string.error_config_server), Snackbar.LENGTH_LONG);
-
-                snackbar.show();
-            }
-        }
-    }*/
-
-    /**
      * Called when the read data task finishes
      * @param result
      */
