@@ -18,7 +18,6 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
     private Activity mActivity;
 
     public CreateOrderTask(Activity callerActivity) {
-        //this.order = order;
         mActivity = callerActivity;
     }
 
@@ -50,6 +49,6 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
             ((PayOrderActivity) mActivity).postExecuteTask(success);
 
         if (mActivity instanceof MainActivity)
-            ((MainActivity) mActivity).postExecuteTask(success);
+            ((MainActivity) mActivity).postExecuteCreateOrderTask(success);
     }
 }

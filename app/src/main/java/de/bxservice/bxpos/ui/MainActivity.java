@@ -35,6 +35,7 @@ import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
+import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
@@ -180,7 +181,19 @@ public class MainActivity extends AppCompatActivity
             else
                 Toast.makeText(getBaseContext(), getString(R.string.no_unsync_orders),
                         Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_logout) {
+
+        } else if (id == R.id.nav_reload_data) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.reload_data_title)
+                    .setMessage(getString(R.string.reload_data_message))
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.reload, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            reloadPOSData();
+                        }
+                    }).create().show();
+        }
+        else if (id == R.id.nav_logout) {
             startActivity(new Intent(getBaseContext(), LoginActivity.class));
             finish();
             return true;
@@ -189,6 +202,24 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Updates the POS data from iDempiere if there's internet connection
+     */
+    private void reloadPOSData() {
+        //Check if network connection is available
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        //Check the internet connection
+        if (networkInfo != null && networkInfo.isConnected()) {
+            ReadServerDataTask readDataTask = new ReadServerDataTask(this);
+            readDataTask.execute();
+        }
+        else
+            Toast.makeText(getBaseContext(), getString(R.string.error_no_connection_on_sync_order),
+                    Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -309,12 +340,25 @@ public class MainActivity extends AppCompatActivity
      * gets call after the create order task finishes
      * @param success flag to check if the sync was successful
      */
-    public void postExecuteTask(boolean success) {
+    public void postExecuteCreateOrderTask(boolean success) {
         if(success)
             Toast.makeText(getBaseContext(), getString(R.string.success_on_sync_order),
                     Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order),
+                    Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * gets call after the read data server task finishes
+     * @param success flag to check if the task was successful
+     */
+    public void postExecuteReadDataTask(boolean success) {
+        if(success)
+            Toast.makeText(getBaseContext(), "SUCEESSSSSSSSSSSSSSS",
+                    Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getBaseContext(), "FAIIIIIL",
                     Toast.LENGTH_LONG).show();
     }
 

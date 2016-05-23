@@ -156,7 +156,7 @@
     <string name="no_success_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
 
     <!-- Navigation Drawer strings -->
-    <string name="synchronize">Synchronize</string>
+    <string name="synchronize">Synchronize orders</string>
     <string name="no_unsync_orders">Great! All the orders are in iDempiere</string>
     <string name="comm_category">Communication</string>
     <string name="share">Share</string>
@@ -195,6 +195,10 @@
     <string name="no_printing_device">No printing device found</string>
     <string name="void_order">Void order</string>
     <string name="void_order_approval_message">Void order %1$s because of %2$s</string>
+    <string name="reload_data">Reload data</string>
+    <string name="reload_data_title">Reload data?</string>
+    <string name="reload_data_message">Reload the data from iDempiere?</string>
+    <string name="reload">Reload</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

@@ -35,10 +35,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.DataReader;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
+import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
@@ -390,7 +390,7 @@ public class LoginActivity extends AppCompatActivity  {
             wsData.setPassword(mPassword);
 
             //If the data to connect to the server has not been set up before - error
-            if(!wsData.isDataComplete()) {
+            if (!wsData.isDataComplete()) {
                 Snackbar snackbar = Snackbar
                         .make(mLoginFormView, getString(R.string.error_no_server_data_configured), Snackbar.LENGTH_LONG)
                         .setAction("", null);
@@ -420,14 +420,15 @@ public class LoginActivity extends AppCompatActivity  {
                 }
 
                 // Read the data needed - Products. MProduct Category - Table ...
-                new InitiateData().execute(getBaseContext());
+                ReadServerDataTask initiateData = new ReadServerDataTask(LoginActivity.this);
+                initiateData.execute();
 
             } else {
 
                 String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
 
                 // If the sync configuration chosen was Always offline login not allowed
-                if(!"0".equals(syncConnPref)) {
+                if (!"0".equals(syncConnPref)) {
                     PosUser loggedUser = getLoggedUser(mUsername);
 
                     //Username does not exist and no internet connection
@@ -458,12 +459,12 @@ public class LoginActivity extends AppCompatActivity  {
     /**
      * params, progress, result
      */
-    private class InitiateData extends AsyncTask<Context, Void, Boolean> {
+    /*private class InitiateData extends AsyncTask<Context, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Context... contexts) {
 
-            DataReader data = DataReader.getInstance(getBaseContext());
+            DataReader data = new DataReader(getBaseContext());
 
             return data.isDataComplete() && !data.isError();
 
@@ -471,20 +472,40 @@ public class LoginActivity extends AppCompatActivity  {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecuteReadData(Boolean result) {
             showProgress(false);
 
-            if(result){
+            if (result) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
-            }else{
+            } else {
                 Snackbar snackbar = Snackbar
                         .make(mLoginFormView, getString(R.string.error_config_server), Snackbar.LENGTH_LONG);
 
                 snackbar.show();
             }
         }
+    }*/
+
+    /**
+     * Called when the read data task finishes
+     * @param result
+     */
+    public void postExecuteReadDataTask(Boolean result) {
+        showProgress(false);
+
+        if (result) {
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Snackbar snackbar = Snackbar
+                    .make(mLoginFormView, getString(R.string.error_config_server), Snackbar.LENGTH_LONG);
+
+            snackbar.show();
+        }
     }
+
 }
 

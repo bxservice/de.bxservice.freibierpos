@@ -156,7 +156,7 @@
     <string name="no_success_on_sync_order">Su dispositivo no se puede comunicar con iDempiere. Intente más adelante</string>
 
     <!-- Navigation Drawer strings -->
-    <string name="synchronize">Sincronizar</string>
+    <string name="synchronize">Sincronizar ordénes</string>
     <string name="no_unsync_orders">¡Enhorabuena! Todas las órdenes están en iDempiere</string>
     <string name="comm_category">Comunicación</string>
     <string name="share">Compartir</string>
@@ -194,6 +194,10 @@
     <string name="no_print_items">No hay items a imprimir</string>
     <string name="no_printing_device">No se encontro dispositivo de imrpesión</string>
     <string name="void_order">Anular orden</string>
+    <string name="reload_data">Recargar datos</string>
+    <string name="reload_data_title">Recargar datos?</string>
+    <string name="reload_data_message">Recargar datos de iDempiere?</string>
+    <string name="reload">Recargar</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
