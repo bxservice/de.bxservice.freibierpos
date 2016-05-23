@@ -35,9 +35,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.fcm.DeviceToken;
+import de.bxservice.bxpos.logic.DataWriter;
+import de.bxservice.bxpos.logic.daomanager.PosDeviceTokenManagement;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
+import de.bxservice.bxpos.logic.tasks.CreateDeviceTokenTask;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
@@ -464,6 +468,16 @@ public class LoginActivity extends AppCompatActivity  {
         showProgress(false);
 
         if (result) {
+
+            //Check if the device has already subscribed to the server for push notifications
+            PosDeviceTokenManagement deviceTokenManagement = new PosDeviceTokenManagement(getBaseContext());
+            DeviceToken deviceToken = deviceTokenManagement.getDeviceToken();
+
+            if(deviceToken != null && !deviceToken.isSynchonized()) {
+                CreateDeviceTokenTask createDeviceTokenTask = new CreateDeviceTokenTask();
+                createDeviceTokenTask.execute(deviceToken);
+            }
+
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
             finish();

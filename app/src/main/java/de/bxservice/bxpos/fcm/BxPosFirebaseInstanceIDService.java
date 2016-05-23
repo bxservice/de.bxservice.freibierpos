@@ -23,22 +23,19 @@ public class BxPosFirebaseInstanceIDService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
-        System.out.println("MAYONNNEEEESA 2" );
-
-        // TODO: Implement this method to send registration via web services to iDempiere
         sendRegistrationToServer(refreshedToken);
     }
 
     /**
-     * Persist token to third-party servers.
-     *
-     * Modify this method to associate the user's FCM InstanceID token with any server-side account
-     * maintained by your application.
-     *
+     * Persist token in the database to send it to iDempiere
+     * when possible
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
-        System.out.println("New token created ----> " + token);
+        Log.d(TAG, "New token created ----> " + token);
+        DeviceToken deviceToken = new DeviceToken();
+        deviceToken.setDeviceToken(token);
+        deviceToken.setSynchonized(false);
+        deviceToken.createToken(null);
     }
 }
