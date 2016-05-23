@@ -641,7 +641,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     /**
-     * Shows the progress UI and hides the login form.
+     * Shows the progress UI and hides the payment form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {

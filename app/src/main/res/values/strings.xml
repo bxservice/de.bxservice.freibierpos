@@ -199,6 +199,7 @@
     <string name="reload_data_title">Reload data?</string>
     <string name="reload_data_message">Reload the data from iDempiere?</string>
     <string name="reload">Reload</string>
+    <string name="success_on_load_data">Data loaded</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

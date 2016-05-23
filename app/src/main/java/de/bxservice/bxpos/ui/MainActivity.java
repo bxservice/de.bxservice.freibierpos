@@ -1,11 +1,15 @@
 package de.bxservice.bxpos.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity
 
     private MainPagerAdapter mMainPagerAdapter;
     private ViewPager mViewPager;
+    private View mProgressView;
 
     private int numberOfGuests = 0;
     private Table selectedTable = null;
@@ -107,6 +112,8 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
         callAsynchronousTask();
+
+        mProgressView = findViewById(R.id.load_data_progress);
     }
 
     @Override
@@ -214,6 +221,8 @@ public class MainActivity extends AppCompatActivity
 
         //Check the internet connection
         if (networkInfo != null && networkInfo.isConnected()) {
+            showProgress(true);
+
             ReadServerDataTask readDataTask = new ReadServerDataTask(this);
             readDataTask.execute();
         }
@@ -337,6 +346,42 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
+     * Shows the progress UI and hides the payment form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mViewPager.setVisibility(show ? View.GONE : View.VISIBLE);
+            mViewPager.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mViewPager.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mViewPager.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    /**
      * gets call after the create order task finishes
      * @param success flag to check if the sync was successful
      */
@@ -354,11 +399,13 @@ public class MainActivity extends AppCompatActivity
      * @param success flag to check if the task was successful
      */
     public void postExecuteReadDataTask(boolean success) {
+        showProgress(false);
+
         if(success)
-            Toast.makeText(getBaseContext(), "SUCEESSSSSSSSSSSSSSS",
+            Toast.makeText(getBaseContext(), getString(R.string.success_on_load_data),
                     Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(getBaseContext(), "FAIIIIIL",
+            Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order),
                     Toast.LENGTH_LONG).show();
     }
 
