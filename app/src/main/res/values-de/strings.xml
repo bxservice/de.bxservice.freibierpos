@@ -159,7 +159,7 @@
     <string name="no_success_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
 
     <!-- Navigation Drawer strings -->
-    <string name="synchronize">Synchronisieren</string>
+    <string name="synchronize">Synchronisieren Aufträge</string>
     <string name="no_unsync_orders">Super! Alle Aufträge sind in iDempiere</string>
     <string name="comm_category">Kommunikation</string>
     <string name="share">Aktie</string>
@@ -197,6 +197,10 @@
     <string name="no_print_items">There are no items to print</string>
     <string name="no_printing_device">No printing device found</string>
     <string name="void_order">Void order</string>
+    <string name="reload_data">Reload data</string>
+    <string name="reload_data_title">Reload data?</string>
+    <string name="reload_data_message">Reload the data from iDempiere?</string>
+    <string name="reload">Reload</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

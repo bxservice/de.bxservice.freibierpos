@@ -31,8 +31,6 @@ public class DataReader {
 
     private static final String LOG_TAG = "Data Reader";
 
-    private static volatile DataReader instance = null;
-
     private List<ProductCategory> productCategoryList = new ArrayList<>();
     private List<TableGroup> tableGroupList = new ArrayList<>();
     private List<MProduct> productList = new ArrayList<>();
@@ -44,7 +42,7 @@ public class DataReader {
     private Context mContext;
 
 
-    private DataReader(Context ctx) {
+    public DataReader(Context ctx) {
 
         mContext = ctx;
 
@@ -158,14 +156,6 @@ public class DataReader {
 
         for(ProductPrice productPrice : productPriceList)
             productPrice.save(mContext);
-    }
-
-    public static synchronized DataReader getInstance(Context ctx) {
-        if (instance == null) {
-            instance = new DataReader(ctx);
-        }
-
-        return instance;
     }
 
     public boolean isError() {
