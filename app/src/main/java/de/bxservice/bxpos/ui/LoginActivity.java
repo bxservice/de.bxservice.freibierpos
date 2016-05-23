@@ -36,7 +36,6 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.fcm.DeviceToken;
-import de.bxservice.bxpos.logic.DataWriter;
 import de.bxservice.bxpos.logic.daomanager.PosDeviceTokenManagement;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
