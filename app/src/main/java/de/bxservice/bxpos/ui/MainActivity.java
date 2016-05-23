@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Shows the progress UI and hides the payment form.
+     * Shows the progress UI and hides the table form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
