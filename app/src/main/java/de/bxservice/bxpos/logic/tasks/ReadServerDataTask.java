@@ -1,6 +1,7 @@
 package de.bxservice.bxpos.logic.tasks;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import de.bxservice.bxpos.logic.DataReader;
@@ -21,7 +22,12 @@ public class ReadServerDataTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
 
-        DataReader data = new DataReader(mActivity.getBaseContext());
+        Context ctx = null;
+
+        if(mActivity != null)
+            ctx = mActivity.getBaseContext();
+
+        DataReader data = new DataReader(ctx);
 
         return data.isDataComplete() && !data.isError();
     }
