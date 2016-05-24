@@ -15,6 +15,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.ui.FCMNotificationActivity;
 import de.bxservice.bxpos.ui.MainActivity;
@@ -50,9 +52,15 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
             if (String.valueOf(BXPOSNotificationCode.RECOMMENDED_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
                 sendNotification(notificationBody, notificationTitle);
             }
-            if (String.valueOf(BXPOSNotificationCode.MANDATORY_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
+            else if (String.valueOf(BXPOSNotificationCode.MANDATORY_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
                 mandatoryUpdate();
             }
+            else if (String.valueOf(BXPOSNotificationCode.TABLE_STATUS_CHANGED_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
+                //TODO: Refresh activity
+                System.out.println("Table changed " + data.get("TableId") + " " + data.get("TableStatus"));
+                updateTable(data.get("TableId"), data.get("TableStatus").equals("Y"));
+            }
+
         }
 
     }
@@ -92,5 +100,17 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
         // Read the data needed - Products. MProduct Category - Table ...
         ReadServerDataTask initiateData = new ReadServerDataTask(null);
         initiateData.execute();
+    }
+
+    private void updateTable(String tableId, Boolean isBusy) {
+        PosTableManagement tableManager = new PosTableManagement(this);
+        Table table = tableManager.get(Long.parseLong(tableId));
+
+        if (table != null) {
+            if (isBusy)
+                table.occupyTable(this);
+            else
+                table.freeTable(this);
+        }
     }
 }
