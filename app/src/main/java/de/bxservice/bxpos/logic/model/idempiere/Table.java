@@ -1,10 +1,13 @@
 package de.bxservice.bxpos.logic.model.idempiere;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.io.Serializable;
 
 import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
+import de.bxservice.bxpos.logic.tasks.UpdateTableStatusTask;
 
 /**
  * Created by Diego Ruiz on 9/11/15.
@@ -85,6 +88,7 @@ public class Table implements Serializable {
 
     public boolean occupyTable(Context ctx) {
         status = BUSY_STATUS;
+        updateServerTableStatus(ctx); //Send the new status to iDempiere
         return updateTable(ctx);
     }
 
@@ -94,6 +98,7 @@ public class Table implements Serializable {
         //Check if there are no more orders in the table -> if there are, don't free the table
         if (tableManager.isTableFree(this)) {
             status = FREE_STATUS;
+            updateServerTableStatus(ctx); //Send the new status to iDempiere
             return updateTable(ctx);
         }
 
@@ -112,5 +117,26 @@ public class Table implements Serializable {
 
     private boolean updateTable() {
         return tableManager.update(this);
+    }
+
+    /**
+     * Updates the status in iDempiere if there's internet connection
+     * @param ctx
+     * @return
+     */
+    private boolean updateServerTableStatus(Context ctx) {
+        if(ctx == null)
+            return false;
+
+        //Check if network connection is available
+        ConnectivityManager connMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            UpdateTableStatusTask updateTask = new UpdateTableStatusTask();
+            updateTask.execute(this);
+        }
+
+        return true;
+
     }
 }
