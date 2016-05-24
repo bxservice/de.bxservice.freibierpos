@@ -46,7 +46,7 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
 
         if(data != null) {
             //If the request is suggested
-            if (String.valueOf(BXPOSNotificationCode.SUGGESTED_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
+            if (String.valueOf(BXPOSNotificationCode.RECOMMENDED_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
                 sendNotification(notificationBody, notificationTitle);
             }
             if (String.valueOf(BXPOSNotificationCode.MANDATORY_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {

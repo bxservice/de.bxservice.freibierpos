@@ -16,16 +16,17 @@ public class FCMNotificationActivity extends AppCompatActivity {
 
         String clickAction = getIntent().getAction();
 
-        if(BXPOSNotificationCode.MANDATORY_UPDATE_ACTION.equals(clickAction)) {
+        if (BXPOSNotificationCode.MANDATORY_UPDATE_ACTION.equals(clickAction)) {
             // Read the data needed - Products. MProduct Category - Table ...
             ReadServerDataTask initiateData = new ReadServerDataTask(this);
             initiateData.execute();
+        } else if (BXPOSNotificationCode.RECOMMENDED_UPDATE_ACTION.equals(clickAction)) {
+            onBackPressed();
         }
     }
 
     /**
      * Called when the read data task finishes
-     * @param result
      */
     public void postExecuteReadDataTask() {
         onBackPressed();
