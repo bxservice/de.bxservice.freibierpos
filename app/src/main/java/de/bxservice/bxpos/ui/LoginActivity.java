@@ -30,6 +30,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,6 +121,25 @@ public class LoginActivity extends AppCompatActivity  {
 
         initWebServiceRequestData();
 
+        checkPlayServices();
+    }
+
+    /**
+     * Check play services for push notifications
+     * @return
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.showErrorNotification(this, result);
+            }
+
+            return false;
+        }
+
+        return true;
     }
 
     private void createDummyUser() {
