@@ -22,6 +22,8 @@ public class FCMNotificationActivity extends AppCompatActivity {
             initiateData.execute();
         } else if (BXPOSNotificationCode.RECOMMENDED_UPDATE_ACTION.equals(clickAction)) {
             onBackPressed();
+        } else {
+            onBackPressed();
         }
     }
 
