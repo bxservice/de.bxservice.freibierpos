@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="de.bxservice.bxpos.ui.FCMNotificationActivity">
+
+    <TextView
+        android:layout_width="116dp"
+        android:layout_height="44dp"
+        android:text="@string/updating"
+        android:id="@+id/textView2"
+        android:textColor="@color/colorAccent"
+        android:gravity="center"
+        android:layout_above="@+id/progress_bar"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:textSize="20sp"/>
+
+    <!-- Login progress-->
+    <ProgressBar android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible" />
+
+</RelativeLayout>
