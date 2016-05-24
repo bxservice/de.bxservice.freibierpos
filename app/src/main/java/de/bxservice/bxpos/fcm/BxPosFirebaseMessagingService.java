@@ -15,6 +15,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.ui.MainActivity;
 
 /**
@@ -48,6 +49,9 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
             if (String.valueOf(BXPOSNotificationCode.SUGGESTED_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
                 sendNotification(notificationBody, notificationTitle);
             }
+            if (String.valueOf(BXPOSNotificationCode.MANDATORY_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
+                mandatoryUpdate();
+            }
         }
 
     }
@@ -76,5 +80,14 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    /**
+     * Performs an update on the data on the background
+     */
+    private void mandatoryUpdate() {
+        // Read the data needed - Products. MProduct Category - Table ...
+        ReadServerDataTask initiateData = new ReadServerDataTask(null);
+        initiateData.execute();
     }
 }
