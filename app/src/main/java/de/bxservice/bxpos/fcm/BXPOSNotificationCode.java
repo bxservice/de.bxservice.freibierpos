@@ -14,6 +14,9 @@ public interface BXPOSNotificationCode {
     /**Request that is mandatory*/
     int MANDATORY_REQUEST_CODE = 200;
 
+    /**Table status changed request*/
+    int TABLE_STATUS_CHANGED_CODE = 300;
+
     /**Request actions send as click_action to perform on click in the notification*/
     /**Mandatory request action*/
     String MANDATORY_UPDATE_ACTION = "LOAD_DATA";
