@@ -9,7 +9,7 @@ public interface BXPOSNotificationCode {
     String REQUEST_TYPE = "RT";
 
     /**Request that is not mandatory*/
-    int SUGGESTED_REQUEST_CODE = 100;
+    int RECOMMENDED_REQUEST_CODE = 100;
 
     /**Request that is mandatory*/
     int MANDATORY_REQUEST_CODE = 200;
@@ -17,4 +17,6 @@ public interface BXPOSNotificationCode {
     /**Request actions send as click_action to perform on click in the notification*/
     /**Mandatory request action*/
     String MANDATORY_UPDATE_ACTION = "LOAD_DATA";
+    String RECOMMENDED_UPDATE_ACTION = "OPEN_ACTIVITY";
+
 }
