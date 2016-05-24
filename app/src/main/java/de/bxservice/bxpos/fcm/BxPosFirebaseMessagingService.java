@@ -16,6 +16,7 @@ import java.util.Map;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
+import de.bxservice.bxpos.ui.FCMNotificationActivity;
 import de.bxservice.bxpos.ui.MainActivity;
 
 /**
@@ -62,7 +63,7 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageTitle FCM message title received.
      */
     private void sendNotification(String messageBody, String messageTitle) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, FCMNotificationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -75,6 +76,8 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+        notificationBuilder.setAutoCancel(true);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
