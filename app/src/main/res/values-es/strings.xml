@@ -199,6 +199,7 @@
     <string name="reload_data_message">Recargar datos de iDempiere?</string>
     <string name="reload">Recargar</string>
     <string name="success_on_load_data">Datos cargados</string>
+    <string name="updating">Actulizando...</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
