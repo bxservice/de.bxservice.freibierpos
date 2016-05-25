@@ -3,9 +3,11 @@ package de.bxservice.bxpos.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity
 
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
+    public final static String TABLE_UPDATED_ACTION   = "TABLE_UPDATED";
 
     private MainPagerAdapter mMainPagerAdapter;
     private ViewPager mViewPager;
@@ -70,6 +74,14 @@ public class MainActivity extends AppCompatActivity
     private Table selectedTable = null;
 
     private String syncConnPref;
+
+    private IntentFilter myFilter;
+    private BroadcastReceiver myReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MainActivity.this.recreate();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +126,9 @@ public class MainActivity extends AppCompatActivity
         callAsynchronousTask();
 
         mProgressView = findViewById(R.id.load_data_progress);
+
+        //Configuration to recreate UI on push notification
+        myFilter = new IntentFilter(TABLE_UPDATED_ACTION);
     }
 
     @Override
@@ -323,13 +338,22 @@ public class MainActivity extends AppCompatActivity
         PosObjectHelper.closeDB(getBaseContext());
     }
 
-    /**
-     * Close the drawer when coming back from
-     * other activities
-     */
+    @Override
+    protected void onPause() {
+        // Unregister since the activity is paused.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(
+                myReceiver);
+        super.onPause();
+    }
+
     @Override
     public void onResume(){
         super.onResume();
+        // Register to receive messages.
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                myReceiver, myFilter);
+
+        //Close the drawer when coming back from
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
@@ -340,9 +364,29 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == NEW_ORDER_REQUEST ||
                 requestCode == EDIT_ORDER_REQUEST ||
                 requestCode == OPEN_ORDER_REQUEST) {
-            // Make sure the request was successful
-            this.recreate();
+            //this.recreate();
+            safeRecreate();
         }
+    }
+
+    /**
+     * Manage the RuntimeException: Performing stop of activity that is not resumed in android
+     * When recreate call
+     * */
+    private void safeRecreate() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+                {
+                    MainActivity.this.finish();
+                    MainActivity.this.startActivity(MainActivity.this.getIntent());
+                } else MainActivity.this.recreate();
+            }
+        }, 1);
     }
 
     /**
