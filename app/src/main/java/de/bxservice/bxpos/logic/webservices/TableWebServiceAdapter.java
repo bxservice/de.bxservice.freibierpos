@@ -54,6 +54,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                 int tableId;
                 boolean isSummary;
                 String value;
+                String status;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
@@ -62,6 +63,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                     tableId = 0;
                     isSummary = false;
                     value = null;
+                    status = Table.FREE_STATUS;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
@@ -78,6 +80,10 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                         }
                         else if ("Value".equalsIgnoreCase(field.getColumn()))
                             value = field.getStringValue();
+                        else if ("BXS_IsBusy".equalsIgnoreCase(field.getColumn())) {
+                            if("Y".equalsIgnoreCase(field.getStringValue()))
+                                status = Table.BUSY_STATUS;
+                        }
 
                     }
 
@@ -95,7 +101,7 @@ public class TableWebServiceAdapter extends AbstractWSObject{
                             table.setTableID(tableId);
                             table.setTableName(name);
                             table.setValue(value);
-                            table.setStatus(Table.FREE_STATUS);
+                            table.setStatus(status);
                             tableList.add(table);
                         }
                     }
