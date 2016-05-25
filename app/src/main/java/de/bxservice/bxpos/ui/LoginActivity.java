@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,12 +28,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity  {
     private View mLoginFormView;
     private ArrayList<String> roles;
     private Spinner rolesSpinner;
+    private ImageButton settingsButton;
 
     // Reference to the role code in the properties file
     private HashMap<String, String> roleCodes;
@@ -117,7 +119,16 @@ public class LoginActivity extends AppCompatActivity  {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        createDummyUser();
+        settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
 
         initWebServiceRequestData();
 
@@ -142,19 +153,6 @@ public class LoginActivity extends AppCompatActivity  {
         return true;
     }
 
-    private void createDummyUser() {
-
-        if (getOfflineUser() == null /*&& !getOfflineUser().getUsername().equals("FreiBierAdmin")*/) {
-            PosUser dummyUser = new PosUser();
-            dummyUser.setUsername("FreiBierAdmin");
-            dummyUser.setPassword("FreiBierAdmin");
-            dummyUser.createUser(getApplicationContext());
-        }
-        else {
-            Log.i(LOG_TAG, "Dummy user exists FreiBierAdmin");
-        }
-    }
-
     /**
      * Init the webservice request data with the data from preferences
      */
@@ -176,11 +174,6 @@ public class LoginActivity extends AppCompatActivity  {
         wsData.setWarehouseId(warehouseConnPref);
 
         wsData.readValues(getBaseContext());
-    }
-
-    private PosUser getOfflineUser() {
-        PosUserManagement userManager = new PosUserManagement(getApplicationContext());
-        return userManager.get(1);
     }
 
     /**
@@ -260,24 +253,6 @@ public class LoginActivity extends AppCompatActivity  {
             // form field with an error.
             focusView.requestFocus();
         } else {
-
-            // If the credentials are the offline user - show the corresponding activity
-            PosUser offlineUser = getOfflineUser();
-            if(username.equals(offlineUser.getUsername())) {
-                //When the credentials are correct -> display the settings activity
-                if(offlineUser.authenticateHash(password)) {
-                    Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
-                else {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                    return;
-                }
-
-            }
 
             //Check if network connection is available
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -368,6 +343,7 @@ public class LoginActivity extends AppCompatActivity  {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+            settingsButton.setVisibility(show ? View.GONE : View.VISIBLE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             mLoginFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
@@ -388,6 +364,7 @@ public class LoginActivity extends AppCompatActivity  {
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
+            settingsButton.setVisibility(show ? View.GONE : View.VISIBLE);
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
