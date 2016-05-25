@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -59,6 +60,7 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 //TODO: Refresh activity
                 System.out.println("Table changed " + data.get("TableId") + " " + data.get("TableStatus"));
                 updateTable(data.get("TableId"), data.get("TableStatus").equals("Y"));
+                updateMainActivity();
             }
 
         }
@@ -107,10 +109,25 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
         Table table = tableManager.get(Long.parseLong(tableId));
 
         if (table != null) {
-            if (isBusy)
+
+            String status = isBusy ? Table.BUSY_STATUS : Table.FREE_STATUS;
+
+            if(status.equals(table.getStatus()))
+                return;
+
+            if(isBusy)
                 table.occupyTable(this);
             else
                 table.freeTable(this);
+
+            updateMainActivity();
         }
+    }
+
+    private void updateMainActivity() {
+        Log.d(TAG, "Broadcasting message");
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(MainActivity.TABLE_UPDATED_ACTION);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 }
