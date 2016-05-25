@@ -88,5 +88,15 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
     </ScrollView>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/settingsButton"
+        android:src="@drawable/ic_settings_white_24dp"
+        android:background="@drawable/round_button"
+        android:layout_gravity="bottom|left" />
+
 </LinearLayout>
