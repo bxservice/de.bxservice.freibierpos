@@ -1,8 +1,11 @@
 package de.bxservice.bxpos.ui;
 
 import android.annotation.TargetApi;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -21,12 +25,15 @@ import android.view.MenuItem;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
 
 /**
  * Created by Diego Ruiz on 16/12/15.
  */
 public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
+
+    private static final String LOG_TAG = "Admin Settings";
 
     //Restaurant
     public static final String KEY_ORDER_PREFIX = "pref_order_prefix";
@@ -45,12 +52,11 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
     public static final String KEY_VOID_BLOCKED = "pref_key_approval_on_void";
     public static final String KEY_PIN_CODE = "pref_security_pin";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
     }
 
     /**
@@ -122,7 +128,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+    private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
@@ -149,10 +155,29 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
+
+
+                //If the key changed is the URL and the value was really changed -> not only selected
+                if (KEY_PREF_URL.equals(preference.getKey())) {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext().getApplicationContext());
+                    String urlConnPref = sharedPref.getString(KEY_PREF_URL, "");
+
+                    if(stringValue!= null && urlConnPref != null && !urlConnPref.equals(getString(R.string.pref_default_display_name)) && !stringValue.equals(urlConnPref)) {
+                        Log.d(LOG_TAG, "URL Changed");
+                        deleteDatabase();
+                    }
+
+                }
             }
             return true;
         }
     };
+
+    private void deleteDatabase() {
+        Log.d(LOG_TAG, "Deleting database");
+        PosDatabaseHelper databaseHelper = PosDatabaseHelper.getInstance(getBaseContext());
+        databaseHelper.deleteDatabase(getBaseContext());
+    }
 
     /**
      * Binds a preference's summary to its value. More specifically, when the
@@ -163,7 +188,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
      *
      * @see #sBindPreferenceSummaryToValueListener
      */
-    public static void bindPreferenceSummaryToValue(Preference preference) {
+    public void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 

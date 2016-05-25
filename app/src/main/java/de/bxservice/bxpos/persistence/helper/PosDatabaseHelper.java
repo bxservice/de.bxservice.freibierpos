@@ -418,6 +418,11 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         bootstrapDB(db);
     }
 
+    public void deleteDatabase(Context ctx) {
+        closeDB();
+        ctx.deleteDatabase(DATABASE_NAME);
+    }
+
     // closing database
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
