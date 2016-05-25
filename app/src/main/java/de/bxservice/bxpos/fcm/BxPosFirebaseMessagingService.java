@@ -57,10 +57,8 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 mandatoryUpdate();
             }
             else if (String.valueOf(BXPOSNotificationCode.TABLE_STATUS_CHANGED_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
-                //TODO: Refresh activity
-                System.out.println("Table changed " + data.get("TableId") + " " + data.get("TableStatus"));
+                Log.d(TAG, "Reques to change table " + data.get("TableId"));
                 updateTable(data.get("TableId"), data.get("TableStatus").equals("Y"));
-                updateMainActivity();
             }
 
         }
@@ -112,6 +110,7 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
 
             String status = isBusy ? Table.BUSY_STATUS : Table.FREE_STATUS;
 
+            //Check if the status is the same as in the database
             if(status.equals(table.getStatus()))
                 return;
 

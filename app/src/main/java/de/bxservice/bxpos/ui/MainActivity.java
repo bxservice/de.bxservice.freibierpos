@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MainActivity.this.recreate();
+            Log.d(LOG_TAG, "Update table request received");
+            safeRecreate();
         }
     };
 
