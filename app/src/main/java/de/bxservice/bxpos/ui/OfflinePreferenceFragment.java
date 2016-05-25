@@ -14,19 +14,22 @@ public class OfflinePreferenceFragment extends PreferenceFragment {
     {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+
+        OfflineAdminSettingsActivity activity = (OfflineAdminSettingsActivity) getActivity();
+
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences
         // to their values. When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_URL));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORG_ID));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_CLIENT_ID));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ROLE_ID));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED));
-        OfflineAdminSettingsActivity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PIN_CODE));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_URL));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORG_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_CLIENT_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ROLE_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PIN_CODE));
 
     }
 }
