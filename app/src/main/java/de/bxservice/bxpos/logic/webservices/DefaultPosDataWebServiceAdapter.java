@@ -70,6 +70,13 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                             defaultPosData.setCombineItems("Y".equalsIgnoreCase(field.getStringValue()));
                         else if ("BXS_PrintAfterSend".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setPrintAfterSent("Y".equalsIgnoreCase(field.getStringValue()));
+                        else if ("PIN".equalsIgnoreCase(field.getColumn())) {
+                            try {
+                                defaultPosData.setPin(Integer.parseInt(field.getStringValue()));
+                            } catch (NumberFormatException e) {
+                                Log.e(SERVICE_TYPE, "PIN contains non-numeric values");
+                            }
+                        }
 
                     }
                 }

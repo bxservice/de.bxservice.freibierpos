@@ -31,6 +31,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE, data.getDefaultWarehouse());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID, data.getDiscountId());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID, data.getSurchargeId());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN, data.getPin());
 
         int flag = (data.isCombineItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
@@ -55,6 +56,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_WAREHOUSE, data.getDefaultWarehouse());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID, data.getDiscountId());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID, data.getSurchargeId());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN, data.getPin());
 
         int flag = (data.isCombineItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
@@ -92,6 +94,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setDefaultPriceList(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST)));
         defaultData.setDiscountId(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DISCOUNT_ID)));
         defaultData.setSurchargeId(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID)));
+        defaultData.setPin(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN)));
 
         Boolean flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS)) != 0);
         defaultData.setCombineItems(flag);
