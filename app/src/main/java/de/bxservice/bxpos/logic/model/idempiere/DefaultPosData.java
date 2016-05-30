@@ -24,6 +24,7 @@ public class DefaultPosData {
     private int defaultWarehouse = 0;
     private int discountId = 0;
     private int surchargeId = 0;
+    private int pin = 0;
     private boolean printAfterSent = false;
     private boolean combineItems   = false;
 
@@ -89,6 +90,14 @@ public class DefaultPosData {
 
     public void setPrintAfterSent(boolean printAfterSent) {
         this.printAfterSent = printAfterSent;
+    }
+
+    public int getPin() {
+        return pin;
+    }
+
+    public void setPin(int pin) {
+        this.pin = pin;
     }
 
     /**
