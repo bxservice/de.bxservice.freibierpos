@@ -19,7 +19,6 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.ui.MainActivity;
 import de.bxservice.bxpos.ui.adapter.GridTableViewAdapter;
-import de.bxservice.bxpos.ui.adapter.TableGridItem;
 
 /**
  * Created by Diego Ruiz on 18/11/15.
@@ -33,7 +32,7 @@ public class MainTableFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private GridView grid;
     private GridTableViewAdapter mGridAdapter;
-    private ArrayList<TableGridItem> mGridData;
+    private List<Table> mGridData;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -65,24 +64,11 @@ public class MainTableFragment extends Fragment {
         List<TableGroup> tableGroupList = tableGroupManager.getAllTableGroups();
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
-        mGridData = new ArrayList<>();
-
-        TableGridItem item;
-        int i = 0;
-        for (Table table : tableGroup.getTables()) {
-            item = new TableGridItem();
-            item.setTitle(table.getTableName());
-            item.setTable(table);
-            i++;
-            //item.setImage(R.drawable.ic_local_dining_white_24dp);
-            mGridData.add(item);
-        }
-
+        mGridData = tableGroup.getTables();
         grid.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        mGridAdapter = new GridTableViewAdapter(this.getContext(), R.layout.table_grid_item_layout, mGridData);
+        mGridAdapter = new GridTableViewAdapter(this.getContext(), R.layout.table_grid_item_layout, (ArrayList<Table>) mGridData);
 
-        //ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_dropdown_item_1line,list);
         grid.setAdapter(mGridAdapter);
 
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,15 +77,15 @@ public class MainTableFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
                 //Get item at position
-                TableGridItem item = (TableGridItem) parent.getItemAtPosition(position);
+                Table item = (Table) parent.getItemAtPosition(position);
 
-                ((MainActivity) getActivity()).setSelectedTable(item.getTable());
+                ((MainActivity) getActivity()).setSelectedTable(item);
 
-                if (item.getTable().getStatus().equals(Table.FREE_STATUS))
+                if (item.getStatus().equals(Table.FREE_STATUS))
                     ((MainActivity) getActivity()).showGuestNumberDialog();
-                else if (item.getTable().getStatus().equals(Table.BUSY_STATUS)) {
+                else if (item.getStatus().equals(Table.BUSY_STATUS)) {
                     PosOrderManagement orderManager = new PosOrderManagement(getActivity().getBaseContext());
-                    ((MainActivity) getActivity()).editOrder(orderManager.getTableOrders(item.getTable()));
+                    ((MainActivity) getActivity()).editOrder(orderManager.getTableOrders(item));
                 }
             }
         });
