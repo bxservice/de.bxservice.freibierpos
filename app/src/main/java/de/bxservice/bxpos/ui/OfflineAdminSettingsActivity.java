@@ -48,10 +48,6 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
     //Sync & Data
     public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
 
-    //Security
-    public static final String KEY_VOID_BLOCKED = "pref_key_approval_on_void";
-    public static final String KEY_PIN_CODE = "pref_security_pin";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

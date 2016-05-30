@@ -29,7 +29,7 @@
             android:inputType="numberPassword"
             android:layout_marginLeft="22dp"
             android:ems="4"
-            android:maxLength="4"
+            android:maxLength="8"
             android:id="@+id/pin_text"
             android:gravity="left" />
 

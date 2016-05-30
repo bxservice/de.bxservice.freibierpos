@@ -2,8 +2,6 @@ package de.bxservice.bxpos.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -489,10 +487,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onDialogPositiveClick(VoidReasonDialogFragment dialog) {
         if(dialog.getReason() != null) {
 
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            boolean blockVoid = sharedPref.getBoolean(OfflineAdminSettingsActivity.KEY_VOID_BLOCKED, true);
+            PosDefaultDataManagement dataManager = new PosDefaultDataManagement(getBaseContext());
 
-            if(blockVoid) {
+            DefaultPosData data = dataManager.getDefaultData();
+
+            if(data.getPin() != 0) {
                 showConfirmationPINDialog(dialog.getReason(), dialog.isVoidOrder());
             } else {
                 if(dialog.isVoidOrder())
@@ -512,16 +511,18 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onDialogPositiveClick(ConfirmationPinDialogFragment dialog) {
         if(dialog.getPinCode() != null) {
 
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String assignedPin = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PIN_CODE, null);
+            PosDefaultDataManagement dataManager = new PosDefaultDataManagement(getBaseContext());
 
-            if(assignedPin == null) {
+            DefaultPosData data = dataManager.getDefaultData();
+            int assignedPin = data.getPin();
+
+            if(assignedPin == 0) {
                 Snackbar.make(mainView, R.string.assign_password, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return;
             }
 
-            if(!assignedPin.equals(dialog.getPinCode())) {
+            if(assignedPin != Integer.parseInt(dialog.getPinCode())) {
                 Snackbar.make(mainView, R.string.wrong_password, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             } else {
