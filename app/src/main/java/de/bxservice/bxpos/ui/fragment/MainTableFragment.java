@@ -46,6 +46,11 @@ public class MainTableFragment extends Fragment {
         return fragment;
     }
 
+    public List<Table> getmGridData() {
+        return mGridData;
+    }
+
+
     public MainTableFragment() {
     }
 
@@ -91,5 +96,11 @@ public class MainTableFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public void updateTableStatus(int position, String status) {
+        mGridData.get(position).setStatus(status);
+        mGridAdapter.setGridData((ArrayList<Table>) mGridData);
+        mGridAdapter.notifyDataSetChanged();
     }
 }

@@ -4,7 +4,11 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.List;
+
 import de.bxservice.bxpos.logic.daomanager.PosTableGroupManagement;
+import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.fragment.MainTableFragment;
 
 /**
@@ -34,6 +38,36 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return dataProvider.getAllTableGroups().get(position).getName();
+    }
+
+    /**
+     * Update table status in the data set in the fragment
+     * @param fm
+     * @param selectedTable
+     * @param status
+     */
+    public void updateStatus(FragmentManager fm, Table selectedTable, String status) {
+
+        List<Fragment> allFragments = fm.getFragments();
+        boolean found = false;
+
+        for(Fragment fragment : allFragments) {
+
+            if(fragment instanceof  MainTableFragment && !found) {
+                MainTableFragment tableFragment = (MainTableFragment) fragment;
+
+                for(Table table : tableFragment.getmGridData()) {
+
+                    if (table.getTableID() == selectedTable.getTableID()) {
+                        tableFragment.updateTableStatus(tableFragment.getmGridData().indexOf(table), status);
+                        found = true;
+                        break;
+                    }
+                }
+
+            }
+
+        }
     }
 
 }
