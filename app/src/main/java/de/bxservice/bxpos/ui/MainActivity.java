@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity
 
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
+    public final static String EXTRA_UPDATED_TABLE    = "de.bxservice.bxpos.TABLEUPDATE";
     public final static String TABLE_UPDATED_ACTION   = "TABLE_UPDATED";
 
     private MainPagerAdapter mMainPagerAdapter;
@@ -80,7 +81,9 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(LOG_TAG, "Update table request received");
-            safeRecreate();
+            Table table = (Table) intent.getSerializableExtra(EXTRA_UPDATED_TABLE);
+            if (table != null)
+                mMainPagerAdapter.updateStatus(getSupportFragmentManager(), table, table.getStatus());
         }
     };
 

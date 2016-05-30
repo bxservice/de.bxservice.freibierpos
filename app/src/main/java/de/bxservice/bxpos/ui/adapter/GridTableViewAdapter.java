@@ -36,11 +36,10 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
 
     /**
      * Updates grid data and refresh grid items.
-     * @param mGridData
+     * @param newList
      */
-    public void setGridData(ArrayList<Table> mGridData) {
-        this.mGridData = mGridData;
-        notifyDataSetChanged();
+    public void setGridData(ArrayList<Table> newList) {
+       mGridData = newList;
     }
 
     @Override
@@ -64,6 +63,8 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
             row.setBackgroundColor(Color.parseColor("#FFFB980D"));
             //holder.imageView.setImageResource(R.drawable.cutlery23_blank);
             //holder.titleTextView.setTextColor(Color.WHITE);
+        } else {
+            row.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
 
         holder.titleTextView.setText(Html.fromHtml(mGridData.get(position).getTableName()));

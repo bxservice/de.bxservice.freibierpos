@@ -119,14 +119,15 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
             else
                 table.freeTable(this);
 
-            updateMainActivity();
+            updateMainActivity(table);
         }
     }
 
-    private void updateMainActivity() {
+    private void updateMainActivity(Table table) {
         Log.d(TAG, "Broadcasting message");
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(MainActivity.TABLE_UPDATED_ACTION);
+        broadcastIntent.putExtra(MainActivity.EXTRA_UPDATED_TABLE, table);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 }
