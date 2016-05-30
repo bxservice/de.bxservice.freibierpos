@@ -3,12 +3,15 @@ package de.bxservice.bxpos.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,12 +50,18 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
         View row = convertView;
         ViewHolder holder;
 
+        LinearLayout linear = null;
+
         if (row == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.titleTextView = (TextView) row.findViewById(R.id.grid_item_title);
             holder.imageView = (ImageView) row.findViewById(R.id.grid_item_image);
+            holder.serverName = (TextView) row.findViewById(R.id.server_name);
+            holder.orderTime = (TextView) row.findViewById(R.id.time);
+
+            linear = (LinearLayout) row.findViewById(R.id.table_layout);
 
             row.setTag(holder);
         } else {
@@ -60,11 +69,28 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
         }
 
         if (Table.BUSY_STATUS.equals(mGridData.get(position).getStatus())) {
-            row.setBackgroundColor(Color.parseColor("#FFFB980D"));
+            row.setBackgroundColor(ContextCompat.getColor(holder.titleTextView.getContext(), R.color.busy_table_color));
+
+            //TODO: Remove hard coded strings
+            holder.serverName.setText("Diego Ruiz");
+            holder.orderTime.setText("9:59pm");
+
+
+            //ContextCompat.getColor(holder.itemView.getContext(), R.color.complimentaryLineColor)
             //holder.imageView.setImageResource(R.drawable.cutlery23_blank);
             //holder.titleTextView.setTextColor(Color.WHITE);
         } else {
-            row.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            row.setBackgroundColor(ContextCompat.getColor(holder.titleTextView.getContext(), R.color.empty_table_color));
+
+            //If the table is empty, center the table name relative to the total button
+            if (linear != null) {
+                RelativeLayout.LayoutParams layoutParams =
+                        (RelativeLayout.LayoutParams) linear.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                linear.setLayoutParams(layoutParams);
+
+            }
+
         }
 
         holder.titleTextView.setText(Html.fromHtml(mGridData.get(position).getTableName()));
@@ -73,7 +99,9 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
     }
 
     static class ViewHolder {
+        TextView serverName;
         TextView titleTextView;
+        TextView orderTime;
         ImageView imageView;
     }
 
