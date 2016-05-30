@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -19,13 +20,13 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 /**
  * Created by Diego Ruiz on 18/11/15.
  */
-public class GridTableViewAdapter extends ArrayAdapter<TableGridItem> {
+public class GridTableViewAdapter extends ArrayAdapter<Table> {
 
     private Context mContext;
     private int layoutResourceId;
-    private ArrayList<TableGridItem> mGridData = new ArrayList<>();
+    private List<Table> mGridData = new ArrayList<>();
 
-    public GridTableViewAdapter(Context mContext, int layoutResourceId, ArrayList<TableGridItem> mGridData) {
+    public GridTableViewAdapter(Context mContext, int layoutResourceId, ArrayList<Table> mGridData) {
         super(mContext, layoutResourceId, mGridData);
         this.layoutResourceId = layoutResourceId;
         this.mContext = mContext;
@@ -37,7 +38,7 @@ public class GridTableViewAdapter extends ArrayAdapter<TableGridItem> {
      * Updates grid data and refresh grid items.
      * @param mGridData
      */
-    public void setGridData(ArrayList<TableGridItem> mGridData) {
+    public void setGridData(ArrayList<Table> mGridData) {
         this.mGridData = mGridData;
         notifyDataSetChanged();
     }
@@ -59,14 +60,13 @@ public class GridTableViewAdapter extends ArrayAdapter<TableGridItem> {
             holder = (ViewHolder) row.getTag();
         }
 
-        TableGridItem item = mGridData.get(position);
-        if (Table.BUSY_STATUS.equals(item.getTable().getStatus())) {
+        if (Table.BUSY_STATUS.equals(mGridData.get(position).getStatus())) {
             row.setBackgroundColor(Color.parseColor("#FFFB980D"));
             //holder.imageView.setImageResource(R.drawable.cutlery23_blank);
             //holder.titleTextView.setTextColor(Color.WHITE);
         }
 
-        holder.titleTextView.setText(Html.fromHtml(item.getTitle()));
+        holder.titleTextView.setText(Html.fromHtml(mGridData.get(position).getTableName()));
 
         return row;
     }
