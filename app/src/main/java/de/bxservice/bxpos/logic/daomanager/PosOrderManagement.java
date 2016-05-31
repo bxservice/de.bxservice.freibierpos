@@ -74,4 +74,8 @@ public class PosOrderManagement implements ObjectManagement, Serializable {
     public List<POSOrderLine> getPrintBarLines(POSOrder order) {
         return dataMapper.getPrintBarLines(order);
     }
+
+    public String getServerName(POSOrder order) {
+        return dataMapper.getServerName(order);
+    }
 }

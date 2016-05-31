@@ -32,7 +32,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 33;
+    private static final int DATABASE_VERSION = 36;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -69,6 +69,11 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     TableContract.TableDB.COLUMN_NAME_TABLE_STATUS + " VARCHAR(64)" +
                     ", " +
                     TableContract.TableDB.COLUMN_NAME_VALUE + " VARCHAR(64)" +
+                    ", " +
+                    TableContract.TableDB.COLUMN_NAME_UPDATED_AT + " INTEGER" +
+                    ", " +
+                    //Not FK to User table, because the table can be busy by a user that exist in another device - not in the local db
+                    TableContract.TableDB.COLUMN_NAME_SERVER_NAME + " VARCHAR(64)" +
                     ", " +
                     TableContract.TableDB.COLUMN_NAME_GROUP_TABLE_ID + " INTEGER REFERENCES "
                         + Tables.TABLE_TABLE_GROUP + "(" + GroupTableContract.GroupTableDB.COLUMN_NAME_TABLE_GROUP_ID + ") ON DELETE CASCADE" +  //FK to the group

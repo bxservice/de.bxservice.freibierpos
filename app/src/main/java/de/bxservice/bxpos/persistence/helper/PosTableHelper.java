@@ -39,9 +39,9 @@ public class PosTableHelper extends PosObjectHelper {
         values.put(TableContract.TableDB.COLUMN_NAME_TABLE_NAME, table.getTableName());
         values.put(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS, table.getStatus());
         values.put(TableContract.TableDB.COLUMN_NAME_VALUE, table.getValue());
+        values.put(TableContract.TableDB.COLUMN_NAME_UPDATED_AT, Long.parseLong(getCurrentDate()));
 
         // insert row
-
         return db.insert(Tables.TABLE_TABLE, null, values);
     }
 
@@ -71,6 +71,8 @@ public class PosTableHelper extends PosObjectHelper {
         table.setStatus((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS))));
         table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
         table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
+        table.setStatusChangeTime(c.getLong(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_UPDATED_AT)));
+        table.setServerName((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_SERVER_NAME))));
 
         c.close();
 
@@ -88,6 +90,12 @@ public class PosTableHelper extends PosObjectHelper {
         values.put(TableContract.TableDB.COLUMN_NAME_TABLE_NAME, table.getTableName());
         values.put(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS, table.getStatus());
         values.put(TableContract.TableDB.COLUMN_NAME_VALUE, table.getValue());
+
+        //Only update this value when the status is changed
+        if (table.isStatusChanged()) {
+            values.put(TableContract.TableDB.COLUMN_NAME_UPDATED_AT, Long.parseLong(getCurrentDate()));
+            values.put(TableContract.TableDB.COLUMN_NAME_SERVER_NAME, table.getServerName());
+        }
 
         // updating row
         return db.update(Tables.TABLE_TABLE, values, TableContract.TableDB.COLUMN_NAME_TABLE_ID + " = ?",
@@ -116,6 +124,8 @@ public class PosTableHelper extends PosObjectHelper {
                 table.setStatus((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS))));
                 table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
                 table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
+                table.setStatusChangeTime(c.getLong(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_UPDATED_AT)));
+                table.setServerName((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_SERVER_NAME))));
 
                 // adding to orders list
                 tables.add(table);
@@ -152,6 +162,8 @@ public class PosTableHelper extends PosObjectHelper {
                 table.setStatus((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_STATUS))));
                 table.setTableName(c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_TABLE_NAME)));
                 table.setValue((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_VALUE))));
+                table.setStatusChangeTime(c.getLong(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_UPDATED_AT)));
+                table.setServerName((c.getString(c.getColumnIndex(TableContract.TableDB.COLUMN_NAME_SERVER_NAME))));
 
                 tables.add(table);
             } while (c.moveToNext());
@@ -189,5 +201,4 @@ public class PosTableHelper extends PosObjectHelper {
         //If there is at least 1 order in the table -> table is occupied
         return orders <= 0;
     }
-
 }

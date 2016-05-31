@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.util.SecureEngine;
+import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -144,6 +146,40 @@ public class PosUserHelper extends PosObjectHelper {
         // updating row
         return db.update(Tables.TABLE_USER, values, UserContract.User.COLUMN_NAME_USER_ID + " = ?",
                 new String[] { String.valueOf(user.getId()) });
+    }
+
+    /*
+    * get username by order
+    */
+    public String getUserName(POSOrder order) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        StringBuilder selectQuery = new StringBuilder();
+
+        selectQuery.append("SELECT u.");
+        selectQuery.append(UserContract.User.COLUMN_NAME_USERNAME);
+        selectQuery.append(" FROM ");
+        selectQuery.append(Tables.TABLE_USER + " u");
+        selectQuery.append(" JOIN ");
+        selectQuery.append(Tables.TABLE_POSORDER + " o");
+        selectQuery.append(" ON");
+        selectQuery.append(" u." + UserContract.User.COLUMN_NAME_USER_ID + " = o." + PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY);
+        selectQuery.append(" AND o." + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " = ?");
+
+        Log.d(LOG_TAG, selectQuery.toString());
+
+        Cursor c = db.rawQuery(selectQuery.toString(),  new String[] {String.valueOf(order.getOrderId())});
+
+        if (c != null && c.getCount() > 0)
+            c.moveToFirst();
+        else
+            return null;
+
+        String userName = c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME));
+
+        c.close();
+
+        return userName;
     }
 
 }

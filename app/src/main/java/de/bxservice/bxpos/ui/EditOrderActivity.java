@@ -415,6 +415,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
             Table originalTable = order.getTable();
             order.setTable(dialog.getTable());
+            order.getTable().setServerName(order.getServerName(getBaseContext()));
             order.getTable().occupyTable(getBaseContext());
             order.updateOrder(getBaseContext());
 

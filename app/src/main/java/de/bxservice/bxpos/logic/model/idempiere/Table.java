@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 
 import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
 import de.bxservice.bxpos.logic.tasks.UpdateTableStatusTask;
@@ -27,6 +28,10 @@ public class Table implements Serializable {
     private String tableName;
     private String value;
     private String status;
+    private String serverName = "";
+    //last time the status was changed -> yyyymmddhhmm
+    private long statusChangeTime = 0;
+    private boolean isStatusChanged = false;
 
     public long getTableID() {
         return tableID;
@@ -71,6 +76,26 @@ public class Table implements Serializable {
         this.belongingGroup = belongingGroup;
     }
 
+    public String getOrderTime() {
+        return String.valueOf(statusChangeTime);
+    }
+
+    public void setStatusChangeTime(long statusChangeTime) {
+        this.statusChangeTime = statusChangeTime;
+    }
+
+    public boolean isStatusChanged() {
+        return isStatusChanged;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
+
     public boolean save(Context ctx) {
         tableManager = new PosTableManagement(ctx);
         Table originalTable = tableManager.get(tableID);
@@ -89,6 +114,7 @@ public class Table implements Serializable {
     public boolean occupyTable(Context ctx) {
         status = BUSY_STATUS;
         updateServerTableStatus(ctx); //Send the new status to iDempiere
+        isStatusChanged = true;
         return updateTable(ctx);
     }
 
@@ -98,7 +124,9 @@ public class Table implements Serializable {
         //Check if there are no more orders in the table -> if there are, don't free the table
         if (tableManager.isTableFree(this)) {
             status = FREE_STATUS;
+            setServerName("");
             updateServerTableStatus(ctx); //Send the new status to iDempiere
+            isStatusChanged = true;
             return updateTable(ctx);
         }
 
@@ -107,6 +135,7 @@ public class Table implements Serializable {
 
     public boolean reserveTable(Context ctx) {
         status = RESERVED_STATUS;
+        isStatusChanged = true;
         return updateTable(ctx);
     }
 
