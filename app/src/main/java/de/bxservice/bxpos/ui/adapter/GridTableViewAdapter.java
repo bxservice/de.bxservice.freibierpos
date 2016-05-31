@@ -77,7 +77,7 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
             try {
                 //Get the date in format yyyymmddhhmm
                 String dateString = mGridData.get(position).getOrderTime();
-                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyymmddhhmm");
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyymmddHHmm");
 
                 Date date = originalFormat.parse(dateString);
                 DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(holder.titleTextView.getContext());

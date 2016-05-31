@@ -84,6 +84,10 @@ public class Table implements Serializable {
         this.statusChangeTime = statusChangeTime;
     }
 
+    public long getStatusChangeTime() {
+        return statusChangeTime;
+    }
+
     public boolean isStatusChanged() {
         return isStatusChanged;
     }

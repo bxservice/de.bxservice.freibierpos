@@ -101,6 +101,7 @@ public class MainTableFragment extends Fragment {
     public void updateTableStatus(int position, Table table) {
         mGridData.get(position).setStatus(table.getStatus());
         mGridData.get(position).setServerName(table.getServerName());
+        mGridData.get(position).setStatusChangeTime(table.getStatusChangeTime());
         mGridAdapter.setGridData((ArrayList<Table>) mGridData);
         mGridAdapter.notifyDataSetChanged();
     }
@@ -120,6 +121,7 @@ public class MainTableFragment extends Fragment {
                 if (table.getTableID() == mGridData.get(i).getTableID() && !table.getStatus().equals(mGridData.get(i).getStatus())) {
                     mGridData.get(i).setStatus(table.getStatus());
                     mGridData.get(i).setServerName(table.getServerName());
+                    mGridData.get(i).setStatusChangeTime(table.getStatusChangeTime());
                 }
             }
         }
