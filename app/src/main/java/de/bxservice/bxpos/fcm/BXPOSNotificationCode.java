@@ -22,4 +22,9 @@ public interface BXPOSNotificationCode {
     String MANDATORY_UPDATE_ACTION = "LOAD_DATA";
     String RECOMMENDED_UPDATE_ACTION = "OPEN_ACTIVITY";
 
+    /**Data tags for table change status*/
+    String CHANGED_TABLE_ID = "TableId";
+    String NEW_TABLE_STATUS = "TableStatus";
+    String SERVER_NAME = "ServerName";
+
 }

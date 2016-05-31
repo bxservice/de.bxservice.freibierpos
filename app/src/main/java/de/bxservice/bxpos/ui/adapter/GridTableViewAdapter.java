@@ -63,12 +63,12 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
             holder.serverName = (TextView) row.findViewById(R.id.server_name);
             holder.orderTime = (TextView) row.findViewById(R.id.time);
 
-            linear = (LinearLayout) row.findViewById(R.id.table_layout);
-
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();
         }
+
+        linear = (LinearLayout) row.findViewById(R.id.table_layout);
 
         if (Table.BUSY_STATUS.equals(mGridData.get(position).getStatus())) {
             row.setBackgroundColor(ContextCompat.getColor(holder.titleTextView.getContext(), R.color.busy_table_color));
@@ -87,6 +87,14 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
             holder.serverName.setText(mGridData.get(position).getServerName());
             holder.orderTime.setText(occupiedHour);
 
+            //If the table is busy center relative to linear layout
+            if (linear != null) {
+                RelativeLayout.LayoutParams layoutParams =
+                        (RelativeLayout.LayoutParams) linear.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, 0);
+                linear.setLayoutParams(layoutParams);
+            }
+
             //holder.imageView.setImageResource(R.drawable.cutlery23_blank);
             //holder.titleTextView.setTextColor(Color.WHITE);
         } else {
@@ -100,7 +108,6 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
                         (RelativeLayout.LayoutParams) linear.getLayoutParams();
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                 linear.setLayoutParams(layoutParams);
-
             }
 
         }

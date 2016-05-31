@@ -57,8 +57,8 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 mandatoryUpdate();
             }
             else if (String.valueOf(BXPOSNotificationCode.TABLE_STATUS_CHANGED_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
-                Log.d(TAG, "Reques to change table " + data.get("TableId"));
-                updateTable(data.get("TableId"), data.get("TableStatus").equals("Y"));
+                Log.d(TAG, "Request to change table " + data.get(BXPOSNotificationCode.CHANGED_TABLE_ID));
+                updateTable(data.get(BXPOSNotificationCode.CHANGED_TABLE_ID), data.get(BXPOSNotificationCode.NEW_TABLE_STATUS).equals("Y"), data.get(BXPOSNotificationCode.SERVER_NAME));
             }
 
         }
@@ -102,7 +102,7 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
         initiateData.execute();
     }
 
-    private void updateTable(String tableId, Boolean isBusy) {
+    private void updateTable(String tableId, Boolean isBusy, String serverName) {
         PosTableManagement tableManager = new PosTableManagement(this);
         Table table = tableManager.get(Long.parseLong(tableId));
 
@@ -115,7 +115,9 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 return;
 
             if(isBusy) {
-                table.setServerName("PUSH");
+                if(serverName != null)
+                    table.setServerName(serverName);
+
                 table.occupyTable(this);
             }
             else
