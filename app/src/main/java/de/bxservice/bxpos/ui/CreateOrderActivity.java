@@ -427,10 +427,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             if(selectedTable != null && !selectedTable.equals(posOrder.getTable())) {
                 //If a table was selected before
                 if(posOrder.getTable() != null)
-                    posOrder.getTable().freeTable(getBaseContext());
+                    posOrder.getTable().freeTable(getBaseContext(), true);
                 posOrder.setTable(selectedTable);
                 selectedTable.setServerName(posOrder.getServerName(getBaseContext()));
-                selectedTable.occupyTable(getBaseContext());
+                selectedTable.occupyTable(getBaseContext(), true);
             }
 
             posOrder.updateOrder(getBaseContext());

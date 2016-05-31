@@ -111,22 +111,39 @@ public class Table implements Serializable {
         return tableManager.create(this);
     }
 
-    public boolean occupyTable(Context ctx) {
+    /**
+     * Set the table as occupied
+     * @param ctx
+     * @param notify determines if the change will be replicated to the other devices
+     * @return
+     */
+    public boolean occupyTable(Context ctx, boolean notify) {
         status = BUSY_STATUS;
-        updateServerTableStatus(ctx); //Send the new status to iDempiere
         isStatusChanged = true;
+
+        if (notify)
+            updateServerTableStatus(ctx); //Send the new status to iDempiere
+
         return updateTable(ctx);
     }
 
-    public boolean freeTable(Context ctx) {
+    /**
+     * Free-up the table
+     * @param ctx
+     * @param notify determines if the change will be replicated to the other devices
+     * @return
+     */
+    public boolean freeTable(Context ctx, boolean notify) {
         tableManager = new PosTableManagement(ctx);
 
         //Check if there are no more orders in the table -> if there are, don't free the table
         if (tableManager.isTableFree(this)) {
             status = FREE_STATUS;
             setServerName("");
-            updateServerTableStatus(ctx); //Send the new status to iDempiere
             isStatusChanged = true;
+            if (notify)
+                updateServerTableStatus(ctx); //Send the new status to iDempiere
+
             return updateTable(ctx);
         }
 

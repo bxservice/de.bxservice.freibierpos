@@ -514,7 +514,7 @@ public class POSOrder implements Serializable {
             uncompleteOrder();
         else if (table != null) {
             table.setServerName(getServerName(ctx));
-            table.occupyTable(ctx);
+            table.occupyTable(ctx, true);
         }
 
         return result;
@@ -574,7 +574,7 @@ public class POSOrder implements Serializable {
         updateOrder(ctx);
 
         if(table != null) {
-            table.freeTable(ctx);
+            table.freeTable(ctx, true);
         }
     }
 
@@ -629,7 +629,7 @@ public class POSOrder implements Serializable {
 
         // Free the table of the merged order
         if (originTable != null) {
-            originTable.freeTable(ctx);
+            originTable.freeTable(ctx, true);
         }
     }
 
@@ -715,7 +715,7 @@ public class POSOrder implements Serializable {
         }
 
         if(table != null) {
-            table.freeTable(ctx);
+            table.freeTable(ctx, true);
         }
 
         return true;
