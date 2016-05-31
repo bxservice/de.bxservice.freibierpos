@@ -809,7 +809,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         } else if (requestCode == PAY_REQUEST) {
             if (resultCode == RESULT_OK) {
                 setResult(RESULT_OK);
-                finish();
+                super.finish();
             }
         } else if (requestCode == NEW_ORDER_REQUEST) {
             finish();
