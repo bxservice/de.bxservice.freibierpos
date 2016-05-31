@@ -512,7 +512,7 @@ public class POSOrder implements Serializable {
 
         if(!result)
             uncompleteOrder();
-        else if (table != null) {
+        else if (table != null && !table.getStatus().equals(Table.BUSY_STATUS)) {
             table.setServerName(getServerName(ctx));
             table.occupyTable(ctx, true);
         }
