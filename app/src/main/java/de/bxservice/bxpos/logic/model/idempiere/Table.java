@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 
 import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
 import de.bxservice.bxpos.logic.tasks.UpdateTableStatusTask;
