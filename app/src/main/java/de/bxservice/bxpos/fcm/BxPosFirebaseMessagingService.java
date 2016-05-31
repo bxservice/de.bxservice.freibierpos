@@ -114,8 +114,10 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
             if(status.equals(table.getStatus()))
                 return;
 
-            if(isBusy)
+            if(isBusy) {
+                table.setServerName("PUSH");
                 table.occupyTable(this);
+            }
             else
                 table.freeTable(this);
 

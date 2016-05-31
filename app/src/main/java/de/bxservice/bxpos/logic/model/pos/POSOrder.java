@@ -512,13 +512,20 @@ public class POSOrder implements Serializable {
 
         if(!result)
             uncompleteOrder();
-        else {
-            if(table != null)
-                table.occupyTable(ctx);
+        else if (table != null) {
+            table.setServerName(getServerName(ctx));
+            table.occupyTable(ctx);
         }
 
         return result;
 
+    }
+
+    public String getServerName(Context ctx) {
+        if (orderManager == null)
+            orderManager = new PosOrderManagement(ctx);
+
+        return orderManager.getServerName(this);
     }
 
     public boolean createOrder (Context ctx) {
@@ -712,10 +719,6 @@ public class POSOrder implements Serializable {
         }
 
         return true;
-    }
-
-    public String getServerName() {
-        return WebServiceRequestData.getInstance().getUsername();
     }
 
 }

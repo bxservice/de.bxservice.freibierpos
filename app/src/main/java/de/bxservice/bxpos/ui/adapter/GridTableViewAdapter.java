@@ -2,7 +2,6 @@ package de.bxservice.bxpos.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -14,7 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
@@ -71,16 +73,26 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
         if (Table.BUSY_STATUS.equals(mGridData.get(position).getStatus())) {
             row.setBackgroundColor(ContextCompat.getColor(holder.titleTextView.getContext(), R.color.busy_table_color));
 
-            //TODO: Remove hard coded strings
-            holder.serverName.setText("Diego Ruiz");
-            holder.orderTime.setText("9:59pm");
+            String occupiedHour = "";
+            try {
+                //Get the date in format yyyymmddhhmm
+                String dateString = mGridData.get(position).getOrderTime();
+                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyymmddhhmm");
 
+                Date date = originalFormat.parse(dateString);
+                DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(holder.titleTextView.getContext());
+                occupiedHour = dateFormat.format(date);
 
-            //ContextCompat.getColor(holder.itemView.getContext(), R.color.complimentaryLineColor)
+            } catch(Exception e) {}
+            holder.serverName.setText(mGridData.get(position).getServerName());
+            holder.orderTime.setText(occupiedHour);
+
             //holder.imageView.setImageResource(R.drawable.cutlery23_blank);
             //holder.titleTextView.setTextColor(Color.WHITE);
         } else {
             row.setBackgroundColor(ContextCompat.getColor(holder.titleTextView.getContext(), R.color.empty_table_color));
+            holder.serverName.setText("");
+            holder.orderTime.setText("");
 
             //If the table is empty, center the table name relative to the total button
             if (linear != null) {
