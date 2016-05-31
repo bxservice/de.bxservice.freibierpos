@@ -104,4 +104,26 @@ public class MainTableFragment extends Fragment {
         mGridAdapter.setGridData((ArrayList<Table>) mGridData);
         mGridAdapter.notifyDataSetChanged();
     }
+
+    public void refreshAllTables() {
+        int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+
+        PosTableGroupManagement tableGroupManager = new PosTableGroupManagement(getActivity().getBaseContext());
+
+        List<TableGroup> tableGroupList = tableGroupManager.getAllTableGroups();
+        TableGroup tableGroup = tableGroupList.get(sectionNumber);
+
+        List<Table> updatedTables = tableGroup.getTables();
+        for (int i = 0; i < mGridData.size(); i++) {
+
+            for (Table table : updatedTables) {
+                if (table.getTableID() == mGridData.get(i).getTableID() && !table.getStatus().equals(mGridData.get(i).getStatus())) {
+                    mGridData.get(i).setStatus(table.getStatus());
+                    mGridData.get(i).setServerName(table.getServerName());
+                }
+            }
+        }
+        mGridAdapter.setGridData((ArrayList<Table>) mGridData);
+        mGridAdapter.notifyDataSetChanged();
+    }
 }

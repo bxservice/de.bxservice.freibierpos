@@ -742,6 +742,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             setResult(2); //Everything ok - the order was created and the create Activity should be closed
         else if (orderChanged)
             setResult(3); //Back button without sending the order - but order changed
+        else //nothing changed
+            setResult(RESULT_CANCELED);
 
         super.finish();
     }

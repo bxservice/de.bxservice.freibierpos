@@ -63,9 +63,20 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                         break;
                     }
                 }
-
             }
+        }
+    }
 
+    public void updateAllTables(FragmentManager fm) {
+
+        List<Fragment> allFragments = fm.getFragments();
+
+        for (Fragment fragment : allFragments) {
+
+            if (fragment instanceof MainTableFragment) {
+                MainTableFragment menuFragment = (MainTableFragment) fragment;
+                menuFragment.refreshAllTables();
+            }
         }
     }
 

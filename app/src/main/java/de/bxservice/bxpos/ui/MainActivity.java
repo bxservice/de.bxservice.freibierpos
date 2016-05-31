@@ -181,14 +181,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_report) {
             Intent intent = new Intent(this, ReportsActivity.class);
             startActivity(intent);
-        } /*else if (id == R.id.nav_reservation) {
-
-            Intent intent = new Intent(this, ManageReservationActivity.class);
-            startActivity(intent);
-
-        }  else if (id == R.id.nav_settings) {
-
-        }*/ else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_send) {
             PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
 
             final List<POSOrder> unsynchronizedOrders = orderManager.getUnsynchronizedOrders();
@@ -368,8 +361,11 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == NEW_ORDER_REQUEST ||
                 requestCode == EDIT_ORDER_REQUEST ||
                 requestCode == OPEN_ORDER_REQUEST) {
-            //this.recreate();
-            safeRecreate();
+
+            if (resultCode != RESULT_CANCELED) {
+                mMainPagerAdapter.updateAllTables(getSupportFragmentManager());
+            }
+
         }
     }
 
