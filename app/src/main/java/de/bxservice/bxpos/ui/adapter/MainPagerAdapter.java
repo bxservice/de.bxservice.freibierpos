@@ -44,9 +44,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
      * Update table status in the data set in the fragment
      * @param fm
      * @param selectedTable
-     * @param status
      */
-    public void updateStatus(FragmentManager fm, Table selectedTable, String status) {
+    public void updateStatus(FragmentManager fm, Table selectedTable) {
 
         List<Fragment> allFragments = fm.getFragments();
         boolean found = false;
@@ -59,7 +58,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 for(Table table : tableFragment.getmGridData()) {
 
                     if (table.getTableID() == selectedTable.getTableID()) {
-                        tableFragment.updateTableStatus(tableFragment.getmGridData().indexOf(table), status);
+                        tableFragment.updateTableStatus(tableFragment.getmGridData().indexOf(table), selectedTable);
                         found = true;
                         break;
                     }

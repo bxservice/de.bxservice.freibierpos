@@ -98,8 +98,9 @@ public class MainTableFragment extends Fragment {
         return rootView;
     }
 
-    public void updateTableStatus(int position, String status) {
-        mGridData.get(position).setStatus(status);
+    public void updateTableStatus(int position, Table table) {
+        mGridData.get(position).setStatus(table.getStatus());
+        mGridData.get(position).setServerName(table.getServerName());
         mGridAdapter.setGridData((ArrayList<Table>) mGridData);
         mGridAdapter.notifyDataSetChanged();
     }

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
             Log.d(LOG_TAG, "Update table request received");
             Table table = (Table) intent.getSerializableExtra(EXTRA_UPDATED_TABLE);
             if (table != null)
-                mMainPagerAdapter.updateStatus(getSupportFragmentManager(), table, table.getStatus());
+                mMainPagerAdapter.updateStatus(getSupportFragmentManager(), table);
         }
     };
 
