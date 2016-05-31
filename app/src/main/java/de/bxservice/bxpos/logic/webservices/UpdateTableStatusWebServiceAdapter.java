@@ -37,6 +37,8 @@ public class UpdateTableStatusWebServiceAdapter extends AbstractWSObject {
     @Override
     public void queryPerformed() {
 
+        Log.d(TAG, "Sending request to iDempiere");
+
         Table table = (Table) getParameter();
 
         UpdateDataRequest updateData = new UpdateDataRequest();

@@ -118,10 +118,10 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 if(serverName != null)
                     table.setServerName(serverName);
 
-                table.occupyTable(this);
+                table.occupyTable(this, false);
             }
             else
-                table.freeTable(this);
+                table.freeTable(this, false);
 
             updateMainActivity(table);
         }
