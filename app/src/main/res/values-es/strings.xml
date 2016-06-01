@@ -204,6 +204,7 @@
     <!-- Report types -->
     <string-array name="report_types_titles">
         <item>Ventas</item>
+        <item>Mis ventas</item>
         <item>Items anulados</item>
         <item>Ventas por mesa</item>
     </string-array>
@@ -211,6 +212,7 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <!-- Payment types -->

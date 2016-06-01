@@ -11,8 +11,9 @@ public class ReportFactory {
 
     //This values have to match the values in string.xml
     private static final int SALES_CODE       = 0;
-    private static final int VOID_ITEMS_CODE  = 1;
-    private static final int TABLE_SALES_CODE = 2;
+    private static final int MY_SALES_CODE    = 1;
+    private static final int VOID_ITEMS_CODE  = 2;
+    private static final int TABLE_SALES_CODE = 3;
 
     private ArrayList<Report> reports = new ArrayList<>();
 
@@ -25,8 +26,13 @@ public class ReportFactory {
 
             switch (reportValue) {
                 case SALES_CODE:
-                    report = new SalesReport(mContext);
+                    report = new SalesReport(mContext, false);
                     report.setCode(SALES_CODE);
+                    report.setName(names[i]);
+                    break;
+                case MY_SALES_CODE:
+                    report = new SalesReport(mContext, true);
+                    report.setCode(VOID_ITEMS_CODE);
                     report.setName(names[i]);
                     break;
                 case VOID_ITEMS_CODE:

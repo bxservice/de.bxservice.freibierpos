@@ -59,6 +59,10 @@ public class PosOrderManagement implements ObjectManagement, Serializable {
         return dataMapper.getPaidOrders(fromDate, toDate);
     }
 
+    public List<POSOrder> getUserPaidOrders(long fromDate, long toDate) {
+        return dataMapper.getUserPaidOrders(fromDate, toDate);
+    }
+
     public POSOrder getPosOrder(Table table) {
         return dataMapper.getOpenPosOrder(table);
     }

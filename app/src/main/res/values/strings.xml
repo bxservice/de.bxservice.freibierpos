@@ -205,6 +205,7 @@
     <!-- Report types -->
     <string-array name="report_types_titles">
         <item>Sales</item>
+        <item>My sales</item>
         <item>Void items</item>
         <item>Table sales</item>
     </string-array>
@@ -212,6 +213,7 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <!-- Payment types -->
