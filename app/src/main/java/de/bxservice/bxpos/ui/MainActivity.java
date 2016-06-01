@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -43,6 +44,7 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
@@ -124,6 +126,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerLayout = navigationView.getHeaderView(0); // 0-index header
+        TextView userNameTextView = (TextView) headerLayout.findViewById(R.id.usernameTextView);
+
+        userNameTextView.setText(WebServiceRequestData.getInstance().getUsername());
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
@@ -361,6 +368,7 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == NEW_ORDER_REQUEST ||
                 requestCode == EDIT_ORDER_REQUEST ||
                 requestCode == OPEN_ORDER_REQUEST) {
+
             //Notify changes -> always in case of a change in a different device
             mMainPagerAdapter.updateAllTables(getSupportFragmentManager());
         }
