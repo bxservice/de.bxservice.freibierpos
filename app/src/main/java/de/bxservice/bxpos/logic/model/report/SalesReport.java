@@ -21,15 +21,20 @@ public class SalesReport extends Report {
 
     private List<POSOrder> paidOrders;
     private ReportHtmlTemplate htmlTemplate;
+    private boolean reportByUser = false;
 
-    public SalesReport(Context mContext) {
+    public SalesReport(Context mContext, boolean reportByUser) {
         super(mContext);
         htmlTemplate = new ReportHtmlTemplate();
+        this.reportByUser = reportByUser;
     }
 
     @Override
     protected void performReport() {
-        paidOrders = new PosOrderManagement(mContext).getPaidOrders(fromDate, toDate);
+        if (reportByUser)
+            paidOrders = new PosOrderManagement(mContext).getUserPaidOrders(fromDate, toDate);
+        else
+            paidOrders = new PosOrderManagement(mContext).getPaidOrders(fromDate, toDate);
     }
 
     /**

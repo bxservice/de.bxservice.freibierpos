@@ -452,4 +452,60 @@ public class PosOrderHelper extends PosObjectHelper {
         return orders;
     }
 
+    /**
+     * Get all paid orders within a time frame by the current user
+     * @param fromDate
+     * @param toDate
+     * @return array list of paid orders in a time frame
+     */
+    public ArrayList<POSOrder> getUserPaidOrders(long fromDate, long toDate) {
+        ArrayList<POSOrder> orders = new ArrayList<>();
+
+        PosUserHelper userHelper = new PosUserHelper(mContext);
+        int userId = userHelper.getUserId(WebServiceRequestData.getInstance().getUsername());
+
+        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
+                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? " +
+                " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " = ? " +
+                " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT + " BETWEEN ? AND ? ";
+
+        Log.d(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), String.valueOf(userId), String.valueOf(fromDate), String.valueOf(toDate)});
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+            do {
+                POSOrder order = new POSOrder();
+                order.setOrderId(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID)));
+                order.setStatus(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS)));
+                order.setGuestNumber(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS)));
+                order.setOrderRemark(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK)));
+                order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
+                order.setSurchargeFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE)));
+                order.setDiscountFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT)));
+                order.setPaymentRule(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_PAYMENT_RULE)));
+                if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
+                        c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
+                    order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
+                order.setOrderingLines(orderLineHelper.getAllOrderingLines(order));
+                order.setOrderedLines(orderLineHelper.getAllOrderedLines(order));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED)) != 0);
+                order.setSync(flag);
+
+                order.setCurrentLineNo();
+
+                // adding to orders list
+                orders.add(order);
+            } while (c.moveToNext());
+
+            c.close();
+        }
+
+        return orders;
+    }
+
 }

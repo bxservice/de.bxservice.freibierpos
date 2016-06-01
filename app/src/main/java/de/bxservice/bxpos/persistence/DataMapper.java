@@ -509,6 +509,11 @@ public class DataMapper implements Serializable {
         return orderHelper.getPaidOrders(fromDate, toDate);
     }
 
+    public List<POSOrder> getUserPaidOrders(long fromDate, long toDate) {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getUserPaidOrders(fromDate, toDate);
+    }
+
     public String getServerName(POSOrder order) {
         PosUserHelper orderHelper = new PosUserHelper(mContext);
         return orderHelper.getUserName(order);
