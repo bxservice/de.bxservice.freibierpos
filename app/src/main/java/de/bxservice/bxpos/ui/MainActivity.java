@@ -361,11 +361,8 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == NEW_ORDER_REQUEST ||
                 requestCode == EDIT_ORDER_REQUEST ||
                 requestCode == OPEN_ORDER_REQUEST) {
-
-            if (resultCode != RESULT_CANCELED) {
-                mMainPagerAdapter.updateAllTables(getSupportFragmentManager());
-            }
-
+            //Notify changes -> always in case of a change in a different device
+            mMainPagerAdapter.updateAllTables(getSupportFragmentManager());
         }
     }
 
