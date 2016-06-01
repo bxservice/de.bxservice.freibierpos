@@ -410,13 +410,13 @@ public class PosOrderHelper extends PosObjectHelper {
         ArrayList<POSOrder> orders = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
-                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? " +
+                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " IN (?,?) " +
                 " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT + " BETWEEN ? AND ? ";
 
         Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), String.valueOf(fromDate), String.valueOf(toDate)});
+        Cursor c = db.rawQuery(selectQuery, new String[] {POSOrder.COMPLETE_STATUS, POSOrder.VOID_STATUS, String.valueOf(fromDate), String.valueOf(toDate)});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
@@ -465,14 +465,14 @@ public class PosOrderHelper extends PosObjectHelper {
         int userId = userHelper.getUserId(WebServiceRequestData.getInstance().getUsername());
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
-                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? " +
+                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " IN (?,?) " +
                 " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " = ? " +
                 " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT + " BETWEEN ? AND ? ";
 
         Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), String.valueOf(userId), String.valueOf(fromDate), String.valueOf(toDate)});
+        Cursor c = db.rawQuery(selectQuery, new String[] {POSOrder.COMPLETE_STATUS, POSOrder.VOID_STATUS, String.valueOf(userId), String.valueOf(fromDate), String.valueOf(toDate)});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
