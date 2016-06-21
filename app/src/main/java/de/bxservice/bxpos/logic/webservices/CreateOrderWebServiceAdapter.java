@@ -85,6 +85,10 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("IsSOTrx", "Y"); //Sales Order
         data.addField("PaymentRule", order.getPaymentRule());
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));
+
+        if (order.getTable() != null)
+            data.addField("BAY_Table_ID", String.valueOf(order.getTable().getTableID()));
+
         createOrder.setDataRow(data);
 
         compositeOperation.addOperation(createOrder);
