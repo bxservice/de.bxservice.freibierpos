@@ -70,7 +70,8 @@ public class DataReader {
                 productPriceList = productPriceWS.getProductPriceList();
 
                 setProductRelations();
-                persistProductAttributes();
+                if (!error)
+                    persistProductAttributes();
             }
         });
 
