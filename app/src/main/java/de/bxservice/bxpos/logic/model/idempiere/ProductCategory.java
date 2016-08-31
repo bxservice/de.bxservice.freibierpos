@@ -68,6 +68,11 @@ public class ProductCategory {
      * @return
      */
     public boolean save(Context ctx) {
+
+        //No save in the database if the Product Category does not have products
+        if (products.isEmpty())
+            return false;
+
         productCategoryManager = new PosProductCategoryManagement(ctx);
 
         if (productCategoryManager.get(productCategoryID) == null)
