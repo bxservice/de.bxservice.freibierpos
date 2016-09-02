@@ -24,6 +24,7 @@ public class DefaultPosDataContract {
         public static final String COLUMN_NAME_SURCHARGE_ID = "surchargeID";
         public static final String COLUMN_NAME_COMBINE_ITEMS = "combineItems";
         public static final String COLUMN_NAME_PRINT_AFTER_SEND = "printAfter";
+        public static final String COLUMN_NAME_IS_TAX_INCLUDED = "IsTaxIncluded";
         public static final String COLUMN_NAME_PIN = "pin";
 
     }

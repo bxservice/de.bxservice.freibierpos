@@ -77,6 +77,8 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                                 Log.e(SERVICE_TYPE, "PIN contains non-numeric values");
                             }
                         }
+                        else if ("IsTaxIncluded".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setTaxIncluded("Y".equalsIgnoreCase(field.getStringValue()));
 
                     }
                 }

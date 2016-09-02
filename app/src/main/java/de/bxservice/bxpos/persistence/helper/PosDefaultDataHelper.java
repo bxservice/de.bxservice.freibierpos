@@ -39,6 +39,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         flag = (data.isPrintAfterSent()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND, flag);
 
+        flag = (data.isTaxIncluded()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED, flag);
+
         // insert row
         return database.insert(Tables.TABLE_DEFAULT_POS_DATA, null, values);
     }
@@ -63,6 +66,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (data.isPrintAfterSent()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND, flag);
+
+        flag = (data.isTaxIncluded()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED, flag);
 
         // updating row
         return db.update(Tables.TABLE_DEFAULT_POS_DATA, values, DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " = ?",
@@ -101,6 +107,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND)) != 0);
         defaultData.setPrintAfterSent(flag);
+
+        flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED)) != 0);
+        defaultData.setTaxIncluded(flag);
 
         c.close();
 
