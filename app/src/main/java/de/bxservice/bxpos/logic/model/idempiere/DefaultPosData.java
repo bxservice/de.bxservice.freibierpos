@@ -27,6 +27,7 @@ public class DefaultPosData {
     private int pin = 0;
     private boolean printAfterSent = false;
     private boolean combineItems   = false;
+    private boolean IsTaxIncluded  = false;
 
    public int getDefaultBPartner() {
         return defaultBPartner;
@@ -98,6 +99,14 @@ public class DefaultPosData {
 
     public void setPin(int pin) {
         this.pin = pin;
+    }
+
+    public boolean isTaxIncluded() {
+        return IsTaxIncluded;
+    }
+
+    public void setTaxIncluded(boolean taxIncluded) {
+        IsTaxIncluded = taxIncluded;
     }
 
     /**
