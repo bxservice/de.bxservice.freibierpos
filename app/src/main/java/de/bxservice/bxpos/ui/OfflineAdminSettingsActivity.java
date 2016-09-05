@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,6 +17,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -127,7 +129,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
     private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+            final String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -148,22 +150,35 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
                 preference.setSummary(preference.getSummary());
             } else {
 
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
-
-
                 //If the key changed is the URL and the value was really changed -> not only selected
                 if (KEY_PREF_URL.equals(preference.getKey())) {
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext().getApplicationContext());
                     String urlConnPref = sharedPref.getString(KEY_PREF_URL, "");
 
-                    if(stringValue!= null && urlConnPref != null && !urlConnPref.equals(getString(R.string.pref_default_display_name)) && !stringValue.equals(urlConnPref)) {
-                        Log.d(LOG_TAG, "URL Changed");
-                        deleteDatabase();
-                    }
+                    if (stringValue != null && urlConnPref != null && !urlConnPref.equals(getString(R.string.pref_default_display_name))
+                            && !stringValue.equals(urlConnPref)) {
 
+                        final Preference urlPref = preference;
+                        new AlertDialog.Builder(OfflineAdminSettingsActivity.this)
+                                .setTitle(R.string.change_url)
+                                .setNegativeButton(R.string.no, null)
+                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Log.d(LOG_TAG, "URL Changed");
+                                        deleteDatabase();
+                                        setUrl(urlPref, stringValue);
+                                    }
+                                }).create().show();
+
+                        //Return false always to control the confirmation dialog
+                        return false;
+                    }
                 }
+
+                // For all other preferences, set the summary to the value's
+                // simple string representation.
+                preference.setSummary(stringValue);
+
             }
             return true;
         }
@@ -173,6 +188,12 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
         Log.d(LOG_TAG, "Deleting database");
         PosDatabaseHelper databaseHelper = PosDatabaseHelper.getInstance(getBaseContext());
         databaseHelper.deleteDatabase(getBaseContext());
+    }
+
+    private void setUrl(Preference preference, String newUrl) {
+        //Because I return false anyway, I change the preference manually here
+        ((EditTextPreference)preference).setText(newUrl);
+        preference.setSummary(newUrl);
     }
 
     /**

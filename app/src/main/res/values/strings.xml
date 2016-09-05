@@ -86,7 +86,7 @@
     <!-- Strings related to Settings -->
 
     <!-- General settings -->
-    <string name="pref_header_general">Server</string>
+    <string name="pref_header_general">Server settings</string>
 
     <string name="pref_title_display_name">Server URL</string>
     <string name="pref_default_display_name">URL</string>
@@ -182,7 +182,7 @@
     <string name="sales">Sales</string>
     <string name="pref_header_restaurant">Restaurant</string>
     <string name="order_prefix">Order prefix</string>
-    <string name="prefix">Prefix</string>
+    <string name="prefix">The documentNo will start with this letters. Make it different for each device</string>
     <string name="complimentary">Complimentary</string>
     <string name="give_complimentary_product">Are you sure you want to give this item for free?</string>
     <string name="give">Give</string>
@@ -201,6 +201,9 @@
     <string name="reload">Reload</string>
     <string name="success_on_load_data">Data loaded</string>
     <string name="updating">Updating...</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="change_url">This action will delete the local database. Do you want to proceed?</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
