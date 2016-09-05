@@ -86,7 +86,7 @@
     <!-- Strings related to Settings -->
 
     <!-- General settings -->
-    <string name="pref_header_general">Servidor</string>
+    <string name="pref_header_general">Configuración de servidor</string>
 
     <string name="pref_title_display_name">URL Servidor</string>
     <string name="pref_default_display_name">URL</string>
@@ -182,7 +182,7 @@
     <string name="sales">Ventas</string>
     <string name="pref_header_restaurant">Restaurante</string>
     <string name="order_prefix">Prefijo de orden</string>
-    <string name="prefix">Prefijo</string>
+    <string name="prefix">El documento iniciara con estas letras. Use uno diferente para cada dispositivo</string>
     <string name="complimentary">Cortesía</string>
     <string name="give_complimentary_product">¿Esta seguro que desea regalar este producto?</string>
     <string name="give">Regalar</string>
@@ -200,6 +200,9 @@
     <string name="reload">Recargar</string>
     <string name="success_on_load_data">Datos cargados</string>
     <string name="updating">Actulizando...</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="change_url">Esta accion eliminara la base de datos local. ¿Desea continuar?</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
