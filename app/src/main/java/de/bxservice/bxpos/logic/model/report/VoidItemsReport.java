@@ -39,11 +39,12 @@ public class VoidItemsReport extends Report {
         htmlResult.append(htmlTemplate.getHtmlTemplate().replace(ReportHtmlTemplate.TITLE_TAG, name));
         if(voidedLines != null && !voidedLines.isEmpty()) {
 
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+            NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+            currencyFormat.setMinimumFractionDigits(2);
             //Here is to remove the € sign because it has problems in HTML
-            DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
+            /*DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
             decimalFormatSymbols.setCurrencySymbol("");
-            ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+            ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);*/
 
             BigDecimal totalVoided = BigDecimal.ZERO;
             int totalQty = 0;
