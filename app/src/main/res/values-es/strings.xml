@@ -153,7 +153,7 @@
     <string name="error_no_connection_on_sync_order">No hay conexión a internet. Intente más adelante</string>
 
     <string name="success_on_sync_order">Órdenes sincronizadas</string>
-    <string name="no_success_on_sync_order">Su dispositivo no se puede comunicar con iDempiere. Intente más adelante</string>
+    <string name="no_connection_on_sync_order">Su dispositivo no se puede comunicar con iDempiere. Intente más adelante</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Sincronizar ordénes</string>
@@ -223,6 +223,8 @@
         <item>Efectivo</item>
         <item>Tarjeta de crédito</item>
     </string-array>
+    <string name="void_order_approval_message">Anular la orden %1$s por:  %2$</string>
+    <string name="no_success_on_sync_order">Hubo un error. Contacte el administrador</string>
 
 </resources>
 

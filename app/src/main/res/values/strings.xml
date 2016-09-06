@@ -153,7 +153,7 @@
     <string name="error_no_connection_on_sync_order">No internet connection. Try again later</string>
 
     <string name="success_on_sync_order">Orders synchronized</string>
-    <string name="no_success_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
+    <string name="no_connection_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronize orders</string>
@@ -204,6 +204,7 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="change_url">This action will delete the local database. Do you want to proceed?</string>
+    <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

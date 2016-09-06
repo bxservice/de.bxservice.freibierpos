@@ -41,6 +41,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private static final String DOCUMENT_NO_PREFIX = "BXS-POS";
     private boolean success;
     private boolean connectionError;
+    private String errorMessage = "";
     private Context mContext;
 
     public CreateOrderWebServiceAdapter(POSOrder order, Context ctx) {
@@ -184,6 +185,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
                 Log.e(TAG, "Error in web service" + response.getErrorMessage());
                 success = false;
                 connectionError = false;
+                errorMessage = response.getErrorMessage();
             } else {
                 for (int i = 0; i < response.getResponsesCount(); i++) {
                     if (response.getResponse(i).getStatus() == Enums.WebServiceResponseStatus.Error) {
@@ -216,4 +218,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         return success;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }

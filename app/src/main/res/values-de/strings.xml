@@ -156,7 +156,7 @@
     <string name="error_no_connection_on_sync_order">Keine Internetverbindung. Versuchen Sie es später noch einmal</string>
 
     <string name="success_on_sync_order">Bestellungen synchronisiert</string>
-    <string name="no_success_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
+    <string name="no_connection_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
 
     <!-- Navigation Drawer strings -->
     <string name="synchronize">Synchronisieren Aufträge</string>
@@ -226,5 +226,7 @@
         <item>Bargeld</item>
         <item>Kreditkarte</item>
     </string-array>
+    <string name="void_order_approval_message">Void order %1$s because of %2$</string>
+    <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
 
 </resources>
