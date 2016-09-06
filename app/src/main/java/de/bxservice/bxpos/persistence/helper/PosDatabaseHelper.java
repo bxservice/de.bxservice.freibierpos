@@ -32,7 +32,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 37;
+    private static final int DATABASE_VERSION = 38;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -186,6 +186,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID + " INTEGER REFERENCES "
                     + Tables.TABLE_OUTPUT_DEVICE + "(" + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_OUTPUT_DEVICE_ID + ") " +  //FK to the output device
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_IS_ACTIVE + " INTEGER" +
                     ")";
 
     private static final String CREATE_PRODUCT_CATEGORY_TABLE =

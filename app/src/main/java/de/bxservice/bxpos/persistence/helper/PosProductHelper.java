@@ -37,6 +37,9 @@ public class PosProductHelper extends PosObjectHelper {
         if (product.getOutputDeviceId() != 0)
             values.put(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID, product.getOutputDeviceId());
 
+        int flag = (product.isActive()) ? 1 : 0;
+        values.put(ProductContract.ProductDB.COLUMN_IS_ACTIVE, flag);
+
         // insert row
         return db.insert(Tables.TABLE_PRODUCT, null, values);
     }
@@ -65,6 +68,9 @@ public class PosProductHelper extends PosObjectHelper {
         product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
         product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
 
+        Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
+        product.setActive(flag);
+
         c.close();
 
         return product;
@@ -82,6 +88,9 @@ public class PosProductHelper extends PosObjectHelper {
         if (product.getOutputDeviceId() != 0)
             values.put(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID, product.getOutputDeviceId());
 
+        int flag = (product.isActive()) ? 1 : 0;
+        values.put(ProductContract.ProductDB.COLUMN_IS_ACTIVE, flag);
+
         // updating row
         return db.update(Tables.TABLE_PRODUCT, values, ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = ?",
                 new String[] { String.valueOf(product.getProductID()) });
@@ -97,7 +106,7 @@ public class PosProductHelper extends PosObjectHelper {
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " product " +
                 " WHERE product." + ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID
-                + " = ?";
+                + " = ? AND product." + ProductContract.ProductDB.COLUMN_IS_ACTIVE + " = 1";
 
         Log.d(LOG_TAG, selectQuery);
 
@@ -112,6 +121,9 @@ public class PosProductHelper extends PosObjectHelper {
                 product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
                 product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
                 product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
+                product.setActive(flag);
 
                 products.add(product);
             } while (c.moveToNext());
@@ -129,6 +141,7 @@ public class PosProductHelper extends PosObjectHelper {
         ArrayList<MProduct> products = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT +
+                " WHERE " + ProductContract.ProductDB.COLUMN_IS_ACTIVE + " = 1" +
                 " ORDER BY " + ProductContract.ProductDB.COLUMN_NAME_NAME;
 
         Log.d(LOG_TAG, selectQuery);
@@ -144,6 +157,9 @@ public class PosProductHelper extends PosObjectHelper {
                 product.setProductCategoryId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)));
                 product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
                 product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
+
+                Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
+                product.setActive(flag);
 
                 products.add(product);
             } while (c.moveToNext());

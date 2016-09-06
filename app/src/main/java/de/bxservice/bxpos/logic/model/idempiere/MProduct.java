@@ -19,6 +19,7 @@ public class MProduct implements Serializable {
     private String productName;
     private int productCategoryId;
     private int outputDeviceId;
+    private boolean isActive;
     private PosProductManagement productManager;
 
     public int getProductID() {
@@ -61,6 +62,14 @@ public class MProduct implements Serializable {
 
     public void setOutputDeviceId(int outputDeviceId) {
         this.outputDeviceId = outputDeviceId;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     /**
