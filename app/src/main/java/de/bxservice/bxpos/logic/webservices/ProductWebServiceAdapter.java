@@ -52,6 +52,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                 int categoryID;
                 int productId;
                 int outputDeviceID;
+                boolean isActive;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
 
@@ -60,6 +61,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                     productName = null;
                     categoryID = 0;
                     outputDeviceID = 0;
+                    isActive = false;
 
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
@@ -74,6 +76,8 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                             categoryID = Integer.valueOf(field.getStringValue());
                         else if ("BXS_POSOutputDevice_ID".equalsIgnoreCase(field.getColumn()) && !field.getStringValue().isEmpty())
                             outputDeviceID = Integer.valueOf(field.getStringValue());
+                        else if ("IsActive".equalsIgnoreCase(field.getColumn()))
+                            isActive = "Y".equalsIgnoreCase(field.getStringValue());
 
                     }
 
@@ -83,6 +87,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                         p.setProductID(productId);
                         p.setProductName(productName);
                         p.setOutputDeviceId(outputDeviceID);
+                        p.setActive(isActive);
                         productList.add(p);
                     }
 
