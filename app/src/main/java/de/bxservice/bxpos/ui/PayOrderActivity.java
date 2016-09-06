@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -680,25 +681,33 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * gets call after the create order task finishes
      * @param success
      */
-    public void postExecuteTask(boolean success) {
+    public void postExecuteTask(boolean success, boolean connectionError, String errorMessage) {
         if(success) {
             order.payOrder(true, getBaseContext());
             printOrder();
             finish();
         }
         else {
-            Snackbar snackbar = Snackbar
-                    .make(mPayFormView, getString(R.string.no_success_on_sync_order), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.action_retry), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            attemptSynchronizeOrder();
-                        }
-                    });
 
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            snackbar.show();
+            if (connectionError) {
+                Snackbar snackbar = Snackbar
+                        .make(mPayFormView, getString(R.string.no_connection_on_sync_order), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(getString(R.string.action_retry), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                attemptSynchronizeOrder();
+                            }
+                        });
+
+                // Changing message text color
+                snackbar.setActionTextColor(Color.RED);
+                snackbar.show();
+
+            } else {
+                Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order) + errorMessage,
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
         }
     }
 

@@ -434,13 +434,18 @@ public class MainActivity extends AppCompatActivity
      * gets call after the create order task finishes
      * @param success flag to check if the sync was successful
      */
-    public void postExecuteCreateOrderTask(boolean success) {
+    public void postExecuteCreateOrderTask(boolean success, boolean connectionError, String errorMessage) {
         if(success)
             Toast.makeText(getBaseContext(), getString(R.string.success_on_sync_order),
                     Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order),
+        else {
+            if (connectionError)
+                Toast.makeText(getBaseContext(), getString(R.string.no_connection_on_sync_order),
+                        Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order) + errorMessage,
                     Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -454,7 +459,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(getBaseContext(), getString(R.string.success_on_load_data),
                     Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(getBaseContext(), getString(R.string.no_success_on_sync_order),
+            Toast.makeText(getBaseContext(), getString(R.string.no_connection_on_sync_order),
                     Toast.LENGTH_LONG).show();
     }
 

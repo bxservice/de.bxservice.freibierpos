@@ -19,6 +19,7 @@ public class DataWriter {
 
     private boolean success = false;
     private boolean connectionError = false;
+    private String  errorMessage = "";
 
     public void writeOrder(final POSOrder order, final Context context) {
         Log.i(LOG_TAG, "Write order");
@@ -29,6 +30,7 @@ public class DataWriter {
                 CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(order, context);
                 success = createOrderWS.isSuccess();
                 connectionError = createOrderWS.isConnectionError();
+                errorMessage = createOrderWS.getErrorMessage();
             }
         });
 
@@ -56,5 +58,9 @@ public class DataWriter {
 
     public boolean isSuccess() {
         return success;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }

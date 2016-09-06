@@ -16,6 +16,8 @@ import de.bxservice.bxpos.ui.PayOrderActivity;
 public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
     private Activity mActivity;
+    private boolean connectionError = false;
+    private String  errorMessage = "";
 
     public CreateOrderTask(Activity callerActivity) {
         mActivity = callerActivity;
@@ -30,9 +32,15 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         for(POSOrder order : orders) {
             writer.writeOrder(order, mActivity.getBaseContext());
             //If no success creating the order in iDempiere and the problem is the connection with the server
-            if (!writer.isSuccess() && writer.isConnectionError()) {
+            if (!writer.isSuccess()) {
                 success = false;
+
+                if (writer.isConnectionError())
+                    connectionError = true;
+
+                errorMessage = writer.getErrorMessage();
                 break;
+
             }
             order.setSync(true);
             order.updateOrder(mActivity.getBaseContext());
@@ -46,9 +54,9 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
     protected void onPostExecute(final Boolean success) {
 
         if (mActivity instanceof PayOrderActivity)
-            ((PayOrderActivity) mActivity).postExecuteTask(success);
+            ((PayOrderActivity) mActivity).postExecuteTask(success, connectionError, errorMessage);
 
         if (mActivity instanceof MainActivity)
-            ((MainActivity) mActivity).postExecuteCreateOrderTask(success);
+            ((MainActivity) mActivity).postExecuteCreateOrderTask(success, connectionError, errorMessage);
     }
 }
