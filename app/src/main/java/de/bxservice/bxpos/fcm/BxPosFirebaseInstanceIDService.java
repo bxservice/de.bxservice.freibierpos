@@ -24,6 +24,8 @@
  **********************************************************************/
 package de.bxservice.bxpos.fcm;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -35,6 +37,9 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 public class BxPosFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private static final String TAG = "BxPosFirebaseIIDService";
+    public static final String TOKEN_SHARED_PREF = "de.bxservice.token_preference";
+    public static final String TOKEN_SYNC_PREF = "deviceTokenSync";
+
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -57,9 +62,16 @@ public class BxPosFirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         Log.d(TAG, "New token created ----> " + token);
-        DeviceToken deviceToken = new DeviceToken();
-        deviceToken.setDeviceToken(token);
-        deviceToken.setSynchonized(false);
-        deviceToken.createToken(null);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(TOKEN_SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(TOKEN_SYNC_PREF, false);
+        editor.commit();
+
+    }
+
+    public static String getToken(){
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "****TOKEN ----> " + refreshedToken);
+        return refreshedToken;
     }
 }

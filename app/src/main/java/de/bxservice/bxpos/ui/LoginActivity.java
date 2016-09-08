@@ -34,7 +34,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
@@ -64,8 +63,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.fcm.DeviceToken;
-import de.bxservice.bxpos.logic.daomanager.PosDeviceTokenManagement;
+import de.bxservice.bxpos.fcm.BxPosFirebaseInstanceIDService;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
@@ -493,12 +491,17 @@ public class LoginActivity extends AppCompatActivity  {
         if (result) {
 
             //Check if the device has already subscribed to the server for push notifications
-            PosDeviceTokenManagement deviceTokenManagement = new PosDeviceTokenManagement(getBaseContext());
-            DeviceToken deviceToken = deviceTokenManagement.getDeviceToken();
+            SharedPreferences tokenSharedPref = getApplicationContext().getSharedPreferences(BxPosFirebaseInstanceIDService.TOKEN_SHARED_PREF, Context.MODE_PRIVATE);
+            boolean isTokenSync = tokenSharedPref.getBoolean(BxPosFirebaseInstanceIDService.TOKEN_SYNC_PREF, false);
 
-            if(deviceToken != null && !deviceToken.isSynchonized()) {
-                CreateDeviceTokenTask createDeviceTokenTask = new CreateDeviceTokenTask();
-                createDeviceTokenTask.execute(deviceToken);
+            //If it has not been sync -> send it to the server
+            if (!isTokenSync) {
+                String token = BxPosFirebaseInstanceIDService.getToken();
+                Log.d(LOG_TAG, "Registering -> " + token);
+
+                //Send the token to the server
+                CreateDeviceTokenTask createDeviceTokenTask = new CreateDeviceTokenTask(tokenSharedPref);
+                createDeviceTokenTask.execute(token);
             }
 
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
