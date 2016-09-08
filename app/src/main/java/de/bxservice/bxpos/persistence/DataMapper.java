@@ -31,7 +31,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bxservice.bxpos.fcm.DeviceToken;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
@@ -46,7 +45,6 @@ import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.persistence.helper.PosDefaultDataHelper;
-import de.bxservice.bxpos.persistence.helper.PosDeviceTokenHelper;
 import de.bxservice.bxpos.persistence.helper.PosKitchenNoteHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderHelper;
 import de.bxservice.bxpos.persistence.helper.PosOrderLineHelper;
@@ -107,8 +105,6 @@ public class DataMapper implements Serializable {
             success = createOrgInfo((RestaurantInfo) object);
         else if(object instanceof POSOutputDevice)
             success = createOutputDevice((POSOutputDevice) object);
-        else if(object instanceof DeviceToken)
-            success = createDeviceToken((DeviceToken) object);
         else if(object instanceof String)
             success = createKitchenNote((String) object);
 
@@ -147,8 +143,6 @@ public class DataMapper implements Serializable {
             success = updateProduct((MProduct) object);
         else if(object instanceof POSOutputDevice)
             success = updateOutputDevice((POSOutputDevice) object);
-        else if(object instanceof DeviceToken)
-            success = updateDeviceToken((DeviceToken) object);
 
         return success;
     }
@@ -730,37 +724,6 @@ public class DataMapper implements Serializable {
         PosKitchenNoteHelper kitchenNoteHelper = new PosKitchenNoteHelper(mContext);
         return kitchenNoteHelper.getKitchenNotes();
     }
-
-    private boolean createDeviceToken(DeviceToken deviceToken) {
-        PosDeviceTokenHelper deviceTokenHelper = new PosDeviceTokenHelper(mContext);
-
-        if (deviceTokenHelper.createToken(deviceToken) == -1) {
-            Log.e(LOG_TAG, "Cannot save device token");
-            return false;
-        }
-        Log.d(LOG_TAG, "Token saved");
-        return true;
-    }
-
-    private boolean updateDeviceToken(DeviceToken deviceToken) {
-        PosDeviceTokenHelper deviceTokenHelper = new PosDeviceTokenHelper(mContext);
-
-        if (deviceTokenHelper.updateData(deviceToken) != -1) {
-            Log.i(LOG_TAG, "Device token updated");
-        }
-        else {
-            Log.e(LOG_TAG, "Cannot update Device token");
-            return false;
-        }
-
-        return true;
-    }
-
-    public DeviceToken getDeviceToken() {
-        PosDeviceTokenHelper deviceTokenHelper = new PosDeviceTokenHelper(mContext);
-        return deviceTokenHelper.getToken();
-    }
-
 
     private boolean createOutputDevice(POSOutputDevice outputDevice) {
         PosOutputDeviceHelper outputDeviceHelper = new PosOutputDeviceHelper(mContext);
