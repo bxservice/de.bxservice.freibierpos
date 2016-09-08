@@ -225,6 +225,7 @@
     </string-array>
     <string name="void_order_approval_message">Anular la orden %1$s por:  %2$</string>
     <string name="no_success_on_sync_order">Hubo un error. Contacte el administrador</string>
+    <string name="no_allow_complimentary">El item %1$s no puede ser gratis</string>
 
 </resources>
 

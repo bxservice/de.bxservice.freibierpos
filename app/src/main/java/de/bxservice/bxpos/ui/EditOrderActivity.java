@@ -957,8 +957,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                         if(selectedItemPositions != null && !selectedItemPositions.isEmpty()) {
                             for(int i = 0; i< selectedItemPositions.size(); i++) {
                                 POSOrderLine orderLine = order.getOrderingLines().get(selectedItemPositions.get(i));
-                                orderLine.setComplimentaryProduct(true);
-                                orderLine.updateLine(getBaseContext());
+                                if (orderLine.getProduct().isComplimentaryAllow()) {
+                                    orderLine.setComplimentaryProduct(true);
+                                    orderLine.updateLine(getBaseContext());
+                                }
+                                else {
+                                    Toast.makeText(getBaseContext(), getString(R.string.no_allow_complimentary, orderLine.getProduct().getProductName()),
+                                            Toast.LENGTH_LONG).show();
+                                }
                                 EditOrderActivity.this.recreate();
                             }
                         }

@@ -43,5 +43,6 @@ public class ProductPriceContract {
         public static final String COLUMN_NAME_PRODUCT_ID = "productid";
         public static final String COLUMN_NAME_PRICE_LIST_VERSION_ID = "pricelistversionid";
         public static final String COLUMN_NAME_STD_PRICE = "stdprice";
+        public static final String COLUMN_NAME_PRICE_LIMIT = "priceLimit";
     }
 }
