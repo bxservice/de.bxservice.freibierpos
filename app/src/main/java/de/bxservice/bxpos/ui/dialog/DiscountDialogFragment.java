@@ -31,9 +31,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -67,6 +69,8 @@ public class DiscountDialogFragment extends DialogFragment {
 
     private TextWatcher percentWatcher;
     private TextWatcher amountWatcher;
+    private EditText    reasonText;
+    private EditText    discountAmountText;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -85,8 +89,8 @@ public class DiscountDialogFragment extends DialogFragment {
         subTotalLabel.setText(getString(R.string.subtotal_value, currencyFormat.format(subtotal)));
 
         final EditText discountPercentText = (EditText) view.findViewById(R.id.discount_percent);
-        final EditText discountAmountText = (EditText) view.findViewById(R.id.discount_amount);
-        final EditText reasonText = (EditText) view.findViewById(R.id.reason_text);
+        discountAmountText = (EditText) view.findViewById(R.id.discount_amount);
+        reasonText  = (EditText) view.findViewById(R.id.reason_text);
 
         reasonText.setText(reason);
 
@@ -157,9 +161,7 @@ public class DiscountDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        discountAmount = new BigDecimal(discountAmountText.getText().toString());
-                        reason = reasonText.getText().toString();
-                        mListener.onDialogPositiveClick(DiscountDialogFragment.this);
+                        //Nothing on purpose to avoid closing the dialog when the reason is not filled out
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -184,6 +186,33 @@ public class DiscountDialogFragment extends DialogFragment {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
                     + " must implement DiscountDialogListener");
+        }
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();    //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
+        final AlertDialog d = (AlertDialog) getDialog();
+        if(d != null)
+        {
+            Button positiveButton = d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    reason = reasonText.getText().toString();
+                    if (TextUtils.isEmpty(reason)) {
+                        reasonText.setError(getString(R.string.error_invalid_reason));
+                        reasonText.requestFocus();
+                    }
+                    else {
+                        discountAmount = new BigDecimal(discountAmountText.getText().toString());
+                        mListener.onDialogPositiveClick(DiscountDialogFragment.this);
+                    }
+                }
+            });
         }
     }
 
