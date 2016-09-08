@@ -41,6 +41,7 @@ public class ProductPrice {
     private int productPriceID;
     private MProduct product;
     private BigDecimal stdPrice;
+    private BigDecimal priceLimit;
     private int productID;
     private PosProductPriceManagement productPriceManager;
 
@@ -76,6 +77,14 @@ public class ProductPrice {
         this.stdPrice = stdPrice;
     }
 
+    public BigDecimal getPriceLimit() {
+        return priceLimit;
+    }
+
+    public void setPriceLimit(BigDecimal priceLimit) {
+        this.priceLimit = priceLimit;
+    }
+
     public int getProductID() {
         return productID;
     }
@@ -101,6 +110,25 @@ public class ProductPrice {
     public void setStdPriceFromInt(Integer total) {
         double doubleValue = (double) total / 100;
         stdPrice = BigDecimal.valueOf(doubleValue);
+    }
+
+    /**
+     * Returns the price limit of the product
+     * in an integer to be save in the database
+     * @return
+     */
+    public Integer getIntegerPriceLimit() {
+        return priceLimit.multiply(BigDecimal.valueOf(100)).intValue(); //total * 100
+    }
+
+    /**
+     * Gets an integer value from the db and converts it to a BigDecimal
+     * last two digits are decimals
+     * @param total
+     */
+    public void setPriceLimitFromInt(Integer total) {
+        double doubleValue = (double) total / 100;
+        priceLimit = BigDecimal.valueOf(doubleValue);
     }
 
     /**

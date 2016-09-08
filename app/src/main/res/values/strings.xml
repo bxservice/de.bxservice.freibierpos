@@ -205,6 +205,7 @@
     <string name="yes">Yes</string>
     <string name="change_url">This action will delete the local database. Do you want to proceed?</string>
     <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
+    <string name="no_allow_complimentary">The item %1$s cannot be free</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

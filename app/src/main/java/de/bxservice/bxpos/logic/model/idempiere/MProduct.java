@@ -75,6 +75,11 @@ public class MProduct implements Serializable {
         return productPrice.getStdPrice();
     }
 
+    public boolean isComplimentaryAllow() {
+        ProductPrice productPrice = getProductPrice(null);
+        return productPrice.getPriceLimit().compareTo(BigDecimal.ZERO) == 0;
+    }
+
     public ProductPrice getProductPrice(Context ctx) {
         productManager = new PosProductManagement(ctx);
         return productManager.getProductPrice(this);
