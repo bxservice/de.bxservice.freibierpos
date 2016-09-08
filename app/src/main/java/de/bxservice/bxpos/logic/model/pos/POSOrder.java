@@ -79,6 +79,7 @@ public class POSOrder implements Serializable {
     private Table table;
     private int guestNumber = 0;
     private String status;
+    private String discountReason = "";
     private String paymentRule = IOrder.PAYMENTRULE_Cash; //Default cash payments
     private BigDecimal totallines = BigDecimal.ZERO;
     private BigDecimal discount   = BigDecimal.ZERO;
@@ -473,6 +474,14 @@ public class POSOrder implements Serializable {
 
     public void setCashAmt(BigDecimal cashAmt) {
         this.cashAmt = cashAmt;
+    }
+
+    public String getDiscountReason() {
+        return discountReason;
+    }
+
+    public void setDiscountReason(String discountReason) {
+        this.discountReason = discountReason;
     }
 
     /**

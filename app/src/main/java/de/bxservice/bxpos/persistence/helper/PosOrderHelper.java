@@ -125,10 +125,11 @@ public class PosOrderHelper extends PosObjectHelper {
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_GUESTS, order.getGuestNumber());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_REMARK, order.getOrderRemark());
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES, order.getTotallinesInteger());
-        //These two values are only updated when paid
+        //These values are only updated when paid
         if (order.getStatus().equals(POSOrder.COMPLETE_STATUS)) {
             values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE, order.getSurchargeInteger());
             values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT, order.getDiscountInteger());
+            values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT_REASON, order.getDiscountReason());
         }
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_PAYMENT_RULE, order.getPaymentRule());
 
@@ -347,6 +348,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
                 order.setSurchargeFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE)));
                 order.setDiscountFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT)));
+                order.setDiscountReason(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT_REASON)));
                 if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
                         c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
                     order.setTable(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)));
@@ -454,6 +456,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
                 order.setSurchargeFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE)));
                 order.setDiscountFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT)));
+                order.setDiscountReason(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT_REASON)));
                 order.setPaymentRule(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_PAYMENT_RULE)));
                 if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
                         c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)
@@ -510,6 +513,7 @@ public class PosOrderHelper extends PosObjectHelper {
                 order.setTotalFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TOTALLINES)));
                 order.setSurchargeFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_SURCHARGE)));
                 order.setDiscountFromInt(c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT)));
+                order.setDiscountReason(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DISCOUNT_REASON)));
                 order.setPaymentRule(c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_PAYMENT_RULE)));
                 if(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID) != -1 &&
                         c.getInt(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_TABLE_ID)) != 0)

@@ -426,7 +426,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         discount = dialog.getDiscountAmount();
         discountReason = dialog.getReason();
         order.setDiscount(discount);
+        order.setDiscountReason(discountReason);
         updateDiscountField();
+        dialog.dismiss();
     }
 
     private void updateSurchargeField() {

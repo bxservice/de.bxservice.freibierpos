@@ -50,7 +50,8 @@ public class PosOrderContract {
         public static final String COLUMN_NAME_SYNCHRONIZED = "isSynchronized";
         public static final String COLUMN_NAME_SURCHARGE    = "surcharge";
         public static final String COLUMN_NAME_DISCOUNT     = "discount";
-        public static final String COLUMN_NAME_PAYMENT_RULE     = "paymentRule";
+        public static final String COLUMN_NAME_DISCOUNT_REASON = "discountReason";
+        public static final String COLUMN_NAME_PAYMENT_RULE = "paymentRule";
 
     }
 
