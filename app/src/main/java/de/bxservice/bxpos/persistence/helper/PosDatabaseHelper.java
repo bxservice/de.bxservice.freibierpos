@@ -32,7 +32,6 @@ import android.os.Build;
 import android.util.Log;
 
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
-import de.bxservice.bxpos.persistence.dbcontract.DeviceTokenContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.KitchenNoteContract;
 import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
@@ -315,18 +314,6 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
                     ")";
 
-    private static final String CREATE_DEVICE_TOKEN_TABLE =
-            "CREATE TABLE " + Tables.TABLE_DEVICE_TOKEN +
-                    "(" +
-                    DeviceTokenContract.DeviceTokenDB.COLUMN_NAME_DEVICE_TOKEN_ID + " INTEGER PRIMARY KEY" +
-                    ", " +
-                    DeviceTokenContract.DeviceTokenDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
-                    ", " +
-                    DeviceTokenContract.DeviceTokenDB.COLUMN_NAME_DEVICE_TOKEN_VALUE + " VARCHAR(200)" +
-                    ", " +
-                    DeviceTokenContract.DeviceTokenDB.COLUMN_NAME_SYNCHRONIZED + " INTEGER" +
-                    ")";
-
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -426,7 +413,6 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_ORG_INFO);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_OUTPUT_DEVICE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_KITCHEN_NOTE);
-        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_DEVICE_TOKEN);
     }
 
     private void bootstrapDB(SQLiteDatabase db) {
@@ -444,7 +430,6 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(CREATE_ORG_INFO_TABLE);
         db.execSQL(CREATE_KITCHEN_NOTE_TABLE);
-        db.execSQL(CREATE_DEVICE_TOKEN_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");

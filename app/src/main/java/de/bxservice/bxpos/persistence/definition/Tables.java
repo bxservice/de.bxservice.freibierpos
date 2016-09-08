@@ -25,7 +25,6 @@
 package de.bxservice.bxpos.persistence.definition;
 
 import de.bxservice.bxpos.persistence.dbcontract.DefaultPosDataContract;
-import de.bxservice.bxpos.persistence.dbcontract.DeviceTokenContract;
 import de.bxservice.bxpos.persistence.dbcontract.GroupTableContract;
 import de.bxservice.bxpos.persistence.dbcontract.KitchenNoteContract;
 import de.bxservice.bxpos.persistence.dbcontract.OrgInfoContract;
@@ -75,8 +74,5 @@ public interface Tables {
 
     //Kitchen notes
     String TABLE_KITCHEN_NOTE = KitchenNoteContract.KitchenNoteDB.TABLE_NAME;
-
-    //Device token
-    String TABLE_DEVICE_TOKEN = DeviceTokenContract.DeviceTokenDB.TABLE_NAME;
 
 }
