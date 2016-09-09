@@ -26,6 +26,7 @@ package de.bxservice.bxpos.ui;
 
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.CheckBoxPreference;
@@ -38,6 +39,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import java.util.List;
 
@@ -75,6 +77,17 @@ public class HeadersActivity extends PreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || OfflineHeadersPreferenceFragment.class.getName().equals(fragmentName);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
+            finish();
+            return true;
+        }else{
+            return super.onKeyDown(keyCode, event);
+        }
     }
 
     /**
