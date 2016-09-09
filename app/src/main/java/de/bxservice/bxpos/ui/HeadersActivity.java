@@ -24,33 +24,30 @@
  **********************************************************************/
 package de.bxservice.bxpos.ui;
 
-import android.content.Context;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Bundle;
+import android.os.Build;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MenuItem;
+
+import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
-
 /**
- * Created by Diego Ruiz on 16/12/15.
+ * Created by Diego Ruiz on 9/9/16.
  */
-public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
+public class HeadersActivity extends PreferenceActivity {
 
     private static final String LOG_TAG = "Admin Settings";
 
@@ -67,70 +64,17 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
     //Sync & Data
     public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-    }
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.pref_headers, target);
     }
 
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            if (!super.onMenuItemSelected(featureId, item)) {
-                startActivity(new Intent(getBaseContext(), LoginActivity.class));
-                finish();
-                return true;
-            }
-            return true;
-        }
-        return super.onMenuItemSelected(featureId, item);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            startActivity(new Intent(getBaseContext(), LoginActivity.class));
-            finish();
-            return true;
-        }else{
-            return super.onKeyDown(keyCode, event);
-        }
-    }
-
-    /**
-     * Helper method to determine if the device has an extra-large screen. For
-     * example, 10" tablets are extra-large.
-     */
-    private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-    }
-
-    @Override
-    public boolean onIsMultiPane() {
-        return isXLargeTablet(this);
-    }
-
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || OfflinePreferenceFragment.class.getName().equals(fragmentName);
+                || OfflineHeadersPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -170,7 +114,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
                             && !stringValue.equals(urlConnPref)) {
 
                         final Preference urlPref = preference;
-                        new AlertDialog.Builder(OfflineAdminSettingsActivity.this)
+                        new AlertDialog.Builder(HeadersActivity.this)
                                 .setTitle(R.string.change_url)
                                 .setNegativeButton(R.string.no, null)
                                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
