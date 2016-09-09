@@ -30,42 +30,31 @@ import android.preference.PreferenceFragment;
 import de.bxservice.bxpos.R;
 
 /**
- * Created by Diego Ruiz on 16/12/15.
+ * Created by Diego Ruiz on 9/9/16.
  */
-public class OfflinePreferenceFragment extends PreferenceFragment {
-
+public class OfflineHeadersPreferenceFragment extends PreferenceFragment {
     @Override
-    public void onCreate(final Bundle savedInstanceState)
-    {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        HeadersActivity activity = (HeadersActivity) getActivity();
 
-
-        String settings = "";
-        if(getArguments() != null)
-            settings = getArguments().getString("settings");
+        String settings = getArguments().getString("settings");
         if ("order_settings".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_order_settings);
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORDER_PREFIX));
+
         } else if ("data_sync".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_data_sync);
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_PREF_SYNC_CONN));
+
         } else if ("server".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_server);
-        } else
-            addPreferencesFromResource(R.xml.preferences);
-
-        OfflineAdminSettingsActivity activity = (OfflineAdminSettingsActivity) getActivity();
-
-        // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-        // to their values. When their values change, their summaries are
-        // updated to reflect the new value, per the Android Design
-        // guidelines.
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_URL));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORG_ID));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_CLIENT_ID));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ROLE_ID));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID));
-
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_PREF_URL));
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORG_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_CLIENT_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ROLE_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_WAREHOUSE_ID));
+        }
     }
 }

@@ -3,13 +3,24 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="de.bxservice.bxpos.ui.OfflinePreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
-        android:title="@string/pref_header_general" />
+        android:fragment="de.bxservice.bxpos.ui.OfflineHeadersPreferenceFragment"
+        android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
+        android:title="@string/pref_header_restaurant" >
+        <extra android:name="settings" android:value="order_settings" />
+    </header>
 
     <header
-        android:fragment="de.bxservice.bxpos.ui.OfflinePreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/pref_header_data_sync" />
+        android:fragment="de.bxservice.bxpos.ui.OfflineHeadersPreferenceFragment"
+        android:icon="@drawable/ic_donut_large_black_24dp"
+        android:title="@string/pref_header_data_sync" >
+        <extra android:name="settings" android:value="data_sync" />
+    </header>
+
+    <header
+        android:fragment="de.bxservice.bxpos.ui.OfflineHeadersPreferenceFragment"
+        android:icon="@drawable/ic_dvr_black_24dp"
+        android:title="@string/pref_header_general" >
+        <extra android:name="settings" android:value="server" />
+    </header>
 
 </preference-headers>

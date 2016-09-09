@@ -30,6 +30,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -145,9 +146,7 @@ public class LoginActivity extends AppCompatActivity  {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
-                startActivity(intent);
-                finish();
+                openSettings();
                 return;
             }
         });
@@ -389,6 +388,20 @@ public class LoginActivity extends AppCompatActivity  {
             settingsButton.setVisibility(show ? View.GONE : View.VISIBLE);
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    private void openSettings() {
+        //Check if the device has a large screen or not
+        if ((getBaseContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+            Intent intent = new Intent(getBaseContext(), HeadersActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(getBaseContext(), OfflineAdminSettingsActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

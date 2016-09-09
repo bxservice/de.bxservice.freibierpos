@@ -92,6 +92,14 @@
                 android:value="de.bxservice.bxpos.ui.LoginActivity" />
         </activity>
         <activity
+            android:name=".ui.HeadersActivity"
+            android:label="@string/title_activity_admin_settings"
+            android:parentActivityName=".ui.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.bxservice.bxpos.ui.LoginActivity" />
+        </activity>
+        <activity
             android:name=".ui.PayOrderActivity"
             android:label="@string/title_activity_pay_order"
             android:parentActivityName=".ui.EditOrderActivity"
