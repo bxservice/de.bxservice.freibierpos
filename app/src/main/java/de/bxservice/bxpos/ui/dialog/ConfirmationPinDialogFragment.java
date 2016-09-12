@@ -83,7 +83,6 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.void_item, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //Nothing on purpose to avoid closing the dialog when the reason is not filled out
                         pinCode = enteredCode.getText().toString();
                         mListener.onDialogPositiveClick(ConfirmationPinDialogFragment.this);
                     }

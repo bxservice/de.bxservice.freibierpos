@@ -65,12 +65,14 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
+import de.bxservice.bxpos.ui.dialog.MultipleItemsDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 
 public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
-        RemarkDialogFragment.RemarkDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener, SearchView.OnQueryTextListener {
+        RemarkDialogFragment.RemarkDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener,
+        MultipleItemsDialogFragment.MultipleItemsDialogListener, SearchView.OnQueryTextListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -392,6 +394,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         changeTableDialog.show(getFragmentManager(), "SwitchTableDialogFragment");
     }
 
+    private void showAddMultipleItemsDialog(MProduct product) {
+        MultipleItemsDialogFragment multipleItemsDialog = new MultipleItemsDialogFragment();
+        multipleItemsDialog.setProduct(product);
+        multipleItemsDialog.setNoItems(getProductQtyOrdered(product));
+        multipleItemsDialog.show(getFragmentManager(), "MultipleItemsDialogFragment");
+    }
+
     /**
      * Click set on guest number dialog
      * @param dialog
@@ -424,18 +433,50 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         updateDraftOrder();
     }
 
-    public void addOrderItem(MProduct product) {
+    @Override
+    public void onDialogPositiveClick(MultipleItemsDialogFragment dialog) {
 
-        if(posOrder == null) {
-            posOrder = new POSOrder();
-            posOrder.setGuestNumber(numberOfGuests);
-            posOrder.setOrderRemark(remarkNote);
-            posOrder.setTable(selectedTable);
-            posOrder.setStatus(POSOrder.DRAFT_STATUS);
-            posOrder.createOrder(getBaseContext());
+        int orderedQty = dialog.getNoItems();
+
+        //Substract the lines that were previously added by single click
+        int additionalItems = orderedQty - getProductQtyOrdered(dialog.getProduct());
+
+        boolean itemsAdded = additionalItems > 0;
+
+        while (additionalItems > 0) {
+            addOrderItem(dialog.getProduct());
+            additionalItems = additionalItems -1;
         }
 
+        if (itemsAdded) {
+            updateOrderLinesQuantity();
+        }
+
+    }
+
+    public void addOrderItem(MProduct product) {
+
+        if(posOrder == null)
+            createOrder();
+
         posOrder.addItem(product, getBaseContext());
+    }
+
+    public void addMultipleItems(MProduct product) {
+
+        if(posOrder == null)
+            createOrder();
+
+        showAddMultipleItemsDialog(product);
+    }
+
+    private void createOrder() {
+        posOrder = new POSOrder();
+        posOrder.setGuestNumber(numberOfGuests);
+        posOrder.setOrderRemark(remarkNote);
+        posOrder.setTable(selectedTable);
+        posOrder.setStatus(POSOrder.DRAFT_STATUS);
+        posOrder.createOrder(getBaseContext());
     }
 
     private void updateDraftOrder() {
