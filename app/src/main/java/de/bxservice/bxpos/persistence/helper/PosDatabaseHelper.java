@@ -55,7 +55,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 40;
+    private static final int DATABASE_VERSION = 41;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -265,6 +265,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED + " INTEGER" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN + " INTEGER" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE + " VARCHAR(6)" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE + " VARCHAR(3)" +
                     ")";
 
     private static final String CREATE_ORG_INFO_TABLE =

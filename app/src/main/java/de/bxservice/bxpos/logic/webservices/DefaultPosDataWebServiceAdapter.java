@@ -103,6 +103,10 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                         }
                         else if ("IsTaxIncluded".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setTaxIncluded("Y".equalsIgnoreCase(field.getStringValue()));
+                        else if ("ISO_Code".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setCurrencyIsoCode(field.getStringValue());
+                        else if ("AD_Language".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setClientAdLanguage(field.getStringValue());
 
                     }
                 }

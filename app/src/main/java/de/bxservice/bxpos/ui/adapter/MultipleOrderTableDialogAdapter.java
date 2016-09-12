@@ -34,8 +34,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
 
 /**
  * Created by Diego Ruiz on 21/03/16.
@@ -63,7 +63,7 @@ public class MultipleOrderTableDialogAdapter extends RecyclerView.Adapter<Multip
 
         public void bindOrder(POSOrder order) {
             txtOrderId.setText(String.valueOf(order.getOrderId()));
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
             txtTotal.setText(currencyFormat.format(order.getTotallines()));
         }
     }

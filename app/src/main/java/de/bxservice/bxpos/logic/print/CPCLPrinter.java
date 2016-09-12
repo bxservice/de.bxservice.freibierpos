@@ -24,7 +24,6 @@
  **********************************************************************/
 package de.bxservice.bxpos.logic.print;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +35,7 @@ import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 
 /**
@@ -124,7 +124,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
     public String printReceipt() {
         StringBuilder ticket = new StringBuilder();
 
-        NumberFormat currencyFormat = NumberFormat.getNumberInstance(DefaultPosData.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(PosProperties.getInstance().getLocale());
         currencyFormat.setMaximumFractionDigits(2);
         currencyFormat.setMinimumFractionDigits(2);
 

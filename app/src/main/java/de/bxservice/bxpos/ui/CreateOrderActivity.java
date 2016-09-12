@@ -56,12 +56,12 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
-import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
@@ -189,7 +189,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private void initSearchListItems() {
 
         ProductPrice productPrice;
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
 
         PosProductManagement dataProvider = new PosProductManagement(getBaseContext());
 

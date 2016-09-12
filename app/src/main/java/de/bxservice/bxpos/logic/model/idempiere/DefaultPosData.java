@@ -40,8 +40,6 @@ public class DefaultPosData {
     //Manager in charge to communicate with the database - not mixing the model and db layers
     private PosDefaultDataManagement dataManager;
 
-    public static final Locale LOCALE = Locale.GERMANY;
-
     private int defaultBPartner = 0;
     private int defaultPriceList = 0;
     private int defaultCurrency = 0;
@@ -52,8 +50,10 @@ public class DefaultPosData {
     private boolean printAfterSent = false;
     private boolean combineItems   = false;
     private boolean IsTaxIncluded  = false;
+    private String currencyIsoCode  = "";
+    private String clientAdLanguage  = "";
 
-   public int getDefaultBPartner() {
+    public int getDefaultBPartner() {
         return defaultBPartner;
     }
 
@@ -131,6 +131,22 @@ public class DefaultPosData {
 
     public void setTaxIncluded(boolean taxIncluded) {
         IsTaxIncluded = taxIncluded;
+    }
+
+    public String getCurrencyIsoCode() {
+        return currencyIsoCode;
+    }
+
+    public void setCurrencyIsoCode(String currencyIsoCode) {
+        this.currencyIsoCode = currencyIsoCode;
+    }
+
+    public String getClientAdLanguage() {
+        return clientAdLanguage;
+    }
+
+    public void setClientAdLanguage(String clientAdLanguage) {
+        this.clientAdLanguage = clientAdLanguage;
     }
 
     /**

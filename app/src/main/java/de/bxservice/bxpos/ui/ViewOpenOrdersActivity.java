@@ -41,9 +41,9 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
-import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.OpenOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.ui.adapter.GridOpenOrderViewAdapter;
 
 public class ViewOpenOrdersActivity extends AppCompatActivity {
@@ -71,7 +71,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
 
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
 
         OpenOrderGridItem item;
         BigDecimal totalLines;
