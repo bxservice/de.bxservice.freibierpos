@@ -59,6 +59,7 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.logic.print.POSOutputDeviceValues;
 import de.bxservice.bxpos.logic.tasks.PrintOrderTask;
@@ -721,7 +722,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if (order == null)
             return "";
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
 
         switch (status) {
             case POSOrderLine.ORDERING:

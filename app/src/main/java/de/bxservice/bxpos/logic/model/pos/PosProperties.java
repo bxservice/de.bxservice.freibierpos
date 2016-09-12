@@ -22,37 +22,53 @@
  * Contributors:                                                       *
  * - Diego Ruiz - Bx Service GmbH                                      *
  **********************************************************************/
-package de.bxservice.bxpos.persistence.dbcontract;
+package de.bxservice.bxpos.logic.model.pos;
 
-import android.provider.BaseColumns;
+import java.util.Locale;
+
+import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 
 /**
- * Created by Diego Ruiz on 1/03/16.
+ * Created by Diego Ruiz on 9/12/16.
  */
-public class DefaultPosDataContract {
+public class PosProperties {
 
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
-    public DefaultPosDataContract() {
+
+    private static PosProperties instance;
+    private Locale locale;
+
+    private PosProperties() {
     }
 
-    /* Inner class that defines the table contents */
-    public static abstract class DefaultDataDB implements BaseColumns {
-        public static final String TABLE_NAME = "pos_defaultdata";
-        public static final String COLUMN_NAME_DEFAULT_DATA_ID = "defaultdataid";
-        public static final String COLUMN_NAME_BPARTNER = "defaultBPartner";
-        public static final String COLUMN_NAME_PRICE_LIST = "defaultPriceList";
-        public static final String COLUMN_NAME_CURRENCY = "defaultCurrency";
-        public static final String COLUMN_NAME_WAREHOUSE = "defaultWarehouse";
-        public static final String COLUMN_NAME_DISCOUNT_ID = "discountID";
-        public static final String COLUMN_NAME_SURCHARGE_ID = "surchargeID";
-        public static final String COLUMN_NAME_COMBINE_ITEMS = "combineItems";
-        public static final String COLUMN_NAME_PRINT_AFTER_SEND = "printAfter";
-        public static final String COLUMN_NAME_IS_TAX_INCLUDED = "IsTaxIncluded";
-        public static final String COLUMN_NAME_PIN = "pin";
-        public static final String COLUMN_NAME_ISO_CODE = "iso_code";
-        public static final String COLUMN_NAME_AD_LANGUAGE = "ad_language";
+    public static PosProperties getInstance() {
+        if (instance == null)
+            instance = new PosProperties();
+        return instance;
+    }
 
+    public Locale getLocale() {
+        if (locale == null)
+            setLocale();
+
+        return locale;
+    }
+
+    public void setLocale() {
+
+        DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
+
+        //Language from iDempiere usually comes in the form en_US for example
+        int i = defaultPosData.getClientAdLanguage().indexOf("_");
+        if(i != -1) {
+            String lang = defaultPosData.getClientAdLanguage().substring(0, i);
+            String country = defaultPosData.getClientAdLanguage().substring(i+1, defaultPosData.getClientAdLanguage().length());
+            locale = new Locale(lang, country);
+        } else
+            locale = new Locale(defaultPosData.getClientAdLanguage());
+
+        if (locale == null)
+            locale = Locale.getDefault();
     }
 
 }

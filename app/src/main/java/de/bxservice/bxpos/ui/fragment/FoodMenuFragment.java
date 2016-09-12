@@ -40,11 +40,11 @@ import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.daomanager.PosProductCategoryManagement;
-import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.ui.CreateOrderActivity;
 import de.bxservice.bxpos.ui.adapter.GridOrderViewAdapter;
 
@@ -103,7 +103,7 @@ public class FoodMenuFragment extends Fragment {
         mGridData = new ArrayList<>();
         itemProductHashMap = new HashMap<>();
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(DefaultPosData.LOCALE);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
 
         NewOrderGridItem item;
         ProductPrice productPrice;
