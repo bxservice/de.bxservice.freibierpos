@@ -84,7 +84,7 @@ public class PosProperties {
 
     private void setCurrencyFormat() {
 
-        currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        currencyFormat = NumberFormat.getCurrencyInstance(getLocale());
 
         DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
 
