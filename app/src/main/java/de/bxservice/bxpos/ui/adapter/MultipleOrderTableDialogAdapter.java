@@ -63,7 +63,7 @@ public class MultipleOrderTableDialogAdapter extends RecyclerView.Adapter<Multip
 
         public void bindOrder(POSOrder order) {
             txtOrderId.setText(String.valueOf(order.getOrderId()));
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+            NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
             txtTotal.setText(currencyFormat.format(order.getTotallines()));
         }
     }

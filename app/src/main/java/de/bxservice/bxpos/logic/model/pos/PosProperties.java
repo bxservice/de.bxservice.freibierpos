@@ -24,6 +24,8 @@
  **********************************************************************/
 package de.bxservice.bxpos.logic.model.pos;
 
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
@@ -37,6 +39,7 @@ public class PosProperties {
 
     private static PosProperties instance;
     private Locale locale;
+    private NumberFormat currencyFormat;
 
     private PosProperties() {
     }
@@ -54,7 +57,7 @@ public class PosProperties {
         return locale;
     }
 
-    public void setLocale() {
+    private void setLocale() {
 
         DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
 
@@ -69,6 +72,28 @@ public class PosProperties {
 
         if (locale == null)
             locale = Locale.getDefault();
+    }
+
+    public NumberFormat getCurrencyFormat() {
+
+        if (currencyFormat == null)
+            setCurrencyFormat();
+
+        return currencyFormat;
+    }
+
+    private void setCurrencyFormat() {
+
+        currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+
+        DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
+
+        String currencyCode = defaultPosData.getCurrencyIsoCode();
+        //If the currency code from iDempiere is empty or the same as the one from the Locale
+        if (currencyCode.isEmpty() || currencyFormat.getCurrency().getCurrencyCode().equals(currencyCode))
+            return;
+
+        currencyFormat.setCurrency(Currency.getInstance(currencyCode));
     }
 
 }

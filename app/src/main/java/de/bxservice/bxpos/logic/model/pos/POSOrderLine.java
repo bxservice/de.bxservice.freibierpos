@@ -143,7 +143,7 @@ public class POSOrderLine implements Serializable {
 
     public String getLineTotalAmt() {
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
         return currencyFormat.format(getLineNetAmt());
     }
 

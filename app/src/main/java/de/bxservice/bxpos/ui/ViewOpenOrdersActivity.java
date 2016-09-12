@@ -71,7 +71,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
 
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         OpenOrderGridItem item;
         BigDecimal totalLines;

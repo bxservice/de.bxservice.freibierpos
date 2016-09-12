@@ -290,7 +290,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getAmountToPayText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.to_pay, currencyFormat.format(getAmountToPay()));
     }
@@ -301,7 +301,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getSurchargeText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.surcharge_value, currencyFormat.format(surcharge));
     }
@@ -312,7 +312,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getDiscountText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.discount_value, currencyFormat.format(discount.negate()));
     }
@@ -323,7 +323,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getChangeText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.change_value, currencyFormat.format(getChange()));
     }
@@ -334,7 +334,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getPaidAmountText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.paid_value, currencyFormat.format(paidAmount));
     }
@@ -351,7 +351,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getTotalText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.total_value, currencyFormat.format(getTotal()));
     }

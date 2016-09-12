@@ -151,7 +151,7 @@ public class SplitOrderDialogFragment extends DialogFragment {
 
         int totalQty = 0;
         BigDecimal total = BigDecimal.ZERO;
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         for(POSOrderLine orderLine : mGridData) {
             totalQty = totalQty + orderLine.getQtyOrdered();
