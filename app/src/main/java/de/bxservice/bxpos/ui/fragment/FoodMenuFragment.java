@@ -148,6 +148,20 @@ public class FoodMenuFragment extends Fragment {
             }
         });
 
+        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+
+                //Get item at position
+                NewOrderGridItem item = (NewOrderGridItem) parent.getItemAtPosition(position);
+                MProduct product = itemProductHashMap.get(item);
+
+                ((CreateOrderActivity) getActivity()).addMultipleItems(product);
+
+                return true;
+            }
+        });
+
         return rootView;
     }
 
