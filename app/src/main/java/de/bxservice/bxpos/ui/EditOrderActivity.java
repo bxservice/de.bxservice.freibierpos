@@ -722,7 +722,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if (order == null)
             return "";
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         switch (status) {
             case POSOrderLine.ORDERING:

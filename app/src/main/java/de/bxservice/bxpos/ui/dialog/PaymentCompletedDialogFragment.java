@@ -72,7 +72,7 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
 
         final TextView totalText = (TextView) view.findViewById(R.id.total);
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         totalText.setText(getString(R.string.total_value, currencyFormat.format(total)));
 
