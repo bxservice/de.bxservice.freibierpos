@@ -27,11 +27,7 @@ package de.bxservice.bxpos.logic.model.report;
 import android.content.Context;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.daomanager.PosReportManagement;
@@ -63,13 +59,6 @@ public class VoidItemsReport extends Report {
         htmlResult.append(htmlTemplate.getHtmlTemplate().replace(ReportHtmlTemplate.TITLE_TAG, name));
         if(voidedLines != null && !voidedLines.isEmpty()) {
 
-            NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-            currencyFormat.setMinimumFractionDigits(2);
-            //Here is to remove the € sign because it has problems in HTML
-            /*DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
-            decimalFormatSymbols.setCurrencySymbol("");
-            ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);*/
-
             BigDecimal totalVoided = BigDecimal.ZERO;
             int totalQty = 0;
 
@@ -86,7 +75,7 @@ public class VoidItemsReport extends Report {
 
                 htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, genericObject.getDescription()));
                 htmlResult.append(htmlTemplate.getHtmlColumn("center").replace(ReportHtmlTemplate.ROW_TAG, genericObject.getQuantity()));
-                htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(genericObject.getAmount()).trim() + " &euro;"));
+                htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, getFormattedValue(genericObject.getAmount())));
 
                 htmlResult.append(htmlTemplate.getHtmlRowClose());
             }
@@ -96,7 +85,7 @@ public class VoidItemsReport extends Report {
 
             htmlResult.append(htmlTemplate.getHtmlColumn("left").replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.total)));
             htmlResult.append(htmlTemplate.getHtmlColumn("center").replace(ReportHtmlTemplate.ROW_TAG, String.valueOf(totalQty)));
-            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, currencyFormat.format(totalVoided).trim() + " &euro;"));
+            htmlResult.append(htmlTemplate.getHtmlColumn("right").replace(ReportHtmlTemplate.ROW_TAG, getFormattedValue(totalVoided)));
 
             htmlResult.append(htmlTemplate.getHtmlRowClose());
 

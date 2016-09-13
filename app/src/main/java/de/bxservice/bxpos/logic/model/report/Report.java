@@ -26,17 +26,27 @@ package de.bxservice.bxpos.logic.model.report;
 
 import android.content.Context;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
+import de.bxservice.bxpos.logic.model.pos.PosProperties;
+
 /**
  * Created by Diego Ruiz on 25/03/16.
  */
 public abstract class Report {
 
+    final static String HTML_EURO_SYMBOL = " &euro;";
     String name;
     int code;
     long fromDate, toDate;
     Context mContext;
     boolean isSelected;
     StringBuilder htmlResult;
+    NumberFormat currencyFormat;
 
     public Report(Context mContext) {
         this.mContext = mContext;
@@ -46,6 +56,37 @@ public abstract class Report {
     public void runReport() {
         performReport();
         setReportResult();
+    }
+
+    protected void setCurrencyFormat() {
+
+        //Create a clone to change the currency symbol without affecting the original object
+        currencyFormat = (NumberFormat) PosProperties.getInstance().getCurrencyFormat().clone();
+
+        //If the currency code is Euro
+        if (Currency.getInstance(Locale.GERMANY).getCurrencyCode().equals(currencyFormat.getCurrency().getCurrencyCode())) {
+            //Here is to replace the € sign because it has problems in HTML
+            DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
+            decimalFormatSymbols.setCurrencySymbol(HTML_EURO_SYMBOL);
+            ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+        }
+    }
+
+    protected String getFormattedValue(BigDecimal number) {
+
+        if (currencyFormat == null)
+            setCurrencyFormat();
+
+        String formattedValue = currencyFormat.format(number);
+
+        //If the string has garbage in it, replace it
+        if(formattedValue.indexOf(String.valueOf((char) 160)) != -1)
+            formattedValue = formattedValue.replace(String.valueOf((char) 160), "");
+
+        //remove empty spaces
+        formattedValue = formattedValue.trim();
+
+        return formattedValue;
     }
 
     protected abstract void performReport();
