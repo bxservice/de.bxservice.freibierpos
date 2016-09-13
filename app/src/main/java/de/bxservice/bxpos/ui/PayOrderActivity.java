@@ -279,7 +279,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
      * @return
      */
     private String getSubtotalText() {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(PosProperties.getInstance().getLocale());
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         return getString(R.string.subtotal_value, currencyFormat.format(subtotal));
     }
