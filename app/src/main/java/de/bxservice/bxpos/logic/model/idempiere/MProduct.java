@@ -77,7 +77,7 @@ public class MProduct implements Serializable {
 
     public boolean isComplimentaryAllow() {
         ProductPrice productPrice = getProductPrice(null);
-        return productPrice.getPriceLimit().compareTo(BigDecimal.ZERO) == 0;
+        return productPrice.getPriceLimit().compareTo(BigDecimal.ZERO) == 0 || productPrice.getPriceLimit().compareTo(BigDecimal.ZERO) < 0;
     }
 
     public ProductPrice getProductPrice(Context ctx) {
