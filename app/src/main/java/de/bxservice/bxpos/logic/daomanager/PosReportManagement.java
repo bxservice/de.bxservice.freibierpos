@@ -51,4 +51,8 @@ public class PosReportManagement {
         return dataMapper.getTableSalesReportRows(fromDate, toDate);
     }
 
+    public List<ReportGenericObject> getProductSalesReportRows(long fromDate, long toDate) {
+        return dataMapper.getProductSalesReportRows(fromDate, toDate);
+    }
+
 }

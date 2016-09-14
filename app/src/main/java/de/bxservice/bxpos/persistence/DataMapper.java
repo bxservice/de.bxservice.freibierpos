@@ -673,6 +673,11 @@ public class DataMapper implements Serializable {
         return orderHelper.getTableSalesReportRows(fromDate, toDate);
     }
 
+    public List<ReportGenericObject> getProductSalesReportRows(long fromDate, long toDate) {
+        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
+        return orderLineHelper.getProductSalesReportRows(fromDate, toDate);
+    }
+
     private boolean createOrgInfo(RestaurantInfo restaurantInfo) {
 
         PosOrgInfoDataHelper posOrgInfoDataHelper = new PosOrgInfoDataHelper(mContext);
