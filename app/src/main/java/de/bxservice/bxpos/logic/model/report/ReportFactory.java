@@ -34,10 +34,11 @@ import java.util.ArrayList;
 public class ReportFactory {
 
     //This values have to match the values in string.xml
-    private static final int SALES_CODE       = 0;
-    private static final int MY_SALES_CODE    = 1;
-    private static final int VOID_ITEMS_CODE  = 2;
-    private static final int TABLE_SALES_CODE = 3;
+    private static final int SALES_CODE         = 0;
+    private static final int MY_SALES_CODE      = 1;
+    private static final int VOID_ITEMS_CODE    = 2;
+    private static final int TABLE_SALES_CODE   = 3;
+    private static final int PRODUCT_SALES_CODE = 4;
 
     private ArrayList<Report> reports = new ArrayList<>();
 
@@ -67,6 +68,11 @@ public class ReportFactory {
                 case TABLE_SALES_CODE:
                     report = new TableSalesReport(mContext);
                     report.setCode(TABLE_SALES_CODE);
+                    report.setName(names[i]);
+                    break;
+                case PRODUCT_SALES_CODE:
+                    report = new ProductSalesReport(mContext);
+                    report.setCode(PRODUCT_SALES_CODE);
                     report.setName(names[i]);
                     break;
             }

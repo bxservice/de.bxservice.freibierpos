@@ -394,6 +394,14 @@ public class PosOrderLineHelper extends PosObjectHelper {
     }
 
     public ArrayList<ReportGenericObject> getVoidedReportRows(long fromDate, long toDate) {
+        return getReportRows(fromDate, toDate, POSOrderLine.VOIDED);
+    }
+
+    public ArrayList<ReportGenericObject> getProductSalesReportRows(long fromDate, long toDate) {
+        return getReportRows(fromDate, toDate, POSOrderLine.ORDERED);
+    }
+
+    private ArrayList<ReportGenericObject> getReportRows(long fromDate, long toDate, String lineStatus) {
 
         ArrayList<ReportGenericObject> lines = new ArrayList<>();
         StringBuilder selectQuery = new StringBuilder();
@@ -414,7 +422,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
         Log.d(LOG_TAG, selectQuery.toString());
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {String.valueOf(POSOrderLine.VOIDED), String.valueOf(fromDate), String.valueOf(toDate)});
+        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {lineStatus, String.valueOf(fromDate), String.valueOf(toDate)});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
