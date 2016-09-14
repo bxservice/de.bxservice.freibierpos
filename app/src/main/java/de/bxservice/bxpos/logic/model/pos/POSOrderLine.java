@@ -122,6 +122,16 @@ public class POSOrderLine implements Serializable {
         return lineNetAmt;
     }
 
+    public BigDecimal getPriceActual() {
+
+        //return unitary value to be sent to iDempiere
+        if (product != null && !isComplimentaryProduct)
+            return product.getProductPriceValue();
+
+        //if it is a complimentary line -> return zero
+        return BigDecimal.ZERO;
+    }
+
     /**
      * Returns the total amt of the line
      * in an integer to be save in the database

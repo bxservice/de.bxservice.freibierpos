@@ -131,14 +131,11 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
             dataLine.addField("QtyOrdered", String.valueOf(orderLine.getQtyOrdered()));
             dataLine.addField("QtyEntered", String.valueOf(orderLine.getQtyOrdered()));
 
-            //If the line is voided do not send the price to avoid problems in beforeSave in MOrderLine
-            if (orderLine.getQtyOrdered() > 0) {
-                //Send the price to iDempiere - the price to zero for complimentary products
-                dataLine.addField("PriceEntered", String.valueOf(orderLine.getLineNetAmt()));
-                //Send these two values to avoid iDempiere of setting the price in the beforeSave method
-                dataLine.addField("PriceActual", String.valueOf(orderLine.getLineNetAmt()));
-                dataLine.addField("PriceList", String.valueOf(orderLine.getProduct().getProductPriceValue()));
-            }
+            //Send the price to iDempiere - the price to zero for complimentary products
+            dataLine.addField("PriceEntered", String.valueOf(orderLine.getPriceActual()));
+            //Send these two values to avoid iDempiere of setting the price in the beforeSave method
+            dataLine.addField("PriceActual", String.valueOf(orderLine.getPriceActual()));
+            dataLine.addField("PriceList", String.valueOf(orderLine.getProduct().getProductPriceValue()));
 
             createOrderLine.setDataRow(dataLine);
 

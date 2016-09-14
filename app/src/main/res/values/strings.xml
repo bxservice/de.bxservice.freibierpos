@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FreiBier POS</string>
-    <string name="bx_pos">BX POS</string>
+    <string name="app_title">FreiBier POS</string>
     <string name="powered_by">POS powered by BX Service</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
