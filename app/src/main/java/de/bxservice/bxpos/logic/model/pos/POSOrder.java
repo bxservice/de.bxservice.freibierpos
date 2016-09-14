@@ -37,7 +37,6 @@ import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
-import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * This represents the draft order - contains
@@ -592,7 +591,7 @@ public class POSOrder implements Serializable {
 
         if(payments != null && !payments.isEmpty()) {
             if(payments.size() == 1)
-                paymentRule = payments.get(0).getTenderType();
+                paymentRule = payments.get(0).getPaymentRule();
             else {
                 paymentRule = IOrder.PAYMENTRULE_MixedPOSPayment;
                 for(POSPayment payment : payments) {

@@ -32,6 +32,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.PosTenderType;
 import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
@@ -41,6 +42,7 @@ import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.logic.webservices.DefaultPosDataWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.OrgInfoWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.OutputDeviceWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.PosTenderTypeWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
@@ -62,6 +64,7 @@ public class DataReader {
     private DefaultPosData defaultData = null;
     private RestaurantInfo restaurantInfo = null;
     private List<POSOutputDevice> outputDeviceList = new ArrayList<>();
+    private List<PosTenderType> tenderTypeList = new ArrayList<>();
     private boolean error = false;
     private Context mContext;
 
@@ -134,6 +137,17 @@ public class DataReader {
 
         orgInfoThread.run();
 
+        Thread tenderTypesThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PosTenderTypeWebServiceAdapter tenderTypeWS = new PosTenderTypeWebServiceAdapter();
+                tenderTypeList = tenderTypeWS.getTenderTypeList();
+                persistTenderTypes();
+            }
+        });
+
+        tenderTypesThread.run();
+
     }
 
     /**
@@ -181,6 +195,14 @@ public class DataReader {
 
         for(ProductPrice productPrice : productPriceList)
             productPrice.save(mContext);
+    }
+
+    /**
+     * Save tender type in the database
+     */
+    private void persistTenderTypes() {
+        for (PosTenderType tenderType: tenderTypeList)
+            tenderType.save(mContext);
     }
 
     public boolean isError() {

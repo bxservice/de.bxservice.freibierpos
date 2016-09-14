@@ -33,6 +33,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.PosTenderType;
 import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
@@ -56,6 +57,7 @@ import de.bxservice.bxpos.persistence.helper.PosProductHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductPriceHelper;
 import de.bxservice.bxpos.persistence.helper.PosTableGroupHelper;
 import de.bxservice.bxpos.persistence.helper.PosTableHelper;
+import de.bxservice.bxpos.persistence.helper.PosTenderTypeHelper;
 import de.bxservice.bxpos.persistence.helper.PosUserHelper;
 
 /**
@@ -105,6 +107,8 @@ public class DataMapper implements Serializable {
             success = createOrgInfo((RestaurantInfo) object);
         else if(object instanceof POSOutputDevice)
             success = createOutputDevice((POSOutputDevice) object);
+        else if(object instanceof PosTenderType)
+            success = createTenderType((PosTenderType) object);
         else if(object instanceof String)
             success = createKitchenNote((String) object);
 
@@ -143,6 +147,8 @@ public class DataMapper implements Serializable {
             success = updateProduct((MProduct) object);
         else if(object instanceof POSOutputDevice)
             success = updateOutputDevice((POSOutputDevice) object);
+        else if(object instanceof PosTenderType)
+            success = updateTenderType((PosTenderType) object);
 
         return success;
     }
@@ -767,5 +773,40 @@ public class DataMapper implements Serializable {
     public POSOutputDevice getOutputDevice(String target) {
         PosOutputDeviceHelper outputDeviceHelper = new PosOutputDeviceHelper(mContext);
         return outputDeviceHelper.getDevice(target);
+    }
+
+    private boolean createTenderType(PosTenderType tenderType) {
+        PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
+
+        if (tenderTypeHelper.createTenderType(tenderType) == -1) {
+            Log.e(LOG_TAG, "Cannot save Tender Type");
+            return false;
+        }
+        Log.i(LOG_TAG, "Tender Type saved");
+        return true;
+    }
+
+    private boolean updateTenderType(PosTenderType tenderType) {
+        PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
+
+        if (tenderTypeHelper.updatePayment(tenderType) != -1) {
+            Log.i(LOG_TAG, "Tender Type updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update Tender Type");
+            return false;
+        }
+
+        return true;
+    }
+
+    public PosTenderType getTenderType(long id) {
+        PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
+        return tenderTypeHelper.getPosTenderType(id);
+    }
+
+    public PosTenderType getTenderType(String tenderType) {
+        PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
+        return tenderTypeHelper.getPosTenderType(tenderType);
     }
 }

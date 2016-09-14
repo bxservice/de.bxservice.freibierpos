@@ -530,7 +530,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
         if(!payments.isEmpty()) {
             for(POSPayment oldPayment : payments) {
-                if(oldPayment.getTenderType().equals(selectedPaymentType)) {
+                if(oldPayment.getPaymentRule().equals(selectedPaymentType)) {
                     previousPayment = oldPayment;
                 }
             }
@@ -539,7 +539,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         if(previousPayment == null) {
             POSPayment partialPayment = new POSPayment();
             partialPayment.setPaymentAmount(partialAmount.subtract(change));
-            partialPayment.setCashTenderTypeId(selectedPaymentType);
+            partialPayment.setTenderType(selectedPaymentType, getBaseContext());
             payments.add(partialPayment);
         }
         else {

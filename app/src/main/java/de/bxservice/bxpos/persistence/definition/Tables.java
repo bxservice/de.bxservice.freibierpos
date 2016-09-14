@@ -32,6 +32,7 @@ import de.bxservice.bxpos.persistence.dbcontract.OutputDeviceContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosPaymentContract;
+import de.bxservice.bxpos.persistence.dbcontract.PosTenderTypeContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
@@ -54,9 +55,10 @@ public interface Tables {
     String TABLE_TABLE_GROUP   = GroupTableContract.GroupTableDB.TABLE_NAME;
 
     //Order management tables
-    String TABLE_POSORDER      = PosOrderContract.POSOrderDB.TABLE_NAME;
-    String TABLE_POSORDER_LINE = PosOrderLineContract.POSOrderLineDB.TABLE_NAME;
-    String TABLE_POSPAYMENT    = PosPaymentContract.POSPaymentDB.TABLE_NAME;
+    String TABLE_POSORDER       = PosOrderContract.POSOrderDB.TABLE_NAME;
+    String TABLE_POSORDER_LINE  = PosOrderLineContract.POSOrderLineDB.TABLE_NAME;
+    String TABLE_POSPAYMENT     = PosPaymentContract.POSPaymentDB.TABLE_NAME;
+    String TABLE_POSTENDER_TYPE = PosTenderTypeContract.PosTenderTypeDB.TABLE_NAME;
 
     //Product management tables
     String TABLE_PRODUCT          = ProductContract.ProductDB.TABLE_NAME;

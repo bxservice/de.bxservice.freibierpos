@@ -39,6 +39,7 @@ import de.bxservice.bxpos.persistence.dbcontract.OutputDeviceContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosPaymentContract;
+import de.bxservice.bxpos.persistence.dbcontract.PosTenderTypeContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
@@ -55,7 +56,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 41;
+    private static final int DATABASE_VERSION = 42;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -187,7 +188,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_BY + " INTEGER REFERENCES "
                     + Tables.TABLE_USER + "(" + UserContract.User.COLUMN_NAME_USER_ID + ") ON DELETE CASCADE" +  //FK to user
                     ", " +
-                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE + " INTEGER" +
+                    PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_POSTENDER_TYPE + "(" + PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE_ID + ") " +  //FK to tender type
                     ", " +
                     PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_AMOUNT + " NUMERIC" +
                     ", " +
@@ -320,6 +322,14 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_CREATED_AT + " INTEGER" +
                     ")";
 
+    private static final String CREATE_TENDER_TYPE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_POSTENDER_TYPE +
+                    "(" +
+                    PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE + " VARCHAR(2)" +
+                    ")";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -409,6 +419,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER_LINE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSTENDER_TYPE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSPAYMENT);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_PRODUCT_CATEGORY);
@@ -433,6 +444,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_POSORDER_TABLE);
         db.execSQL(CREATE_POSORDER_LINE_TABLE);
         db.execSQL(CREATE_POSPAYMENT_TABLE);
+        db.execSQL(CREATE_TENDER_TYPE_TABLE);
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(CREATE_ORG_INFO_TABLE);
         db.execSQL(CREATE_KITCHEN_NOTE_TABLE);
