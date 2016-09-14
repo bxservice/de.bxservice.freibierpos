@@ -22,29 +22,48 @@
  * Contributors:                                                       *
  * - Diego Ruiz - Bx Service GmbH                                      *
  **********************************************************************/
-package de.bxservice.bxpos.persistence.dbcontract;
+package de.bxservice.bxpos.logic.daomanager;
 
-import android.provider.BaseColumns;
+import android.content.Context;
+
+import java.io.Serializable;
+import de.bxservice.bxpos.logic.model.idempiere.PosTenderType;
+import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
- * Created by Diego Ruiz on 8/04/16.
+ * Created by Diego Ruiz on 9/14/16.
  */
-public class PosPaymentContract {
+public class PosTenderTypeManagement implements ObjectManagement, Serializable {
 
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
-    public PosPaymentContract() {}
+    //Object that writes to the db
+    private DataMapper dataMapper;
 
-    /* Inner class that defines the table contents */
-    public static abstract class POSPaymentDB implements BaseColumns {
-        public static final String TABLE_NAME                 = "pos_payment";
-        public static final String COLUMN_NAME_PAYMENT_ID     = "paymentid";
-        public static final String COLUMN_NAME_CREATED_AT     = "created";
-        public static final String COLUMN_NAME_UPDATED_AT     = "updated";
-        public static final String COLUMN_NAME_CREATED_BY     = "createdBy";
-        public static final String COLUMN_NAME_TENDER_TYPE_ID = "tenderType_ID";
-        public static final String COLUMN_NAME_ORDER_ID       = "orderid";
-        public static final String COLUMN_NAME_PAYMENT_AMOUNT = "paymentAmount";
-
+    public PosTenderTypeManagement(Context ctx) {
+        dataMapper = new DataMapper(ctx);
     }
+
+    @Override
+    public boolean update(Object object) {
+        return dataMapper.update(object);
+    }
+
+    @Override
+    public boolean create(Object object) {
+        return dataMapper.save(object);
+    }
+
+    @Override
+    public PosTenderType get(long id){
+        return dataMapper.getTenderType(id);
+    }
+
+    @Override
+    public boolean remove(Object object) {
+        return true;
+    }
+
+    public PosTenderType get(String tenderType) {
+        return dataMapper.getTenderType(tenderType);
+    }
+
 }

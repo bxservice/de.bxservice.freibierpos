@@ -22,29 +22,60 @@
  * Contributors:                                                       *
  * - Diego Ruiz - Bx Service GmbH                                      *
  **********************************************************************/
-package de.bxservice.bxpos.persistence.dbcontract;
+package de.bxservice.bxpos.logic.model.idempiere;
 
-import android.provider.BaseColumns;
+import android.content.Context;
+import java.io.Serializable;
+import de.bxservice.bxpos.logic.daomanager.PosTenderTypeManagement;
 
 /**
- * Created by Diego Ruiz on 8/04/16.
+ * Created by Diego Ruiz on 9/14/16.
  */
-public class PosPaymentContract {
+public class PosTenderType implements Serializable {
 
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
-    public PosPaymentContract() {}
+    //Constant values in iDempiere
+    public static final String CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE = "C";
+    public static final String CASH_PAYMENT_TENDER_TYPE_VALUE        = "X";
 
-    /* Inner class that defines the table contents */
-    public static abstract class POSPaymentDB implements BaseColumns {
-        public static final String TABLE_NAME                 = "pos_payment";
-        public static final String COLUMN_NAME_PAYMENT_ID     = "paymentid";
-        public static final String COLUMN_NAME_CREATED_AT     = "created";
-        public static final String COLUMN_NAME_UPDATED_AT     = "updated";
-        public static final String COLUMN_NAME_CREATED_BY     = "createdBy";
-        public static final String COLUMN_NAME_TENDER_TYPE_ID = "tenderType_ID";
-        public static final String COLUMN_NAME_ORDER_ID       = "orderid";
-        public static final String COLUMN_NAME_PAYMENT_AMOUNT = "paymentAmount";
+    private PosTenderTypeManagement tenderTypeManager;
 
+    private int    C_POSTenderType_ID;
+    private String tenderType;
+
+    public int getC_POSTenderType_ID() {
+        return C_POSTenderType_ID;
+    }
+
+    public void setC_POSTenderType_ID(int c_POSTenderType_ID) {
+        C_POSTenderType_ID = c_POSTenderType_ID;
+    }
+
+    public String getTenderType() {
+        return tenderType;
+    }
+
+    public void setTenderType(String tenderType) {
+        this.tenderType = tenderType;
+    }
+
+    public boolean save(Context ctx) {
+        tenderTypeManager = new PosTenderTypeManagement(ctx);
+
+        if (tenderTypeManager.get(C_POSTenderType_ID) == null)
+            return createTenderType();
+        else
+            return updateTenderType();
+    }
+
+    private boolean updateTenderType() {
+        return tenderTypeManager.update(this);
+    }
+
+    /**
+     * Communicates with the manager to create the product in the database
+     * @return
+     */
+    private boolean createTenderType() {
+        return tenderTypeManager.create(this);
     }
 }

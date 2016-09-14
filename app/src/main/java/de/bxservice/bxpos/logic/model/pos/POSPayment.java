@@ -30,23 +30,19 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import de.bxservice.bxpos.logic.daomanager.PosPaymentManagement;
+import de.bxservice.bxpos.logic.daomanager.PosTenderTypeManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
+import de.bxservice.bxpos.logic.model.idempiere.PosTenderType;
 
 /**
  * Created by Diego Ruiz on 8/04/16.
  */
 public class POSPayment implements Serializable {
 
-    //IDs from iDempiere
-    private static final int CASH_TENDER_TYPE_ID        = 1000000;
-    private static final int CREDIT_CARD_TENDER_TYPE_ID = 1000001;
-    private static final String CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE = "C";
-    private static final String CASH_PAYMENT_TENDER_TYPE_VALUE        = "X";
-
     private PosPaymentManagement paymentManager;
 
     private BigDecimal paymentAmount = BigDecimal.ZERO;
-    private int POSTenderTypeID;
+    private PosTenderType tenderType;
     private int paymentId;
     //Order that the payment belongs to
     private POSOrder order;
@@ -60,11 +56,7 @@ public class POSPayment implements Serializable {
     }
 
     public int getPOSTenderTypeID() {
-        return POSTenderTypeID;
-    }
-
-    public void setPOSTenderTypeID(int POSTenderTypeID) {
-        this.POSTenderTypeID = POSTenderTypeID;
+        return tenderType.getC_POSTenderType_ID();
     }
 
     public int getPaymentId() {
@@ -92,34 +84,45 @@ public class POSPayment implements Serializable {
         paymentAmount = BigDecimal.valueOf(doubleValue);
     }
 
-    public void setCashTenderTypeId(String paymentType) {
+    public void setTenderType(String paymentType, Context ctx) {
+        PosTenderTypeManagement tenderTypeManager = new PosTenderTypeManagement(ctx);
         if(IOrder.PAYMENTRULE_Cash.equals(paymentType)) {
-            POSTenderTypeID = CASH_TENDER_TYPE_ID;
+           tenderType = tenderTypeManager.get(PosTenderType.CASH_PAYMENT_TENDER_TYPE_VALUE);
         } else if(IOrder.PAYMENTRULE_CreditCard.equals(paymentType)) {
-            POSTenderTypeID = CREDIT_CARD_TENDER_TYPE_ID;
+            tenderType = tenderTypeManager.get(PosTenderType.CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE);
         }
     }
 
-    public String getTenderType() {
-        switch(POSTenderTypeID) {
-            case CASH_TENDER_TYPE_ID:
-                return IOrder.PAYMENTRULE_Cash;
-            case CREDIT_CARD_TENDER_TYPE_ID:
-                return IOrder.PAYMENTRULE_CreditCard;
-            default:
-                return IOrder.PAYMENTRULE_Cash;
+    public void setTenderType(PosTenderType tenderType) {
+        this.tenderType = tenderType;
+    }
+
+    public PosTenderType getTenderType() {
+        return tenderType;
+    }
+
+    public String getPaymentRule() {
+
+        //Cash by default
+        String paymentRule = IOrder.PAYMENTRULE_Cash;
+
+        if (tenderType != null) {
+            switch(tenderType.getTenderType()) {
+                case PosTenderType.CASH_PAYMENT_TENDER_TYPE_VALUE:
+                    return IOrder.PAYMENTRULE_Cash;
+                case PosTenderType.CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE:
+                    return IOrder.PAYMENTRULE_CreditCard;
+            }
         }
+
+        return paymentRule;
     }
 
     public String getPaymentTenderType() {
-        switch(POSTenderTypeID) {
-            case CASH_TENDER_TYPE_ID:
-                return CASH_PAYMENT_TENDER_TYPE_VALUE;
-            case CREDIT_CARD_TENDER_TYPE_ID:
-                return CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE;
-            default:
-                return CASH_PAYMENT_TENDER_TYPE_VALUE;
-        }
+        if (tenderType != null)
+            return tenderType.getTenderType();
+
+        return PosTenderType.CASH_PAYMENT_TENDER_TYPE_VALUE;
     }
 
     public boolean updatePayment(Context ctx) {

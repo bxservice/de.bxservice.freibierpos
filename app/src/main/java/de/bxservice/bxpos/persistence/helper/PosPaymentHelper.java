@@ -60,7 +60,7 @@ public class PosPaymentHelper extends PosObjectHelper {
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_BY, userId);
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_ORDER_ID, payment.getOrder().getOrderId());
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_AMOUNT, payment.getPaymentAmtInteger());
-        values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE, payment.getPOSTenderTypeID());
+        values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE_ID, payment.getTenderType().getC_POSTenderType_ID());
 
         // insert row
         return database.insert(Tables.TABLE_POSPAYMENT, null, values);
@@ -76,7 +76,7 @@ public class PosPaymentHelper extends PosObjectHelper {
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_ORDER_ID, payment.getOrder().getOrderId());
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_AMOUNT, payment.getPaymentAmtInteger());
-        values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE, payment.getPOSTenderTypeID());
+        values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE_ID, payment.getTenderType().getC_POSTenderType_ID());
 
         values.put(PosPaymentContract.POSPaymentDB.COLUMN_NAME_UPDATED_AT, Long.parseLong(getCurrentDate()));
 
@@ -111,11 +111,12 @@ public class PosPaymentHelper extends PosObjectHelper {
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
+            PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
             do {
                 POSPayment posPayment = new POSPayment();
                 posPayment.setPaymentId(c.getInt(c.getColumnIndex(PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_ID)));
                 posPayment.setOrder(order);
-                posPayment.setPOSTenderTypeID(c.getInt(c.getColumnIndex(PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE)));
+                posPayment.setTenderType(tenderTypeHelper.getPosTenderType(c.getInt(c.getColumnIndex(PosPaymentContract.POSPaymentDB.COLUMN_NAME_TENDER_TYPE_ID))));
                 posPayment.setPaymentAmountFromInt(c.getInt(c.getColumnIndex(PosPaymentContract.POSPaymentDB.COLUMN_NAME_PAYMENT_AMOUNT)));
 
                 payments.add(posPayment);

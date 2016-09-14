@@ -27,24 +27,18 @@ package de.bxservice.bxpos.persistence.dbcontract;
 import android.provider.BaseColumns;
 
 /**
- * Created by Diego Ruiz on 8/04/16.
+ * Created by Diego Ruiz on 9/14/16.
  */
-public class PosPaymentContract {
+public class PosTenderTypeContract {
 
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
-    public PosPaymentContract() {}
+    public PosTenderTypeContract() {}
 
     /* Inner class that defines the table contents */
-    public static abstract class POSPaymentDB implements BaseColumns {
-        public static final String TABLE_NAME                 = "pos_payment";
-        public static final String COLUMN_NAME_PAYMENT_ID     = "paymentid";
-        public static final String COLUMN_NAME_CREATED_AT     = "created";
-        public static final String COLUMN_NAME_UPDATED_AT     = "updated";
-        public static final String COLUMN_NAME_CREATED_BY     = "createdBy";
+    public static abstract class PosTenderTypeDB implements BaseColumns {
+        public static final String TABLE_NAME                 = "pos_tenderType";
         public static final String COLUMN_NAME_TENDER_TYPE_ID = "tenderType_ID";
-        public static final String COLUMN_NAME_ORDER_ID       = "orderid";
-        public static final String COLUMN_NAME_PAYMENT_AMOUNT = "paymentAmount";
-
+        public static final String COLUMN_NAME_TENDER_TYPE    = "tenderType";
     }
 }
