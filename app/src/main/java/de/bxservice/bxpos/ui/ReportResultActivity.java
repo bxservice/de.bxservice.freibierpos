@@ -25,11 +25,15 @@
 package de.bxservice.bxpos.ui;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,6 +57,13 @@ import de.bxservice.bxpos.ui.adapter.ReportResultAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
 public class ReportResultActivity extends AppCompatActivity {
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     private RecyclerView recyclerView;
     private ArrayList<String> reportResults;
@@ -92,7 +103,21 @@ public class ReportResultActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_pdf:
-                saveToPdf();
+                int permissionCheck = ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                //Version API 23+, you have to ask for permission in the activity to be allow to save files
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    // We don't have permission so prompt the user
+                    ActivityCompat.requestPermissions(
+                            this,
+                            PERMISSIONS_STORAGE,
+                            REQUEST_EXTERNAL_STORAGE
+                    );
+                } else {
+                    //We have permission so save the pdf
+                    saveToPdf();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -155,6 +180,25 @@ public class ReportResultActivity extends AppCompatActivity {
         openPDF(pdfName);
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    saveToPdf();
+
+                } else {
+                    // permission denied
+                }
+                return;
+            }
+        }
     }
 
     private void openPDF(String pdfName) {
