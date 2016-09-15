@@ -12,9 +12,9 @@
     <string name="save">Guardar</string>
 
     <!-- Strings related to dialogs -->
-    <string name="discard_draft_order">Descartar orden?</string>
+    <string name="discard_draft_order">¿Descartar orden?</string>
     <string name="discard">Descartar</string>
-    <string name="number_of_guests">Establecer número de Personas</string>
+    <string name="number_of_guests">Establecer número de personas</string>
     <string name="guests">Personas</string>
     <string name="set">Establecer</string>
     <string name="add">Añadir</string>
@@ -22,7 +22,7 @@
     <string name="note">Añadir observación</string>
     <string name="kitchen_note">Nota para la cocina</string>
     <string name="undo">DESHACER</string>
-    <string name="item_removed">Item eliminado</string>
+    <string name="item_removed">Ítem eliminado</string>
     <string name="delete">Eliminar</string>
     <string name="copy">Copiar</string>
     <string name="selected_count">%1$s seleccionado</string>
@@ -38,8 +38,8 @@
     <string name="join">Combinar</string>
     <string name="split">Dividir</string>
     <string name="new_order">Nueva orden</string>
-    <string name="unable_split">No se puede dividir una orden con menos de un item</string>
-    <string name="split_all_Error">No se pueden seleccionar todos los items para dividir</string>
+    <string name="unable_split">No se puede dividir una orden con menos de un ítem</string>
+    <string name="split_all_Error">No se pueden seleccionar todos los ítems para dividir</string>
     <string name="void_title">Anular</string>
     <string name="select_order">Seleccionar orden</string>
 
@@ -49,9 +49,9 @@
     <string name="action_sign_in">Acceder</string>
     <string name="action_sign_in_short">Acceder</string>
     <string name="action_retry">REINTENTAR</string>
-    <string name="error_invalid_password">Esta contrase{a es muy corta</string>
-    <string name="error_no_connection">No hay conexión a Internet!</string>
-    <string name="error_no_connection_username">No hay conexión a internet y usuario desconocido!</string>
+    <string name="error_invalid_password">Esta contraseña es muy corta</string>
+    <string name="error_no_connection">¡No hay conexión a internet!</string>
+    <string name="error_no_connection_username">¡No hay conexión a internet y usuario desconocido!</string>
     <string name="error_incorrect_password">Nombre de usuario o contraseña incorrecto</string>
     <string name="error_field_required">Este campo es requerido</string>
     <string name="error_config_server"> Error en los datos. Por favor, póngase en contacto con el administrador</string>
@@ -61,7 +61,7 @@
     <string name="login_title">FreiBier POS</string>
     <string name="title_activity_edit_order">Editar orden</string>
     <string name="title_activity_create_order">Nueva orden</string>
-    <string name="title_activity_add_items">Añadir items</string>
+    <string name="title_activity_add_items">Añadir ítems</string>
     <string name="title_activity_view_open_orders">Órdenes abiertas</string>
     <string name="title_activity_create_reservation">Reservación</string>
     <string name="title_activity_login">Acceder</string>
@@ -149,14 +149,14 @@
     <string name="currency_symbol">€</string>
 
     <string name="unsent_lines">Aún hay líneas sin enviar</string>
-    <string name="error_no_connection_on_pay_order">No hay conexión a internet! Las órdenes serán sincronizadas luego</string>
+    <string name="error_no_connection_on_pay_order">¡No hay conexión a internet! Las órdenes serán sincronizadas luego</string>
     <string name="error_no_connection_on_sync_order">No hay conexión a internet. Intente más adelante</string>
 
     <string name="success_on_sync_order">Órdenes sincronizadas</string>
     <string name="no_connection_on_sync_order">Su dispositivo no se puede comunicar con iDempiere. Intente más adelante</string>
 
     <!-- Navigation Drawer strings -->
-    <string name="synchronize">Sincronizar ordénes</string>
+    <string name="synchronize">Sincronizar órdenes</string>
     <string name="no_unsync_orders">¡Enhorabuena! Todas las órdenes están en iDempiere</string>
     <string name="comm_category">Comunicación</string>
     <string name="share">Compartir</string>
@@ -164,51 +164,51 @@
     <string name="void_item">Anular</string>
     <string name="already_voided_item">No puede anular una línea ya anulada</string>
     <string name="pref_header_data_security">Seguridad</string>
-    <string name="pref_summary_void_approval">Solicitar un PIN cuando se anulan items</string>
-    <string name="pref_title_void_approval">Bloquear anular items</string>
+    <string name="pref_summary_void_approval">Solicitar un PIN cuando se anulan ítems</string>
+    <string name="pref_title_void_approval">Bloquear anular ítems</string>
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">Una razón debe ser introducida</string>
     <string name="approve_void">Confirmación de anulación</string>
-    <string name="void_summary">¿Anular %1$s items?</string>
-    <string name="void_approval_message">¿Aprobar la anulacion de %1$s items porque %2$s</string>
-    <string name="assign_password">El PIN no ha sido asignado. Pongase en contacto con el administrador.</string>
+    <string name="void_summary">¿Anular %1$s ítems?</string>
+    <string name="void_approval_message">¿Aprobar la anulación de %1$s ítems porque %2$s</string>
+    <string name="assign_password">El PIN no ha sido asignado. Póngase en contacto con el administrador.</string>
     <string name="wrong_password">Contraseña incorrecta</string>
     <string name="from_date">Desde: %1$s</string>
     <string name="to_date">Hasta: %1$s</string>
     <string name="no_report_selected">Debe seleccionar por lo menos un tipo de reporte</string>
     <string name="no_records">No hay registros</string>
     <string name="net_sales">Ventas netas</string>
-    <string name="voided_items">Items anulados</string>
+    <string name="voided_items">Ítems anulados</string>
     <string name="sales">Ventas</string>
     <string name="pref_header_restaurant">Restaurante</string>
     <string name="order_prefix">Prefijo de orden</string>
-    <string name="prefix">El documento iniciara con estas letras. Use uno diferente para cada dispositivo</string>
+    <string name="prefix">El documento iniciará con estas letras. Use uno diferente para cada dispositivo</string>
     <string name="complimentary">Cortesía</string>
-    <string name="give_complimentary_product">¿Esta seguro que desea regalar este producto?</string>
+    <string name="give_complimentary_product">¿Está seguro que desea regalar este producto?</string>
     <string name="give">Regalar</string>
     <string name="type">Tipo</string>
     <string name="receipt">Recibo</string>
     <string name="cash">Efectivo</string>
     <string name="logout">Cerrar sesión</string>
     <string name="print_order">Imprimir orden</string>
-    <string name="no_print_items">No hay items a imprimir</string>
-    <string name="no_printing_device">No se encontro dispositivo de imrpesión</string>
+    <string name="no_print_items">No hay ítems a imprimir</string>
+    <string name="no_printing_device">No se encontro dispositivo de impresión</string>
     <string name="void_order">Anular orden</string>
     <string name="reload_data">Recargar datos</string>
-    <string name="reload_data_title">Recargar datos?</string>
-    <string name="reload_data_message">Recargar datos de iDempiere?</string>
+    <string name="reload_data_title">¿Recargar datos?</string>
+    <string name="reload_data_message">¿Recargar datos de iDempiere?</string>
     <string name="reload">Recargar</string>
     <string name="success_on_load_data">Datos cargados</string>
-    <string name="updating">Actulizando...</string>
+    <string name="updating">Actualizando...</string>
     <string name="no">No</string>
-    <string name="yes">Yes</string>
-    <string name="change_url">Esta accion eliminara la base de datos local. ¿Desea continuar?</string>
+    <string name="yes">Si</string>
+    <string name="change_url">Esta acción eliminara la base de datos local. ¿Desea continuar?</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
         <item>Ventas</item>
         <item>Mis ventas</item>
-        <item>Items anulados</item>
+        <item>Ítems anulados</item>
         <item>Ventas por mesa</item>
         <item>Ventas por producto</item>
     </string-array>
@@ -227,7 +227,7 @@
     </string-array>
     <string name="void_order_approval_message">Anular la orden %1$s por:  %2$</string>
     <string name="no_success_on_sync_order">Hubo un error. Contacte el administrador</string>
-    <string name="no_allow_complimentary">El item %1$s no puede ser gratis</string>
+    <string name="no_allow_complimentary">El ítem %1$s no puede ser gratis</string>
 
 </resources>
 
