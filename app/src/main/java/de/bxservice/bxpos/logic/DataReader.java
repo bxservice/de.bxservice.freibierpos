@@ -211,11 +211,12 @@ public class DataReader {
 
     public boolean isDataComplete(){
 
-        if(productCategoryList  != null && !productCategoryList.isEmpty() &&
+        if(productCategoryList   != null && !productCategoryList.isEmpty() &&
                 productList      != null && !productList.isEmpty() &&
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
                 productPriceList != null && !productPriceList.isEmpty() &&
-               defaultData != null) {
+                tenderTypeList   != null && !tenderTypeList.isEmpty() &&
+                restaurantInfo   != null &&  defaultData != null) {
             return true;
         }
 
