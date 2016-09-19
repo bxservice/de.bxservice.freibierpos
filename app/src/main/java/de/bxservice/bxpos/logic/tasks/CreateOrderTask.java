@@ -29,6 +29,7 @@ import android.os.AsyncTask;
 
 import de.bxservice.bxpos.logic.DataWriter;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.ui.MainActivity;
 import de.bxservice.bxpos.ui.PayOrderActivity;
 
@@ -52,9 +53,10 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
         DataWriter writer = new DataWriter();
         boolean success = true;
+        WebServiceRequestData wsData = new WebServiceRequestData(mActivity.getBaseContext());
 
         for(POSOrder order : orders) {
-            writer.writeOrder(order, mActivity.getBaseContext());
+            writer.writeOrder(order, mActivity.getBaseContext(), wsData);
             //If no success creating the order in iDempiere and the problem is the connection with the server
             if (!writer.isSuccess()) {
                 success = false;

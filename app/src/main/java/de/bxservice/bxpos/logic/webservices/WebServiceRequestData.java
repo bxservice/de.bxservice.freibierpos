@@ -25,19 +25,25 @@
 package de.bxservice.bxpos.logic.webservices;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.util.Properties;
 
 import de.bxservice.bxpos.logic.AssetsPropertyReader;
 import de.bxservice.bxpos.logic.PosProperties;
+import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 
 /**
  * Created by Diego Ruiz on 6/11/15.
  */
 public class WebServiceRequestData {
 
-    private static volatile WebServiceRequestData instance = null;
+    public static final String DATA_SHARED_PREF   = "de.bxservice.wsdata_preference";
+    public static final String USERNAME_SYNC_PREF = "de.bxservice.username";
+    public static final String PASSWORD_SYNC_PREF = "de.bxservice.password";
 
+    //Web services variables
     private String username        = null;
     private String password        = null;
     private String clientId        = null;
@@ -47,32 +53,48 @@ public class WebServiceRequestData {
     private String timeout         = null;
     private String attemptsTimeout = null;
     private String urlBase         = null;
-    private String warehouseId = null;
+    private String warehouseId     = null;
 
-    private WebServiceRequestData() {
+    public WebServiceRequestData(Context context) {
 
+        //Variables from preferences
+        readPreferenceVariables(context);
+
+        //Variables in the properties file
+        readValues(context);
+
+        //username and password
+        readCredentials(context);
     }
 
-    public static synchronized WebServiceRequestData getInstance() {
-        if (instance == null) {
-            instance = new WebServiceRequestData();
-        }
+    /**
+     * Variables read from the preference Menu
+     */
+    private void readPreferenceVariables(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
-        return instance;
+        urlBase =  sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
+        orgId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
+        clientId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
+        roleId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
+        warehouseId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID, "");
     }
 
-    public void readValues(Context context) {
+    private void readValues(Context context) {
         //Properties reader
         AssetsPropertyReader assetsPropertyReader = new AssetsPropertyReader(context);
         Properties properties = assetsPropertyReader.getProperties();
 
-        //clientId        = properties.getProperty(PosProperties.CLIENT_PROPERTY);
-        //roleId          = properties.getProperty(role);
-        //orgId           = properties.getProperty(PosProperties.ORG_PROPERTY);
         attemptsNo      = properties.getProperty(PosProperties.ATTEMPTS_PROPERTY);
         timeout         = properties.getProperty(PosProperties.TIMEOUT_PROPERTY);
         attemptsTimeout = properties.getProperty(PosProperties.ATTEMPTS_TIMEOUT_PROPERTY);
 
+    }
+
+    private void readCredentials(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(DATA_SHARED_PREF, Context.MODE_PRIVATE);
+        username = sharedPref.getString(USERNAME_SYNC_PREF, "");
+        password = sharedPref.getString(PASSWORD_SYNC_PREF, "");
     }
 
     public boolean isDataComplete() {
@@ -96,20 +118,8 @@ public class WebServiceRequestData {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setWarehouseId(String warehouseId) {
-        this.warehouseId = warehouseId;
     }
 
     public String getWarehouseId() {
@@ -120,55 +130,28 @@ public class WebServiceRequestData {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
     public String getRoleId() {
         return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
     }
 
     public String getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(String orgId) {
-        this.orgId = orgId;
-    }
-
     public String getAttemptsNo() {
         return attemptsNo;
-    }
-
-    public void setAttemptsNo(String attemptsNo) {
-        this.attemptsNo = attemptsNo;
     }
 
     public String getTimeout() {
         return timeout;
     }
 
-    public void setTimeout(String timeout) {
-        this.timeout = timeout;
-    }
-
     public String getAttemptsTimeout() {
         return attemptsTimeout;
-    }
-
-    public void setAttemptsTimeout(String attemptsTimeout) {
-        this.attemptsTimeout = attemptsTimeout;
     }
 
     public String getUrlBase() {
         return urlBase;
     }
 
-    public void setUrlBase(String urlBase) {
-        this.urlBase = urlBase;
-    }
 }

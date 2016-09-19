@@ -99,7 +99,6 @@ public class LoginActivity extends AppCompatActivity  {
 
     //Web service request data
     private SharedPreferences sharedPref;
-    private WebServiceRequestData wsData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,8 +150,6 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
-        initWebServiceRequestData();
-
         checkPlayServices();
     }
 
@@ -172,29 +169,6 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
         return true;
-    }
-
-    /**
-     * Init the webservice request data with the data from preferences
-     */
-    private void initWebServiceRequestData() {
-        //Get preferences from the administration settings
-        String urlConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
-        String orgConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
-        String clientConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
-        String roleConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
-        String warehouseConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID, "");
-
-        // Sets the data to create a ws request to iDempiere
-        wsData = WebServiceRequestData.getInstance();
-        wsData.setUrlBase(urlConnPref);
-
-        wsData.setClientId(clientConnPref);
-        wsData.setOrgId(orgConnPref);
-        wsData.setRoleId(roleConnPref);
-        wsData.setWarehouseId(warehouseConnPref);
-
-        wsData.readValues(getBaseContext());
     }
 
     /**
@@ -340,13 +314,20 @@ public class LoginActivity extends AppCompatActivity  {
      */
     private void offlineLogin(PosUser loggedUser, String plainPwd) {
 
-        wsData.setUsername(loggedUser.getUsername());
-        wsData.setPassword(plainPwd);
+        setWsDataPreferences(loggedUser.getUsername(), plainPwd);
 
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
         finish();
 
+    }
+
+    private void setWsDataPreferences(String username, String password) {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(WebServiceRequestData.USERNAME_SYNC_PREF, username);
+        editor.putString(WebServiceRequestData.PASSWORD_SYNC_PREF, password);
+        editor.commit();
     }
 
     private boolean isPasswordValid(String password) {
@@ -424,8 +405,8 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            wsData.setUsername(mUsername);
-            wsData.setPassword(mPassword);
+            setWsDataPreferences(mUsername, mPassword);
+            WebServiceRequestData wsData = new WebServiceRequestData(getBaseContext());
 
             //If the data to connect to the server has not been set up before - error
             if (!wsData.isDataComplete()) {
@@ -435,7 +416,7 @@ public class LoginActivity extends AppCompatActivity  {
                 snackbar.show();
                 return false;
             } else {
-                AuthenticationWebService auth = new AuthenticationWebService();
+                AuthenticationWebService auth = new AuthenticationWebService(wsData);
 
                 return auth.isSuccess();
             }
@@ -513,7 +494,7 @@ public class LoginActivity extends AppCompatActivity  {
                 Log.d(LOG_TAG, "Registering -> " + token);
 
                 //Send the token to the server
-                CreateDeviceTokenTask createDeviceTokenTask = new CreateDeviceTokenTask(tokenSharedPref);
+                CreateDeviceTokenTask createDeviceTokenTask = new CreateDeviceTokenTask(tokenSharedPref, this.getBaseContext());
                 createDeviceTokenTask.execute(token);
             }
 

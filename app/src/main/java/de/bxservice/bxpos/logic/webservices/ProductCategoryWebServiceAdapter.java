@@ -48,6 +48,10 @@ public class ProductCategoryWebServiceAdapter extends AbstractWSObject{
 
     private List<ProductCategory> productCategoryList;
 
+    public ProductCategoryWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

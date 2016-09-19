@@ -44,6 +44,10 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
     private static final String SERVICE_TYPE = "QueryOrgInfo";
     private RestaurantInfo restaurantInfo;
 
+    public OrgInfoWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

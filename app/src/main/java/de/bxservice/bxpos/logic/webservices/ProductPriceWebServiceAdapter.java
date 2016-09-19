@@ -51,6 +51,10 @@ public class ProductPriceWebServiceAdapter extends AbstractWSObject {
 
     private List<ProductPrice> productPriceList;
 
+    public ProductPriceWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

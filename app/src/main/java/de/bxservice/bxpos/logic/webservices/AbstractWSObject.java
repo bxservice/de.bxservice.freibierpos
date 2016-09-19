@@ -37,9 +37,9 @@ abstract class AbstractWSObject {
     private WebServiceRequestData wsData;
     private Object parameter;
 
-    protected AbstractWSObject() {
+    protected AbstractWSObject(WebServiceRequestData wsData) {
 
-        wsData = WebServiceRequestData.getInstance();
+        this.wsData = wsData;
 
         if (wsData.isDataComplete()) {
             initLogin();
@@ -48,15 +48,14 @@ abstract class AbstractWSObject {
         }
     }
 
-    public AbstractWSObject(Object parameter) {
+    public AbstractWSObject(WebServiceRequestData wsData, Object parameter) {
 
-        wsData = WebServiceRequestData.getInstance();
+        this.wsData = wsData;
 
         if (wsData.isDataComplete()) {
             initLogin();
             initClient();
             setParameter(parameter);
-            //runWebService();
         }
 
     }
@@ -92,9 +91,6 @@ abstract class AbstractWSObject {
 
     private void runWebService() {
         queryPerformed();
-        /*saveRequestResponse();
-        printTotal();
-        System.out.println();*/
     }
 
     public abstract String getServiceType();

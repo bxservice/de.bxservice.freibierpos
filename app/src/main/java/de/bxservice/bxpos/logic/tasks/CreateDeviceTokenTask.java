@@ -24,21 +24,25 @@
  **********************************************************************/
 package de.bxservice.bxpos.logic.tasks;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import de.bxservice.bxpos.fcm.BxPosFirebaseInstanceIDService;
 import de.bxservice.bxpos.logic.DataWriter;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * Created by Diego Ruiz on 5/23/16.
  */
 public class CreateDeviceTokenTask extends AsyncTask<String, Void, Boolean> {
 
-    SharedPreferences sharedPref;
+    private Context context;
+    private SharedPreferences sharedPref;
 
-    public CreateDeviceTokenTask(SharedPreferences sharedPref) {
+    public CreateDeviceTokenTask(SharedPreferences sharedPref, Context context) {
         this.sharedPref = sharedPref;
+        this.context = context;
     }
 
     @Override
@@ -47,9 +51,11 @@ public class CreateDeviceTokenTask extends AsyncTask<String, Void, Boolean> {
         DataWriter writer = new DataWriter();
         boolean success = true;
 
+        final WebServiceRequestData wsData = new WebServiceRequestData(context);
+
         for(String token : tokens) {
 
-            writer.writeDeviceToken(token);
+            writer.writeDeviceToken(token, wsData);
             if (!writer.isSuccess() && writer.isConnectionError()) {
                 success = false;
                 break;

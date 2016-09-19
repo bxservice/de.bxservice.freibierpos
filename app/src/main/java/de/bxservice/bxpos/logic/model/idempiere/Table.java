@@ -205,7 +205,7 @@ public class Table implements Serializable {
         ConnectivityManager connMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            UpdateTableStatusTask updateTask = new UpdateTableStatusTask();
+            UpdateTableStatusTask updateTask = new UpdateTableStatusTask(ctx);
             updateTask.execute(this);
         }
 

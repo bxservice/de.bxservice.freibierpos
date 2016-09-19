@@ -1011,7 +1011,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         if(positionItemsToVoid != null) {
 
             for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
-                order.voidLine(positionItemsToVoid.get(i), reason);
+                order.voidLine(positionItemsToVoid.get(i), reason, getBaseContext());
             }
 
             this.recreate(); //TODO: Improve fragment recreation

@@ -34,12 +34,16 @@ import org.idempiere.webservice.client.response.CompositeResponse;
 /**
  * Created by Diego Ruiz on 12/11/15.
  */
-public class AuthenticationWebService extends AbstractWSObject{
+public class AuthenticationWebService extends AbstractWSObject {
 
     //Associated record in Web Service Security in iDempiere
     private static final String SERVICE_TYPE = "TestLogin";
 
     private boolean success;
+
+    public AuthenticationWebService(WebServiceRequestData wsData) {
+        super(wsData);
+    }
 
     @Override
     public String getServiceType() {
