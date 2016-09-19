@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity
                     }).create().show();
         }
         else if (id == R.id.nav_logout) {
+            cleanWSData();
             startActivity(new Intent(getBaseContext(), LoginActivity.class));
             finish();
             return true;
@@ -365,6 +366,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
+        cleanWSData();
         PosObjectHelper.closeDB(getBaseContext());
     }
 
@@ -418,6 +420,17 @@ public class MainActivity extends AppCompatActivity
                 } else MainActivity.this.recreate();
             }
         }, 1);
+    }
+
+    /**
+     * Make sure that the username and password only last for one session
+     */
+    private void cleanWSData() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        // Clearing all data from Shared Preferences
+        editor.clear();
+        editor.commit();
     }
 
     /**
