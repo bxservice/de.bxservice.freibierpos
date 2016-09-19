@@ -47,6 +47,7 @@ import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * Class that reads from iDempiere the data and call the necessary methods
@@ -72,11 +73,12 @@ public class DataReader {
     public DataReader(Context ctx) {
 
         mContext = ctx;
+        final WebServiceRequestData wsData = new WebServiceRequestData(mContext);
 
         Thread outputDeviceThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                OutputDeviceWebServiceAdapter deviceWS = new OutputDeviceWebServiceAdapter();
+                OutputDeviceWebServiceAdapter deviceWS = new OutputDeviceWebServiceAdapter(wsData);
                 outputDeviceList = deviceWS.getOutputDeviceList();
                 persistDeviceList();
             }
@@ -87,13 +89,13 @@ public class DataReader {
         Thread productCategoryThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter();
+                ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(wsData);
                 productCategoryList = productCategoryWS.getProductCategoryList();
 
-                ProductWebServiceAdapter productWS = new ProductWebServiceAdapter();
+                ProductWebServiceAdapter productWS = new ProductWebServiceAdapter(wsData);
                 productList = productWS.getProductList();
 
-                ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter();
+                ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter(wsData);
                 productPriceList = productPriceWS.getProductPriceList();
 
                 setProductRelations();
@@ -107,7 +109,7 @@ public class DataReader {
         Thread tableThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                TableWebServiceAdapter tableWS = new TableWebServiceAdapter();
+                TableWebServiceAdapter tableWS = new TableWebServiceAdapter(wsData);
                 tableGroupList = tableWS.getTableGroupList();
                 persistTables();
             }
@@ -118,7 +120,7 @@ public class DataReader {
         Thread tablePosData = new Thread(new Runnable() {
             @Override
             public void run() {
-                DefaultPosDataWebServiceAdapter dataWS = new DefaultPosDataWebServiceAdapter();
+                DefaultPosDataWebServiceAdapter dataWS = new DefaultPosDataWebServiceAdapter(wsData);
                 defaultData = dataWS.getDefaultPosData();
                 persistPosData();
             }
@@ -129,7 +131,7 @@ public class DataReader {
         Thread orgInfoThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                OrgInfoWebServiceAdapter dataWS = new OrgInfoWebServiceAdapter();
+                OrgInfoWebServiceAdapter dataWS = new OrgInfoWebServiceAdapter(wsData);
                 restaurantInfo = dataWS.getRestaurantInfo();
                 persistOrgInfo();
             }
@@ -140,7 +142,7 @@ public class DataReader {
         Thread tenderTypesThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                PosTenderTypeWebServiceAdapter tenderTypeWS = new PosTenderTypeWebServiceAdapter();
+                PosTenderTypeWebServiceAdapter tenderTypeWS = new PosTenderTypeWebServiceAdapter(wsData);
                 tenderTypeList = tenderTypeWS.getTenderTypeList();
                 persistTenderTypes();
             }

@@ -154,9 +154,11 @@ public class MainActivity extends AppCompatActivity
         View headerLayout = navigationView.getHeaderView(0); // 0-index header
         TextView userNameTextView = (TextView) headerLayout.findViewById(R.id.usernameTextView);
 
-        userNameTextView.setText(WebServiceRequestData.getInstance().getUsername());
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
+        userNameTextView.setText(sharedPref.getString(WebServiceRequestData.USERNAME_SYNC_PREF, ""));
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
         callAsynchronousTask();
 

@@ -24,24 +24,34 @@
  **********************************************************************/
 package de.bxservice.bxpos.logic.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.webservices.UpdateTableStatusWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * Created by Diego Ruiz on 5/24/16.
  */
 public class UpdateTableStatusTask extends AsyncTask<Table, Void, Boolean> {
 
+    private Context ctx;
+
+    public UpdateTableStatusTask(Context context) {
+        ctx = context;
+    }
+
     @Override
     protected Boolean doInBackground(Table... tables) {
 
         boolean success = true;
 
+        WebServiceRequestData wsData = new WebServiceRequestData(ctx);
+
         for (Table table : tables) {
 
-            UpdateTableStatusWebServiceAdapter updateTableStatusWebServiceAdapter = new UpdateTableStatusWebServiceAdapter(table);
+            UpdateTableStatusWebServiceAdapter updateTableStatusWebServiceAdapter = new UpdateTableStatusWebServiceAdapter(wsData, table);
             if (!updateTableStatusWebServiceAdapter.isSuccess() && updateTableStatusWebServiceAdapter.isConnectionError()) {
                 success = false;
                 break;

@@ -49,6 +49,10 @@ public class TableWebServiceAdapter extends AbstractWSObject{
     private List<Table> tableList;
     private List <TableGroup> tableGroupList;
 
+    public TableWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

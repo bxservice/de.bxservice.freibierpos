@@ -706,7 +706,7 @@ public class POSOrder implements Serializable {
      * Void line by creating a copy of the original line
      * but with negative qty
      */
-    public boolean voidLine(int position, String reason) {
+    public boolean voidLine(int position, String reason, Context ctx) {
 
         POSOrderLine voidedLine = orderedLines.get(position); //Original line to be voided
 
@@ -728,7 +728,7 @@ public class POSOrder implements Serializable {
         voidedLine.updateLine(null);
 
         orderedLines.add(position + 1, voidLine);
-        voidLine.createLine(null);
+        voidLine.createLine(ctx);
 
         return true;
     }

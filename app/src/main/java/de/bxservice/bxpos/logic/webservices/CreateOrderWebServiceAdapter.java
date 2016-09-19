@@ -68,8 +68,8 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
     private String errorMessage = "";
     private Context mContext;
 
-    public CreateOrderWebServiceAdapter(POSOrder order, Context ctx) {
-        super(order);
+    public CreateOrderWebServiceAdapter(WebServiceRequestData wsData, POSOrder order, Context ctx) {
+        super(wsData, order);
         mContext = ctx;
         queryPerformed();
     }

@@ -47,8 +47,8 @@ public class UpdateTableStatusWebServiceAdapter extends AbstractWSObject {
     private boolean success;
     private boolean connectionError;
 
-    public UpdateTableStatusWebServiceAdapter(Table table) {
-        super(table);
+    public UpdateTableStatusWebServiceAdapter(WebServiceRequestData wsData, Table table) {
+        super(wsData, table);
         queryPerformed();
     }
 

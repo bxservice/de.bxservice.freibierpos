@@ -47,6 +47,10 @@ public class OutputDeviceWebServiceAdapter extends AbstractWSObject{
 
     private List<POSOutputDevice> outputDeviceList;
 
+    public OutputDeviceWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

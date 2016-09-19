@@ -45,8 +45,8 @@ public class CreateDeviceTokenWebServiceAdapter extends AbstractWSObject {
     private boolean success;
     private boolean connectionError;
 
-    public CreateDeviceTokenWebServiceAdapter(String deviceToken) {
-        super(deviceToken);
+    public CreateDeviceTokenWebServiceAdapter(WebServiceRequestData wsData, String deviceToken) {
+        super(wsData, deviceToken);
         queryPerformed();
     }
 

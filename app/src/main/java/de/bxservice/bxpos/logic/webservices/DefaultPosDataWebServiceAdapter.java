@@ -43,6 +43,10 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
     private static final String SERVICE_TYPE = "QueryPOSData";
     private DefaultPosData defaultPosData;
 
+    public DefaultPosDataWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

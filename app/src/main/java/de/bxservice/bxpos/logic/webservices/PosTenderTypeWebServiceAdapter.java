@@ -47,6 +47,10 @@ public class PosTenderTypeWebServiceAdapter extends AbstractWSObject{
 
     private List<PosTenderType> tenderTypeList;
 
+    public PosTenderTypeWebServiceAdapter(WebServiceRequestData wsData) {
+        super(wsData);
+    }
+
     @Override
     public String getServiceType() {
         return SERVICE_TYPE;

@@ -30,6 +30,7 @@ import android.util.Log;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.webservices.CreateDeviceTokenWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.CreateOrderWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * Class that writes in iDempiere the data
@@ -45,13 +46,13 @@ public class DataWriter {
     private boolean connectionError = false;
     private String  errorMessage = "";
 
-    public void writeOrder(final POSOrder order, final Context context) {
+    public void writeOrder(final POSOrder order, final Context context, final WebServiceRequestData wsData) {
         Log.i(LOG_TAG, "Write order");
 
         Thread createOrderThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(order, context);
+                CreateOrderWebServiceAdapter createOrderWS = new CreateOrderWebServiceAdapter(wsData, order, context);
                 success = createOrderWS.isSuccess();
                 connectionError = createOrderWS.isConnectionError();
                 errorMessage = createOrderWS.getErrorMessage();
@@ -61,13 +62,13 @@ public class DataWriter {
         createOrderThread.run();
     }
 
-    public void writeDeviceToken(final String token) {
+    public void writeDeviceToken(final String token, final WebServiceRequestData wsData) {
         Log.i(LOG_TAG, "Write token");
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                CreateDeviceTokenWebServiceAdapter createTokenWS = new CreateDeviceTokenWebServiceAdapter(token);
+                CreateDeviceTokenWebServiceAdapter createTokenWS = new CreateDeviceTokenWebServiceAdapter(wsData, token);
                 success = createTokenWS.isSuccess();
                 connectionError = createTokenWS.isConnectionError();
             }

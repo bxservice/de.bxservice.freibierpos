@@ -55,7 +55,7 @@ public class ReadServerDataTask extends AsyncTask<Void, Void, Boolean> {
         if(mActivity != null)
             ctx = mActivity.getBaseContext();
 
-        WebServiceRequestData wsData = WebServiceRequestData.getInstance();
+        WebServiceRequestData wsData = new WebServiceRequestData(ctx);
 
         DataReader data;
         //Check if the necessary data to perform a web service call exists
