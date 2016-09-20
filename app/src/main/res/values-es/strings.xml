@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FreiBier POS</string>
     <string name="bx_pos">BX POS</string>
-    <string name="powered_by">POS powered by BX Service</string>
+    <string name="powered_by">POS powered by BX Service GmbH</string>
 
     <string name="navigation_drawer_open">Abrir panel de navegación</string>
     <string name="navigation_drawer_close">Cerrar panel de navegación</string>
@@ -228,6 +228,9 @@
     <string name="void_order_approval_message">Anular la orden %1$s por:  %2$</string>
     <string name="no_success_on_sync_order">Hubo un error. Contacte el administrador</string>
     <string name="no_allow_complimentary">El ítem %1$s no puede ser gratis</string>
+    <string name="complete_order">¿Completar pago?</string>
+    <string name="no_undone_operation">Esta operación no se puede deshacer</string>
+    <string name="complete">Completar</string>
 
 </resources>
 

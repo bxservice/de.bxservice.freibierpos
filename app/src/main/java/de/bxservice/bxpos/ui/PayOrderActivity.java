@@ -28,6 +28,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -37,6 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -549,7 +551,15 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     private void completePayment() {
-        showPaymentDialog();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.complete_order)
+                .setMessage(R.string.no_undone_operation)
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.complete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        showPaymentDialog();
+                    }
+                }).create().show();
     }
 
     private void showPaymentDialog() {
