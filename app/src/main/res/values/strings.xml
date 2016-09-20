@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FreiBier POS</string>
     <string name="app_title">FreiBier POS</string>
-    <string name="powered_by">POS powered by BX Service</string>
+    <string name="powered_by">POS powered by BX Service GmbH</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -206,6 +206,9 @@
     <string name="change_url">This action will delete the local database. Do you want to proceed?</string>
     <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
     <string name="no_allow_complimentary">The item %1$s cannot be free</string>
+    <string name="complete_order">Complete payment?</string>
+    <string name="no_undone_operation">This operation cannot be undone</string>
+    <string name="complete">Complete</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
