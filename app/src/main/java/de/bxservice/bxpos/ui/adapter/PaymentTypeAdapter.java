@@ -24,7 +24,9 @@
  **********************************************************************/
 package de.bxservice.bxpos.ui.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +56,10 @@ public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.
 
         public void bindPaymentType(String paymentType, int position) {
             txtPayment.setText(paymentType);
-            if (position == 0)
+            if (position == 0) {
                 txtPayment.setSelected(true);
+                txtPayment.setBackgroundColor(ContextCompat.getColor(txtPayment.getContext(), R.color.colorAccent));
+            }
         }
     }
 
@@ -74,8 +78,13 @@ public class PaymentTypeAdapter extends RecyclerView.Adapter<PaymentTypeAdapter.
         ViewGroup row = (ViewGroup) view.getParent();
         for(int itemPos = 0; itemPos < row.getChildCount(); itemPos++) {
             row.getChildAt(itemPos).setSelected(false);
+            TypedValue outValue = new TypedValue();
+            row.getChildAt(itemPos).getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+            row.getChildAt(itemPos).setBackgroundResource(outValue.resourceId);
         }
         view.setSelected(true);
+        view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
+
         if (listener != null)
             listener.onClick(view);
     }

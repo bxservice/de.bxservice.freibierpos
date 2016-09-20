@@ -554,7 +554,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         new AlertDialog.Builder(this)
                 .setTitle(R.string.complete_order)
                 .setMessage(R.string.no_undone_operation)
-                .setNegativeButton(R.string.no, null)
+                .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.complete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         showPaymentDialog();
