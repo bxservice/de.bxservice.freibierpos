@@ -25,7 +25,7 @@
 
     <header
         android:fragment="de.bxservice.bxpos.ui.OfflineHeadersPreferenceFragment"
-        android:icon="@drawable/ic_dvr_black_24dp"
+        android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/about" >
         <extra android:name="settings" android:value="about" />
     </header>
