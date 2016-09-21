@@ -91,4 +91,11 @@
 
     </PreferenceScreen>
 
+    <PreferenceScreen
+        android:title="@string/about"
+        android:summary="@string/about_summary">
+        <intent android:targetPackage="de.bxservice.bxpos"
+            android:targetClass="de.bxservice.bxpos.ui.AboutActivity"/>
+    </PreferenceScreen>
+
 </PreferenceScreen>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FreiBier POS</string>
+    <string name="app_name">Freibier POS</string>
     <string name="bx_pos">BX POS</string>
     <string name="powered_by">POS powered by BX Service GmbH</string>
 
@@ -58,7 +58,7 @@
     <string name="error_no_server_data_configured">Login data missing. Please contact the administrator!</string>
 
     <!-- Activity titles strings -->
-    <string name="login_title">FreiBier POS</string>
+    <string name="login_title">Freibier POS</string>
     <string name="title_activity_edit_order">Auftrag bearbeiten</string>
     <string name="title_activity_create_order">Neue Auftrag</string>
     <string name="title_activity_add_items">Verlängern items</string>
@@ -228,11 +228,24 @@
         <item>Bargeld</item>
         <item>Kreditkarte</item>
     </string-array>
+
     <string name="void_order_approval_message">Void order %1$s because of %2$</string>
     <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
     <string name="no_allow_complimentary">The item %1$s cannot be free</string>
     <string name="complete_order">Complete payment?</string>
     <string name="no_undone_operation">This operation cannot be undone</string>
     <string name="complete">Complete</string>
+    <string name="app_title">Freibier POS</string>
+
+    <!-- About activity strings -->
+    <string name="about">Über</string>
+    <string name="about_forum">Besuche das Forum</string>
+    <string name="about_google">Auf Google+ folgen</string>
+    <string name="about_rate">Diese App bewerten</string>
+    <string name="about_license">Lizenzen</string>
+    <string name="about_help">Hilfe</string>
+    <string name="developedBy">Developed by:</string>
+    <string name="about_version">Version 1.0.0</string>
+    <string name="about_summary">Informationen über Freibier POS</string>
 
 </resources>

@@ -244,8 +244,10 @@ public class MainActivity extends AppCompatActivity
                             reloadPOSData();
                         }
                     }).create().show();
-        }
-        else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_logout) {
             cleanWSData();
             startActivity(new Intent(getBaseContext(), LoginActivity.class));
             finish();

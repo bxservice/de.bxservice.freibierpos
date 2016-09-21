@@ -55,6 +55,8 @@ public class OfflineHeadersPreferenceFragment extends PreferenceFragment {
             activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_CLIENT_ID));
             activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ROLE_ID));
             activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_WAREHOUSE_ID));
+        } else if ("about".equals(settings)) {
+            addPreferencesFromResource(R.xml.pref_about);
         }
     }
 }
