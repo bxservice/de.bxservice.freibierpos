@@ -37,4 +37,7 @@
     <!-- Background color for empty tables. -->
     <color name="empty_table_color">#7294b0</color>
 
+    <!-- Text color for about activity. -->
+    <color name="about_text_color">#ff333333</color>
+
 </resources>

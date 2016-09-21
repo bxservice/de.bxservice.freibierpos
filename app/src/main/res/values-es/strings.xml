@@ -58,7 +58,7 @@
     <string name="error_no_server_data_configured">Faltan datos de autenticación. Por favor, póngase en contacto con el administrador</string>
 
     <!-- Activity titles strings -->
-    <string name="login_title">FreiBier POS</string>
+    <string name="login_title">Freibier POS</string>
     <string name="title_activity_edit_order">Editar orden</string>
     <string name="title_activity_create_order">Nueva orden</string>
     <string name="title_activity_add_items">Añadir ítems</string>
@@ -231,6 +231,18 @@
     <string name="complete_order">¿Completar pago?</string>
     <string name="no_undone_operation">Esta operación no se puede deshacer</string>
     <string name="complete">Completar</string>
+    <string name="app_title">Freibier POS</string>
+
+    <!-- About activity strings -->
+    <string name="about">Acerca de</string>
+    <string name="about_forum">Visita el foro</string>
+    <string name="about_google">Síguenos en G+</string>
+    <string name="about_rate">Evaluar</string>
+    <string name="about_license">Licencia</string>
+    <string name="about_help">Ayuda</string>
+    <string name="developedBy">Desarrollado por:</string>
+    <string name="about_version">Version 1.0.0</string>
+    <string name="about_summary">Informacion sobre Freibier POS</string>
 
 </resources>
 

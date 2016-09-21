@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:title="@string/about"
+        android:summary="@string/about_summary">
+        <intent android:targetPackage="de.bxservice.bxpos"
+            android:targetClass="de.bxservice.bxpos.ui.AboutActivity"/>
+    </PreferenceScreen>
+</PreferenceScreen>
