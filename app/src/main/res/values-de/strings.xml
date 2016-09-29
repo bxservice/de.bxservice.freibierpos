@@ -25,7 +25,7 @@
     <string name="item_removed">Entfernt Artikel</string>
     <string name="delete">Löschen</string>
     <string name="copy">Kopieren</string>
-    <string name="selected_count">%1$s ausgewählt</string>
+    <string name="selected_count">%1$d ausgewählt</string>
     <string name="set_table">Wählen Tisch</string>
     <string name="change_table">Schaltertisch</string>
     <string name="split_order">Split-Bestellung</string>
@@ -33,7 +33,7 @@
     <string name="remove">Entfernen</string>
     <string name="send_items">Senden</string>
     <string name="synchronize_orders_title">Synchronisieren Sie Aufträge?</string>
-    <string name="synchronize_orders_message">Synchronisieren Sie %1$s Aufträge mit iDempiere?</string>
+    <string name="synchronize_orders_message">Synchronisieren Sie %1$d Aufträge mit iDempiere?</string>
     <string name="join_order_question">Aufträge kombinieren?</string>
     <string name="join">Kombinieren</string>
     <string name="split">Split</string>
@@ -75,7 +75,7 @@
     <string name="subtotal_value">Zwischensumme: %1$s</string>
     <string name="total">Gesamt</string>
     <string name="total_value">Gesamt: %1$s</string>
-    <string name="quantity_summary">Menge: %1$s</string>
+    <string name="quantity_summary">Menge: %1$d</string>
 
 
     <!-- Strings related to roles -->
@@ -172,8 +172,8 @@
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason"> Ein Grund muss geschrieben werden</string>
     <string name="approve_void">Void approval</string>
-    <string name="void_summary">Ungültig %1$s Artikel?</string>
-    <string name="void_approval_message">Approve %1$s voided items because of %2$s</string>
+    <string name="void_summary">Ungültig %1$d Artikel?</string>
+    <string name="void_approval_message">Approve %1$d voided items because of %2$s</string>
     <string name="assign_password">The admin PIN has not been assigned. Contact the administrator</string>
     <string name="wrong_password">Falsches Passwort</string>
     <string name="from_date">From: %1$s</string>
@@ -229,7 +229,7 @@
         <item>Kreditkarte</item>
     </string-array>
 
-    <string name="void_order_approval_message">Void order %1$s because of %2$</string>
+    <string name="void_order_approval_message">Void order %1$d because of %2$s</string>
     <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
     <string name="no_allow_complimentary">The item %1$s cannot be free</string>
     <string name="complete_order">Complete payment?</string>

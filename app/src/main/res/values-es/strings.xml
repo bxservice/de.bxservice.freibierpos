@@ -25,7 +25,7 @@
     <string name="item_removed">Ítem eliminado</string>
     <string name="delete">Eliminar</string>
     <string name="copy">Copiar</string>
-    <string name="selected_count">%1$s seleccionado</string>
+    <string name="selected_count">%1$d seleccionado</string>
     <string name="set_table">Establecer mesa</string>
     <string name="change_table">Cambiar mesa</string>
     <string name="split_order">Dividir orden</string>
@@ -33,7 +33,7 @@
     <string name="remove">Remover</string>
     <string name="send_items">Enviar</string>
     <string name="synchronize_orders_title">¿Sincronizar órdenes?</string>
-    <string name="synchronize_orders_message">¿Sincronizar %1$s órdenes con iDempiere?</string>
+    <string name="synchronize_orders_message">¿Sincronizar %1$d órdenes con iDempiere?</string>
     <string name="join_order_question">¿Combinar órdenes?</string>
     <string name="join">Combinar</string>
     <string name="split">Dividir</string>
@@ -75,7 +75,7 @@
     <string name="subtotal_value">Subtotal: %1$s</string>
     <string name="total">Total</string>
     <string name="total_value">Total: %1$s</string>
-    <string name="quantity_summary">Cantidad: %1$s</string>
+    <string name="quantity_summary">Cantidad: %1$d</string>
 
     <!-- Strings related to roles -->
     <string name="role">Rol</string>
@@ -169,8 +169,8 @@
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">Una razón debe ser introducida</string>
     <string name="approve_void">Confirmación de anulación</string>
-    <string name="void_summary">¿Anular %1$s ítems?</string>
-    <string name="void_approval_message">¿Aprobar la anulación de %1$s ítems porque %2$s</string>
+    <string name="void_summary">¿Anular %1$d ítems?</string>
+    <string name="void_approval_message">¿Aprobar la anulación de %1$d ítems porque %2$s</string>
     <string name="assign_password">El PIN no ha sido asignado. Póngase en contacto con el administrador.</string>
     <string name="wrong_password">Contraseña incorrecta</string>
     <string name="from_date">Desde: %1$s</string>
@@ -225,7 +225,7 @@
         <item>Efectivo</item>
         <item>Tarjeta de crédito</item>
     </string-array>
-    <string name="void_order_approval_message">Anular la orden %1$s por:  %2$</string>
+    <string name="void_order_approval_message">Anular la orden %1$d por:  %2$s</string>
     <string name="no_success_on_sync_order">Hubo un error. Contacte el administrador</string>
     <string name="no_allow_complimentary">El ítem %1$s no puede ser gratis</string>
     <string name="complete_order">¿Completar pago?</string>
