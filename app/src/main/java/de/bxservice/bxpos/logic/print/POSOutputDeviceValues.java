@@ -34,7 +34,7 @@ public interface POSOutputDeviceValues {
 
     /** Connection type */
     String CONNECTION_BLUETOOTH = "B";
-    String CONNECTION_WLAN      = "w";
+    String CONNECTION_WLAN      = "W";
 
     /** Device Type */
     String DEVICE_PRINTER = "P";
