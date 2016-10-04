@@ -73,7 +73,6 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append( "%s: "+ order.getGuestNumber() +"\r\n");
         ticket.append("\r\n");
         ticket.append( "! U1 SETLP 5 2 46\r\n");
-        System.out.println("ASDASDASDASDASDA " + order.getServerName(null));
 
         List<POSOrderLine> lines = new ArrayList<>();
 
@@ -154,8 +153,6 @@ public class CPCLPrinter extends AbstractPOSPrinter {
                 "PRINT\r\n";
 
         ticket.append(label);
-        System.out.println("ASDASDASDASDASDA " + order.getServerName(null));
-
         ticket.append( "! U1 SETLP 7 0 24\r\n");
 
         DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
