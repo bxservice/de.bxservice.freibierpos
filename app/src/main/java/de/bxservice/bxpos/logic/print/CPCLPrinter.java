@@ -58,7 +58,8 @@ public class CPCLPrinter extends AbstractPOSPrinter {
      */
     @Override
     public String printTicket(String target) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, PosProperties.getInstance().getLocale());
         Calendar cal = Calendar.getInstance();
 
         StringBuilder ticket = new StringBuilder();
@@ -127,7 +128,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         currencyFormat.setMaximumFractionDigits(2);
         currencyFormat.setMinimumFractionDigits(2);
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, PosProperties.getInstance().getLocale());
         Calendar cal = Calendar.getInstance();
 
         //header T font size x y data
