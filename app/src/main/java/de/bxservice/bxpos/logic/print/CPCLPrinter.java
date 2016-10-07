@@ -26,7 +26,6 @@ package de.bxservice.bxpos.logic.print;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
