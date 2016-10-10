@@ -52,6 +52,7 @@ public class DefaultPosData {
     private boolean IsTaxIncluded  = false;
     private String currencyIsoCode  = "";
     private String clientAdLanguage  = "";
+    private String receiptFooter  = "";
 
     public int getDefaultBPartner() {
         return defaultBPartner;
@@ -147,6 +148,14 @@ public class DefaultPosData {
 
     public void setClientAdLanguage(String clientAdLanguage) {
         this.clientAdLanguage = clientAdLanguage;
+    }
+
+    public String getReceiptFooter() {
+        return receiptFooter;
+    }
+
+    public void setReceiptFooter(String receiptFooter) {
+        this.receiptFooter = receiptFooter;
     }
 
     /**

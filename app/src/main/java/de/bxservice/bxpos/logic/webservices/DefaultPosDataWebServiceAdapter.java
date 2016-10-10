@@ -64,7 +64,7 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
         defaultPosData = new DefaultPosData();
 
         try {
-            WindowTabDataResponse response = client.sendRequest(ws);
+                WindowTabDataResponse response = client.sendRequest(ws);
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 Log.e("Error ws response", response.getErrorMessage());
@@ -111,6 +111,8 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                             defaultPosData.setCurrencyIsoCode(field.getStringValue());
                         else if ("AD_Language".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setClientAdLanguage(field.getStringValue());
+                        else if ("DocumentNote".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setReceiptFooter(field.getStringValue());
 
                     }
                 }

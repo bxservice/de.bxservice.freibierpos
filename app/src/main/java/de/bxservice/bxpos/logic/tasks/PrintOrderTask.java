@@ -81,7 +81,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
 
                     PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
                     RestaurantInfo restaurantInfo = orgInfoManager.get(1); //Get org info to print in the receipt
-                    //TODO: Get footer from iDempiere
+
                     bt.sendData(String.format(printer.printReceipt(),
                             new Object[] { printerDevice.getPageWidth(),
                                     restaurantInfo.getName(),
@@ -97,8 +97,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                                     mActivity.getResources().getString(R.string.set_extra),
                                     mActivity.getResources().getString(R.string.total),
                                     mActivity.getResources().getString(R.string.cash),
-                                    mActivity.getResources().getString(R.string.change),
-                                    "We hope to see you soon again"}).getBytes());
+                                    mActivity.getResources().getString(R.string.change)}).getBytes());
                 }
             }
         }

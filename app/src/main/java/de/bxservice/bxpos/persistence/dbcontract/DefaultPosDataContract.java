@@ -52,6 +52,7 @@ public class DefaultPosDataContract {
         public static final String COLUMN_NAME_PIN = "pin";
         public static final String COLUMN_NAME_ISO_CODE = "iso_code";
         public static final String COLUMN_NAME_AD_LANGUAGE = "ad_language";
+        public static final String COLUMN_NAME_RECEIPT_FOOTER = "receiptFooter";
 
     }
 
