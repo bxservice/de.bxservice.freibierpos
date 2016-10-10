@@ -32,9 +32,26 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 public abstract class AbstractPOSPrinter implements POSPrinter {
 
     protected POSOrder order;
+    protected int      pageWidth;
 
-    public AbstractPOSPrinter(POSOrder order) {
+    public AbstractPOSPrinter(POSOrder order, int pageWidth) {
         this.order = order;
+        this.pageWidth = pageWidth;
     }
+
+    protected abstract String getTicketText(String target, String orderLabel, String tableLabel, String tableName, String serverLabel, String guestsLabel);
+    protected abstract String getReceiptText(String restaurantName,
+                                             String address,
+                                             String city,
+                                             String receiptLabel,
+                                             String tableLabel,
+                                             String tableName,
+                                             String serverLabel,
+                                             String guestsLabel,
+                                             String subtotalLabel,
+                                             String surchargeLabel,
+                                             String totalLabel,
+                                             String cashLabel,
+                                             String changeLabel);
 
 }

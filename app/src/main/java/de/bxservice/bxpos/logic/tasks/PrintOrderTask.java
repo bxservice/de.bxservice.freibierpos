@@ -63,41 +63,38 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         boolean success = true;
         POSPrinterServiceFactory printerServiceFactory = new POSPrinterServiceFactory();
 
-        bt = printerServiceFactory.getPrinterService(POSOutputDeviceValues.CONNECTION_BLUETOOTH, mActivity, printerDevice.getPrinterName());
+        bt = printerServiceFactory.getPrinterService(printerDevice.getConnectionType(), mActivity, printerDevice.getPrinterName());
 
         for(POSOrder order : orders) {
             if(bt != null && bt.isConnected()) {
                 POSPrinterFactory printerFactory = new POSPrinterFactory();
-                POSPrinter printer = printerFactory.getPrinter(printerDevice.getPrinterLanguage(), order);
+                POSPrinter printer = printerFactory.getPrinter(printerDevice.getPrinterLanguage(), order, printerDevice.getPageWidth());
 
                 if(mActivity instanceof EditOrderActivity) {
-                    bt.sendData(String.format(printer.printTicket(printerDevice.getDocTarget()),
-                            new Object[] { mActivity.getResources().getString(R.string.order),
-                                    mActivity.getResources().getString(R.string.table),
-                                    order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
-                                    mActivity.getResources().getString(R.string.waiter_role),
-                                    mActivity.getResources().getString(R.string.guests)}).getBytes());
+                    bt.sendData(printer.printTicket(printerDevice.getDocTarget(),
+                            mActivity.getResources().getString(R.string.order),
+                            mActivity.getResources().getString(R.string.table),
+                            order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
+                            mActivity.getResources().getString(R.string.waiter_role),
+                            mActivity.getResources().getString(R.string.guests)));
                 } else if(mActivity instanceof PayOrderActivity) {
 
                     PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
                     RestaurantInfo restaurantInfo = orgInfoManager.get(1); //Get org info to print in the receipt
 
-                    bt.sendData(String.format(printer.printReceipt(),
-                            new Object[] { printerDevice.getPageWidth(),
-                                    restaurantInfo.getName(),
-                                    restaurantInfo.getAddress1(),
-                                    restaurantInfo.getPostalCode() + " " + restaurantInfo.getCity(),
-                                    mActivity.getResources().getString(R.string.receipt),
-                                    order.getOrderId(),
-                                    mActivity.getResources().getString(R.string.table),
-                                    order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
-                                    mActivity.getResources().getString(R.string.waiter_role),
-                                    mActivity.getResources().getString(R.string.guests),
-                                    mActivity.getResources().getString(R.string.subtotal),
-                                    mActivity.getResources().getString(R.string.set_extra),
-                                    mActivity.getResources().getString(R.string.total),
-                                    mActivity.getResources().getString(R.string.cash),
-                                    mActivity.getResources().getString(R.string.change)}).getBytes());
+                    bt.sendData(printer.printReceipt(restaurantInfo.getName(),
+                            restaurantInfo.getAddress1(),
+                            restaurantInfo.getPostalCode() + " " + restaurantInfo.getCity(),
+                            mActivity.getResources().getString(R.string.receipt),
+                            mActivity.getResources().getString(R.string.table),
+                            order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
+                            mActivity.getResources().getString(R.string.waiter_role),
+                            mActivity.getResources().getString(R.string.guests),
+                            mActivity.getResources().getString(R.string.subtotal),
+                            mActivity.getResources().getString(R.string.set_extra),
+                            mActivity.getResources().getString(R.string.total),
+                            mActivity.getResources().getString(R.string.cash),
+                            mActivity.getResources().getString(R.string.change)));
                 }
             }
         }

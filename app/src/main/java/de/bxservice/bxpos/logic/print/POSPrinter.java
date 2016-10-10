@@ -32,6 +32,23 @@ public interface POSPrinter {
     String KITCHEN_RECEIPT = POSOutputDeviceValues.TARGET_KITCHEN;
     String BAR_RECEIPT     = POSOutputDeviceValues.TARGET_BAR;
 
-    String printTicket(String target);
-    String printReceipt();
+    byte[] printTicket(String target,
+                       String orderLabel,
+                       String tableLabel,
+                       String tableName,
+                       String serverLabel,
+                       String guestsLabel);
+    byte[] printReceipt(String restaurantName,
+                        String address,
+                        String city,
+                        String receiptLabel,
+                        String tableLabel,
+                        String tableName,
+                        String serverLabel,
+                        String guestsLabel,
+                        String subtotalLabel,
+                        String surchargeLabel,
+                        String totalLabel,
+                        String cashLabel,
+                        String changeLabel);
 }

@@ -33,12 +33,12 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
  */
 public class POSPrinterFactory {
 
-    public POSPrinter getPrinter(String printerType, POSOrder order) {
+    public POSPrinter getPrinter(String printerType, POSOrder order, int pageWidth) {
         if(printerType == null)
             return null;
 
         if(printerType.equalsIgnoreCase(POSOutputDeviceValues.LANGUAGE_CPCL))
-            return new CPCLPrinter(order);
+            return new CPCLPrinter(order, pageWidth);
 
         return null;
     }
