@@ -26,8 +26,6 @@ package de.bxservice.bxpos.logic.model.idempiere;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 
 /**
