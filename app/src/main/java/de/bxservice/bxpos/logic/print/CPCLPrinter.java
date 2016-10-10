@@ -213,7 +213,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
         posY = posY + 45;
         footer.append("CENTER\r\n"); //back amount
-        footer.append("T 7 1 10 "+ posY + " %s\r\n"); //Footer message
+        footer.append("T 7 1 10 "+ posY + defaultPosData.getReceiptFooter() + "\r\n"); //Footer message
         footer.append("POSTFEED 20\r\n");
         footer.append("FORM \r\n\r\n");
         footer.append("PRINT\r\n");

@@ -58,6 +58,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN, data.getPin());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE, data.getClientAdLanguage());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE, data.getCurrencyIsoCode());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER, data.getReceiptFooter());
 
         int flag = (data.isCombineItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
@@ -88,6 +89,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN, data.getPin());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE, data.getClientAdLanguage());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE, data.getCurrencyIsoCode());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER, data.getReceiptFooter());
 
         int flag = (data.isCombineItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
@@ -131,6 +133,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setPin(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN)));
         defaultData.setClientAdLanguage(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE)));
         defaultData.setCurrencyIsoCode(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE)));
+        defaultData.setReceiptFooter(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER)));
 
         Boolean flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS)) != 0);
         defaultData.setCombineItems(flag);
