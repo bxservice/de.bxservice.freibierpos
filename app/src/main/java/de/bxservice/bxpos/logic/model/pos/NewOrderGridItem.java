@@ -33,6 +33,7 @@ package de.bxservice.bxpos.logic.model.pos;
 public class NewOrderGridItem {
 
     private String name;
+    private String key;
     private String price;
     private String qty;
 
@@ -55,6 +56,14 @@ public class NewOrderGridItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getQty() {

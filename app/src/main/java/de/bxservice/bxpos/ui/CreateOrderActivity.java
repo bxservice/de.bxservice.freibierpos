@@ -200,8 +200,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             gridItem = new NewOrderGridItem();
             productPrice = product.getProductPrice(getBaseContext());
 
-            gridItem.setName(product.getProductKey() + " " + product.getProductName());
+            //If the key and the name are the same, don't repeat
+            if (product.getProductName().equalsIgnoreCase(product.getProductKey()))
+                gridItem.setName(product.getProductName());
+            else
+                gridItem.setName(product.getProductKey() + " " + product.getProductName());
             gridItem.setPrice(currencyFormat.format(productPrice.getStdPrice()));
+            gridItem.setKey(product.getProductKey());
 
             items.add(gridItem);
             itemProductHashMap.put(gridItem, product);
