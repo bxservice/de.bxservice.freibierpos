@@ -34,7 +34,6 @@ import de.bxservice.bxpos.logic.daomanager.PosOrgInfoManagement;
 import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
-import de.bxservice.bxpos.logic.print.POSOutputDeviceValues;
 import de.bxservice.bxpos.logic.print.POSPrinter;
 import de.bxservice.bxpos.logic.print.POSPrinterFactory;
 import de.bxservice.bxpos.logic.print.POSPrinterService;
