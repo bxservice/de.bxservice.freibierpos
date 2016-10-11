@@ -35,7 +35,6 @@ import android.widget.GridView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 
@@ -111,7 +110,7 @@ public class FoodMenuFragment extends Fragment {
         int qtyOrdered;
         for(MProduct product : productCategory.getProducts()) {
             item = new NewOrderGridItem();
-            item.setName(product.getProductkey());
+            item.setName(product.getProductKey());
 
             productPrice = product.getProductPrice(getActivity().getBaseContext());
             item.setPrice(currencyFormat.format(productPrice.getStdPrice()));

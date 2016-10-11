@@ -118,7 +118,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                         p.setProductCategoryId(categoryID);
                         p.setProductID(productId);
                         p.setProductName(productName);
-                        p.setProductkey(productKey);
+                        p.setProductKey(productKey);
                         p.setOutputDeviceId(outputDeviceID);
                         p.setActive(isActive);
                         productList.add(p);
