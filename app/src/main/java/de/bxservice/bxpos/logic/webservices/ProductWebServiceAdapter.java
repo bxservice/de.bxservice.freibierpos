@@ -77,6 +77,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
 
                 Log.i("info", "Total rows: " + response.getNumRows());
                 String productName;
+                String productKey;
                 int categoryID;
                 int productId;
                 int outputDeviceID;
@@ -87,6 +88,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                     Log.i("info", "Row: " + (i + 1));
                     productId = 0;
                     productName = null;
+                    productKey = null;
                     categoryID = 0;
                     outputDeviceID = 0;
                     isActive = false;
@@ -106,14 +108,17 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                             outputDeviceID = Integer.valueOf(field.getStringValue());
                         else if ("IsActive".equalsIgnoreCase(field.getColumn()))
                             isActive = "Y".equalsIgnoreCase(field.getStringValue());
+                        else if ("Value".equalsIgnoreCase(field.getColumn()))
+                            productKey = field.getStringValue();
 
                     }
 
-                    if(productName != null && productId != 0 && categoryID != 0) {
+                    if(productName != null && productId != 0 && categoryID != 0 && productKey != null) {
                         MProduct p = new MProduct();
                         p.setProductCategoryId(categoryID);
                         p.setProductID(productId);
                         p.setProductName(productName);
+                        p.setProductkey(productKey);
                         p.setOutputDeviceId(outputDeviceID);
                         p.setActive(isActive);
                         productList.add(p);
