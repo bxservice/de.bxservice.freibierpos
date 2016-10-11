@@ -200,7 +200,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             gridItem = new NewOrderGridItem();
             productPrice = product.getProductPrice(getBaseContext());
 
-            gridItem.setName(product.getProductName());
+            gridItem.setName(product.getProductkey() + " " + product.getProductName());
             gridItem.setPrice(currencyFormat.format(productPrice.getStdPrice()));
 
             items.add(gridItem);
