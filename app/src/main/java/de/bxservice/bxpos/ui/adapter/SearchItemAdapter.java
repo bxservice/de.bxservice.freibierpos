@@ -52,19 +52,19 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
     public static class SearchItemViewHolder extends RecyclerView.ViewHolder {
 
         public TextView txtProductName;
-        public TextView txtPtice;
+        public TextView txtPrice;
 
         public SearchItemViewHolder(View v) {
             super(v);
 
             txtProductName = (TextView) itemView.findViewById(R.id.search_name);
-            txtPtice = (TextView) itemView.findViewById(R.id.search_price);
+            txtPrice = (TextView) itemView.findViewById(R.id.search_price);
 
         }
 
         public void bindSearchItem(NewOrderGridItem item) {
             txtProductName.setText(item.getName());
-            txtPtice.setText(item.getPrice());
+            txtPrice.setText(item.getPrice());
         }
     }
 
