@@ -41,6 +41,7 @@ public class MProduct implements Serializable {
 
     private int productID;
     private String productName;
+    private String productkey;
     private int productCategoryId;
     private int outputDeviceId;
     private boolean isActive;
@@ -60,6 +61,14 @@ public class MProduct implements Serializable {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getProductkey() {
+        return productkey;
+    }
+
+    public void setProductkey(String productkey) {
+        this.productkey = productkey;
     }
 
     public int getProductCategoryId() {

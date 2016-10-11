@@ -56,7 +56,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 43;
+    private static final int DATABASE_VERSION = 44;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -207,6 +207,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " INTEGER PRIMARY KEY" +
                     ", " +
                     ProductContract.ProductDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_NAME_VALUE + " VARCHAR(64) NOT NULL" +
                     ", " +
                     ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + " INTEGER REFERENCES "
                         + Tables.TABLE_PRODUCT_CATEGORY + "(" + ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID + ") ON DELETE CASCADE" +  //FK to the product category

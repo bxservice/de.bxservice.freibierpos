@@ -249,7 +249,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
         return String.format(ticket.toString(), pageWidth, restaurantName, address, city, receiptLabel, order.getOrderId(),
                 tableLabel, tableName, serverLabel, order.getServerName(null), guestsLabel, order.getGuestNumber(), dateFormat.format(cal.getTime()),
-                subtotalLabel, surchargeLabel, totalLabel, cashLabel, changeLabel, defaultPosData.getReceiptFooter() );
+                subtotalLabel, surchargeLabel, totalLabel, cashLabel, changeLabel, defaultPosData.getReceiptFooter());
     }
 
     @Override
