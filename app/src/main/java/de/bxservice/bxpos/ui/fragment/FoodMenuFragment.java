@@ -111,6 +111,7 @@ public class FoodMenuFragment extends Fragment {
         for(MProduct product : productCategory.getProducts()) {
             item = new NewOrderGridItem();
             item.setName(product.getProductKey());
+            item.setKey(product.getProductKey());
 
             productPrice = product.getProductPrice(getActivity().getBaseContext());
             item.setPrice(currencyFormat.format(productPrice.getStdPrice()));

@@ -91,7 +91,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
                 for(NewOrderGridItem item : menuFragment.getmGridData()) {
 
-                    if (item.getName().equals(selectedItem.getName())) {
+                    if (item.getKey().equals(selectedItem.getKey())) {
                         menuFragment.updateQtyOnClick(menuFragment.getmGridData().indexOf(item), quantity);
                         found = true;
                     }
