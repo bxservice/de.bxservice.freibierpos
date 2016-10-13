@@ -75,6 +75,7 @@ import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
  * A login screen that offers login via username/password.
+ * Created by Diego Ruiz
  */
 public class LoginActivity extends AppCompatActivity  {
 
@@ -109,6 +110,16 @@ public class LoginActivity extends AppCompatActivity  {
 
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
+
+        //// Get the string array
+        PosUserManagement userManager = new PosUserManagement(getApplicationContext());
+        ArrayList<String> usernameList = userManager.getUsernameList();
+
+        if (usernameList != null && usernameList.size() >0) {
+            // Create the adapter and set it to the AutoCompleteTextView
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, usernameList);
+            mUsernameView.setAdapter(adapter);
+        }
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {

@@ -27,6 +27,7 @@ package de.bxservice.bxpos.logic.daomanager;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.persistence.DataMapper;
@@ -70,6 +71,11 @@ public class PosUserManagement implements ObjectManagement, Serializable {
      */
     public PosUser get(String username) {
         return dataMapper.getUser(username);
+    }
+
+    //return the usernames that have already logged in
+    public ArrayList<String> getUsernameList() {
+        return dataMapper.getUsernameList();
     }
 
 }

@@ -30,6 +30,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.util.SecureEngine;
@@ -123,6 +125,31 @@ public class PosUserHelper extends PosObjectHelper {
         c.close();
 
         return td;
+    }
+
+    public ArrayList<String> getUsernameList() {
+        ArrayList<String> users = new ArrayList<>();
+
+        String selectQuery = "SELECT " + UserContract.User.COLUMN_NAME_USERNAME + " FROM " + Tables.TABLE_USER;
+
+
+        Log.d(LOG_TAG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c == null || c.getCount() <= 0)
+            return users;
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                users.add(c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME)));
+            } while (c.moveToNext());
+            c.close();
+        }
+
+        return users;
     }
 
     /*
