@@ -25,7 +25,7 @@
         android:verticalSpacing="8dp"
         android:horizontalSpacing="8dp"
         android:stretchMode="columnWidth"
-
+        android:layout_marginBottom="50dp"
         />
 
 </RelativeLayout>
