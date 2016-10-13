@@ -203,6 +203,11 @@ public class DataMapper implements Serializable {
         return posUserHelper.getUser(username);
     }
 
+    public ArrayList<String> getUsernameList() {
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+        return posUserHelper.getUsernameList();
+    }
+
     private boolean createPosOrder(POSOrder order) {
 
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
