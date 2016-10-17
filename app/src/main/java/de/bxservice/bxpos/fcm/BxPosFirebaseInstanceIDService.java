@@ -65,7 +65,7 @@ public class BxPosFirebaseInstanceIDService extends FirebaseInstanceIdService {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(TOKEN_SHARED_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(TOKEN_SYNC_PREF, false);
-        editor.commit();
+        editor.apply();
 
     }
 

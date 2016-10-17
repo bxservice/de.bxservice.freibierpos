@@ -338,7 +338,7 @@ public class LoginActivity extends AppCompatActivity  {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(WebServiceRequestData.USERNAME_SYNC_PREF, username);
         editor.putString(WebServiceRequestData.PASSWORD_SYNC_PREF, password);
-        editor.commit();
+        editor.apply();
     }
 
     private boolean isPasswordValid(String password) {
