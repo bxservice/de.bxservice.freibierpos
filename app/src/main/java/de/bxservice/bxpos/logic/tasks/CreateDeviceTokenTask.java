@@ -72,7 +72,7 @@ public class CreateDeviceTokenTask extends AsyncTask<String, Void, Boolean> {
             //Update value
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(BxPosFirebaseInstanceIDService.TOKEN_SYNC_PREF, success);
-            editor.commit();
+            editor.apply();
         }
     }
 

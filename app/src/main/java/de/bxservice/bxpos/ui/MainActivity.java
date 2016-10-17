@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = sharedPref.edit();
         // Clearing all data from Shared Preferences
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
     /**
