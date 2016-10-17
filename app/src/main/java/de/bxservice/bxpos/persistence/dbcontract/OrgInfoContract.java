@@ -26,8 +26,6 @@ package de.bxservice.bxpos.persistence.dbcontract;
 
 import android.provider.BaseColumns;
 
-import de.bxservice.bxpos.persistence.definition.Tables;
-
 /**
  * Created by Diego Ruiz on 27/04/16.
  */

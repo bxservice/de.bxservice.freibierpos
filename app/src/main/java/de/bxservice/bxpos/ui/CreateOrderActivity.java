@@ -189,7 +189,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private void initSearchListItems() {
 
         ProductPrice productPrice;
-        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();;
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         PosProductManagement dataProvider = new PosProductManagement(getBaseContext());
 

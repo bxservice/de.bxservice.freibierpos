@@ -71,7 +71,7 @@ public class UpdateTableStatusWebServiceAdapter extends AbstractWSObject {
         updateData.setRecordID((int) table.getTableID());
 
         DataRow data = new DataRow();
-        Boolean tableStatus = table.getStatus().equals(Table.FREE_STATUS) ? false : true;
+        Boolean tableStatus = !table.getStatus().equals(Table.FREE_STATUS);
         data.addField("BXS_IsBusy", tableStatus.toString());
         updateData.setDataRow(data);
 
