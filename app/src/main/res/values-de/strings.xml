@@ -202,7 +202,7 @@
     <string name="reload_data_message">Reload the data from iDempiere?</string>
     <string name="reload">Reload</string>
     <string name="success_on_load_data">Data loaded</string>
-    <string name="updating">Updating...</string>
+    <string name="updating">Updating…</string>
     <string name="no">Nein</string>
     <string name="yes">Ja</string>
     <string name="change_url">This action will delete the local database. Do you want to proceed?</string>

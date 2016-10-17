@@ -199,7 +199,7 @@
     <string name="reload_data_message">¿Recargar datos de iDempiere?</string>
     <string name="reload">Recargar</string>
     <string name="success_on_load_data">Datos cargados</string>
-    <string name="updating">Actualizando...</string>
+    <string name="updating">Actualizando…</string>
     <string name="no">No</string>
     <string name="yes">Si</string>
     <string name="change_url">Esta acción eliminara la base de datos local. ¿Desea continuar?</string>
