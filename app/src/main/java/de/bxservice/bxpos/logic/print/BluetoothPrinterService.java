@@ -45,15 +45,12 @@ public class BluetoothPrinterService extends AbstractPOSPrinterService {
     private static final String TAG = "BluetoothPrinterService";
     private static int MAX_DATA_TO_WRITE_TO_STREAM_AT_ONCE = 1024;
 
-    // android built in classes for bluetooth operations
-    private BluetoothAdapter mBluetoothAdapter;
     private BluetoothSocket mmSocket;
     private BluetoothDevice mmDevice;
 
     // needed for communication to bluetooth device / network
     private OutputStream mmOutputStream;
     private InputStream mmInputStream;
-    private Thread workerThread;
 
     private byte[] readBuffer;
     private int readBufferPosition;
@@ -72,7 +69,7 @@ public class BluetoothPrinterService extends AbstractPOSPrinterService {
     public void findDevice(String printerName) {
 
         try {
-            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             if(mBluetoothAdapter == null) {
                 Log.i(TAG, "No bluetooth adapter available");
@@ -137,7 +134,7 @@ public class BluetoothPrinterService extends AbstractPOSPrinterService {
             readBufferPosition = 0;
             readBuffer = new byte[1024];
 
-            workerThread = new Thread(new Runnable() {
+            Thread workerThread = new Thread(new Runnable() {
                 public void run() {
 
                     while (!Thread.currentThread().isInterrupted() && !stopWorker) {

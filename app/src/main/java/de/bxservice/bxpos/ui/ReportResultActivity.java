@@ -196,7 +196,6 @@ public class ReportResultActivity extends AppCompatActivity {
                 } else {
                     // permission denied
                 }
-                return;
             }
         }
     }

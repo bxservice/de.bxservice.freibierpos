@@ -31,7 +31,6 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import de.bxservice.bxpos.logic.daomanager.PosOrderLineManagement;
-import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 
 /**

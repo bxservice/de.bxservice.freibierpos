@@ -25,7 +25,6 @@
 package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
-import android.widget.ListView;
 
 import java.io.Serializable;
 import java.util.List;
