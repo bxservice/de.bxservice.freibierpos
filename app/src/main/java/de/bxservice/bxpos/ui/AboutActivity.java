@@ -38,6 +38,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.bxservice.bxpos.BuildConfig;
 import de.bxservice.bxpos.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -55,6 +56,9 @@ public class AboutActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.about_toolbar);
         setSupportActionBar(toolbar);
 
+        TextView versionTv = (TextView) findViewById(R.id.versionTextView);
+        versionTv.setText(getString(R.string.about_version, BuildConfig.VERSION_NAME));
+
         SpannableStringBuilder builder = new SpannableStringBuilder();
 
         SpannableString str1= new SpannableString(getString(R.string.developedBy));
@@ -67,7 +71,6 @@ public class AboutActivity extends AppCompatActivity {
 
         TextView tv = (TextView) findViewById(R.id.developerTextView);
         tv.setText( builder, TextView.BufferType.SPANNABLE);
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
