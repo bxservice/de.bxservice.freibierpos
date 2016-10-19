@@ -40,7 +40,6 @@ import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
  */
 public class WebServiceRequestData {
 
-    public static final String DATA_SHARED_PREF   = "de.bxservice.wsdata_preference";
     public static final String USERNAME_SYNC_PREF = "de.bxservice.username";
     public static final String PASSWORD_SYNC_PREF = "de.bxservice.password";
 

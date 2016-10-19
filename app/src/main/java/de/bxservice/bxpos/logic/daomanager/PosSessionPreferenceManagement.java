@@ -43,4 +43,8 @@ public class PosSessionPreferenceManagement implements ObjectManagement, Seriali
         return dataMapper.getSessionPreferenceValue(preferenceName);
     }
 
+    public void cleanSession() {
+        dataMapper.cleanSessionPreferenceData();
+    }
+
 }
