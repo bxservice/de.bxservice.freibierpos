@@ -26,7 +26,6 @@ package de.bxservice.bxpos.persistence.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -37,7 +36,6 @@ import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.logic.print.POSOutputDeviceValues;
-import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.dbcontract.OutputDeviceContract;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderLineContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
@@ -58,12 +56,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
     public long createOrderLine(POSOrderLine orderLine) {
         SQLiteDatabase database = getWritableDatabase();
 
-        PosUserHelper userHelper = new PosUserHelper(mContext);
-        int userId = 0;
-        if (mContext != null) {
-            SharedPreferences sharedPref = mContext.getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-            userId = userHelper.getUserId(sharedPref.getString(WebServiceRequestData.USERNAME_SYNC_PREF, ""));
-        }
+        int userId = getLoggedUser();
 
         ContentValues values = new ContentValues();
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));

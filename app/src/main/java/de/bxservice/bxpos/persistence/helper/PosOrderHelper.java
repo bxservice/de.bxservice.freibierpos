@@ -26,7 +26,6 @@ package de.bxservice.bxpos.persistence.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -38,7 +37,6 @@ import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
-import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.dbcontract.PosOrderContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -56,12 +54,7 @@ public class PosOrderHelper extends PosObjectHelper {
     public long createOrder(POSOrder order) {
         SQLiteDatabase database = getWritableDatabase();
 
-        PosUserHelper userHelper = new PosUserHelper(mContext);
-        int userId = 0;
-        if (mContext != null) {
-            SharedPreferences sharedPref = mContext.getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-            userId = userHelper.getUserId(sharedPref.getString(WebServiceRequestData.USERNAME_SYNC_PREF, ""));
-        }
+        int userId = getLoggedUser();
 
         ContentValues values = new ContentValues();
         values.put(PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));
@@ -493,12 +486,7 @@ public class PosOrderHelper extends PosObjectHelper {
     public ArrayList<POSOrder> getUserPaidOrders(long fromDate, long toDate) {
         ArrayList<POSOrder> orders = new ArrayList<>();
 
-        PosUserHelper userHelper = new PosUserHelper(mContext);
-        int userId = 0;
-        if (mContext != null) {
-            SharedPreferences sharedPref = mContext.getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-            userId = userHelper.getUserId(sharedPref.getString(WebServiceRequestData.USERNAME_SYNC_PREF, ""));
-        }
+        int userId = getLoggedUser();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
                 " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " IN (?,?) " +

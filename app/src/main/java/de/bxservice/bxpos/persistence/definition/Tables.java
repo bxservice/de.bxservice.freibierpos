@@ -36,6 +36,7 @@ import de.bxservice.bxpos.persistence.dbcontract.PosTenderTypeContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
+import de.bxservice.bxpos.persistence.dbcontract.SessionPreferenceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
@@ -76,5 +77,8 @@ public interface Tables {
 
     //Kitchen notes
     String TABLE_KITCHEN_NOTE = KitchenNoteContract.KitchenNoteDB.TABLE_NAME;
+
+    //Kitchen notes
+    String TABLE_SESSION_PREFERENCE = SessionPreferenceContract.SessionPreferenceDB.TABLE_NAME;
 
 }
