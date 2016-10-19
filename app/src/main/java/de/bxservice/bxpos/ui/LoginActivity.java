@@ -72,6 +72,7 @@ import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
 import de.bxservice.bxpos.logic.tasks.CreateDeviceTokenTask;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
+import de.bxservice.bxpos.logic.util.SecureEngine;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
@@ -340,7 +341,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         HashMap<String, String> requestData = new HashMap<>();
         requestData.put(WebServiceRequestData.USERNAME_SYNC_PREF, username);
-        requestData.put(WebServiceRequestData.PASSWORD_SYNC_PREF, password);
+        requestData.put(WebServiceRequestData.PASSWORD_SYNC_PREF, SecureEngine.encryptIt(password));
 
         sessionPreferenceManager.create(requestData);
     }
@@ -475,6 +476,10 @@ public class LoginActivity extends AppCompatActivity  {
                         }
                     }
                 }
+
+                //Wrong login -> Clean stored data
+                PosSessionPreferenceManagement sessionPreferenceManager = new PosSessionPreferenceManagement(getBaseContext());
+                sessionPreferenceManager.cleanSession();
 
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

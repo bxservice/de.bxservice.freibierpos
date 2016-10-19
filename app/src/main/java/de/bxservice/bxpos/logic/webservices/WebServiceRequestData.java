@@ -33,6 +33,7 @@ import java.util.Properties;
 import de.bxservice.bxpos.logic.AssetsPropertyReader;
 import de.bxservice.bxpos.logic.PosProperties;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
+import de.bxservice.bxpos.logic.util.SecureEngine;
 import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 
 /**
@@ -95,7 +96,8 @@ public class WebServiceRequestData {
         PosSessionPreferenceManagement preferenceManager = new PosSessionPreferenceManagement(context);
 
         username = preferenceManager.getPreferenceValue(USERNAME_SYNC_PREF);
-        password = preferenceManager.getPreferenceValue(PASSWORD_SYNC_PREF);
+        password = SecureEngine.decryptIt(preferenceManager.getPreferenceValue(PASSWORD_SYNC_PREF));
+
     }
 
     public boolean isDataComplete() {
