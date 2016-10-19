@@ -64,6 +64,7 @@ import java.util.TimerTask;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
+import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
@@ -154,11 +155,9 @@ public class MainActivity extends AppCompatActivity
         View headerLayout = navigationView.getHeaderView(0); // 0-index header
         TextView userNameTextView = (TextView) headerLayout.findViewById(R.id.usernameTextView);
 
+        userNameTextView.setText(WebServiceRequestData.getLoggedUsername(getBaseContext()));
 
-        SharedPreferences sharedPref = getBaseContext().getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-        userNameTextView.setText(sharedPref.getString(WebServiceRequestData.USERNAME_SYNC_PREF, ""));
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
         callAsynchronousTask();
 
@@ -248,7 +247,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
-            cleanWSData();
+            cleanSessionPreference();
             startActivity(new Intent(getBaseContext(), LoginActivity.class));
             finish();
             return true;
@@ -368,7 +367,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        cleanWSData();
+        cleanSessionPreference();
         PosObjectHelper.closeDB(getBaseContext());
     }
 
@@ -425,14 +424,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Make sure that the username and password only last for one session
+     * Make sure that session preference only last one session
      */
-    private void cleanWSData() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        // Clearing all data from Shared Preferences
-        editor.clear();
-        editor.apply();
+    private void cleanSessionPreference() {
+        PosSessionPreferenceManagement preferenceManager = new PosSessionPreferenceManagement(getBaseContext());
+        preferenceManager.cleanSession();
     }
 
     /**

@@ -49,8 +49,6 @@ public class PosSessionPreferenceHelper extends PosObjectHelper {
 
         for (Map.Entry<String, String> entry : keyValuePair.entrySet()) {
             ContentValues values = new ContentValues();
-
-            Log.i(LOG_TAG, entry.getKey() + " = " + entry.getValue());
             values.put(SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_NAME, entry.getKey());
             values.put(SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_VALUE, entry.getValue());
 
@@ -89,6 +87,13 @@ public class PosSessionPreferenceHelper extends PosObjectHelper {
         c.close();
 
         return preferenceValue;
+    }
+
+    public void cleanSessionPreferenceData() {
+        SQLiteDatabase database = getWritableDatabase();
+
+        database.delete(Tables.TABLE_SESSION_PREFERENCE, null , null);
+        database.execSQL("VACUUM");
     }
 
 }

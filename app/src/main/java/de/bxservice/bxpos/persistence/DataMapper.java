@@ -840,4 +840,9 @@ public class DataMapper implements Serializable {
 
         return preferenceHelper.getPreferenceValue(preferenceName);
     }
+
+    public void cleanSessionPreferenceData() {
+        PosSessionPreferenceHelper preferenceHelper = new PosSessionPreferenceHelper(mContext);
+        preferenceHelper.cleanSessionPreferenceData();
+    }
 }
