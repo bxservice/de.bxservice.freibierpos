@@ -29,6 +29,7 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
@@ -55,6 +56,7 @@ import de.bxservice.bxpos.persistence.helper.PosPaymentHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductCategoryHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductHelper;
 import de.bxservice.bxpos.persistence.helper.PosProductPriceHelper;
+import de.bxservice.bxpos.persistence.helper.PosSessionPreferenceHelper;
 import de.bxservice.bxpos.persistence.helper.PosTableGroupHelper;
 import de.bxservice.bxpos.persistence.helper.PosTableHelper;
 import de.bxservice.bxpos.persistence.helper.PosTenderTypeHelper;
@@ -111,6 +113,8 @@ public class DataMapper implements Serializable {
             success = createTenderType((PosTenderType) object);
         else if(object instanceof String)
             success = createKitchenNote((String) object);
+        else if(object instanceof HashMap)
+            success = createSessionPreference((HashMap) object);
 
         return success;
     }
@@ -818,5 +822,22 @@ public class DataMapper implements Serializable {
     public PosTenderType getTenderType(String tenderType) {
         PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
         return tenderTypeHelper.getPosTenderType(tenderType);
+    }
+
+    private boolean createSessionPreference(HashMap<String, String> keyValuePair) {
+        PosSessionPreferenceHelper preferenceHelper = new PosSessionPreferenceHelper(mContext);
+
+        if (!preferenceHelper.createSessionPreference(keyValuePair)) {
+            Log.e(LOG_TAG, "Cannot save session preference");
+            return false;
+        }
+        Log.i(LOG_TAG, "Session preference saved");
+        return true;
+    }
+
+    public String getSessionPreferenceValue(String preferenceName) {
+        PosSessionPreferenceHelper preferenceHelper = new PosSessionPreferenceHelper(mContext);
+
+        return preferenceHelper.getPreferenceValue(preferenceName);
     }
 }

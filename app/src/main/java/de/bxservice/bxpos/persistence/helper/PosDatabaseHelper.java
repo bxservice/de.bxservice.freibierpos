@@ -43,6 +43,7 @@ import de.bxservice.bxpos.persistence.dbcontract.PosTenderTypeContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductCategoryContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
+import de.bxservice.bxpos.persistence.dbcontract.SessionPreferenceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
@@ -56,7 +57,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 44;
+    private static final int DATABASE_VERSION = 45;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -334,6 +335,16 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE + " VARCHAR(2)" +
                     ")";
 
+    private static final String CREATE_SESSION_PREFERENCE_TABLE =
+            "CREATE TABLE " + Tables.TABLE_SESSION_PREFERENCE +
+                    "(" +
+                    SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_SESSION_PREF_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_NAME + " VARCHAR(64)" +
+                    ", " +
+                    SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_VALUE + " VARCHAR(64)" +
+                    ")";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -434,6 +445,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_ORG_INFO);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_OUTPUT_DEVICE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_KITCHEN_NOTE);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_SESSION_PREFERENCE);
     }
 
     private void bootstrapDB(SQLiteDatabase db) {
@@ -452,6 +464,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_DEFAULT_DATA_TABLE);
         db.execSQL(CREATE_ORG_INFO_TABLE);
         db.execSQL(CREATE_KITCHEN_NOTE_TABLE);
+        db.execSQL(CREATE_SESSION_PREFERENCE_TABLE);
         db.execSQL(INSERT_BUILD_VERSION);
 
         Log.i(TAG, "Bootstrapped database");

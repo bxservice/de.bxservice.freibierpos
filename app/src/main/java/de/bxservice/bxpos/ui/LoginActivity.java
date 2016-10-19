@@ -44,6 +44,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -65,6 +66,7 @@ import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.fcm.BxPosFirebaseInstanceIDService;
+import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
@@ -334,11 +336,13 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void setWsDataPreferences(String username, String password) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(WebServiceRequestData.USERNAME_SYNC_PREF, username);
-        editor.putString(WebServiceRequestData.PASSWORD_SYNC_PREF, password);
-        editor.apply();
+        PosSessionPreferenceManagement sessionPreferenceManager = new PosSessionPreferenceManagement(getBaseContext());
+
+        HashMap<String, String> requestData = new HashMap<>();
+        requestData.put(WebServiceRequestData.USERNAME_SYNC_PREF, username);
+        requestData.put(WebServiceRequestData.PASSWORD_SYNC_PREF, password);
+
+        sessionPreferenceManager.create(requestData);
     }
 
     private boolean isPasswordValid(String password) {

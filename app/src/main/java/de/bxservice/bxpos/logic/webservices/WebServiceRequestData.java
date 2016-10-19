@@ -32,6 +32,7 @@ import java.util.Properties;
 
 import de.bxservice.bxpos.logic.AssetsPropertyReader;
 import de.bxservice.bxpos.logic.PosProperties;
+import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 
 /**
@@ -92,9 +93,10 @@ public class WebServiceRequestData {
     }
 
     private void readCredentials(Context context) {
-        SharedPreferences sharedPref = context.getSharedPreferences(DATA_SHARED_PREF, Context.MODE_PRIVATE);
-        username = sharedPref.getString(USERNAME_SYNC_PREF, "");
-        password = sharedPref.getString(PASSWORD_SYNC_PREF, "");
+        PosSessionPreferenceManagement preferenceManager = new PosSessionPreferenceManagement(context);
+
+        username = preferenceManager.getPreferenceValue(USERNAME_SYNC_PREF);
+        password = preferenceManager.getPreferenceValue(PASSWORD_SYNC_PREF);
     }
 
     public boolean isDataComplete() {
@@ -152,6 +154,11 @@ public class WebServiceRequestData {
 
     public String getUrlBase() {
         return urlBase;
+    }
+
+    public static String getLoggedUsername(Context context) {
+        PosSessionPreferenceManagement preferenceManager = new PosSessionPreferenceManagement(context);
+        return preferenceManager.getPreferenceValue(USERNAME_SYNC_PREF);
     }
 
 }

@@ -26,14 +26,11 @@ package de.bxservice.bxpos.persistence.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-
-import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.persistence.dbcontract.KitchenNoteContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -51,12 +48,7 @@ public class PosKitchenNoteHelper extends PosObjectHelper {
     public long createKitchenNote(String note) {
         SQLiteDatabase database = getWritableDatabase();
 
-        PosUserHelper userHelper = new PosUserHelper(mContext);
-        int userId = 0;
-        if (mContext != null) {
-            SharedPreferences sharedPref = mContext.getSharedPreferences(WebServiceRequestData.DATA_SHARED_PREF, Context.MODE_PRIVATE);
-            userId = userHelper.getUserId(sharedPref.getString(WebServiceRequestData.USERNAME_SYNC_PREF, ""));
-        }
+        int userId = getLoggedUser();
 
         ContentValues values = new ContentValues();
         values.put(KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));

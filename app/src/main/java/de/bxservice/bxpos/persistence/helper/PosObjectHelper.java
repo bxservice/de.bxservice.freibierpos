@@ -31,6 +31,9 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
+import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
+
 /**
  * Created by Diego Ruiz on 23/12/15.
  */
@@ -90,6 +93,12 @@ public abstract class PosObjectHelper {
         date.append(minutes);
 
         return date.toString();
+    }
+
+    protected int getLoggedUser() {
+        PosUserHelper userHelper = new PosUserHelper(mContext);
+        PosSessionPreferenceManagement preferenceManager = new PosSessionPreferenceManagement(mContext);
+        return userHelper.getUserId(preferenceManager.getPreferenceValue(WebServiceRequestData.USERNAME_SYNC_PREF));
     }
 
 }
