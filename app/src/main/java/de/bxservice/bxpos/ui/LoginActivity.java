@@ -118,10 +118,14 @@ public class LoginActivity extends AppCompatActivity  {
         PosUserManagement userManager = new PosUserManagement(getApplicationContext());
         ArrayList<String> usernameList = userManager.getUsernameList();
 
-        if (usernameList != null && usernameList.size() >0) {
+        if (usernameList != null && usernameList.size() > 0) {
             // Create the adapter and set it to the AutoCompleteTextView
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, usernameList);
             mUsernameView.setAdapter(adapter);
+
+            //The app might have crashed and the data remain there -> Force to clean
+            PosSessionPreferenceManagement sessionPreferenceManager = new PosSessionPreferenceManagement(getBaseContext());
+            sessionPreferenceManager.cleanSession();
         }
 
         mPasswordView = (EditText) findViewById(R.id.password);
