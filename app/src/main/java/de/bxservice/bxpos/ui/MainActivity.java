@@ -367,8 +367,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
-        cleanSessionPreference();
-        PosObjectHelper.closeDB(getBaseContext());
+        //If the activity is destroyed by closing -> no by rotating the screen and is not only being destroyed temporarily by Android
+        if (!isChangingConfigurations() && isFinishing()) {
+            cleanSessionPreference();
+            PosObjectHelper.closeDB(getBaseContext());
+        }
     }
 
     @Override
