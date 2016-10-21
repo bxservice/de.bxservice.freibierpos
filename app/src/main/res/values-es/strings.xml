@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FreiBier POS</string>
+    <string name="app_name">Freibier POS</string>
     <string name="bx_pos">BX POS</string>
     <string name="powered_by">POS powered by BX Service GmbH</string>
 
@@ -243,6 +243,7 @@
     <string name="developedBy">Desarrollado por:</string>
     <string name="about_version">Versión: %1$s</string>
     <string name="about_summary">Informacion sobre Freibier POS</string>
+    <string name="confirm_exit">Pulse de nuevo para salir de Freibier POS</string>
 
 </resources>
 

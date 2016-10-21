@@ -247,5 +247,6 @@
     <string name="developedBy">Developed by:</string>
     <string name="about_version">Version: %1$s</string>
     <string name="about_summary">Informationen über Freibier POS</string>
+    <string name="confirm_exit">Zum Verlassen von Freibier POS noch einmal tippen</string>
 
 </resources>

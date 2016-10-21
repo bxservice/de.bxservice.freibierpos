@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         MultipleOrdersTableDialogFragment.MultipleOrdersTableDialogListener {
 
     private static final String LOG_TAG = "Main Activity";
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
 
     static final int NEW_ORDER_REQUEST  = 1;  // The request code
     static final int EDIT_ORDER_REQUEST = 2;  // The request code
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity
     private Table selectedTable = null;
 
     private String syncConnPref;
+    private long backPressed;
 
     private IntentFilter myFilter;
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
@@ -173,7 +175,15 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                super.onBackPressed();
+                return;
+            }
+            else {
+                Toast.makeText(getBaseContext(), getString(R.string.confirm_exit), Toast.LENGTH_SHORT).show();
+            }
+
+            backPressed = System.currentTimeMillis();
         }
     }
 
