@@ -1,0 +1,5 @@
+<resources>
+
+    <!-- Navigation drawer width. -->
+    <dimen name="width">400dp</dimen>
+</resources>
