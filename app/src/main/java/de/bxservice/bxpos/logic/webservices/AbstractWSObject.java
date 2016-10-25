@@ -36,6 +36,7 @@ abstract class AbstractWSObject {
     private WebServiceConnection client;
     private WebServiceRequestData wsData;
     private Object parameter;
+    protected boolean success = true;
 
     protected AbstractWSObject(WebServiceRequestData wsData) {
 
@@ -103,6 +104,14 @@ abstract class AbstractWSObject {
 
     protected Object getParameter() {
         return parameter;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
 }
