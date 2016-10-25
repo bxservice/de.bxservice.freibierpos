@@ -208,7 +208,7 @@ public class PosUserHelper extends PosObjectHelper {
         StringBuilder selectQuery = new StringBuilder();
 
         selectQuery.append("SELECT u.");
-        selectQuery.append(UserContract.User.COLUMN_NAME_USERNAME);
+        selectQuery.append(UserContract.User.COLUMN_NAME_DISPLAY_NAME);
         selectQuery.append(" FROM ");
         selectQuery.append(Tables.TABLE_USER + " u");
         selectQuery.append(" JOIN ");
@@ -226,11 +226,48 @@ public class PosUserHelper extends PosObjectHelper {
         else
             return null;
 
-        String userName = c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_USERNAME));
+        String userName = c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_DISPLAY_NAME));
 
         c.close();
 
         return userName;
+    }
+
+    public int updateUserInfo(PosUser user) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(UserContract.User.COLUMN_NAME_DISPLAY_NAME, user.getDisplayUsername());
+        values.put(UserContract.User.COLUMN_NAME_USER_PIN, user.getUserPIN());
+
+        // updating row
+        return db.update(Tables.TABLE_USER, values, UserContract.User.COLUMN_NAME_USER_ID + " = ?",
+                new String[] { String.valueOf(getLoggedUser()) });
+    }
+
+    /**
+     * Gets the display name of the currently logged user
+     */
+    public String getCurrentUserDisplayName() {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT "+ UserContract.User.COLUMN_NAME_DISPLAY_NAME
+                + " FROM " + Tables.TABLE_USER + " WHERE "
+                + UserContract.User.COLUMN_NAME_USER_ID + " = ?";
+
+        Log.d(LOG_TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(getLoggedUser())});
+
+        if (c != null && c.getCount() > 0)
+            c.moveToFirst();
+        else
+            return "";
+
+        String displayName = c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_DISPLAY_NAME));
+        c.close();
+
+        return displayName;
     }
 
 }

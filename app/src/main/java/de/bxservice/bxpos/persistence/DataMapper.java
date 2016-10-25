@@ -165,24 +165,12 @@ public class DataMapper implements Serializable {
      */
     public boolean remove(Object object) {
 
-        /*if(object instanceof PosUser)
-            success = createPosUser((PosUser) object);*/
         if(object instanceof POSOrder)
             success = removePosOrder((POSOrder) object);
         else if(object instanceof POSOrderLine)
             success = removePosOrderLine((POSOrderLine) object);
         else if(object instanceof POSPayment)
             success = removePayment((POSPayment) object);
-        /*if(object instanceof Table)
-            success = createTable((Table) object);
-        if(object instanceof TableGroup)
-            success = createTableGroup((TableGroup) object);
-        if(object instanceof ProductCategory)
-            success = createProductCategory((ProductCategory) object);
-        if(object instanceof ProductPrice)
-            success = createProductPrice((ProductPrice) object);
-        if(object instanceof MProduct)
-            success = createProduct((MProduct) object);*/
 
         return success;
     }
@@ -205,6 +193,16 @@ public class DataMapper implements Serializable {
     public PosUser getUser(String username) {
         PosUserHelper posUserHelper = new PosUserHelper(mContext);
         return posUserHelper.getUser(username);
+    }
+
+    public boolean updateUserInfo(PosUser user) {
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+        return posUserHelper.updateUserInfo(user) != -1;
+    }
+
+    public String getCurrentUserDisplayName() {
+        PosUserHelper posUserHelper = new PosUserHelper(mContext);
+        return posUserHelper.getCurrentUserDisplayName();
     }
 
     public ArrayList<String> getUsernameList() {

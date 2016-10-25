@@ -78,4 +78,17 @@ public class PosUserManagement implements ObjectManagement, Serializable {
         return dataMapper.getUsernameList();
     }
 
+    /**
+     * Updates the info read from the server
+     * - username to displauy
+     * - user PIN
+     */
+    public boolean updateUserInfo(PosUser user) {
+        return dataMapper.updateUserInfo(user);
+    }
+
+    public String getCurrentUserDisplayName() {
+        return dataMapper.getCurrentUserDisplayName();
+    }
+
 }
