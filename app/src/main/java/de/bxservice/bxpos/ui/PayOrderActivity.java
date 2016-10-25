@@ -28,7 +28,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -253,6 +252,9 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
             case R.id.pay:
                 onPay();
                 break;
+            case R.id.dec:
+                if (payAmount.toString().isEmpty() || payAmount.toString().contains(getString(R.string.decimal)))
+                    break;
             default:
                 payAmount.append(((Button) view).getText().toString());
                 updatePayField();
