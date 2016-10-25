@@ -1,73 +1,71 @@
 <resources>
-    <string name="app_name">Freibier POS</string>
-    <string name="bx_pos">BX POS</string>
+    <string name="app_name">Bx POS</string>
     <string name="powered_by">POS powered by BX Service GmbH</string>
 
-    <string name="navigation_drawer_open"> Offene Navigationsleiste </string>
-    <string name="navigation_drawer_close"> Schließen Navigationsleiste</string>
+    <string name="navigation_drawer_open">Öffnen der Navigationsleiste</string>
+    <string name="navigation_drawer_close">Schließen der Navigationsleiste</string>
     <string name="search">Suche</string>
-    <string name="action_settings"> Einstellung</string>
-    <string name="reservation"> Reservierung</string>
-    <string name="report"> Bericht</string>
-    <string name="save"> speichern</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="reservation">Reservierung</string>
+    <string name="report">Bericht</string>
+    <string name="save">speichern</string>
 
     <!-- Strings related to dialogs -->
-    <string name="discard_draft_order">Ausschließen Auftrag?</string>
-    <string name="discard">Ausschließen</string>
-    <string name="number_of_guests">Festlegen Sie Anzahl von Leute</string>
-    <string name="guests">Leute</string>
+    <string name="discard_draft_order">Beleg verwerfen?</string>
+    <string name="discard">Verwerfen</string>
+    <string name="number_of_guests">Anzahl an Gästen</string>
+    <string name="guests">Gäste</string>
     <string name="set">Festlegen</string>
-    <string name="add">Verlängern</string>
+    <string name="add">Hinzufügen</string>
     <string name="cancel">Abbrechen</string>
-    <string name="note">Verlängern Bemerkung</string>
-    <string name="kitchen_note">Küche Note</string>
-    <string name="undo">Rückgängig machen</string>
-    <string name="item_removed">Entfernt Artikel</string>
-    <string name="delete">Löschen</string>
+    <string name="note">Bemerkung erweitern</string>
+    <string name="kitchen_note">Küchennotiz</string>
+    <string name="undo">rückgängig machen</string>
+    <string name="item_removed">Artikel entfernt</string>
+    <string name="delete">Entf</string>
     <string name="copy">Kopieren</string>
     <string name="selected_count">%1$d ausgewählt</string>
-    <string name="set_table">Wählen Tisch</string>
-    <string name="change_table">Schaltertisch</string>
+    <string name="set_table">Tisch wählen</string>
+    <string name="change_table">Tisch wechseln</string>
     <string name="split_order">Split-Bestellung</string>
-    <string name="join_orders">Mähdrescheraufträge</string>
+    <string name="join_orders">Aufträge kombinieren</string>
     <string name="remove">Entfernen</string>
     <string name="send_items">Senden</string>
-    <string name="synchronize_orders_title">Synchronisieren Sie Aufträge?</string>
-    <string name="synchronize_orders_message">Synchronisieren Sie %1$d Aufträge mit iDempiere?</string>
+    <string name="synchronize_orders_title">Aufträge synchronisieren?</string>
+    <string name="synchronize_orders_message">Möchten Sie %1$d Aufträge mit dem BX-POS Server synchronisieren?</string>
     <string name="join_order_question">Aufträge kombinieren?</string>
-    <string name="join">Kombinieren</string>
-    <string name="split">Split</string>
-    <string name="new_order">Neue</string>
-    <string name="unable_split">You cannot split an order with one or less items</string>
-    <string name="split_all_Error">You can\'t select all items to split</string>
-    <string name="void_title">Ungültig</string>
-    <string name="select_order">Select order</string>
+    <string name="join">kombinieren</string>
+    <string name="split">splitten</string>
+    <string name="new_order">Neuer Beleg</string>
+    <string name="unable_split">Sie können keinen Beleg mit einem oder keinem Artikel splitten.</string>
+    <string name="split_all_Error">Sie können nicht alle Zeilen auswählen und dann splitten.</string>
+    <string name="void_title">Storno</string>
+    <string name="select_order">Beleg auswählen</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_username"> Benutzername</string>
-    <string name="prompt_password"> Passwort</string>
-    <string name="action_sign_in"> Anmelden</string>
-    <string name="action_sign_in_short"> Anmelden</string>
-    <string name="action_retry"> Wiederholen</string>
-    <string name="error_invalid_password"> Dieses Passwort ist zu kurz</string>
-    <string name="error_no_connection"> Keine Internetverbindung!</string>
-    <string name="error_no_connection_username">Keine Internetverbindung und Unbekannter Benutzername</string>
-    <string name="error_incorrect_password"> Benutzername oder Passwort falsch</string>
-    <string name="error_field_required"> Dieses Feld wird benötigt</string>
-    <string name="error_config_server"> Datenfehler. Wenden Sie sich an den Administrator</string>
-    <string name="error_no_server_data_configured">Login data missing. Please contact the administrator!</string>
+    <string name="prompt_username">Benutzername</string>
+    <string name="prompt_password">Passwort</string>
+    <string name="action_sign_in">Anmelden</string>
+    <string name="action_sign_in_short">Anmelden</string>
+    <string name="action_retry">Wiederholen</string>
+    <string name="error_invalid_password">Dieses Passwort ist zu kurz</string>
+    <string name="error_no_connection">Keine Internetverbindung!</string>
+    <string name="error_no_connection_username">Keine Internetverbindung und unbekannter Benutzername.</string>
+    <string name="error_incorrect_password">Benutzername oder Passwort falsch</string>
+    <string name="error_field_required">Dieses Feld wird benötigt</string>
+    <string name="error_config_server">Datenfehler. Wenden Sie sich an den Administrator</string>
+    <string name="error_no_server_data_configured">Keine Login-Daten. Wenden Sie sich an den Administrator.</string>
 
     <!-- Activity titles strings -->
-    <string name="login_title">Freibier POS</string>
-    <string name="title_activity_edit_order">Auftrag bearbeiten</string>
-    <string name="title_activity_create_order">Neue Auftrag</string>
-    <string name="title_activity_add_items">Verlängern items</string>
+    <string name="title_activity_edit_order">Beleg bearbeiten</string>
+    <string name="title_activity_create_order">Neuer Beleg</string>
+    <string name="title_activity_add_items">Artikel hinzufügen</string>
     <string name="title_activity_view_open_orders">Offene Aufträge</string>
-    <string name="title_activity_create_reservation"> Reservierung</string>
+    <string name="title_activity_create_reservation">Reservierung</string>
     <string name="title_activity_login">Anmelden</string>
 
     <!-- Strings related to orders -->
-    <string name="empty_order"> Die auftrag ist leer</string>
+    <string name="empty_order">Der Beleg ist leer</string>
     <string name="ordering">BESTELLUNG</string>
     <string name="ordered">BESTELLT</string>
     <string name="quantity">Menge</string>
@@ -81,13 +79,13 @@
     <!-- Strings related to roles -->
     <string name="role">Rolle</string>
     <string name="waiter_role"> Kellner</string>
-    <string name="supervisor_role"> Aufseher</string>
-    <string name="title_activity_admin_settings"> Einstellungen</string>
+    <string name="supervisor_role">Vorgesetzter</string>
+    <string name="title_activity_admin_settings">Einstellungen</string>
 
     <!-- Strings related to Settings -->
 
     <!-- General settings -->
-    <string name="pref_header_general">Server einstellungen</string>
+    <string name="pref_header_general">Server Einstellungen</string>
 
     <string name="pref_title_display_name">URL Server</string>
     <string name="pref_default_display_name">URL</string>
@@ -100,7 +98,7 @@
     <!-- Strings for Data & Sync -->
     <string name="pref_header_data_sync">Daten &amp; synchronisieren</string>
 
-    <string name="pref_title_sync_frequency">Synchronisieren Häufigkeit</string>
+    <string name="pref_title_sync_frequency">Häufigkeit der Synchronisierung</string>
     <string-array name="pref_sync_frequency_titles">
         <item>15 minuten</item>
         <item>30 minuten</item>
@@ -128,84 +126,84 @@
     <string name="nine">9</string>
     <string name="zero">0</string>
     <string name="decimal">,</string>
-    <string name="del">Löschen</string>
-    <string name="exact">Exakt</string>
-    <string name="pay">Bezahlen</string>
+    <string name="del">Entf</string>
+    <string name="exact">exakt</string>
+    <string name="pay">zahlen</string>
     <string name="set_extra"> Zuschlag</string>
-    <string name="add_discount"> Rabatt</string>
-    <string name="title_activity_pay_order">Bezahlung</string>
+    <string name="add_discount">Rabatt</string>
+    <string name="title_activity_pay_order">Zahlung</string>
     <string name="close">Schließen</string>
 
     <string name="reason">Grund</string>
-    <string name="change">Züruck </string>
-    <string name="change_value">Veränderung: %1$s</string>
-    <string name="to_pay">Bezahlen: %1$s</string>
-    <string name="surcharge_value">Surcharge: %1$s</string>
-    <string name="discount_value">Discount: %1$s</string>
+    <string name="change">Wechselgeld</string>
+    <string name="change_value">Wechselgeld: %1$s</string>
+    <string name="to_pay">zu zahlen: %1$s</string>
+    <string name="surcharge_value">Zusatz: %1$s</string>
+    <string name="discount_value">Rabatt: %1$s</string>
     <string name="paid">Bezahlt</string>
     <string name="paid_value">Bezahlt: %1$s</string>
     <string name="percentage_sign">%</string>
     <string name="currency_symbol">€</string>
 
     <string name="order">Auftrag</string>
-    <string name="unset_table">Zum mitnehmen/Bar</string>
+    <string name="unset_table">Zum mitnehmen/Theke</string>
     <string name="table">Tisch</string>
 
-    <string name="unsent_lines">Es gibt Bestellung noch Gegenstände warten</string>
-    <string name="error_no_connection_on_pay_order">Keine Internetverbindung! Die Aufträge werden später synchronisiert werden</string>
-    <string name="error_no_connection_on_sync_order">Keine Internetverbindung. Versuchen Sie es später noch einmal</string>
+    <string name="unsent_lines">Es sind noch nicht alle Bestellungen bestätigt.</string>
+    <string name="error_no_connection_on_pay_order">Keine Internetverbindung! Die Aufträge werden später synchronisiert.</string>
+    <string name="error_no_connection_on_sync_order">Keine Internetverbindung. Versuchen Sie es später noch einmal.</string>
 
     <string name="success_on_sync_order">Bestellungen synchronisiert</string>
-    <string name="no_connection_on_sync_order">Your device can\'t communicate with iDempiere. Try again later!</string>
+    <string name="no_connection_on_sync_order">Das Gerät kann nicht mit dem BX-POS-Server kommunizieren. Bitte versuchen Sie es später.</string>
 
     <!-- Navigation Drawer strings -->
-    <string name="synchronize">Synchronisieren Aufträge</string>
-    <string name="no_unsync_orders">Super! Alle Aufträge sind in iDempiere</string>
+    <string name="synchronize">Aufträge synchronisieren</string>
+    <string name="no_unsync_orders">Super! Alle Aufträge sind im BX-POS-Server</string>
     <string name="comm_category">Kommunikation</string>
     <string name="share">Aktie</string>
 
-    <string name="void_item">Ungültig</string>
-    <string name="already_voided_item">You can\'t void a voided line</string>
+    <string name="void_item">Storno</string>
+    <string name="already_voided_item">Diese Zeile ist bereits storniert</string>
     <string name="pref_header_data_security">Sicherheit</string>
     <string name="pref_summary_void_approval">Request a PIN when an item is voided</string>
     <string name="pref_title_void_approval">Block void items</string>
     <string name="pref_title_pin_code">PIN</string>
-    <string name="error_invalid_reason"> Ein Grund muss geschrieben werden</string>
-    <string name="approve_void">Void approval</string>
-    <string name="void_summary">Ungültig %1$d Artikel?</string>
-    <string name="void_approval_message">Approve %1$d voided items because of %2$s</string>
-    <string name="assign_password">The admin PIN has not been assigned. Contact the administrator</string>
-    <string name="wrong_password">Falsches Passwort</string>
-    <string name="from_date">From: %1$s</string>
-    <string name="to_date">To: %1$s</string>
-    <string name="no_report_selected">You must select at least one report type</string>
-    <string name="no_records">Es wurden keine Einträge gefunden</string>
-    <string name="net_sales">Nettoumsatz</string>
-    <string name="voided_items">Voided items</string>
-    <string name="sales">Sales</string>
+    <string name="error_invalid_reason">Es muss ein Grund angegeben werden</string>
+    <string name="approve_void">Bestätigung für Storno</string>
+    <string name="void_summary">Stornieren von %1$d Artikeln?</string>
+    <string name="void_approval_message">Bestätigen Sie das Storno von %1$d Bestellzeilen aus folgendem Grund: %2$s</string>
+    <string name="assign_password">Es wurde keine Admin-PIN vergeben. Fragen Sie Ihren Administrator.</string>
+    <string name="wrong_password">falsches Passwort</string>
+    <string name="from_date">Vom: %1$s</string>
+    <string name="to_date">Bis: %1$s</string>
+    <string name="no_report_selected">Suchen Sie eine Berichtsart aus.</string>
+    <string name="no_records">Es wurden keine Daten gefunden</string>
+    <string name="net_sales">Gesamtumsatz</string>
+    <string name="voided_items">Stornierte Artikel</string>
+    <string name="sales">Verkauf</string>
     <string name="pref_header_restaurant">Restaurant</string>
-    <string name="order_prefix">Order prefix</string>
-    <string name="prefix">The documentNo will start with this letters. Make it different for each device</string>
-    <string name="complimentary">Gratis</string>
-    <string name="give_complimentary_product">Are you sure you want to give this item for free?</string>
-    <string name="give">Give</string>
-    <string name="type">Type</string>
+    <string name="order_prefix">Auftragsprefix</string>
+    <string name="prefix">Die Belegnummern beginnen mit diesen Buchstaben. Nehmen Sie verschiedene für jedes Gerät.</string>
+    <string name="complimentary">gratis</string>
+    <string name="give_complimentary_product">Sind Sie sicher, dass Sie das gratis geben wollen?</string>
+    <string name="give">gratis</string>
+    <string name="type">Typ</string>
     <string name="receipt">Bon</string>
-    <string name="cash">Bar</string>
-    <string name="logout">Ausloggen</string>
-    <string name="print_order">Print order</string>
-    <string name="no_print_items">There are no items to print</string>
-    <string name="no_printing_device">No printing device found</string>
-    <string name="void_order">Void order</string>
-    <string name="reload_data">Reload data</string>
-    <string name="reload_data_title">Reload data?</string>
-    <string name="reload_data_message">Reload the data from iDempiere?</string>
-    <string name="reload">Reload</string>
-    <string name="success_on_load_data">Data loaded</string>
+    <string name="cash">Bargeld</string>
+    <string name="logout">ausloggen</string>
+    <string name="print_order">Beleg drucken</string>
+    <string name="no_print_items">Keine Zeilen zum Ausdruck</string>
+    <string name="no_printing_device">Drucker nicht gefunden</string>
+    <string name="void_order">Beleg stornieren</string>
+    <string name="reload_data">Daten neu laden</string>
+    <string name="reload_data_title">Daten neu laden?</string>
+    <string name="reload_data_message">Daten neu vom BX-POS Server laden?</string>
+    <string name="reload">Neu laden</string>
+    <string name="success_on_load_data">Daten geladen</string>
     <string name="updating">Updating…</string>
     <string name="no">Nein</string>
     <string name="yes">Ja</string>
-    <string name="change_url">This action will delete the local database. Do you want to proceed?</string>
+    <string name="change_url">Diese Aktion löscht die lokale Datenbank. Sind Sie sicher?</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
@@ -229,24 +227,24 @@
         <item>Kreditkarte</item>
     </string-array>
 
-    <string name="void_order_approval_message">Void order %1$d because of %2$s</string>
-    <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
-    <string name="no_allow_complimentary">The item %1$s cannot be free</string>
-    <string name="complete_order">Complete payment?</string>
-    <string name="no_undone_operation">This operation cannot be undone</string>
-    <string name="complete">Complete</string>
-    <string name="app_title">Freibier POS</string>
+    <string name="void_order_approval_message">Beleg Nr. %1$d  stornieren aus folgendem Grund: %2$s</string>
+    <string name="no_success_on_sync_order">Es ist ein Fehler bei der Synchronisierung aufgetreten. Melden Sie sich beim Administrator.</string>
+    <string name="no_allow_complimentary">Der Artikel %1$s darf nicht gratis gegeben werden.</string>
+    <string name="complete_order">Zahlung abschliessen?</string>
+    <string name="no_undone_operation">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+    <string name="complete">Abschliessen</string>
+    <string name="app_title">Bx POS</string>
 
     <!-- About activity strings -->
     <string name="about">Über</string>
-    <string name="about_forum">Besuche das Forum</string>
+    <string name="about_forum">Forum besuchen</string>
     <string name="about_google">Auf Google+ folgen</string>
     <string name="about_rate">Diese App bewerten</string>
-    <string name="about_license">Lizenzen</string>
+    <string name="about_license">Lizenz</string>
     <string name="about_help">Hilfe</string>
-    <string name="developedBy">Developed by:</string>
+    <string name="developedBy">"Entwickler: "</string>
     <string name="about_version">Version: %1$s</string>
-    <string name="about_summary">Informationen über Freibier POS</string>
-    <string name="confirm_exit">Zum Verlassen von Freibier POS noch einmal tippen</string>
+    <string name="about_summary">Informationen über Bx POS</string>
+    <string name="confirm_exit">Zum Verlassen von BX POS noch einmal tippen</string>
 
 </resources>
