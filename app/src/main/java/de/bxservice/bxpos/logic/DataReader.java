@@ -82,8 +82,10 @@ public class DataReader {
             @Override
             public void run() {
                 PosUserWebServiceAdapter userWS = new PosUserWebServiceAdapter(wsData);
-                userInfo = userWS.getUser();
-                persistUserData();
+                if (userWS.isSuccess()) {
+                    userInfo = userWS.getUser();
+                    persistUserData();
+                }
             }
         });
 
