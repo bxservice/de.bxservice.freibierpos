@@ -551,15 +551,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     private void completePayment() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.complete_order)
-                .setMessage(R.string.no_undone_operation)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.complete, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        showPaymentDialog();
-                    }
-                }).create().show();
+        showPaymentDialog();
     }
 
     private void showPaymentDialog() {
@@ -570,15 +562,18 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         paymentDialog.show(getFragmentManager(), "PaymentDialogFragment");
     }
 
-    /**
-     * Click add on add remark dialog
-     * @param dialog
-     */
     @Override
     public void onDialogPositiveClick(PaymentCompletedDialogFragment dialog) {
         order.setCashAmt(paidAmount);
         order.setChangeAmt(getChange());
         attemptSynchronizeOrder();
+    }
+
+    @Override
+    public void onDialogNegativeClick(PaymentCompletedDialogFragment dialog) {
+        initAmounts();
+        fillPaymentDisplay();
+        dialog.getDialog().cancel();
     }
 
     private void printOrder() {

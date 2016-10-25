@@ -50,6 +50,7 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface PaymentCompletedListener {
         void onDialogPositiveClick(PaymentCompletedDialogFragment dialog);
+        void onDialogNegativeClick(PaymentCompletedDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
@@ -63,7 +64,6 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        setCancelable(false); //No back button - it's not a confirmation dialog, only an informative one
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
@@ -83,13 +83,19 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
         final TextView changeText = (TextView) view.findViewById(R.id.change);
         changeText.setText(getString(R.string.change_value, currencyFormat.format(changeAmount)));
 
-        builder.setTitle(R.string.pay);
+        builder.setTitle(R.string.complete_order);
+        builder.setMessage(R.string.no_undone_operation);
         builder.setView(view)
                 // Add action buttons
-                .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.pay, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onDialogPositiveClick(PaymentCompletedDialogFragment.this);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mListener.onDialogNegativeClick(PaymentCompletedDialogFragment.this);
                     }
                 });
 
@@ -120,16 +126,8 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
         this.total = total;
     }
 
-    public BigDecimal getPaidAmount() {
-        return paidAmount;
-    }
-
     public void setPaidAmount(BigDecimal paidAmount) {
         this.paidAmount = paidAmount;
-    }
-
-    public BigDecimal getChangeAmount() {
-        return changeAmount;
     }
 
     public void setChangeAmount(BigDecimal changeAmount) {
