@@ -42,6 +42,7 @@ public interface POSPrinter {
                         String address,
                         String city,
                         String receiptLabel,
+                        String orderPrefix,
                         String tableLabel,
                         String tableName,
                         String serverLabel,

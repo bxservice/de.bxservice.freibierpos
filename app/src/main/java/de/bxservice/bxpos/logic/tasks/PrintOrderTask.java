@@ -25,7 +25,9 @@
 package de.bxservice.bxpos.logic.tasks;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import java.io.IOException;
 
@@ -39,6 +41,7 @@ import de.bxservice.bxpos.logic.print.POSPrinterFactory;
 import de.bxservice.bxpos.logic.print.POSPrinterService;
 import de.bxservice.bxpos.logic.print.POSPrinterServiceFactory;
 import de.bxservice.bxpos.ui.EditOrderActivity;
+import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 import de.bxservice.bxpos.ui.PayOrderActivity;
 
 /**
@@ -81,10 +84,14 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                     PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
                     RestaurantInfo restaurantInfo = orgInfoManager.get(1); //Get org info to print in the receipt
 
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mActivity.getBaseContext());
+                    String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, "");
+
                     bt.sendData(printer.printReceipt(restaurantInfo.getName(),
                             restaurantInfo.getAddress1(),
                             restaurantInfo.getPostalCode() + " " + restaurantInfo.getCity(),
                             mActivity.getResources().getString(R.string.receipt),
+                            orderPrefix,
                             mActivity.getResources().getString(R.string.table),
                             order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
                             mActivity.getResources().getString(R.string.waiter_role),
