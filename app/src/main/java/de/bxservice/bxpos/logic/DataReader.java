@@ -38,11 +38,13 @@ import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.logic.webservices.DefaultPosDataWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.OrgInfoWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.OutputDeviceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.PosTenderTypeWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.PosUserWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
@@ -64,6 +66,7 @@ public class DataReader {
     private List<ProductPrice> productPriceList = new ArrayList<>();
     private DefaultPosData defaultData = null;
     private RestaurantInfo restaurantInfo = null;
+    private PosUser userInfo = null;
     private List<POSOutputDevice> outputDeviceList = new ArrayList<>();
     private List<PosTenderType> tenderTypeList = new ArrayList<>();
     private boolean error = false;
@@ -74,6 +77,17 @@ public class DataReader {
 
         mContext = ctx;
         final WebServiceRequestData wsData = new WebServiceRequestData(mContext);
+
+        Thread dataUserThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PosUserWebServiceAdapter userWS = new PosUserWebServiceAdapter(wsData);
+                userInfo = userWS.getUser();
+                persistUserData();
+            }
+        });
+
+        dataUserThread.run();
 
         Thread outputDeviceThread = new Thread(new Runnable() {
             @Override
@@ -152,6 +166,10 @@ public class DataReader {
 
     }
 
+    private void persistUserData() {
+        userInfo.updateUserInfo(mContext);
+    }
+
     /**
      * Save default data in the database
      */
@@ -160,7 +178,7 @@ public class DataReader {
     }
 
     /**
-     * Save default data in the database
+     * Save Org info in the database
      */
     private void persistOrgInfo() {
         restaurantInfo.saveData(mContext);
@@ -218,7 +236,8 @@ public class DataReader {
                 tableGroupList   != null && !tableGroupList.isEmpty() &&
                 productPriceList != null && !productPriceList.isEmpty() &&
                 tenderTypeList   != null && !tenderTypeList.isEmpty() &&
-                restaurantInfo   != null &&  defaultData != null) {
+                restaurantInfo   != null &&  defaultData != null &&
+                userInfo != null) {
             return true;
         }
 

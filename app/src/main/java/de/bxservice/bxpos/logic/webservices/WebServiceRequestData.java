@@ -157,9 +157,4 @@ public class WebServiceRequestData {
         return urlBase;
     }
 
-    public static String getLoggedUsername(Context context) {
-        PosSessionPreferenceManagement preferenceManager = new PosSessionPreferenceManagement(context);
-        return preferenceManager.getPreferenceValue(USERNAME_SYNC_PREF);
-    }
-
 }

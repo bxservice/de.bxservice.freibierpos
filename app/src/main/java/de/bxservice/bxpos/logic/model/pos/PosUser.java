@@ -37,6 +37,8 @@ public class PosUser extends UserContract.User {
 
     private int id;
     private String username;
+    private String displayUsername;
+    private String userPIN;
     private String password;
     private String salt;
     private PosUserManagement userManager;
@@ -65,6 +67,22 @@ public class PosUser extends UserContract.User {
         this.password = password;
     }
 
+    public String getDisplayUsername() {
+        return displayUsername;
+    }
+
+    public void setDisplayUsername(String displayUsername) {
+        this.displayUsername = displayUsername;
+    }
+
+    public String getUserPIN() {
+        return userPIN;
+    }
+
+    public void setUserPIN(String userPIN) {
+        this.userPIN = userPIN;
+    }
+
     /**
      * Communicates with the manager to create the user in the database
      * @param ctx
@@ -85,14 +103,14 @@ public class PosUser extends UserContract.User {
         this.salt = salt;
     }
 
-    public boolean changePassword(String password, Context ctx) {
-        this.password = password;
-        return updateUser(ctx);
-    }
-
     public boolean updateUser(Context ctx) {
         userManager = new PosUserManagement(ctx);
         return userManager.update(this);
+    }
+
+    public boolean updateUserInfo(Context ctx) {
+        userManager = new PosUserManagement(ctx);
+        return userManager.updateUserInfo(this);
     }
 
     /**

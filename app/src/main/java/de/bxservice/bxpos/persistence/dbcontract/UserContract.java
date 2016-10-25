@@ -37,10 +37,12 @@ public final class UserContract {
 
     /* Inner class that defines the table contents */
     public static abstract class User implements BaseColumns {
-        public static final String TABLE_NAME = "pos_user";
-        public static final String COLUMN_NAME_USER_ID = "userid";
-        public static final String COLUMN_NAME_USERNAME = "username";
-        public static final String COLUMN_NAME_PASSWORD = "password";
-        public static final String COLUMN_NAME_SALT     = "salt";
+        public static final String TABLE_NAME               = "pos_user";
+        public static final String COLUMN_NAME_USER_ID      = "userid";
+        public static final String COLUMN_NAME_USERNAME     = "username";
+        public static final String COLUMN_NAME_DISPLAY_NAME = "displayName";
+        public static final String COLUMN_NAME_USER_PIN     = "userPIN";
+        public static final String COLUMN_NAME_PASSWORD     = "password";
+        public static final String COLUMN_NAME_SALT         = "salt";
     }
 }

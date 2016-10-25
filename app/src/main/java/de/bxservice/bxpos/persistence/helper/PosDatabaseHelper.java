@@ -57,7 +57,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 45;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -78,6 +78,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     UserContract.User.COLUMN_NAME_USER_ID + " INTEGER PRIMARY KEY" +
                     ", " +
                     UserContract.User.COLUMN_NAME_USERNAME + " VARCHAR(64) NOT NULL UNIQUE" +
+                    ", " +
+                    UserContract.User.COLUMN_NAME_DISPLAY_NAME + " VARCHAR(256)" +
+                    ", " +
+                    UserContract.User.COLUMN_NAME_USER_PIN + " VARCHAR(20)" +
                     ", " +
                     UserContract.User.COLUMN_NAME_PASSWORD + " VARCHAR(256) NOT NULL" +
                     ", " +
@@ -345,6 +349,14 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_VALUE + " VARCHAR(64)" +
                     ")";
 
+    private static final String ALTER_USER_DISPLAY_NAME =
+            "ALTER TABLE "             + Tables.TABLE_USER +
+                    " ADD COLUMN " + UserContract.User.COLUMN_NAME_DISPLAY_NAME + " VARCHAR(256)";
+
+    private static final String ALTER_USER_USER_PIN =
+            "ALTER TABLE "             + Tables.TABLE_USER +
+                    " ADD COLUMN " + UserContract.User.COLUMN_NAME_USER_PIN + " VARCHAR(20)";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -394,10 +406,11 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < DATABASE_VERSION) {
-            Log.w(TAG, "Detected schema version '" + oldVersion + "'. " +
-                    "Index needs to be rebuilt for schema version '" + newVersion + "'.");
-            // We need to drop the tables and recreate them
-            reconstruct(db);
+            Log.d(TAG, "Upgrading db from version " + oldVersion + " to " + newVersion);
+            if (oldVersion < 2) {
+                db.execSQL(ALTER_USER_DISPLAY_NAME);
+                db.execSQL(ALTER_USER_USER_PIN);
+            }
         }
     }
 
