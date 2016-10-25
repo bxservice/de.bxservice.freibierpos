@@ -125,7 +125,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
      * @return String for receipt printing
      */
     @Override
-    protected String getReceiptText(String restaurantName, String address, String city, String receiptLabel, String tableLabel, String tableName, String serverLabel,
+    protected String getReceiptText(String restaurantName, String address, String city, String receiptLabel, String orderPrefix, String tableLabel, String tableName, String serverLabel,
                                     String guestsLabel, String subtotalLabel, String surchargeLabel, String totalLabel, String cashLabel, String changeLabel) {
 
         StringBuilder ticket = new StringBuilder();
@@ -247,16 +247,16 @@ public class CPCLPrinter extends AbstractPOSPrinter {
 
         ticket.append(footerSection.toString());
 
-        return String.format(ticket.toString(), pageWidth, restaurantName, address, city, receiptLabel, order.getOrderId(),
+        return String.format(ticket.toString(), pageWidth, restaurantName, address, city, receiptLabel, orderPrefix + order.getOrderId(),
                 tableLabel, tableName, serverLabel, order.getServerName(null), guestsLabel, order.getGuestNumber(), dateFormat.format(cal.getTime()),
                 subtotalLabel, surchargeLabel, totalLabel, cashLabel, changeLabel, defaultPosData.getReceiptFooter());
     }
 
     @Override
-    public byte[] printReceipt(String restaurantName, String address, String city, String receiptLabel, String tableLabel, String tableName, String serverLabel,
+    public byte[] printReceipt(String restaurantName, String address, String city, String receiptLabel, String orderPrefix, String tableLabel, String tableName, String serverLabel,
                                String guestsLabel, String subtotalLabel, String surchargeLabel, String totalLabel, String cashLabel, String changeLabel) {
 
-        return getReceiptText(restaurantName, address, city, receiptLabel, tableLabel, tableName, serverLabel,
+        return getReceiptText(restaurantName, address, city, receiptLabel, orderPrefix, tableLabel, tableName, serverLabel,
                 guestsLabel, subtotalLabel, surchargeLabel, totalLabel, cashLabel, changeLabel).getBytes();
     }
 }
