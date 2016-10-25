@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Freibier POS</string>
-    <string name="app_title">Freibier POS</string>
     <string name="bx_pos">BX POS</string>
     <string name="powered_by">POS powered by BX Service GmbH</string>
 
@@ -59,7 +58,6 @@
     <string name="error_no_server_data_configured">Login data missing. Please contact the administrator!</string>
 
     <!-- Activity titles strings -->
-    <string name="login_title">Freibier POS</string>
     <string name="title_activity_edit_order">Edit order</string>
     <string name="title_activity_create_order">New order</string>
     <string name="title_activity_add_items">Add items</string>

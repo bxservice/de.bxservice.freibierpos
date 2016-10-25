@@ -58,7 +58,6 @@
     <string name="error_no_server_data_configured">Faltan datos de autenticación. Por favor, póngase en contacto con el administrador</string>
 
     <!-- Activity titles strings -->
-    <string name="login_title">Freibier POS</string>
     <string name="title_activity_edit_order">Editar orden</string>
     <string name="title_activity_create_order">Nueva orden</string>
     <string name="title_activity_add_items">Añadir ítems</string>
@@ -231,7 +230,6 @@
     <string name="complete_order">¿Pagar orden?</string>
     <string name="no_undone_operation">Esta operación no se puede deshacer</string>
     <string name="complete">Completar</string>
-    <string name="app_title">Freibier POS</string>
 
     <!-- About activity strings -->
     <string name="about">Acerca de</string>
