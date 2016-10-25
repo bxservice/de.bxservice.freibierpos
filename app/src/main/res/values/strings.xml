@@ -207,7 +207,7 @@
     <string name="change_url">This action will delete the local database. Do you want to proceed?</string>
     <string name="no_success_on_sync_order">There was an error. Contact the administrator</string>
     <string name="no_allow_complimentary">The item %1$s cannot be free</string>
-    <string name="complete_order">Complete payment?</string>
+    <string name="complete_order">Pay order?</string>
     <string name="no_undone_operation">This operation cannot be undone</string>
     <string name="complete">Complete</string>
 
