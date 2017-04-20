@@ -38,6 +38,8 @@ import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
 import de.bxservice.bxpos.persistence.dbcontract.SessionPreferenceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
+import de.bxservice.bxpos.persistence.dbcontract.TaxCategoryContract;
+import de.bxservice.bxpos.persistence.dbcontract.TaxContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
@@ -54,6 +56,10 @@ public interface Tables {
     //Physical space tables
     String TABLE_TABLE         = TableContract.TableDB.TABLE_NAME;
     String TABLE_TABLE_GROUP   = GroupTableContract.GroupTableDB.TABLE_NAME;
+
+    //Taxes
+    String TABLE_TAX_CATEGORY  = TaxContract.TaxDB.TABLE_NAME;
+    String TABLE_TAX           = TaxCategoryContract.TaxCategoryDB.TABLE_NAME;
 
     //Order management tables
     String TABLE_POSORDER       = PosOrderContract.POSOrderDB.TABLE_NAME;

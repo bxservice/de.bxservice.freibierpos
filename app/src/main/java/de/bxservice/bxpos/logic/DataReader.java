@@ -38,6 +38,7 @@ import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.idempiere.TaxCategory;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
 import de.bxservice.bxpos.logic.webservices.DefaultPosDataWebServiceAdapter;
@@ -49,6 +50,7 @@ import de.bxservice.bxpos.logic.webservices.ProductCategoryWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductPriceWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.ProductWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.TableWebServiceAdapter;
+import de.bxservice.bxpos.logic.webservices.TaxInfoWebServiceAdapter;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 
 /**
@@ -62,6 +64,7 @@ public class DataReader {
 
     private List<ProductCategory> productCategoryList = new ArrayList<>();
     private List<TableGroup> tableGroupList = new ArrayList<>();
+    private List<TaxCategory> taxCategoryList = new ArrayList<>();
     private List<MProduct> productList = new ArrayList<>();
     private List<ProductPrice> productPriceList = new ArrayList<>();
     private DefaultPosData defaultData = null;
@@ -100,6 +103,19 @@ public class DataReader {
         });
 
         outputDeviceThread.run();
+
+        Thread taxInfoThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TaxInfoWebServiceAdapter taxInfoWS = new TaxInfoWebServiceAdapter(wsData);
+                if (taxInfoWS.isSuccess()) {
+                    taxCategoryList = taxInfoWS.getTaxCategoryList();
+                    persistTaxCategory();
+                }
+            }
+        });
+
+        taxInfoThread.run();
 
         Thread productCategoryThread = new Thread(new Runnable() {
             @Override
@@ -202,6 +218,11 @@ public class DataReader {
                 table.save(mContext);
             }
         }
+    }
+
+    private void persistTaxCategory() {
+        for(TaxCategory taxCategory : taxCategoryList)
+            taxCategory.save(mContext);
     }
 
     /**

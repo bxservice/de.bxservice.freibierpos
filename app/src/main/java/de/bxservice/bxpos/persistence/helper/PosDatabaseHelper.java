@@ -45,6 +45,8 @@ import de.bxservice.bxpos.persistence.dbcontract.ProductContract;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
 import de.bxservice.bxpos.persistence.dbcontract.SessionPreferenceContract;
 import de.bxservice.bxpos.persistence.dbcontract.TableContract;
+import de.bxservice.bxpos.persistence.dbcontract.TaxCategoryContract;
+import de.bxservice.bxpos.persistence.dbcontract.TaxContract;
 import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 import de.bxservice.bxpos.persistence.definition.Tables;
 
@@ -57,7 +59,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -351,6 +353,30 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_VALUE + " VARCHAR(64)" +
                     ")";
 
+    private static final String CREATE_TAX_TABLE =
+            "CREATE TABLE " + Tables.TABLE_TAX +
+                    "(" +
+                    TaxContract.TaxDB.COLUMN_NAME_TAX_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    TaxContract.TaxDB.COLUMN_NAME_NAME + " VARCHAR(250) NOT NULL" +
+                    ", " +
+                    TaxContract.TaxDB.COLUMN_NAME_RATE + " NUMERIC" +
+                    ", " +
+                    TaxContract.TaxDB.COLUMN_NAME_POSTAL + " VARCHAR(20)" +
+                    ", " +
+                    TaxContract.TaxDB.COLUMN_NAME_TAX_CATEGORY_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_TAX_CATEGORY + "(" + TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_TAX_CATEGORY_ID + ") ON DELETE CASCADE" +  //FK to the group
+                    ")";
+
+    private static final String CREATE_TAX_CATEGORY_TABLE =
+            "CREATE TABLE " + Tables.TABLE_TAX_CATEGORY +
+                    "(" +
+                    TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_TAX_CATEGORY_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_NAME + " VARCHAR(250) NOT NULL" +
+                    ")";
+
+    //Alter queries
     private static final String ALTER_USER_DISPLAY_NAME =
             "ALTER TABLE "             + Tables.TABLE_USER +
                     " ADD COLUMN " + UserContract.User.COLUMN_NAME_DISPLAY_NAME + " VARCHAR(256)";
@@ -420,6 +446,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             if (oldVersion < 3) {
                 db.execSQL(ALTER_ORG_INFO_DESCRIPTION);
             }
+            if (oldVersion < 4) {
+                db.execSQL(CREATE_TAX_CATEGORY_TABLE);
+                db.execSQL(CREATE_TAX_TABLE);
+            }
         }
     }
 
@@ -454,6 +484,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private void dropTables(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_META_INDEX);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TAX_CATEGORY);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_TAX);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSORDER_LINE);
         db.execSQL("DROP TABLE IF EXISTS " + Tables.TABLE_POSTENDER_TYPE);
@@ -476,6 +508,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_GROUPTABLE_TABLE);
         db.execSQL(CREATE_TABLE_TABLE);
         db.execSQL(CREATE_OUTPUT_DEVICE_TABLE);
+        db.execSQL(CREATE_TAX_CATEGORY_TABLE);
+        db.execSQL(CREATE_TAX_TABLE);
         db.execSQL(CREATE_PRODUCT_CATEGORY_TABLE);
         db.execSQL(CREATE_PRODUCT_TABLE);
         db.execSQL(CREATE_PRODUCT_PRICE_TABLE);
