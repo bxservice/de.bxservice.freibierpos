@@ -115,4 +115,9 @@ public class POSOutputDevice {
     private boolean createOutputDevice() {
         return deviceManager.create(this);
     }
+
+    public static POSOutputDevice getDevice(Context ctx, String target) {
+        PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(ctx);
+        return outputDeviceManager.getDevice(target);
+    }
 }

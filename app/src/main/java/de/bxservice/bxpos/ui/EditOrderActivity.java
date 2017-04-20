@@ -52,7 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.daomanager.PosOutputDeviceManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -1043,11 +1042,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private void printOrder(boolean showMessage) {
 
-        PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
-
         //Check if there are configured printers
-        if(outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN) == null &&
-                outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_BAR) == null) {
+        if(POSOutputDevice.getDevice(getBaseContext(), POSOutputDeviceValues.TARGET_KITCHEN) == null &&
+                POSOutputDevice.getDevice(getBaseContext(), POSOutputDeviceValues.TARGET_BAR) == null) {
             if(showMessage)
                 Toast.makeText(getBaseContext(), getString(R.string.no_printing_device),
                         Toast.LENGTH_LONG).show();
@@ -1065,7 +1062,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             return;
         }
 
-        POSOutputDevice printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_KITCHEN);
+        POSOutputDevice printOrderDevice = POSOutputDevice.getDevice(getBaseContext(), POSOutputDeviceValues.TARGET_KITCHEN);
 
         //If kitchen printer is configured -> print kitchen
         if(printOrderDevice != null &&
@@ -1075,7 +1072,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             createOrderTask.execute(order);
         }
 
-        printOrderDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_BAR);
+        printOrderDevice = POSOutputDevice.getDevice(getBaseContext(), POSOutputDeviceValues.TARGET_BAR);
 
         //If bar printer is configured -> print bar
         if(printOrderDevice != null &&

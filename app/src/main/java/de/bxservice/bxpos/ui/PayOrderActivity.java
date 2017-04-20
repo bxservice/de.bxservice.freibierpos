@@ -57,7 +57,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOutputDeviceManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
@@ -579,8 +578,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     private void printOrder() {
-        PosOutputDeviceManagement outputDeviceManager = new PosOutputDeviceManagement(getBaseContext());
-        POSOutputDevice printReceiptDevice = outputDeviceManager.getDevice(POSOutputDeviceValues.TARGET_RECEIPT);
+        POSOutputDevice printReceiptDevice = POSOutputDevice.getDevice(getBaseContext(), POSOutputDeviceValues.TARGET_RECEIPT);
 
         if(printReceiptDevice != null && printReceiptDevice.getDeviceType().equalsIgnoreCase(POSOutputDeviceValues.DEVICE_PRINTER)) {
             PrintOrderTask createOrderTask = new PrintOrderTask(this, printReceiptDevice);
