@@ -73,10 +73,9 @@ public class DataReader {
     private Context mContext;
 
 
-    public DataReader(Context ctx) {
+    public DataReader(final WebServiceRequestData wsData, Context ctx) {
 
         mContext = ctx;
-        final WebServiceRequestData wsData = new WebServiceRequestData(mContext);
 
         Thread dataUserThread = new Thread(new Runnable() {
             @Override
