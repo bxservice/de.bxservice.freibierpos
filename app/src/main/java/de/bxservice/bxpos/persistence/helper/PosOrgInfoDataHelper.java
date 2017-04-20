@@ -55,6 +55,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
         values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_CITY, data.getCity());
         values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_PHONE, data.getPhone());
         values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_POSTAL, data.getPostalCode());
+        values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_DESCRIPTION, data.getDescription());
 
         // insert row
         return database.insert(Tables.TABLE_ORG_INFO, null, values);
@@ -73,6 +74,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
         values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_CITY, data.getCity());
         values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_PHONE, data.getPhone());
         values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_POSTAL, data.getPostalCode());
+        values.put(OrgInfoContract.OrgInfoDB.COLUMN_NAME_DESCRIPTION, data.getDescription());
 
         // updating row
         return db.update(Tables.TABLE_ORG_INFO, values, OrgInfoContract.OrgInfoDB.COLUMN_NAME_ORG_INFO_ID + " = ?",
@@ -104,6 +106,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
         restaurantInfo.setCity(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_CITY)));
         restaurantInfo.setPhone(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_PHONE)));
         restaurantInfo.setPostalCode(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_POSTAL)));
+        restaurantInfo.setDescription(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_DESCRIPTION)));
 
         c.close();
 
