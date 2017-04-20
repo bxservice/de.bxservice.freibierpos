@@ -28,6 +28,7 @@ import android.content.Context;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
 
@@ -144,6 +145,11 @@ public class MProduct implements Serializable {
      */
     private boolean createProduct() {
         return productManager.create(this);
+    }
+
+    public static List<MProduct> getAllProducts(Context ctx) {
+        PosProductManagement dataProvider = new PosProductManagement(ctx);
+        return dataProvider.getAllProducts();
     }
 
 }
