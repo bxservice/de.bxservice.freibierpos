@@ -67,7 +67,6 @@ import java.util.HashMap;
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.fcm.BxPosFirebaseInstanceIDService;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
-import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.model.pos.PosRoles;
 import de.bxservice.bxpos.logic.tasks.CreateDeviceTokenTask;
@@ -115,8 +114,7 @@ public class LoginActivity extends AppCompatActivity  {
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
 
         //// Get the string array
-        PosUserManagement userManager = new PosUserManagement(getApplicationContext());
-        ArrayList<String> usernameList = userManager.getUsernameList();
+        ArrayList<String> usernameList = PosUser.getUsernameList(getApplicationContext());
 
         if (usernameList != null && usernameList.size() > 0) {
             // Create the adapter and set it to the AutoCompleteTextView
@@ -187,17 +185,6 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
         return true;
-    }
-
-    /**
-     * Checks if the logged credentials were introduced before
-     * @param username
-     * @return
-     */
-    private PosUser getLoggedUser(String username) {
-        PosUserManagement userManager = new PosUserManagement(getApplicationContext());
-
-        return userManager.get(username);
     }
 
     /**
@@ -298,7 +285,7 @@ public class LoginActivity extends AppCompatActivity  {
                     snackbar.show();
                 } else {
 
-                    PosUser loggedUser = getLoggedUser(username);
+                    PosUser loggedUser = PosUser.getUser(getBaseContext(), username);
 
                     //Username does not exist and no internet connection
                     if(loggedUser == null) {
@@ -449,7 +436,7 @@ public class LoginActivity extends AppCompatActivity  {
             if (success) {
 
                 //New user -> create it in the database
-                if (getLoggedUser(mUsername) == null) {
+                if (PosUser.getUser(getBaseContext(), mUsername) == null) {
                     PosUser newUser = new PosUser();
                     newUser.setUsername(mUsername);
                     newUser.setPassword(mPassword);
@@ -468,7 +455,7 @@ public class LoginActivity extends AppCompatActivity  {
 
                 // If the sync configuration chosen was Always offline login not allowed
                 if (!"0".equals(syncConnPref)) {
-                    PosUser loggedUser = getLoggedUser(mUsername);
+                    PosUser loggedUser = PosUser.getUser(getBaseContext(), mUsername);
 
                     //Username does not exist and no internet connection
                     if(loggedUser != null) {
