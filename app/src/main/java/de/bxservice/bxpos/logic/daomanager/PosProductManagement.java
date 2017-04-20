@@ -26,33 +26,18 @@ package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
 
-import java.io.Serializable;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
-import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * Created by Diego Ruiz on 28/12/15.
  */
-public class PosProductManagement implements ObjectManagement, Serializable {
-
-    //Object that writes to the db
-    private DataMapper dataMapper;
+public class PosProductManagement extends AbstractObjectManagement {
 
     public PosProductManagement(Context ctx) {
-        dataMapper = new DataMapper(ctx);
-    }
-
-    @Override
-    public boolean update(Object object) {
-        return dataMapper.update(object);
-    }
-
-    @Override
-    public boolean create(Object object) {
-        return dataMapper.save(object);
+        super(ctx);
     }
 
     @Override
@@ -72,4 +57,5 @@ public class PosProductManagement implements ObjectManagement, Serializable {
     public List<MProduct> getAllProducts() {
         return dataMapper.getAllProducts();
     }
+
 }

@@ -26,21 +26,15 @@ package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-
-import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * Created by Diego Ruiz on 11/05/16.
  */
-public class PosKitchenNoteManagement implements ObjectManagement, Serializable {
-
-    //Object that writes to the db
-    private DataMapper dataMapper;
+public class PosKitchenNoteManagement extends AbstractObjectManagement {
 
     public PosKitchenNoteManagement(Context ctx) {
-        dataMapper = new DataMapper(ctx);
+        super(ctx);
     }
 
     @Override
@@ -65,10 +59,6 @@ public class PosKitchenNoteManagement implements ObjectManagement, Serializable 
     @Override
     public boolean remove(Object object) {
         return false;
-    }
-
-    public boolean noteExist(String note) {
-        return dataMapper.noteExist(note);
     }
 
     public ArrayList<String> getKitchenNotes() {

@@ -27,6 +27,7 @@ package de.bxservice.bxpos.logic.daomanager;
 import android.content.Context;
 
 import java.util.List;
+
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 import de.bxservice.bxpos.persistence.DataMapper;
 

@@ -26,32 +26,17 @@ package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
 
-import java.io.Serializable;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
-import de.bxservice.bxpos.persistence.DataMapper;
 
 /**
  * Created by Diego Ruiz on 28/12/15.
  */
-public class PosProductCategoryManagement implements ObjectManagement, Serializable {
-
-    //Object that writes to the db
-    private DataMapper dataMapper;
+public class PosProductCategoryManagement extends AbstractObjectManagement {
 
     public PosProductCategoryManagement(Context ctx) {
-        dataMapper = new DataMapper(ctx);
-    }
-
-    @Override
-    public boolean update(Object object) {
-        return dataMapper.update(object);
-    }
-
-    @Override
-    public boolean create(Object object) {
-        return dataMapper.save(object);
+        super(ctx);
     }
 
     @Override

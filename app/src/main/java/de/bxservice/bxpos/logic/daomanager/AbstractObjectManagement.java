@@ -26,34 +26,33 @@ package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
 
-import java.util.List;
+import java.io.Serializable;
 
-import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.persistence.DataMapper;
 
-/**
- * Created by Diego Ruiz on 28/12/15.
- */
-public class PosTableGroupManagement extends AbstractObjectManagement {
+public abstract class AbstractObjectManagement implements ObjectManagement, Serializable {
 
-    public PosTableGroupManagement(Context ctx) {
-        super(ctx);
+    //Object that writes to the db
+    DataMapper dataMapper;
+
+    protected AbstractObjectManagement(Context ctx) {
+        dataMapper = new DataMapper(ctx);
     }
 
     @Override
-    public TableGroup get(long id){
-        return dataMapper.getTableGroup(id);
+    public boolean update(Object object) {
+        return dataMapper.update(object);
+    }
+
+    @Override
+    public boolean create(Object object) {
+        return dataMapper.save(object);
     }
 
     @Override
     public boolean remove(Object object) {
-        return true;
+        return dataMapper.remove(object);
     }
 
-    public long getTotalTableGroups() {
-        return dataMapper.getTotalTableGroups();
-    }
 
-    public List<TableGroup> getAllTableGroups() {
-        return dataMapper.getAllTableGroups();
-    }
 }
