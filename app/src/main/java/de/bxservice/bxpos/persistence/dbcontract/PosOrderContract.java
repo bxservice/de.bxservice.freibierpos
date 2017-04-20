@@ -39,6 +39,7 @@ public class PosOrderContract {
     public static abstract class POSOrderDB implements BaseColumns {
         public static final String TABLE_NAME               = "pos_order";
         public static final String COLUMN_NAME_ORDER_ID     = "orderid";
+        public static final String COLUMN_NAME_DOCUMENT_NO  = "DocumentNo";
         public static final String COLUMN_NAME_CREATED_AT   = "created";
         public static final String COLUMN_NAME_UPDATED_AT   = "updated";
         public static final String COLUMN_NAME_CREATED_BY   = "createdBy";

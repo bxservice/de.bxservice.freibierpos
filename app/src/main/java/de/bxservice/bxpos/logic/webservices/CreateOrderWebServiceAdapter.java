@@ -25,8 +25,6 @@
 package de.bxservice.bxpos.logic.webservices;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.idempiere.webservice.client.base.DataRow;
@@ -38,13 +36,11 @@ import org.idempiere.webservice.client.request.CreateDataRequest;
 import org.idempiere.webservice.client.request.SetDocActionRequest;
 import org.idempiere.webservice.client.response.CompositeResponse;
 
-import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
-import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 
 /**
  * Created by Diego Ruiz on 12/02/16.
@@ -95,8 +91,6 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         String orgId = getLogin().getOrgID().toString();
 
         DefaultPosData defaultPosData = DefaultPosData.get(mContext);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, DOCUMENT_NO_PREFIX);
 
         DataRow data = new DataRow();
 
@@ -113,7 +107,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("C_DocTypeTarget_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("C_DocType_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("Description", order.getOrderRemark());
-        data.addField("DocumentNo", orderPrefix + order.getOrderId());
+        data.addField("DocumentNo", order.getDocumentNo());
         data.addField("IsSOTrx", "Y"); //Sales Order
         data.addField("PaymentRule", order.getPaymentRule());
         data.addField("M_PriceList_ID", String.valueOf(defaultPosData.getDefaultPriceList()));

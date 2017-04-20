@@ -221,6 +221,9 @@
     <string name="about_summary">Information about Freibier POS</string>
     <string name="confirm_exit">Tap again to exit Freibier POS</string>
 
+    <string name="prefix_number">The orders will be numbered from this number consecutively.</string>
+    <string name="order_number_prefix">Initial order number</string>
+
     <!-- Report types -->
     <string-array name="report_types_titles">
         <item>Sales</item>

@@ -60,7 +60,7 @@ public class SelectOrderDialogAdapter extends RecyclerView.Adapter<SelectOrderDi
         }
 
         public void bindOrder(POSOrder order) {
-            txtOrder.setText(String.valueOf(order.getOrderId()));
+            txtOrder.setText(order.getOrderNo());
             if (order.getTable() != null)
                 txtTable.setText(order.getTable().getTableName());
             else

@@ -59,7 +59,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -124,6 +124,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + Tables.TABLE_POSORDER +
                     "(" +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " INTEGER PRIMARY KEY" +
+                    ", " +
+                    PosOrderContract.POSOrderDB.COLUMN_NAME_DOCUMENT_NO + " VARCHAR(30) NOT NULL UNIQUE" +
                     ", " +
                     PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " VARCHAR(64) NOT NULL" +
                     ", " +
@@ -410,6 +412,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     " ADD COLUMN " + ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID + " INTEGER REFERENCES "
                     + Tables.TABLE_TAX_CATEGORY + "(" + TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_TAX_CATEGORY_ID + ") "; //FK to the tax category
 
+    private static final String ALTER_ORDER_DOCUMENT_NO =
+            "ALTER TABLE "             + Tables.TABLE_POSORDER +
+                    " ADD COLUMN " + PosOrderContract.POSOrderDB.COLUMN_NAME_DOCUMENT_NO + " VARCHAR(30) NOT NULL UNIQUE";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -475,6 +481,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                 db.execSQL(ALTER_DEFAULT_POS_DATA_BPARTNER);
                 db.execSQL(ALTER_DEFAULT_POS_DATA_STDPRECISION);
                 db.execSQL(ALTER_PRODUCT_TAX_CATEGORY);
+            }
+            if (oldVersion < 6) {
+                db.execSQL(ALTER_ORDER_DOCUMENT_NO);
             }
         }
     }

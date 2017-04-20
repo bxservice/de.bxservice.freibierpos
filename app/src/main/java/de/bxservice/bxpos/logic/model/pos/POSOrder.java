@@ -25,6 +25,8 @@
 package de.bxservice.bxpos.logic.model.pos;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -39,6 +41,7 @@ import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.StandardTaxProvider;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
+import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 
 /**
  * This represents the draft order - contains
@@ -78,6 +81,7 @@ public class POSOrder implements Serializable {
 
     private int currentLineNo = 10;
     private long orderId;
+    private String documentNo;
     private Table table;
     private int guestNumber = 0;
     private String status;
@@ -326,6 +330,22 @@ public class POSOrder implements Serializable {
         this.sync = sync;
     }
 
+    public String getDocumentNo() {
+        return documentNo;
+    }
+
+    public void setDocumentNo(String documentNo) {
+        this.documentNo = documentNo;
+    }
+
+    /**
+     *  Get the numeric part of the document no
+     * @return document number without the prefix
+     */
+    public String getOrderNo() {
+        return documentNo.replaceAll("[^0-9]", "");
+    }
+
     public void setCurrentLineNo() {
         if(orderedLines != null && !orderedLines.isEmpty())
             currentLineNo = orderedLines.get(orderedLines.size() - 1).getLineNo() + 10;
@@ -541,12 +561,12 @@ public class POSOrder implements Serializable {
         orderManager = new PosOrderManagement(ctx);
         boolean result;
 
-        completeOrder();
+        completeOrder(ctx);
 
         result = orderManager.update(this);
 
         if(!result)
-            uncompleteOrder();
+            uncompleteOrder(ctx);
         else if (table != null && !table.getStatus().equals(Table.BUSY_STATUS)) {
             table.setServerName(getServerName(ctx));
             table.occupyTable(ctx, true);
@@ -565,7 +585,21 @@ public class POSOrder implements Serializable {
 
     public boolean createOrder (Context ctx) {
         orderManager = new PosOrderManagement(ctx);
-        return orderManager.create(this);
+
+        //get values from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx);
+        String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, "");
+        int orderNumber = Integer.parseInt(sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER, "1"));
+        documentNo = orderPrefix + orderNumber;
+
+        //If the order is created successfully - order Number +1
+        if (orderManager.create(this)) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER, String.valueOf(orderNumber +1));
+            editor.apply();
+            return true;
+        } else
+            return false;
     }
 
     public boolean updateOrder (Context ctx) {
@@ -573,11 +607,11 @@ public class POSOrder implements Serializable {
         return orderManager.update(this);
     }
 
-    private void completeOrder() {
+    private void completeOrder(Context ctx) {
         status = SENT_STATUS;
         for (POSOrderLine orderLine : orderingLines) {
             orderLine.completeLine();
-            orderLine.updateLine(null);
+            orderLine.updateLine(ctx);
             orderedLines.add(orderLine);
         }
         orderingLines.clear();
@@ -616,11 +650,11 @@ public class POSOrder implements Serializable {
         }
     }
 
-    private void uncompleteOrder() {
+    private void uncompleteOrder(Context ctx) {
         status = DRAFT_STATUS;
         for (POSOrderLine orderLine : orderedLines) {
             orderLine.uncompleteLine();
-            orderLine.updateLine(null);
+            orderLine.updateLine(ctx);
             orderingLines.add(orderLine);
         }
         orderedLines.clear();
@@ -686,7 +720,6 @@ public class POSOrder implements Serializable {
         if(destinationOrder == null) {
             POSOrder newOrder = new POSOrder();
 
-            newOrder.createOrder(ctx);
             newOrder.setStatus(SENT_STATUS);
             newOrder.setOrderedLines(toSplitLines);
             newOrder.setTable(table);

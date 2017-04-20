@@ -74,7 +74,7 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
 
         for(POSOrder order : POSOrder.getOpenOrders(getBaseContext())) {
             item = new OpenOrderGridItem();
-            item.setOrderNo(getString(R.string.order) + ": " + String.valueOf(order.getOrderId()));
+            item.setOrderNo(getString(R.string.order) + ": " + order.getDocumentNo());
 
             totalLines = order.getTotallines();
             item.setPrice(getString(R.string.total) + ": " + currencyFormat.format(totalLines));

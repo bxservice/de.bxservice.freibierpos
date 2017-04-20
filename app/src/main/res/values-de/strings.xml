@@ -247,4 +247,7 @@
     <string name="about_summary">Informationen über Freibier POS</string>
     <string name="confirm_exit">Zum Verlassen von Freibier POS noch einmal tippen</string>
 
+    <string name="prefix_number">Die Belege werden von dieser Nummer an fortlaufend nummeriert.</string>
+    <string name="order_number_prefix">Startbelegnummer</string>
+
 </resources>

@@ -11,4 +11,15 @@
         android:hint="@string/prefix"
         android:title="@string/order_prefix" />
 
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="1"
+        android:inputType="number"
+        android:key="pref_order_number"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:hint="@string/prefix_number"
+        android:title="@string/order_number_prefix" />
+
 </PreferenceScreen>
