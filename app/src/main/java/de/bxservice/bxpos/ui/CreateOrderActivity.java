@@ -196,7 +196,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
 
-        for(MProduct product : dataProvider.getAllProducts()) {
+        for (MProduct product : dataProvider.getAllProducts()) {
             gridItem = new NewOrderGridItem();
             productPrice = product.getProductPrice(getBaseContext());
 

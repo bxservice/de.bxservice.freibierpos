@@ -2,31 +2,14 @@ package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
 
-import java.io.Serializable;
-
-import de.bxservice.bxpos.persistence.DataMapper;
-
 /**
  * Created by Diego Ruiz on 10/19/16.
  */
 
-public class PosSessionPreferenceManagement implements ObjectManagement, Serializable {
-
-    //Object that writes to the db
-    private DataMapper dataMapper;
+public class PosSessionPreferenceManagement extends AbstractObjectManagement {
 
     public PosSessionPreferenceManagement(Context ctx) {
-        dataMapper = new DataMapper(ctx);
-    }
-
-    @Override
-    public boolean update(Object object) {
-        return dataMapper.update(object);
-    }
-
-    @Override
-    public boolean create(Object object) {
-        return dataMapper.save(object);
+        super(ctx);
     }
 
     @Override
