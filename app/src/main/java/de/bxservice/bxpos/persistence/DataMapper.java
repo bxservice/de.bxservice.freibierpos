@@ -40,6 +40,8 @@ import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.idempiere.Tax;
+import de.bxservice.bxpos.logic.model.idempiere.TaxCategory;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 import de.bxservice.bxpos.logic.model.pos.POSPayment;
@@ -59,6 +61,8 @@ import de.bxservice.bxpos.persistence.helper.PosProductPriceHelper;
 import de.bxservice.bxpos.persistence.helper.PosSessionPreferenceHelper;
 import de.bxservice.bxpos.persistence.helper.PosTableGroupHelper;
 import de.bxservice.bxpos.persistence.helper.PosTableHelper;
+import de.bxservice.bxpos.persistence.helper.PosTaxCategoryHelper;
+import de.bxservice.bxpos.persistence.helper.PosTaxHelper;
 import de.bxservice.bxpos.persistence.helper.PosTenderTypeHelper;
 import de.bxservice.bxpos.persistence.helper.PosUserHelper;
 
@@ -111,6 +115,10 @@ public class DataMapper implements Serializable {
             success = createOutputDevice((POSOutputDevice) object);
         else if(object instanceof PosTenderType)
             success = createTenderType((PosTenderType) object);
+        else if(object instanceof TaxCategory)
+            success = createTaxCategory((TaxCategory) object);
+        else if(object instanceof Tax)
+            success = createTax((Tax) object);
         else if(object instanceof String)
             success = createKitchenNote((String) object);
         else if(object instanceof HashMap)
@@ -153,6 +161,10 @@ public class DataMapper implements Serializable {
             success = updateOutputDevice((POSOutputDevice) object);
         else if(object instanceof PosTenderType)
             success = updateTenderType((PosTenderType) object);
+        else if(object instanceof TaxCategory)
+            success = updateTaxCategory((TaxCategory) object);
+        else if(object instanceof Tax)
+            success = updateTax((Tax) object);
 
         return success;
     }
@@ -820,6 +832,75 @@ public class DataMapper implements Serializable {
     public PosTenderType getTenderType(String tenderType) {
         PosTenderTypeHelper tenderTypeHelper = new PosTenderTypeHelper(mContext);
         return tenderTypeHelper.getPosTenderType(tenderType);
+    }
+
+    private boolean createTaxCategory(TaxCategory taxCategory) {
+        PosTaxCategoryHelper taxCategoryHelper = new PosTaxCategoryHelper(mContext);
+
+        if (taxCategoryHelper.createTaxCategory(taxCategory) == -1) {
+            Log.e(LOG_TAG, "Cannot save Tax Category");
+            return false;
+        }
+        Log.i(LOG_TAG, "Tax Category saved");
+        for (Tax tax : taxCategory.getTaxes())
+            tax.save(mContext);
+        return true;
+    }
+
+    private boolean updateTaxCategory(TaxCategory taxCategory) {
+        PosTaxCategoryHelper taxCategoryHelper = new PosTaxCategoryHelper(mContext);
+
+        if (taxCategoryHelper.updateTaxCategory(taxCategory) != -1) {
+            Log.i(LOG_TAG, "Tax Category updated");
+            for (Tax tax : taxCategory.getTaxes())
+                tax.save(mContext);
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update Tax Category");
+            return false;
+        }
+
+        return true;
+    }
+
+    public TaxCategory getTaxCategory(long id) {
+        PosTaxCategoryHelper taxCategoryHelper = new PosTaxCategoryHelper(mContext);
+        return taxCategoryHelper.getTaxCategory(id);
+    }
+
+    private boolean createTax(Tax tax) {
+        PosTaxHelper taxHelper = new PosTaxHelper(mContext);
+
+        if (taxHelper.createTax(tax) == -1) {
+            Log.e(LOG_TAG, "Cannot save Tax");
+            return false;
+        }
+        Log.i(LOG_TAG, "Tax saved");
+        return true;
+    }
+
+    private boolean updateTax(Tax tax) {
+        PosTaxHelper taxHelper = new PosTaxHelper(mContext);
+
+        if (taxHelper.updateTax(tax) != -1) {
+            Log.i(LOG_TAG, "Tax updated");
+        }
+        else {
+            Log.e(LOG_TAG, "Cannot update Tax");
+            return false;
+        }
+
+        return true;
+    }
+
+    public Tax getTax(long id) {
+        PosTaxHelper taxHelper = new PosTaxHelper(mContext);
+        return taxHelper.getTaxes(id);
+    }
+
+    public Tax getTax(long taxCategoryID, boolean toGo) {
+        PosTaxHelper taxHelper = new PosTaxHelper(mContext);
+        return taxHelper.getTaxes(taxCategoryID, toGo);
     }
 
     private boolean createSessionPreference(HashMap<String, String> keyValuePair) {
