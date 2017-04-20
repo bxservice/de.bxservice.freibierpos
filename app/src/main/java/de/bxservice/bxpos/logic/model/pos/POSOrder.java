@@ -865,4 +865,9 @@ public class POSOrder implements Serializable {
         return true;
     }
 
+    public static int getMaxDocumentNo(Context ctx, String orderPrefix) {
+        PosOrderManagement orderManager = new PosOrderManagement(ctx);
+        return orderManager.getMaxDocumentNo(orderPrefix);
+    }
+
 }

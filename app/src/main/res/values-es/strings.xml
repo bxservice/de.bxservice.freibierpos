@@ -245,6 +245,7 @@
 
     <string name="prefix_number">Las ordénes serán numeradas consecutivamente a partir de este número.</string>
     <string name="order_number_prefix">Número inicial de orden</string>
+    <string name="wrong_order_number">Ordénes con un número menos y el mismo prefijo ya existen. Seleccione un número mayor que %1$d.</string>
 </resources>
 
 

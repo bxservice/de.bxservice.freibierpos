@@ -81,4 +81,8 @@ public class PosOrderManagement extends AbstractObjectManagement {
     public String getServerName(POSOrder order) {
         return dataMapper.getServerName(order);
     }
+
+    public int getMaxDocumentNo(String orderPrefix) {
+        return dataMapper.getMaxDocumentNo(orderPrefix);
+    }
 }
