@@ -57,7 +57,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -289,6 +289,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     OrgInfoContract.OrgInfoDB.COLUMN_NAME_NAME + " VARCHAR(64) NOT NULL" +
                     ", " +
+                    OrgInfoContract.OrgInfoDB.COLUMN_NAME_DESCRIPTION + " VARCHAR(255)" +
+                    ", " +
                     OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS1 + " VARCHAR(64)" +
                     ", " +
                     OrgInfoContract.OrgInfoDB.COLUMN_NAME_ADDRESS2 + " VARCHAR(64)" +
@@ -357,6 +359,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "ALTER TABLE "             + Tables.TABLE_USER +
                     " ADD COLUMN " + UserContract.User.COLUMN_NAME_USER_PIN + " VARCHAR(20)";
 
+    private static final String ALTER_ORG_INFO_DESCRIPTION =
+            "ALTER TABLE "             + Tables.TABLE_ORG_INFO +
+                    " ADD COLUMN " + OrgInfoContract.OrgInfoDB.COLUMN_NAME_DESCRIPTION + " VARCHAR(255)";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -410,6 +416,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             if (oldVersion < 2) {
                 db.execSQL(ALTER_USER_DISPLAY_NAME);
                 db.execSQL(ALTER_USER_USER_PIN);
+            }
+            if (oldVersion < 3) {
+                db.execSQL(ALTER_ORG_INFO_DESCRIPTION);
             }
         }
     }

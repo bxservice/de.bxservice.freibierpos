@@ -40,6 +40,7 @@ public class OrgInfoContract {
     public static abstract class OrgInfoDB implements BaseColumns {
         public static final String TABLE_NAME = "org_info";
         public static final String COLUMN_NAME_ORG_INFO_ID = "org_info_id";
+        public static final String COLUMN_NAME_DESCRIPTION = "Description";
         public static final String COLUMN_NAME_NAME     = "Name";
         public static final String COLUMN_NAME_ADDRESS1 = "Address1";
         public static final String COLUMN_NAME_ADDRESS2 = "Address2";

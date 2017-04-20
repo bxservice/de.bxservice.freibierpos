@@ -99,6 +99,8 @@ public class OrgInfoWebServiceAdapter extends AbstractWSObject {
                             restaurantInfo.setPhone(field.getStringValue());
                         else if ("Postal".equalsIgnoreCase(field.getColumn()))
                             restaurantInfo.setPostalCode(field.getStringValue());
+                        else if ("Description".equalsIgnoreCase(field.getColumn()))
+                            restaurantInfo.setDescription(field.getStringValue());
                     }
                 }
             }

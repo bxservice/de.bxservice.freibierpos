@@ -36,6 +36,7 @@ public class RestaurantInfo {
     private PosOrgInfoManagement dataManager;
 
     private String name;
+    private String description;
     private String address1;
     private String address2;
     private String city;
@@ -88,6 +89,14 @@ public class RestaurantInfo {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
