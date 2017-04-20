@@ -55,22 +55,26 @@ public class CreateOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
         boolean success = true;
         WebServiceRequestData wsData = new WebServiceRequestData(mActivity.getBaseContext());
 
-        for(POSOrder order : orders) {
-            writer.writeOrder(order, mActivity.getBaseContext(), wsData);
-            //If no success creating the order in iDempiere and the problem is the connection with the server
-            if (!writer.isSuccess()) {
-                success = false;
+        if (wsData.isDataComplete()) {
+            for (POSOrder order : orders) {
+                writer.writeOrder(order, mActivity.getBaseContext(), wsData);
+                //If no success creating the order in iDempiere and the problem is the connection with the server
+                if (!writer.isSuccess()) {
+                    success = false;
 
-                if (writer.isConnectionError())
-                    connectionError = true;
+                    if (writer.isConnectionError())
+                        connectionError = true;
 
-                errorMessage = writer.getErrorMessage();
-                break;
+                    errorMessage = writer.getErrorMessage();
+                    break;
 
+                }
+                order.setSync(true);
+                order.updateOrder(mActivity.getBaseContext());
+                success = true;
             }
-            order.setSync(true);
-            order.updateOrder(mActivity.getBaseContext());
-            success = true;
+        } else {
+            success = false;
         }
 
         return success;

@@ -49,13 +49,17 @@ public class UpdateTableStatusTask extends AsyncTask<Table, Void, Boolean> {
 
         WebServiceRequestData wsData = new WebServiceRequestData(ctx);
 
-        for (Table table : tables) {
+        if (wsData.isDataComplete()) {
+            for (Table table : tables) {
 
-            UpdateTableStatusWebServiceAdapter updateTableStatusWebServiceAdapter = new UpdateTableStatusWebServiceAdapter(wsData, table);
-            if (!updateTableStatusWebServiceAdapter.isSuccess() && updateTableStatusWebServiceAdapter.isConnectionError()) {
-                success = false;
-                break;
+                UpdateTableStatusWebServiceAdapter updateTableStatusWebServiceAdapter = new UpdateTableStatusWebServiceAdapter(wsData, table);
+                if (!updateTableStatusWebServiceAdapter.isSuccess() && updateTableStatusWebServiceAdapter.isConnectionError()) {
+                    success = false;
+                    break;
+                }
             }
+        } else {
+            success = false;
         }
 
         return success;

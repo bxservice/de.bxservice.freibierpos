@@ -53,13 +53,17 @@ public class CreateDeviceTokenTask extends AsyncTask<String, Void, Boolean> {
 
         final WebServiceRequestData wsData = new WebServiceRequestData(context);
 
-        for(String token : tokens) {
+        if (wsData.isDataComplete()) {
+            for (String token : tokens) {
 
-            writer.writeDeviceToken(token, wsData);
-            if (!writer.isSuccess() && writer.isConnectionError()) {
-                success = false;
-                break;
+                writer.writeDeviceToken(token, wsData);
+                if (!writer.isSuccess() && writer.isConnectionError()) {
+                    success = false;
+                    break;
+                }
             }
+        } else {
+            success = false;
         }
 
         return success;
