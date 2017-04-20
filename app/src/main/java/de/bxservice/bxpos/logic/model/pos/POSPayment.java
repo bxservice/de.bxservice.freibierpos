@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import de.bxservice.bxpos.logic.daomanager.PosPaymentManagement;
-import de.bxservice.bxpos.logic.daomanager.PosTenderTypeManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.PosTenderType;
 
@@ -85,11 +84,10 @@ public class POSPayment implements Serializable {
     }
 
     public void setTenderType(String paymentType, Context ctx) {
-        PosTenderTypeManagement tenderTypeManager = new PosTenderTypeManagement(ctx);
         if(IOrder.PAYMENTRULE_Cash.equals(paymentType)) {
-           tenderType = tenderTypeManager.get(PosTenderType.CASH_PAYMENT_TENDER_TYPE_VALUE);
+           tenderType = PosTenderType.get(ctx, PosTenderType.CASH_PAYMENT_TENDER_TYPE_VALUE);
         } else if(IOrder.PAYMENTRULE_CreditCard.equals(paymentType)) {
-            tenderType = tenderTypeManager.get(PosTenderType.CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE);
+            tenderType = PosTenderType.get(ctx, PosTenderType.CREDIT_CARD_PAYMENT_TENDER_TYPE_VALUE);
         }
     }
 
