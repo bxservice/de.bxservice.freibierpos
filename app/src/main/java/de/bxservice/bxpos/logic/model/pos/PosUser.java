@@ -26,14 +26,15 @@ package de.bxservice.bxpos.logic.model.pos;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.util.SecureEngine;
-import de.bxservice.bxpos.persistence.dbcontract.UserContract;
 
 /**
  * Created by Diego Ruiz on 15/12/15.
  */
-public class PosUser extends UserContract.User {
+public class PosUser {
 
     private int id;
     private String username;
@@ -118,6 +119,27 @@ public class PosUser extends UserContract.User {
      */
     public boolean authenticateHash (String password2)  {
         return SecureEngine.isMatchHash(password, salt, password2);
+    }
+
+    public static PosUser getUser(Context ctx, String username) {
+        PosUserManagement userManager = new PosUserManagement(ctx);
+        return userManager.get(username);
+    }
+
+    public static String getCurrentUserDisplayName(Context ctx) {
+        PosUserManagement userManager = new PosUserManagement(ctx);
+        return userManager.getCurrentUserDisplayName();
+    }
+
+    /**
+     * Get the list of all the user names that have logged in
+     * the application
+     * @param ctx activity context
+     * @return list of all the user names
+     */
+    public static ArrayList<String> getUsernameList(Context ctx) {
+        PosUserManagement userManager = new PosUserManagement(ctx);
+        return userManager.getUsernameList();
     }
 
 }

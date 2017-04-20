@@ -64,9 +64,9 @@ import java.util.TimerTask;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
-import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
+import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity
         View headerLayout = navigationView.getHeaderView(0); // 0-index header
         TextView userNameTextView = (TextView) headerLayout.findViewById(R.id.usernameTextView);
 
-        userNameTextView.setText(new PosUserManagement(getBaseContext()).getCurrentUserDisplayName());
+        userNameTextView.setText(PosUser.getCurrentUserDisplayName(getBaseContext()));
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
