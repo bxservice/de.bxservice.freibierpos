@@ -78,4 +78,9 @@ public class PosTenderType implements Serializable {
     private boolean createTenderType() {
         return tenderTypeManager.create(this);
     }
+
+    public static PosTenderType get(Context ctx, String tenderType) {
+        PosTenderTypeManagement tenderTypeManager = new PosTenderTypeManagement(ctx);
+        return tenderTypeManager.get(tenderType);
+    }
 }
