@@ -65,39 +65,40 @@ public class UpdateTableStatusWebServiceAdapter extends AbstractWSObject {
 
         Table table = (Table) getParameter();
 
-        UpdateDataRequest updateData = new UpdateDataRequest();
-        updateData.setLogin(getLogin());
-        updateData.setWebServiceType(SERVICE_TYPE);
-        updateData.setRecordID((int) table.getTableID());
+        if (table != null) {
+            UpdateDataRequest updateData = new UpdateDataRequest();
+            updateData.setLogin(getLogin());
+            updateData.setWebServiceType(SERVICE_TYPE);
+            updateData.setRecordID((int) table.getTableID());
 
-        DataRow data = new DataRow();
-        Boolean tableStatus = !table.getStatus().equals(Table.FREE_STATUS);
-        data.addField("BXS_IsBusy", tableStatus.toString());
-        updateData.setDataRow(data);
+            DataRow data = new DataRow();
+            Boolean tableStatus = !table.getStatus().equals(Table.FREE_STATUS);
+            data.addField("BXS_IsBusy", tableStatus.toString());
+            updateData.setDataRow(data);
 
-        WebServiceConnection client = getClient();
+            WebServiceConnection client = getClient();
 
-        try {
-            StandardResponse response = client.sendRequest(updateData);
-            if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
-                Log.e(TAG, "Error in web service " + response.getErrorMessage());
+            try {
+                StandardResponse response = client.sendRequest(updateData);
+                if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
+                    Log.e(TAG, "Error in web service " + response.getErrorMessage());
+                    success = false;
+                    connectionError = false;
+                } else {
+                    Log.d(TAG, "RecordID: " + response.getRecordID());
+                }
+
+            } catch (WebServiceException e) {
+                Log.e(TAG, "No connection to iDempiere error");
+                e.printStackTrace();
+                success = false;
+                connectionError = true;
+            } catch (Exception e) {
+                e.printStackTrace();
                 success = false;
                 connectionError = false;
-            } else {
-                Log.d(TAG, "RecordID: " + response.getRecordID());
             }
-
-        } catch (WebServiceException e) {
-            Log.e(TAG, "No connection to iDempiere error");
-            e.printStackTrace();
-            success=false;
-            connectionError = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            success=false;
-            connectionError = false;
         }
-
     }
 
     public boolean isConnectionError() {
