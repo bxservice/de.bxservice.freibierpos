@@ -197,7 +197,12 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         }
 
         SetDocActionRequest docAction = new SetDocActionRequest();
-        docAction.setDocAction(Enums.DocAction.Complete);
+
+        if (POSOrder.VOID_STATUS.equals(order.getStatus()))
+            docAction.setDocAction(Enums.DocAction.Void);
+        else
+            docAction.setDocAction(Enums.DocAction.Complete);
+
         docAction.setWebServiceType(DOC_ACTION_SERVICE_TYPE);
         docAction.setRecordIDVariable("@C_Order.C_Order_ID");
 
