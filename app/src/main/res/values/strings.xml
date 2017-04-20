@@ -223,6 +223,7 @@
 
     <string name="prefix_number">The orders will be numbered from this number consecutively.</string>
     <string name="order_number_prefix">Initial order number</string>
+    <string name="wrong_order_number">Orders with a lower number and the same prefix already exist. Set a number greater than %1$d.</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

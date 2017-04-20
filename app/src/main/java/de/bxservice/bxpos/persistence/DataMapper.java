@@ -562,6 +562,11 @@ public class DataMapper implements Serializable {
         return orderHelper.getUserName(order);
     }
 
+    public int getMaxDocumentNo(String orderPrefix) {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getMaxDocumentNo(orderPrefix);
+    }
+
     public ProductPrice getProductPriceByProduct(MProduct product) {
         PosProductPriceHelper productPriceHelper = new PosProductPriceHelper(mContext);
         return productPriceHelper.getProductPriceByProduct(product);

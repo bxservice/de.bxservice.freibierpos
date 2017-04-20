@@ -544,4 +544,39 @@ public class PosOrderHelper extends PosObjectHelper {
         return orders;
     }
 
+    public int getMaxDocumentNo(String orderPrefix) {
+
+        int maxDocument = 0;
+        StringBuilder selectQuery = new StringBuilder();
+
+        selectQuery.append("SELECT ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_DOCUMENT_NO);
+        selectQuery.append(" FROM ");
+        selectQuery.append(Tables.TABLE_POSORDER);
+        selectQuery.append(" WHERE ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID);
+        selectQuery.append(" = ( SELECT MAX(");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID);
+        selectQuery.append(") FROM ");
+        selectQuery.append(Tables.TABLE_POSORDER);
+        selectQuery.append(" WHERE ");
+        selectQuery.append(PosOrderContract.POSOrderDB.COLUMN_NAME_DOCUMENT_NO);
+        selectQuery.append(" LIKE ?)");
+
+        Log.d(LOG_TAG, selectQuery.toString());
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {orderPrefix + "%"});
+
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            String documentNo = c.getString(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_DOCUMENT_NO));
+            maxDocument = Integer.parseInt(documentNo.replaceAll("[^0-9]", ""));
+        }
+
+        c.close();
+
+        return maxDocument;
+    }
+
 }

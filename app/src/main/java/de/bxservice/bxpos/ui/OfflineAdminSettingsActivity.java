@@ -44,6 +44,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
 
 
@@ -184,6 +185,24 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
 
                         //Return false always to control the confirmation dialog
                         return false;
+                    }
+                }
+
+                //Check if the Document No is valid
+                if (KEY_ORDER_NUMBER.equals(preference.getKey())) {
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext().getApplicationContext());
+                    String orderPrefix = sharedPref.getString(KEY_ORDER_PREFIX, "");
+                    String orderNumber = sharedPref.getString(KEY_ORDER_NUMBER, "");
+
+                    if (!stringValue.equals(orderNumber)) {
+                        int maxDocumentNo = POSOrder.getMaxDocumentNo(getBaseContext(), orderPrefix);
+                        if (Integer.parseInt(stringValue) <= maxDocumentNo) {
+
+                            new AlertDialog.Builder(OfflineAdminSettingsActivity.this)
+                                    .setMessage(getString(R.string.wrong_order_number, maxDocumentNo))
+                                    .setPositiveButton(android.R.string.ok, null).create().show();
+                            return false;
+                        }
                     }
                 }
 
