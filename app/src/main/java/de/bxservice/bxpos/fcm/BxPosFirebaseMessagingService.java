@@ -40,7 +40,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.ui.FCMNotificationActivity;
@@ -127,8 +126,7 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void updateTable(String tableId, Boolean isBusy, String serverName) {
-        PosTableManagement tableManager = new PosTableManagement(this);
-        Table table = tableManager.get(Long.parseLong(tableId));
+        Table table = Table.getTable(this, Long.parseLong(tableId));
 
         if (table != null) {
 

@@ -29,6 +29,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
 import de.bxservice.bxpos.logic.tasks.UpdateTableStatusTask;
@@ -211,5 +212,15 @@ public class Table implements Serializable {
 
         return true;
 
+    }
+
+    public static Table getTable(Context ctx, long tableID) {
+        PosTableManagement tableManager = new PosTableManagement(ctx);
+        return tableManager.get(tableID);
+    }
+
+    public static List<Table> getAllTables(Context ctx) {
+        PosTableManagement dataProvider = new PosTableManagement(ctx);
+        return dataProvider.getAllTables();
     }
 }
