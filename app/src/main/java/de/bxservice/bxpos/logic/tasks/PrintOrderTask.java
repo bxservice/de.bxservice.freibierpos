@@ -32,7 +32,6 @@ import android.preference.PreferenceManager;
 import java.io.IOException;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOrgInfoManagement;
 import de.bxservice.bxpos.logic.model.idempiere.RestaurantInfo;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
@@ -81,8 +80,7 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                             mActivity.getResources().getString(R.string.guests)));
                 } else if(mActivity instanceof PayOrderActivity) {
 
-                    PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(mActivity.getBaseContext());
-                    RestaurantInfo restaurantInfo = orgInfoManager.get(1); //Get org info to print in the receipt
+                    RestaurantInfo restaurantInfo = RestaurantInfo.getDefaultRestaurantInfo(mActivity.getBaseContext()); //Get org info to print in the receipt
 
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mActivity.getBaseContext());
                     String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, "");
