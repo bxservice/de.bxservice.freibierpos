@@ -758,6 +758,29 @@ public class POSOrder implements Serializable {
         return taxRates;
     }
 
+    public static List<POSOrder> getUnsynchronizedOrders(Context ctx) {
+        PosOrderManagement orderManager = new PosOrderManagement(ctx);
+        return orderManager.getUnsynchronizedOrders();
+    }
+
+    public static List<POSOrder> getOpenOrders(Context ctx) {
+        PosOrderManagement orderManager = new PosOrderManagement(ctx);
+        return orderManager.getAllOpenOrders();
+    }
+
+    public static List<POSOrder> getTableOrders(Context ctx, Table table) {
+        PosOrderManagement orderManager = new PosOrderManagement(ctx);
+        return orderManager.getTableOrders(table);
+    }
+
+    public static List<POSOrder> getPaidOrders(Context ctx, long fromDate, long toDate, boolean byUser) {
+        PosOrderManagement orderManager = new PosOrderManagement(ctx);
+        if (byUser)
+            return orderManager.getUserPaidOrders(fromDate, toDate);
+        else
+            return orderManager.getPaidOrders(fromDate, toDate);
+    }
+
     /**
      * Void line by creating a copy of the original line
      * but with negative qty

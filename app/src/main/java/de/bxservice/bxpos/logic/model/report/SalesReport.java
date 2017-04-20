@@ -30,7 +30,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
@@ -51,10 +50,7 @@ public class SalesReport extends Report {
 
     @Override
     protected void performReport() {
-        if (reportByUser)
-            paidOrders = new PosOrderManagement(mContext).getUserPaidOrders(fromDate, toDate);
-        else
-            paidOrders = new PosOrderManagement(mContext).getPaidOrders(fromDate, toDate);
+        paidOrders = POSOrder.getPaidOrders(mContext, fromDate, toDate, reportByUser);
     }
 
     /**
