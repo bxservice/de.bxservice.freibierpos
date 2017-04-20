@@ -30,8 +30,10 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import de.bxservice.bxpos.R;
@@ -55,6 +57,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
     private int noItems = 0;
     //Flag to know if the void is for an order or an order line
     private boolean voidOrder = false;
+    private EditText enteredCode;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
         else
             voidSummaryText.setText(getString(R.string.void_approval_message, noItems, reason));
 
-        final EditText enteredCode = (EditText) view.findViewById(R.id.pin_text);
+        enteredCode = (EditText) view.findViewById(R.id.pin_text);
 
         enteredCode.requestFocus();
 
@@ -83,8 +86,7 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.void_item, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        pinCode = enteredCode.getText().toString();
-                        mListener.onDialogPositiveClick(ConfirmationPinDialogFragment.this);
+                        //Nothing on purpose to avoid closing the dialog when the reason is not filled out
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -97,6 +99,31 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();    //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
+        final AlertDialog d = (AlertDialog) getDialog();
+        if(d != null)
+        {
+            Button positiveButton = d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    pinCode = enteredCode.getText().toString();
+                    if (TextUtils.isEmpty(pinCode)) {
+                        enteredCode.setError(getString(R.string.wrong_password));
+                        enteredCode.requestFocus();
+                    }
+                    else {
+                        mListener.onDialogPositiveClick(ConfirmationPinDialogFragment.this);
+                    }
+                }
+            });
+        }
     }
 
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener

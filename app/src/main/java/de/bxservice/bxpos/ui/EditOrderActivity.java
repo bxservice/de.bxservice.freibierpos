@@ -37,6 +37,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -531,7 +532,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     @Override
     public void onDialogPositiveClick(ConfirmationPinDialogFragment dialog) {
-        if(dialog.getPinCode() != null) {
+        if(dialog.getPinCode() != null && !TextUtils.isEmpty(dialog.getPinCode())) {
 
             DefaultPosData data = DefaultPosData.get(getBaseContext());
             int assignedPin = data.getPin();
@@ -550,9 +551,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     voidOrder(dialog.getReason());
                 else
                     voidSelectedItems(dialog.getReason());
-                dialog.dismiss();
             }
         }
+        dialog.dismiss();
     }
 
     /**
