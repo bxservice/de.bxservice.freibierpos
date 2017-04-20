@@ -21,238 +21,243 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout android:gravity="bottom|center"
-            android:orientation="vertical"
-            android:id="@+id/toplinear"
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_alignParentTop="true">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:id="@+id/textView2"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorAccent"
-                android:gravity="center_vertical|center_horizontal"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:textSize="32sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/versionTextView"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorAccent"
-                android:gravity="center_vertical|center_horizontal"
-                android:visibility="visible"
-                android:textSize="16sp"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/freiBierIcon"
-                android:src="@drawable/freibier_logo"
-                android:contentDescription="@string/app_name" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/contentlinear"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_below="@id/toplinear">
-
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:id="@+id/forumLinear"
-                android:paddingLeft="12dip"
-                android:paddingTop="12dip"
-                android:paddingRight="12dip"
-                android:paddingBottom="12dip"
-                android:clickable="true"
-                android:onClick="onButtonClick"
-                android:background="@android:color/white"
+            <LinearLayout android:gravity="bottom|center"
+                android:orientation="vertical"
+                android:id="@+id/toplinear"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView android:layout_width="34dip"
-                    android:layout_height="34dip"
-                    android:src="@android:drawable/sym_action_chat"
-                    android:scaleType="fitXY" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_alignParentTop="true">
 
                 <TextView
-                    android:textSize="16sp"
-                    android:textColor="@color/about_text_color"
-                    android:layout_width="0dip"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:text="@string/about_forum"
-                    android:layout_weight="1" />
+                    android:text="@string/app_name"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    android:textSize="32sp"/>
 
-                 <ImageView android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:src="@drawable/ic_chevron_right_black_24dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/versionTextView"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:visibility="visible"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_splash_bxlogo"
+                    android:contentDescription="@string/app_name" />
+
             </LinearLayout>
 
-            <ImageView android:background="#ffebebeb"
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/contentlinear"
                 android:layout_width="fill_parent"
-                android:layout_height="1px"
-                />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_below="@id/toplinear">
 
-            <LinearLayout android:gravity="center_vertical"
-                android:id="@+id/gPlusLinear"
-                android:background="@android:color/white"
-                android:padding="12dip"
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:id="@+id/forumLinear"
+                    android:paddingLeft="12dip"
+                    android:paddingTop="12dip"
+                    android:paddingRight="12dip"
+                    android:paddingBottom="12dip"
+                    android:clickable="true"
+                    android:onClick="onButtonClick"
+                    android:background="@android:color/white"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView android:layout_width="34dip"
+                        android:layout_height="34dip"
+                        android:src="@android:drawable/sym_action_chat"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:textSize="16sp"
+                        android:textColor="@color/about_text_color"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:text="@string/about_forum"
+                        android:layout_weight="1" />
+
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right_black_24dp" />
+                </LinearLayout>
+
+                <ImageView android:background="#ffebebeb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    />
+
+                <LinearLayout android:gravity="center_vertical"
+                    android:id="@+id/gPlusLinear"
+                    android:background="@android:color/white"
+                    android:padding="12dip"
+                    android:clickable="true"
+                    android:onClick="onButtonClick"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView android:layout_width="34.0dip"
+                        android:layout_height="34.0dip"
+                        android:src="@drawable/common_plus_signin_btn_icon_dark_disabled"
+                        android:scaleType="fitXY" />
+
+                    <TextView android:textSize="16sp"
+                        android:textColor="@color/about_text_color"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:text="@string/about_google"
+                        android:layout_weight="1.0" />
+
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+                </LinearLayout>
+
+                <ImageView android:background="#ffebebeb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px" />
+
+                <LinearLayout android:gravity="center_vertical"
+                    android:id="@+id/rateLinear"
+                    android:background="@android:color/white"
+                    android:padding="12dip"
+                    android:clickable="true"
+                    android:onClick="onButtonClick"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView android:layout_width="34dip"
+                        android:layout_height="34dip"
+                        android:src="@android:drawable/star_off"
+                        android:scaleType="fitXY" />
+
+                    <TextView android:textSize="16sp"
+                        android:textColor="@color/about_text_color"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:text="@string/about_rate"
+                        android:layout_weight="1" />
+
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+                </LinearLayout>
+
+                <ImageView android:background="#ffebebeb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px" />
+
+                <LinearLayout android:gravity="center_vertical"
+                    android:id="@+id/licenseLinear"
+                    android:background="@android:color/white"
+                    android:padding="12dip"
+                    android:clickable="true"
+                    android:onClick="onButtonClick"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView android:layout_width="34dip"
+                        android:layout_height="34dip"
+                        android:src="@android:drawable/ic_input_get"
+                        android:scaleType="fitXY" />
+
+                    <TextView android:textSize="16sp"
+                        android:textColor="@color/about_text_color"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:text="@string/about_license"
+                        android:layout_weight="1" />
+
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+                </LinearLayout>
+
+                <ImageView android:background="#ffebebeb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px" />
+
+                <LinearLayout android:gravity="center_vertical"
+                    android:id="@+id/helpLinear"
+                    android:background="@android:color/white"
+                    android:padding="12dip"
+                    android:onClick="onButtonClick"
+                    android:clickable="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView android:layout_width="34dip"
+                        android:layout_height="34dip"
+                        android:src="@android:drawable/ic_menu_help"
+                        android:scaleType="fitXY" />
+
+                    <TextView android:textSize="16sp"
+                        android:textColor="@color/about_text_color"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:text="@string/about_help"
+                        android:layout_weight="1" />
+
+                    <ImageView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView android:textSize="14sp"
+                android:textColor="#ff999999"
+                android:id="@+id/developerTextView"
+                android:layout_below="@id/contentlinear"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
                 android:clickable="true"
                 android:onClick="onButtonClick"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
 
-                <ImageView android:layout_width="34.0dip"
-                    android:layout_height="34.0dip"
-                    android:src="@drawable/common_plus_signin_btn_icon_dark_disabled"
-                    android:scaleType="fitXY" />
+        </RelativeLayout>
 
-                <TextView android:textSize="16sp"
-                    android:textColor="@color/about_text_color"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:text="@string/about_google"
-                    android:layout_weight="1.0" />
-
-                <ImageView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_black_24dp" />
-
-            </LinearLayout>
-
-            <ImageView android:background="#ffebebeb"
-                android:layout_width="fill_parent"
-                android:layout_height="1px" />
-
-            <LinearLayout android:gravity="center_vertical"
-                android:id="@+id/rateLinear"
-                android:background="@android:color/white"
-                android:padding="12dip"
-                android:clickable="true"
-                android:onClick="onButtonClick"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView android:layout_width="34dip"
-                    android:layout_height="34dip"
-                    android:src="@android:drawable/star_off"
-                    android:scaleType="fitXY" />
-
-                <TextView android:textSize="16sp"
-                    android:textColor="@color/about_text_color"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:text="@string/about_rate"
-                    android:layout_weight="1" />
-
-                <ImageView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_black_24dp" />
-
-            </LinearLayout>
-
-            <ImageView android:background="#ffebebeb"
-                android:layout_width="fill_parent"
-                android:layout_height="1px" />
-
-            <LinearLayout android:gravity="center_vertical"
-                android:id="@+id/licenseLinear"
-                android:background="@android:color/white"
-                android:padding="12dip"
-                android:clickable="true"
-                android:onClick="onButtonClick"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView android:layout_width="34dip"
-                    android:layout_height="34dip"
-                    android:src="@android:drawable/ic_input_get"
-                    android:scaleType="fitXY" />
-
-                <TextView android:textSize="16sp"
-                    android:textColor="@color/about_text_color"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:text="@string/about_license"
-                    android:layout_weight="1" />
-
-                <ImageView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_black_24dp" />
-
-            </LinearLayout>
-
-            <ImageView android:background="#ffebebeb"
-                android:layout_width="fill_parent"
-                android:layout_height="1px" />
-
-            <LinearLayout android:gravity="center_vertical"
-                android:id="@+id/helpLinear"
-                android:background="@android:color/white"
-                android:padding="12dip"
-                android:onClick="onButtonClick"
-                android:clickable="true"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView android:layout_width="34dip"
-                    android:layout_height="34dip"
-                    android:src="@android:drawable/ic_menu_help"
-                    android:scaleType="fitXY" />
-
-                <TextView android:textSize="16sp"
-                    android:textColor="@color/about_text_color"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:text="@string/about_help"
-                    android:layout_weight="1" />
-
-                <ImageView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_black_24dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView android:textSize="14sp"
-            android:textColor="#ff999999"
-            android:id="@+id/developerTextView"
-            android:layout_below="@id/contentlinear"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:clickable="true"
-            android:onClick="onButtonClick"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>
