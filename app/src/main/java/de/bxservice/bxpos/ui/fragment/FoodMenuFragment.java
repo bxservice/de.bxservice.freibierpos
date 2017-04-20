@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosProductCategoryManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
@@ -63,7 +62,6 @@ public class FoodMenuFragment extends Fragment {
     private GridOrderViewAdapter mGridAdapter;
     private List<ProductCategory> productCategoryList;
     private HashMap<NewOrderGridItem, MProduct> itemProductHashMap;
-    private PosProductCategoryManagement categoryManager;
 
     public ArrayList<NewOrderGridItem> getmGridData() {
         return mGridData;
@@ -94,9 +92,7 @@ public class FoodMenuFragment extends Fragment {
 
         grid = (GridView) rootView.findViewById(R.id.create_order_gridview);
 
-        categoryManager = new PosProductCategoryManagement(getActivity().getBaseContext());
-
-        productCategoryList = categoryManager.getAllCategories();
+        productCategoryList = ProductCategory.getAllCategories(getActivity().getBaseContext());
 
         ProductCategory productCategory = productCategoryList.get(sectionNumber);
 
