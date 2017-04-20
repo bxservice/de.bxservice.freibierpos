@@ -819,11 +819,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
                 order = (POSOrder) data.getExtras().get(EXTRA_ORDER);
 
-                /*if (orderLines != null && !orderLines.isEmpty() && orderLines.size() != order.getOrderingLines().size()) {
-                    addNewOrderLines(orderLines);
-                    mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
-                }9*/
-
                 updateOrderingItems();
                 mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
                 orderChanged = true;
@@ -838,6 +833,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 super.finish();
             }
         } else if (requestCode == NEW_ORDER_REQUEST) {
+            orderChanged = true;
             finish();
         }
     }
