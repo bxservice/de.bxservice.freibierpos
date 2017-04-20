@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -162,7 +161,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         ticket.append(label);
         ticket.append( "! U1 SETLP 7 0 24\r\n");
 
-        DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
+        DefaultPosData defaultPosData = DefaultPosData.get(null);
 
         //If single lines for every product -> Configurable
         if(!defaultPosData.isCombineItems()) {
