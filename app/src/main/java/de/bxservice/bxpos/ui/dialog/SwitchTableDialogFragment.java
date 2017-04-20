@@ -38,7 +38,6 @@ import android.view.View;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosTableManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
 import de.bxservice.bxpos.ui.adapter.TableDialogAdapter;
@@ -113,8 +112,7 @@ public class SwitchTableDialogFragment extends DialogFragment {
      * init the grid data with all the tables
      */
     private void initGridData() {
-        PosTableManagement dataProvider = new PosTableManagement(getActivity().getBaseContext());
-        mGridData = new ArrayList<>(dataProvider.getAllTables());
+        mGridData = new ArrayList<>(Table.getAllTables(getActivity().getBaseContext()));
     }
 
     public Table getTable() {
