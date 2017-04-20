@@ -335,10 +335,16 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     }
 
     private void showJoinOrdersDialog() {
-        SelectOrderDialogFragment joinOrdersDialog = new SelectOrderDialogFragment();
-        joinOrdersDialog.setOrder(order);
-        joinOrdersDialog.setIsJoin(true);
-        joinOrdersDialog.show(getFragmentManager(), "SelectOrderDialogFragment");
+        //If the open orders are more than one
+        if (POSOrder.getOpenOrders(getBaseContext()).size() > 1) {
+            SelectOrderDialogFragment joinOrdersDialog = new SelectOrderDialogFragment();
+            joinOrdersDialog.setOrder(order);
+            joinOrdersDialog.setIsJoin(true);
+            joinOrdersDialog.show(getFragmentManager(), "SelectOrderDialogFragment");
+        } else {
+            Toast.makeText(getBaseContext(), getString(R.string.unable_join),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     private void showSplitOrderDialog() {
