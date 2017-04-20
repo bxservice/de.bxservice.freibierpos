@@ -385,7 +385,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         confirmationPinDialog.setReason(reason);
 
         if(voidOrder)
-            confirmationPinDialog.setNoItems((int) order.getOrderId());
+            confirmationPinDialog.setNoItems(Integer.parseInt(order.getOrderNo()));
         else
             confirmationPinDialog.setNoItems(positionItemsToVoid.size());
 

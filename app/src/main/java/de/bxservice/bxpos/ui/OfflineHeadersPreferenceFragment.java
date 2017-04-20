@@ -43,7 +43,7 @@ public class OfflineHeadersPreferenceFragment extends PreferenceFragment {
         if ("order_settings".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_order_settings);
             activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORDER_PREFIX));
-
+            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORDER_NUMBER));
         } else if ("data_sync".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_data_sync);
             activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_PREF_SYNC_CONN));

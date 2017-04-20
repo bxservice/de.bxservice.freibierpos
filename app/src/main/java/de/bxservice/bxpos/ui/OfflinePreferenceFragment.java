@@ -60,6 +60,7 @@ public class OfflinePreferenceFragment extends PreferenceFragment {
         // updated to reflect the new value, per the Android Design
         // guidelines.
         activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX));
+        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER));
         activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_URL));
         activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN));
         activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORG_ID));

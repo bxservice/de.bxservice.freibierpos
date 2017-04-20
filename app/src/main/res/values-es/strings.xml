@@ -243,6 +243,8 @@
     <string name="about_summary">Informacion sobre Freibier POS</string>
     <string name="confirm_exit">Pulse de nuevo para salir de Freibier POS</string>
 
+    <string name="prefix_number">Las ordénes serán numeradas consecutivamente a partir de este número.</string>
+    <string name="order_number_prefix">Número inicial de orden</string>
 </resources>
 
 

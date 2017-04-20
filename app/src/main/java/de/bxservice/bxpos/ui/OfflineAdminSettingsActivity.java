@@ -56,6 +56,7 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
 
     //Restaurant
     public static final String KEY_ORDER_PREFIX = "pref_order_prefix";
+    public static final String KEY_ORDER_NUMBER = "pref_order_number";
 
     //General
     public static final String KEY_PREF_URL = "pref_serverurl";

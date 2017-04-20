@@ -30,7 +30,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -531,8 +533,15 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                     .setPositiveButton(R.string.discard, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            if(posOrder.remove(getBaseContext()))
+                            if(posOrder.remove(getBaseContext())) {
+                                //If the order is discarded -> the preference value goes back to what it was
+                                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER, posOrder.getOrderNo());
+                                editor.apply();
+
                                 CreateOrderActivity.super.onBackPressed();
+                            }
                         }
                     }).create().show();
         }
