@@ -59,8 +59,8 @@ public class ReadServerDataTask extends AsyncTask<Void, Void, Boolean> {
 
         DataReader data;
         //Check if the necessary data to perform a web service call exists
-        if (wsData != null && wsData.isDataComplete()) {
-            data = new DataReader(ctx);
+        if (wsData.isDataComplete()) {
+            data = new DataReader(wsData, ctx);
         } else {
             Log.e(TAG, "Invalid Web service request data");
             return false;
