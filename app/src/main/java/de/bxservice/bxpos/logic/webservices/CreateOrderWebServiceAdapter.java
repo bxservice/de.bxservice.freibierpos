@@ -205,7 +205,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         WebServiceConnection client = getClient();
 
         try {
-            CompositeResponse response = client.sendRequest(compositeOperation); //TODO: Find the problem that calls iDempiere several times sometimes
+            CompositeResponse response = client.sendRequest(compositeOperation);
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 Log.e(TAG, "Error in web service" + response.getErrorMessage());
                 success = false;
