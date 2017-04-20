@@ -259,6 +259,7 @@ public class DataReader {
                 productPriceList != null && !productPriceList.isEmpty() &&
                 tenderTypeList   != null && !tenderTypeList.isEmpty() &&
                 restaurantInfo   != null &&  defaultData != null &&
+                taxCategoryList  != null && !taxCategoryList.isEmpty() &&
                 userInfo != null) {
             return true;
         }

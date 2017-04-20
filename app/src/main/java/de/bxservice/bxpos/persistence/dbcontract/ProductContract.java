@@ -45,5 +45,6 @@ public class ProductContract {
         public static final String COLUMN_OUTPUT_DEVICE_ID = "outputdevice_id";
         public static final String COLUMN_IS_ACTIVE = "isActive";
         public static final String COLUMN_NAME_VALUE = "keyValue";
+        public static final String COLUMN_NAME_TAX_CATEGORY_ID = "tax_category_id";
     }
 }

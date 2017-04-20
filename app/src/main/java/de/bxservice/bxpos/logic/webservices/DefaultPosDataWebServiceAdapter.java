@@ -113,6 +113,10 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                             defaultPosData.setClientAdLanguage(field.getStringValue());
                         else if ("DocumentNote".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setReceiptFooter(field.getStringValue());
+                        else if ("StdPrecision".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setStdPrecision((Integer.valueOf(field.getStringValue())));
+                        else if ("BXS_BPToGoCashTrx_ID".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setDefaultBPartnerToGo(Integer.valueOf(field.getStringValue()));
 
                     }
                 }

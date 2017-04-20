@@ -94,12 +94,19 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
 
         String orgId = getLogin().getOrgID().toString();
 
-        DefaultPosData defaultPosData = new PosDefaultDataManagement(null).getDefaultData();
+        DefaultPosData defaultPosData = DefaultPosData.get(mContext);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
         String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, DOCUMENT_NO_PREFIX);
 
         DataRow data = new DataRow();
-        data.addField("C_BPartner_ID", String.valueOf(defaultPosData.getDefaultBPartner()));
+
+        int C_BPartner_ID;
+        if (order.getTable() == null && defaultPosData.getDefaultBPartnerToGo() !=  0)
+            C_BPartner_ID = defaultPosData.getDefaultBPartnerToGo();
+        else
+            C_BPartner_ID = defaultPosData.getDefaultBPartner();
+
+        data.addField("C_BPartner_ID", String.valueOf(C_BPartner_ID));
         data.addField("M_Warehouse_ID", String.valueOf(defaultPosData.getDefaultWarehouse()));
         data.addField("AD_Org_ID", orgId);
         data.addField("C_Currency_ID", String.valueOf(defaultPosData.getDefaultCurrency()));

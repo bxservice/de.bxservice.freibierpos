@@ -32,6 +32,7 @@ import java.text.NumberFormat;
 
 import de.bxservice.bxpos.logic.daomanager.PosOrderLineManagement;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.Tax;
 
 /**
  * This is the line that is added to the orders
@@ -52,6 +53,7 @@ public class POSOrderLine implements Serializable {
     private int orderLineId;
     private int lineNo;
     private MProduct product;
+    private Tax lineTax;
     private int qtyOrdered;
     private String productRemark = "";
     private boolean marked = false;
@@ -109,6 +111,14 @@ public class POSOrderLine implements Serializable {
 
     public void setLineStatus(String lineStatus) {
         this.lineStatus = lineStatus;
+    }
+
+    public Tax getLineTax() {
+        if (lineTax == null) {
+            lineTax = Tax.getTax(product.getTaxCategoryID(), order.getTable() == null);
+        }
+
+        return lineTax;
     }
 
     public BigDecimal getLineNetAmt() {

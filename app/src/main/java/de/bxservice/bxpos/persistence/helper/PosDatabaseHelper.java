@@ -59,7 +59,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -223,6 +223,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID + " INTEGER REFERENCES "
                     + Tables.TABLE_OUTPUT_DEVICE + "(" + OutputDeviceContract.OutputDeviceDB.COLUMN_NAME_OUTPUT_DEVICE_ID + ") " +  //FK to the output device
                     ", " +
+                    ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_TAX_CATEGORY + "(" + TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_TAX_CATEGORY_ID + ") " +  //FK to the tax category
+                    ", " +
                     ProductContract.ProductDB.COLUMN_IS_ACTIVE + " INTEGER" +
                     ")";
 
@@ -258,6 +261,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " INTEGER PRIMARY KEY" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER + " INTEGER NOT NULL" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO + " INTEGER" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION + " INTEGER" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRICE_LIST + " INTEGER NOT NULL" +
                     ", " +
@@ -389,6 +396,20 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "ALTER TABLE "             + Tables.TABLE_ORG_INFO +
                     " ADD COLUMN " + OrgInfoContract.OrgInfoDB.COLUMN_NAME_DESCRIPTION + " VARCHAR(255)";
 
+    private static final String ALTER_DEFAULT_POS_DATA_BPARTNER =
+            "ALTER TABLE "             + Tables.TABLE_DEFAULT_POS_DATA +
+                    " ADD COLUMN " + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO + " INTEGER";
+
+    private static final String ALTER_DEFAULT_POS_DATA_STDPRECISION =
+            "ALTER TABLE "             + Tables.TABLE_DEFAULT_POS_DATA +
+                    " ADD COLUMN " + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION + " INTEGER";
+
+
+    private static final String ALTER_PRODUCT_TAX_CATEGORY =
+            "ALTER TABLE "             + Tables.TABLE_PRODUCT +
+                    " ADD COLUMN " + ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID + " INTEGER REFERENCES "
+                    + Tables.TABLE_TAX_CATEGORY + "(" + TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_TAX_CATEGORY_ID + ") "; //FK to the tax category
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -449,6 +470,11 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             if (oldVersion < 4) {
                 db.execSQL(CREATE_TAX_CATEGORY_TABLE);
                 db.execSQL(CREATE_TAX_TABLE);
+            }
+            if (oldVersion < 5) {
+                db.execSQL(ALTER_DEFAULT_POS_DATA_BPARTNER);
+                db.execSQL(ALTER_DEFAULT_POS_DATA_STDPRECISION);
+                db.execSQL(ALTER_PRODUCT_TAX_CATEGORY);
             }
         }
     }

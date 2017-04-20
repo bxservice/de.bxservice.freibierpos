@@ -81,6 +81,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                 int categoryID;
                 int productId;
                 int outputDeviceID;
+                int taxCategoryID;
                 boolean isActive;
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
@@ -90,6 +91,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                     productName = null;
                     productKey = null;
                     categoryID = 0;
+                    taxCategoryID = 0;
                     outputDeviceID = 0;
                     isActive = false;
 
@@ -110,6 +112,8 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                             isActive = "Y".equalsIgnoreCase(field.getStringValue());
                         else if ("Value".equalsIgnoreCase(field.getColumn()))
                             productKey = field.getStringValue();
+                        else if ("C_TaxCategory_ID".equalsIgnoreCase(field.getColumn()))
+                            taxCategoryID = Integer.valueOf(field.getStringValue());
 
                     }
 
@@ -120,6 +124,7 @@ public class ProductWebServiceAdapter extends AbstractWSObject{
                         p.setProductName(productName);
                         p.setProductKey(productKey);
                         p.setOutputDeviceId(outputDeviceID);
+                        p.setTaxCategoryID(taxCategoryID);
                         p.setActive(isActive);
                         productList.add(p);
                     }

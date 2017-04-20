@@ -59,6 +59,7 @@ public class PosProductHelper extends PosObjectHelper {
         values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, product.getProductCategoryId());
         values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
         values.put(ProductContract.ProductDB.COLUMN_NAME_VALUE, product.getProductKey());
+        values.put(ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID, product.getTaxCategoryID());
         if (product.getOutputDeviceId() != 0)
             values.put(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID, product.getOutputDeviceId());
 
@@ -93,6 +94,7 @@ public class PosProductHelper extends PosObjectHelper {
         product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
         product.setProductKey(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_VALUE)));
         product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
+        product.setTaxCategoryID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID)));
 
         Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
         product.setActive(flag);
@@ -112,6 +114,7 @@ public class PosProductHelper extends PosObjectHelper {
         values.put(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_CATEGORY_ID, product.getProductCategoryId());
         values.put(ProductContract.ProductDB.COLUMN_NAME_NAME, product.getProductName());
         values.put(ProductContract.ProductDB.COLUMN_NAME_VALUE, product.getProductKey());
+        values.put(ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID, product.getTaxCategoryID());
         if (product.getOutputDeviceId() != 0)
             values.put(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID, product.getOutputDeviceId());
 
@@ -150,6 +153,7 @@ public class PosProductHelper extends PosObjectHelper {
                 product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
                 product.setProductKey(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_VALUE)));
                 product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
+                product.setTaxCategoryID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID)));
 
                 Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
                 product.setActive(flag);
@@ -187,6 +191,7 @@ public class PosProductHelper extends PosObjectHelper {
                 product.setProductName(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_NAME)));
                 product.setProductKey(c.getString(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_VALUE)));
                 product.setOutputDeviceId(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_OUTPUT_DEVICE_ID)));
+                product.setTaxCategoryID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_TAX_CATEGORY_ID)));
 
                 Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
                 product.setActive(flag);

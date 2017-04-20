@@ -59,6 +59,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE, data.getClientAdLanguage());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE, data.getCurrencyIsoCode());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER, data.getReceiptFooter());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION, data.getStdPrecision());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO, data.getDefaultBPartnerToGo());
 
         int flag = (data.isCombineItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
@@ -90,6 +92,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE, data.getClientAdLanguage());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE, data.getCurrencyIsoCode());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER, data.getReceiptFooter());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION, data.getStdPrecision());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO, data.getDefaultBPartnerToGo());
 
         int flag = (data.isCombineItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
@@ -134,6 +138,8 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setClientAdLanguage(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE)));
         defaultData.setCurrencyIsoCode(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_ISO_CODE)));
         defaultData.setReceiptFooter(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER)));
+        defaultData.setDefaultBPartnerToGo(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO)));
+        defaultData.setStdPrecision(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION)));
 
         Boolean flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS)) != 0);
         defaultData.setCombineItems(flag);
