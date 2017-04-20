@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.pos.OpenOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.PosProperties;
@@ -68,15 +67,12 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         mGridData = new ArrayList<>();
         orderItemHashMap = new HashMap<>();
 
-        PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
-
-
         NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         OpenOrderGridItem item;
         BigDecimal totalLines;
 
-        for(POSOrder order : orderManager.getAllOpenOrders()) {
+        for(POSOrder order : POSOrder.getOpenOrders(getBaseContext())) {
             item = new OpenOrderGridItem();
             item.setOrderNo(getString(R.string.order) + ": " + String.valueOf(order.getOrderId()));
 

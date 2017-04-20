@@ -38,7 +38,6 @@ import android.view.View;
 import java.util.ArrayList;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.RecyclerItemsListener;
 import de.bxservice.bxpos.ui.adapter.SelectOrderDialogAdapter;
@@ -135,16 +134,15 @@ public class SelectOrderDialogFragment extends DialogFragment {
      * init the grid data with all the tables
      */
     private void initGridData() {
-        PosOrderManagement orderManager = new PosOrderManagement(getActivity().getBaseContext());
         //If the order is != null don't add it to the array. Avoid join an order with itself
         if (order != null) {
             mGridData = new ArrayList<>();
-            for (POSOrder currentOrder : orderManager.getAllOpenOrders()) {
+            for (POSOrder currentOrder : POSOrder.getOpenOrders(getActivity().getBaseContext())) {
                 if(order.getOrderId() != currentOrder.getOrderId())
                     mGridData.add(currentOrder);
             }
         } else {
-            mGridData = new ArrayList<>(orderManager.getAllOpenOrders());
+            mGridData = new ArrayList<>(POSOrder.getOpenOrders(getActivity().getBaseContext()));
         }
     }
 

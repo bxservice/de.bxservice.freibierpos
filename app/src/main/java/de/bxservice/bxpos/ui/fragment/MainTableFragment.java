@@ -37,10 +37,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.daomanager.PosTableGroupManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
+import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.ui.MainActivity;
 import de.bxservice.bxpos.ui.adapter.GridTableViewAdapter;
 
@@ -113,8 +113,7 @@ public class MainTableFragment extends Fragment {
                 if (item.getStatus().equals(Table.FREE_STATUS))
                     ((MainActivity) getActivity()).showGuestNumberDialog();
                 else if (item.getStatus().equals(Table.BUSY_STATUS)) {
-                    PosOrderManagement orderManager = new PosOrderManagement(getActivity().getBaseContext());
-                    ((MainActivity) getActivity()).editOrder(orderManager.getTableOrders(item));
+                    ((MainActivity) getActivity()).editOrder(POSOrder.getTableOrders(getActivity().getBaseContext(), item));
                 }
             }
         });

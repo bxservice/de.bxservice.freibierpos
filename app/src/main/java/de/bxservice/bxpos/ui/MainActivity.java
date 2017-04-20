@@ -63,7 +63,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.logic.daomanager.PosUserManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -225,9 +224,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, ReportsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_send) {
-            PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
 
-            final List<POSOrder> unsynchronizedOrders = orderManager.getUnsynchronizedOrders();
+            final List<POSOrder> unsynchronizedOrders = POSOrder.getUnsynchronizedOrders(getBaseContext());
 
             if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
                 new AlertDialog.Builder(this)
@@ -534,8 +532,7 @@ public class MainActivity extends AppCompatActivity
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            PosOrderManagement orderManager = new PosOrderManagement(getBaseContext());
-                            final List<POSOrder> unsynchronizedOrders = orderManager.getUnsynchronizedOrders();
+                            final List<POSOrder> unsynchronizedOrders = POSOrder.getUnsynchronizedOrders(getBaseContext());
 
                             if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
                                 synchronizePendingOrders(unsynchronizedOrders, true);
