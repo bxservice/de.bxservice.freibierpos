@@ -112,4 +112,9 @@ public class ProductCategory {
     private boolean createProductCategory() {
         return productCategoryManager.create(this);
     }
+
+    public static List<ProductCategory> getAllCategories(Context ctx) {
+        PosProductCategoryManagement categoryManager = new PosProductCategoryManagement(ctx);
+        return categoryManager.getAllCategories();
+    }
 }
