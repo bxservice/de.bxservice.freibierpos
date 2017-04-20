@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
                 super.onBackPressed();
+                cleanSessionPreference();
                 return;
             }
             else {
@@ -379,7 +380,6 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         //If the activity is destroyed by closing -> no by rotating the screen and is not only being destroyed temporarily by Android
         if (!isChangingConfigurations() && isFinishing()) {
-            cleanSessionPreference();
             PosObjectHelper.closeDB(getBaseContext());
         }
     }
