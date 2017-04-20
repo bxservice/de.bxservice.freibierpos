@@ -40,6 +40,7 @@ public class MProduct implements Serializable {
     public static final String M_Product_ID = "M_Product_ID";
 
     private int productID;
+    private int taxCategoryID;
     private String productName;
     private String productKey;
     private int productCategoryId;
@@ -53,6 +54,14 @@ public class MProduct implements Serializable {
 
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    public int getTaxCategoryID() {
+        return taxCategoryID;
+    }
+
+    public void setTaxCategoryID(int taxCategoryID) {
+        this.taxCategoryID = taxCategoryID;
     }
 
     public String getProductName() {

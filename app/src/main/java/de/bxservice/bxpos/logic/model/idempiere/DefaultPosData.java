@@ -39,12 +39,14 @@ public class DefaultPosData {
     private PosDefaultDataManagement dataManager;
 
     private int defaultBPartner = 0;
+    private int defaultBPartnerToGo = 0;
     private int defaultPriceList = 0;
     private int defaultCurrency = 0;
     private int defaultWarehouse = 0;
     private int discountId = 0;
     private int surchargeId = 0;
     private int pin = 0;
+    private int stdPrecision = 0;
     private boolean printAfterSent = false;
     private boolean combineItems   = false;
     private boolean IsTaxIncluded  = false;
@@ -58,6 +60,14 @@ public class DefaultPosData {
 
     public void setDefaultBPartner(int defaultBPartner) {
         this.defaultBPartner = defaultBPartner;
+    }
+
+    public int getDefaultBPartnerToGo() {
+        return defaultBPartnerToGo;
+    }
+
+    public void setDefaultBPartnerToGo(int defaultBPartnerToGo) {
+        this.defaultBPartnerToGo = defaultBPartnerToGo;
     }
 
     public int getDefaultPriceList() {
@@ -124,6 +134,14 @@ public class DefaultPosData {
         this.pin = pin;
     }
 
+    public int getStdPrecision() {
+        return stdPrecision;
+    }
+
+    public void setStdPrecision(int stdPrecision) {
+        this.stdPrecision = stdPrecision;
+    }
+
     public boolean isTaxIncluded() {
         return IsTaxIncluded;
     }
@@ -154,6 +172,16 @@ public class DefaultPosData {
 
     public void setReceiptFooter(String receiptFooter) {
         this.receiptFooter = receiptFooter;
+    }
+
+    public static int getPrecision(Context ctx) {
+        DefaultPosData posData = get(ctx);
+        return posData.getStdPrecision();
+    }
+
+    public static DefaultPosData get(Context ctx) {
+        PosDefaultDataManagement dataManager = new PosDefaultDataManagement(ctx);
+        return dataManager.getDefaultData();
     }
 
     /**

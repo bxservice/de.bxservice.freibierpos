@@ -31,10 +31,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
+import de.bxservice.bxpos.logic.model.idempiere.StandardTaxProvider;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
 
@@ -71,6 +73,7 @@ public class POSOrder implements Serializable {
     private ArrayList<POSOrderLine> orderingLines = new ArrayList<>();
     private ArrayList<POSOrderLine> orderedLines  = new ArrayList<>();
     private ArrayList<POSPayment>   payments      = new ArrayList<>();
+    private ArrayList<POSOrderTax>  orderTaxes;
     private String orderRemark = "";
 
     private int currentLineNo = 10;
@@ -601,6 +604,9 @@ public class POSOrder implements Serializable {
             }
         }
 
+        //Calculate tax
+        calculateTaxTotal(ctx);
+
         status = COMPLETE_STATUS;
         sync = isSynchronized;
         updateOrder(ctx);
@@ -700,6 +706,56 @@ public class POSOrder implements Serializable {
             }
         }
 
+    }
+
+    public ArrayList<POSOrderTax> getOrderTaxes() {
+
+        if (orderTaxes == null)
+            calculateTaxTotal(null);
+
+        return orderTaxes;
+    }
+
+    /**
+     * Returns the total sum of the taxes
+     * @return
+     */
+    public BigDecimal getTotalTaxes() {
+        BigDecimal totalTaxes = BigDecimal.ZERO;
+
+        for (POSOrderTax tax : getOrderTaxes())
+            totalTaxes = totalTaxes.add(tax.getTaxAmount());
+
+        return totalTaxes;
+    }
+
+    public boolean calculateTaxTotal(Context ctx) {
+        //Clean the existing taxes if any
+        orderTaxes = new ArrayList<>();
+
+        StandardTaxProvider calculator = new StandardTaxProvider();
+        return calculator.calculateOrderTaxTotal(ctx, this);
+
+    }	//	calculateTaxTotal
+
+    /**
+     * Get the tax amount grouped by tax rate
+     * @return Map with the pairs rate - tax amount
+     */
+    public Map<Integer, BigDecimal> getTaxRates() {
+        Map<Integer, BigDecimal> taxRates = new HashMap<>();
+
+        for (POSOrderTax orderTax : getOrderTaxes()) {
+            Integer rate = orderTax.getTax().getRate().intValue();
+            if (!taxRates.containsKey(rate)) {
+                taxRates.put(rate, orderTax.getTaxAmount());
+            } else {
+                BigDecimal oldTaxAmt = taxRates.get(rate);
+                taxRates.put(rate, oldTaxAmt.add(orderTax.getTaxAmount()));
+            }
+        }
+
+        return taxRates;
     }
 
     /**
