@@ -55,7 +55,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosProductManagement;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
@@ -191,12 +190,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         ProductPrice productPrice;
         NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
-        PosProductManagement dataProvider = new PosProductManagement(getBaseContext());
-
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
 
-        for (MProduct product : dataProvider.getAllProducts()) {
+        for (MProduct product : MProduct.getAllProducts(getBaseContext())) {
             gridItem = new NewOrderGridItem();
             productPrice = product.getProductPrice(getBaseContext());
 
