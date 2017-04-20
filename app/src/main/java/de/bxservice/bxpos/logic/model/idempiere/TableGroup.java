@@ -91,4 +91,9 @@ public class TableGroup implements Serializable {
     private boolean createTableGroup() {
         return tableGroupManager.create(this);
     }
+
+    public static List<TableGroup> getAllTableGroups(Context ctx) {
+        PosTableGroupManagement tableGroupManager = new PosTableGroupManagement(ctx);
+        return tableGroupManager.getAllTableGroups();
+    }
 }

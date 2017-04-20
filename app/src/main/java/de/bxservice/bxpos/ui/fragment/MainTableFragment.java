@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.daomanager.PosTableGroupManagement;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -88,9 +87,7 @@ public class MainTableFragment extends Fragment {
 
         grid = (GridView) rootView.findViewById(R.id.tableView);
 
-        PosTableGroupManagement tableGroupManager = new PosTableGroupManagement(getActivity().getBaseContext());
-
-        List<TableGroup> tableGroupList = tableGroupManager.getAllTableGroups();
+        List<TableGroup> tableGroupList = TableGroup.getAllTableGroups(getActivity().getBaseContext());
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
         mGridData = tableGroup.getTables();
@@ -132,9 +129,7 @@ public class MainTableFragment extends Fragment {
     public void refreshAllTables() {
         int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
-        PosTableGroupManagement tableGroupManager = new PosTableGroupManagement(getActivity().getBaseContext());
-
-        List<TableGroup> tableGroupList = tableGroupManager.getAllTableGroups();
+        List<TableGroup> tableGroupList = TableGroup.getAllTableGroups(getActivity().getBaseContext());
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
 
         List<Table> updatedTables = tableGroup.getTables();
