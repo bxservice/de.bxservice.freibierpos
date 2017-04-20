@@ -333,14 +333,14 @@ public class PosOrderHelper extends PosObjectHelper {
         ArrayList<POSOrder> orders = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER +
-                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " = ? " +
+                " WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " IN (?,?) " +
                 " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_SYNCHRONIZED + " = ?" ;
 
 
         Log.d(LOG_TAG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(POSOrder.COMPLETE_STATUS), Integer.toString(0)});
+        Cursor c = db.rawQuery(selectQuery, new String[] {POSOrder.COMPLETE_STATUS, POSOrder.VOID_STATUS, Integer.toString(0)});
 
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
