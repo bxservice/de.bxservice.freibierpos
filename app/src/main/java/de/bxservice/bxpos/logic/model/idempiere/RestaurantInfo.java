@@ -121,4 +121,9 @@ public class RestaurantInfo {
     private boolean updateData () {
         return dataManager.update(this);
     }
+
+    public static RestaurantInfo getDefaultRestaurantInfo(Context ctx) {
+        PosOrgInfoManagement orgInfoManager = new PosOrgInfoManagement(ctx);
+        return orgInfoManager.get(1);
+    }
 }
