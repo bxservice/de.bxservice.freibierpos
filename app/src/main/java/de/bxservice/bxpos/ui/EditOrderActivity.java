@@ -52,7 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.bxservice.bxpos.logic.daomanager.PosDefaultDataManagement;
 import de.bxservice.bxpos.logic.daomanager.PosOutputDeviceManagement;
 import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
@@ -158,7 +157,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             public void onClick(View view) {
                 if (order.sendOrder(getApplicationContext())) {
                     orderSent = true;
-                    DefaultPosData defaultPosData = new PosDefaultDataManagement(getBaseContext()).getDefaultData();
+                    DefaultPosData defaultPosData = DefaultPosData.get(getBaseContext());
 
                     //If the option is marked in POS Terminal -> Print
                     if(defaultPosData.isPrintAfterSent())
@@ -513,9 +512,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onDialogPositiveClick(VoidReasonDialogFragment dialog) {
         if(dialog.getReason() != null) {
 
-            PosDefaultDataManagement dataManager = new PosDefaultDataManagement(getBaseContext());
-
-            DefaultPosData data = dataManager.getDefaultData();
+            DefaultPosData data = DefaultPosData.get(getBaseContext());
 
             if(data.getPin() != 0) {
                 showConfirmationPINDialog(dialog.getReason(), dialog.isVoidOrder());
@@ -537,9 +534,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public void onDialogPositiveClick(ConfirmationPinDialogFragment dialog) {
         if(dialog.getPinCode() != null) {
 
-            PosDefaultDataManagement dataManager = new PosDefaultDataManagement(getBaseContext());
-
-            DefaultPosData data = dataManager.getDefaultData();
+            DefaultPosData data = DefaultPosData.get(getBaseContext());
             int assignedPin = data.getPin();
 
             if(assignedPin == 0) {
