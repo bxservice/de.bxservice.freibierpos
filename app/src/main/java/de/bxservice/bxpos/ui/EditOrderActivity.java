@@ -459,6 +459,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             if(originalTable != null)
                 originalTable.freeTable(getBaseContext(), true);
 
+            Toast.makeText(getBaseContext(), getString(R.string.table_switched),
+                    Toast.LENGTH_LONG).show();
+
             orderChanged = true;
         }
     }
