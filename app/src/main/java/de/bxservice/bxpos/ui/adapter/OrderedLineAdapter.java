@@ -35,7 +35,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
@@ -109,8 +108,8 @@ public class OrderedLineAdapter extends RecyclerView.Adapter<OrderedLineAdapter.
         return selectedItems.size();
     }
 
-    public List<Integer> getSelectedItems() {
-        List<Integer> items =
+    public ArrayList<Integer> getSelectedItems() {
+        ArrayList<Integer> items =
                 new ArrayList<>(selectedItems.size());
         for (int i = 0; i < selectedItems.size(); i++) {
             items.add(selectedItems.keyAt(i));
