@@ -64,6 +64,7 @@ public class GuestNumberDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        setRetainInstance(true);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
@@ -110,5 +111,14 @@ public class GuestNumberDialogFragment extends DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement GuestNumberDialogListener");
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        // handles https://code.google.com/p/android/issues/detail?id=17423
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setDismissMessage(null);
+        }
+        super.onDestroyView();
     }
 }
