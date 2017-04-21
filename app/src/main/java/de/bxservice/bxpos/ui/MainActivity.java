@@ -365,8 +365,8 @@ public class MainActivity extends AppCompatActivity
 
     public void editOrder(POSOrder order) {
         Intent intent = new Intent(this, EditOrderActivity.class);
-        intent.putExtra("caller","MainActivity");
-        intent.putExtra("draftOrder", order);
+        intent.putExtra(EditOrderActivity.CALLER_ACTIVITY,"MainActivity");
+        intent.putExtra(EditOrderActivity.DRAFT_ORDER, order);
         startActivityForResult(intent, EDIT_ORDER_REQUEST);
     }
 

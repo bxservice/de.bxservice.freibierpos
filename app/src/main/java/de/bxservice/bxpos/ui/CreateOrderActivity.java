@@ -85,7 +85,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
     static final int PICK_CONFIRMATION_REQUEST = 1;  // The request code
-
+    public final static String CALLER_ACTIVITY = "CreateOrderActivity.CALLER";
 
     private PagerSlidingTabStrip tabs;
 
@@ -566,8 +566,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private void openConfirmationActivity() {
         if("MainActivity".equals(caller)) {
             Intent intent = new Intent(this, EditOrderActivity.class);
-            intent.putExtra("draftOrder", posOrder);
-            intent.putExtra("caller","CreateOrderActivity");
+            intent.putExtra(EditOrderActivity.DRAFT_ORDER, posOrder);
+            intent.putExtra(EditOrderActivity.CALLER_ACTIVITY, "CreateOrderActivity");
             startActivityForResult(intent, PICK_CONFIRMATION_REQUEST);
         }
         else if ("EditOrderActivity".equals(caller)) {

@@ -121,8 +121,8 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
 
     public void openEditOrder(POSOrder order) {
         Intent intent = new Intent(this, EditOrderActivity.class);
-        intent.putExtra("caller","ViewOpenOrdersActivity");
-        intent.putExtra("draftOrder", order);
+        intent.putExtra(EditOrderActivity.CALLER_ACTIVITY,"ViewOpenOrdersActivity");
+        intent.putExtra(EditOrderActivity.DRAFT_ORDER, order);
         startActivityForResult(intent, EDIT_ORDER_REQUEST);
     }
 

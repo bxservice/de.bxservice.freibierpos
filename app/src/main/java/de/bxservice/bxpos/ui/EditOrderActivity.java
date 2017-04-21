@@ -92,6 +92,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private static final String ORDER_STATE = "orderState";
     public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
+    public final static String DRAFT_ORDER   = "de.bxservice.bxpos.DRAFT_ORDER";
+    public final static String CALLER_ACTIVITY        = "de.bxservice.bxpos.CALLER";
     public final static String EXTRA_NUMBER_OF_GUESTS = "de.bxservice.bxpos.GUESTS";
     public final static String EXTRA_ASSIGNED_TABLE   = "de.bxservice.bxpos.TABLE";
 
@@ -570,11 +572,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         Intent intent = getIntent();
 
-        if(intent != null) {
-
-            order = (POSOrder) intent.getSerializableExtra("draftOrder");
-            caller = intent.getStringExtra("caller");
-
+        if (intent != null) {
+            order = (POSOrder) intent.getSerializableExtra(DRAFT_ORDER);
+            caller = intent.getStringExtra(CALLER_ACTIVITY);
         }
     }
 
@@ -790,7 +790,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private void createNewOrder() {
         Intent intent = new Intent(this, CreateOrderActivity.class);
-        intent.putExtra("caller","MainActivity");
+        intent.putExtra(CreateOrderActivity.CALLER_ACTIVITY, "MainActivity");
         intent.putExtra(EXTRA_NUMBER_OF_GUESTS, 1); //Always one by default
         intent.putExtra(EXTRA_ASSIGNED_TABLE, order.getTable());
 
@@ -823,7 +823,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 mViewPager.setCurrentItem(EditPagerAdapter.ORDERING_POSITION, false);
                 orderChanged = true;
 
-                getIntent().putExtra("draftOrder", order);
+                getIntent().putExtra(DRAFT_ORDER, order);
 
                 this.recreate();
             }
@@ -1035,7 +1035,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
     private void openPaymentActivity() {
         Intent intent = new Intent(this, PayOrderActivity.class);
-        intent.putExtra("completedOrder", order);
+        intent.putExtra(PayOrderActivity.COMPLETED_ORDER, order);
         startActivityForResult(intent, PAY_REQUEST);
     }
 

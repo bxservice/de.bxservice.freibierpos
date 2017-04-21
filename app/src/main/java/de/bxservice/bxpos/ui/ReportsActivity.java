@@ -225,7 +225,7 @@ public class ReportsActivity extends AppCompatActivity implements
 
     private void startPrintResultActivity() {
         Intent intent = new Intent(this, ReportResultActivity.class);
-        intent.putExtra("results", reportResults);
+        intent.putExtra(ReportResultActivity.REPORT_RESULTS, reportResults);
         startActivity(intent);
     }
 
