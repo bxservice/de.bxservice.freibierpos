@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String LOG_TAG = "Main Activity";
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private static final String SELECTED_TABLE = "selectedTable";
 
     static final int NEW_ORDER_REQUEST  = 1;  // The request code
     static final int EDIT_ORDER_REQUEST = 2;  // The request code
@@ -162,6 +163,10 @@ public class MainActivity extends AppCompatActivity
         callAsynchronousTask();
 
         mProgressView = findViewById(R.id.load_data_progress);
+
+        if (savedInstanceState != null) {
+            selectedTable = (Table) savedInstanceState.getSerializable(SELECTED_TABLE);
+        }
 
         //Configuration to recreate UI on push notification
         myFilter = new IntentFilter(TABLE_UPDATED_ACTION);
@@ -378,6 +383,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable(SELECTED_TABLE, selectedTable);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
