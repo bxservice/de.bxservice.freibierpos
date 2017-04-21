@@ -30,9 +30,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.persistence.dbcontract.ProductPriceContract;
@@ -143,39 +140,6 @@ public class PosProductPriceHelper extends PosObjectHelper {
         // updating row
         return db.update(Tables.TABLE_PRODUCT_PRICE, values, ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID + " = ?",
                 new String[] { String.valueOf(productPrice.getProductPriceID()) });
-    }
-
-    /**
-     * Getting all product prices
-     */
-    public List<ProductPrice> getAllProductPrice() {
-        List<ProductPrice> productPrices = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_PRICE;
-
-        Log.d(LOG_TAG, selectQuery);
-
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (c.moveToFirst()) {
-            PosProductHelper productHelper = new PosProductHelper(mContext);
-            do {
-                ProductPrice productPrice = new ProductPrice();
-                productPrice.setProductPriceID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID)));
-                productPrice.setProductID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID)));
-                productPrice.setPriceListVersionID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIST_VERSION_ID)));
-                productPrice.setStdPriceFromInt(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_STD_PRICE)));
-                productPrice.setPriceLimitFromInt(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRICE_LIMIT)));
-                productPrice.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_ID))));
-
-                // adding to category list
-                productPrices.add(productPrice);
-            } while (c.moveToNext());
-            c.close();
-        }
-
-        return productPrices;
     }
 
 }

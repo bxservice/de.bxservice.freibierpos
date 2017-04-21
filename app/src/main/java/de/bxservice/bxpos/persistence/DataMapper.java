@@ -613,12 +613,6 @@ public class DataMapper implements Serializable {
         return true;
     }
 
-    public POSOrder getOpenPosOrder(Table table) {
-
-        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
-        return orderHelper.getOrder(table);
-    }
-
     public List<POSOrder> getTableOrders(Table table) {
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
         return orderHelper.getTableOrders(table);
@@ -664,17 +658,6 @@ public class DataMapper implements Serializable {
     public boolean isTableFree(Table table) {
         PosTableHelper tableHelper = new PosTableHelper(mContext);
         return tableHelper.isTableFree(table);
-    }
-
-    /**
-     * Use for reports
-     * @param fromDate selected initial date
-     * @param toDate   selected final date
-     * @return         array with all the ordering lines void within the time frame
-     */
-    public List<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
-        PosOrderLineHelper orderLineHelper = new PosOrderLineHelper(mContext);
-        return orderLineHelper.getVoidedItems(fromDate, toDate);
     }
 
     public List<POSOrderLine> getPrintKitchenLines(POSOrder order) {

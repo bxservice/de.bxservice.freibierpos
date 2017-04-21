@@ -122,9 +122,6 @@ public class OrderingItemsFragment extends Fragment {
         touchHelper.attachToRecyclerView(mRecyclerView);
 
         mAdapter.setOnDataChangeListener(new OnDataChangeListener() {
-            public void onDataChanged(int position) {
-            }
-
             @Override
             public void onItemDeleted(int position) {
                 ((EditOrderActivity) getActivity()).removeItem(position);

@@ -71,13 +71,6 @@ public class PosTenderTypeHelper extends PosObjectHelper {
                 new String[] { String.valueOf(tenderType.getC_POSTenderType_ID()) });
     }
 
-    public int deletePayment(PosTenderType tenderType)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        return db.delete(Tables.TABLE_POSTENDER_TYPE, PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE_ID + " = ?",
-                new String[] { String.valueOf(tenderType.getC_POSTenderType_ID()) });
-    }
-
     /**
      * Getting tender type ID by its type
      * @param tenderType

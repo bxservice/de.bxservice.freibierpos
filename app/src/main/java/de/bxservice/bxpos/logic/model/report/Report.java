@@ -137,7 +137,4 @@ public abstract class Report {
         return htmlResult;
     }
 
-    public void setHtmlResult(StringBuilder htmlResult) {
-        this.htmlResult = htmlResult;
-    }
 }

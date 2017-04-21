@@ -117,9 +117,4 @@ public class OrderedItemsFragment extends Fragment {
         return mAdapter;
     }
 
-    public void refresh(POSOrder order) {
-        this.getArguments().putSerializable(ARG_ORDER, order);
-        mAdapter.notifyDataSetChanged();
-    }
-
 }

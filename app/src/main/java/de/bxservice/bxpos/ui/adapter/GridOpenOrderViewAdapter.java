@@ -54,15 +54,6 @@ public class GridOpenOrderViewAdapter extends ArrayAdapter<OpenOrderGridItem> {
         this.mGridData = mGridData;
     }
 
-    /**
-     * Updates grid data and refresh grid items.
-     * @param mGridData
-     */
-    public void setGridData(ArrayList<OpenOrderGridItem> mGridData) {
-        this.mGridData = mGridData;
-        notifyDataSetChanged();
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;

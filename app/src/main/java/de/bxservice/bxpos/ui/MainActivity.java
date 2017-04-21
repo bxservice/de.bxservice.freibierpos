@@ -392,26 +392,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Manage the RuntimeException: Performing stop of activity that is not resumed in android
-     * When recreate call
-     * */
-    private void safeRecreate() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-                {
-                    MainActivity.this.finish();
-                    MainActivity.this.startActivity(MainActivity.this.getIntent());
-                } else MainActivity.this.recreate();
-            }
-        }, 1);
-    }
-
-    /**
      * Make sure that session preference only last one session
      */
     private void cleanSessionPreference() {
