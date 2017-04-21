@@ -19,7 +19,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/pin_label"
             android:text="@string/pref_title_pin_code"
             android:paddingLeft="18dp" />
 

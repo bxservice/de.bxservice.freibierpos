@@ -14,7 +14,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <LinearLayout
-        android:id="@+id/summaryLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -26,7 +25,6 @@
         android:layout_margin="2dp">
 
         <LinearLayout
-            android:id="@+id/originalOrder"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -58,7 +56,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/newOrder"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">

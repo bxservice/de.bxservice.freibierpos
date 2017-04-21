@@ -60,21 +60,18 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id = "@+id/seven"
                     style="@style/PadButtonStyle"
                     android:onClick="onButtonClick"
                     android:text="@string/seven" />
 
                 <Button
                     style="@style/PadButtonStyle"
-                    android:id = "@+id/eight"
                     android:onClick="onButtonClick"
                     android:text="@string/eight" />
 
                 <Button
                     style="@style/PadButtonStyle"
                     android:onClick="onButtonClick"
-                    android:id = "@+id/nine"
                     android:text="@string/nine" />
 
             </LinearLayout>
@@ -89,19 +86,16 @@
                 <Button
                     style="@style/PadButtonStyle"
                     android:onClick="onButtonClick"
-                    android:id = "@+id/four"
                     android:text="@string/four" />
 
                 <Button
                     style="@style/PadButtonStyle"
                     android:onClick="onButtonClick"
-                    android:id = "@+id/five"
                     android:text="@string/five" />
 
                 <Button
                     style="@style/PadButtonStyle"
                     android:onClick="onButtonClick"
-                    android:id = "@+id/six"
                     android:text="@string/six" />
 
             </LinearLayout>
@@ -115,19 +109,16 @@
 
                 <Button
                     style="@style/PadButtonStyle"
-                    android:id = "@+id/one"
                     android:onClick="onButtonClick"
                     android:text="@string/one" />
 
                 <Button
                     style="@style/PadButtonStyle"
-                    android:id = "@+id/two"
                     android:onClick="onButtonClick"
                     android:text="@string/two" />
 
                 <Button
                     style="@style/PadButtonStyle"
-                    android:id = "@+id/three"
                     android:onClick="onButtonClick"
                     android:text="@string/three" />
 
@@ -148,7 +139,6 @@
 
                 <Button
                     style="@style/PadButtonStyle"
-                    android:id = "@+id/zero"
                     android:onClick="onButtonClick"
                     android:text="@string/zero" />
 

@@ -6,8 +6,6 @@
     <string name="navigation_drawer_open">Abrir panel de navegación</string>
     <string name="navigation_drawer_close">Cerrar panel de navegación</string>
     <string name="search">Buscar</string>
-    <string name="action_settings">Ajustes</string>
-    <string name="reservation">Reservación</string>
     <string name="report">Reporte</string>
     <string name="save">Guardar</string>
 
@@ -62,8 +60,6 @@
     <string name="title_activity_create_order">Nueva orden</string>
     <string name="title_activity_add_items">Añadir ítems</string>
     <string name="title_activity_view_open_orders">Órdenes abiertas</string>
-    <string name="title_activity_create_reservation">Reservación</string>
-    <string name="title_activity_login">Acceder</string>
 
     <!-- Strings related to orders -->
     <string name="empty_order">La orden esta vacia</string>
@@ -77,9 +73,7 @@
     <string name="quantity_summary">Cantidad: %1$d</string>
 
     <!-- Strings related to roles -->
-    <string name="role">Rol</string>
     <string name="waiter_role">Mesero</string>
-    <string name="supervisor_role">Supervisor</string>
     <string name="title_activity_admin_settings">Ajustes</string>
 
     <!-- Strings related to Settings -->
@@ -139,7 +133,6 @@
     <string name="discount_value">Descuento: %1$s</string>
     <string name="paid">Pagado</string>
     <string name="paid_value">Pagado: %1$s</string>
-    <string name="close">Cerrar</string>
 
     <string name="order">Orden</string>
     <string name="unset_table">Para llevar/Barra</string>
@@ -158,13 +151,9 @@
     <string name="synchronize">Sincronizar órdenes</string>
     <string name="no_unsync_orders">¡Enhorabuena! Todas las órdenes están en iDempiere</string>
     <string name="comm_category">Comunicación</string>
-    <string name="share">Compartir</string>
 
     <string name="void_item">Anular</string>
     <string name="already_voided_item">No puede anular una línea ya anulada</string>
-    <string name="pref_header_data_security">Seguridad</string>
-    <string name="pref_summary_void_approval">Solicitar un PIN cuando se anulan ítems</string>
-    <string name="pref_title_void_approval">Bloquear anular ítems</string>
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">Una razón debe ser introducida</string>
     <string name="approve_void">Confirmación de anulación</string>
@@ -177,7 +166,6 @@
     <string name="no_report_selected">Debe seleccionar por lo menos un tipo de reporte</string>
     <string name="no_records">No hay registros</string>
     <string name="net_sales">Ventas netas</string>
-    <string name="voided_items">Ítems anulados</string>
     <string name="sales">Ventas</string>
     <string name="pref_header_restaurant">Restaurante</string>
     <string name="order_prefix">Prefijo de orden</string>
@@ -185,7 +173,6 @@
     <string name="complimentary">Cortesía</string>
     <string name="give_complimentary_product">¿Está seguro que desea regalar este producto?</string>
     <string name="give">Regalar</string>
-    <string name="type">Tipo</string>
     <string name="receipt">Recibo</string>
     <string name="cash">Efectivo</string>
     <string name="logout">Cerrar sesión</string>
@@ -229,7 +216,6 @@
     <string name="no_allow_complimentary">El ítem %1$s no puede ser gratis</string>
     <string name="complete_order">¿Pagar orden?</string>
     <string name="no_undone_operation">Esta operación no se puede deshacer</string>
-    <string name="complete">Completar</string>
 
     <!-- About activity strings -->
     <string name="about">Acerca de</string>

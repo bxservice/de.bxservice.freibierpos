@@ -14,7 +14,6 @@
         android:layout_width="116dp"
         android:layout_height="44dp"
         android:text="@string/updating"
-        android:id="@+id/textView2"
         android:textColor="@color/colorAccent"
         android:gravity="center"
         android:layout_above="@+id/progress_bar"
