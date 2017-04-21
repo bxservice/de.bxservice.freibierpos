@@ -79,6 +79,11 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
 
     private static final String LOG_TAG = "Pay Order Activity";
     public final static String COMPLETED_ORDER = "de.bxservice.bxpos.completeOrder";
+    private static final String PAY_AMOUNT       = "payAmount";
+    private static final String SURCHARGE_AMOUNT = "surchargeAmount";
+    private static final String DISCOUNT_AMOUNT  = "discountAmount";
+    private static final String PAID_AMOUNT      = "paidAmount";
+    private static final String PAYMENTS_ARRAY   = "paymentsArray";
 
     private POSOrder order;
 
@@ -171,6 +176,14 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         deleteButton = findViewById(R.id.del);
         deleteButton.setOnLongClickListener(this);
 
+        if (savedInstanceState != null) {
+            payAmount  = new StringBuilder(savedInstanceState.getString(PAY_AMOUNT));
+            surcharge  = new BigDecimal(savedInstanceState.getString(SURCHARGE_AMOUNT));
+            discount   = new BigDecimal(savedInstanceState.getString(DISCOUNT_AMOUNT));
+            paidAmount = new BigDecimal(savedInstanceState.getString(PAID_AMOUNT));
+            payments   = (ArrayList<POSPayment>) savedInstanceState.getSerializable(PAYMENTS_ARRAY);
+        }
+
         initAmounts();
         fillPaymentDisplay();
 
@@ -179,10 +192,15 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     }
 
     private void initAmounts() {
+
+        if (surcharge == null)
+            surcharge = BigDecimal.ZERO;
+        if (discount == null)
+            discount = BigDecimal.ZERO;
+        if (paidAmount == null)
+            paidAmount = BigDecimal.ZERO;
+
         subtotal = order.getTotallines();
-        surcharge = BigDecimal.ZERO;
-        discount = BigDecimal.ZERO;
-        paidAmount = BigDecimal.ZERO;
         amountToPay = getAmountToPay();
         total = getTotal();
         changeAmount = getChange();
@@ -671,6 +689,17 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         else
             setResult(RESULT_CANCELED);
         super.finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(PAY_AMOUNT, payAmount.toString());
+        outState.putString(PAID_AMOUNT, paidAmount.toString());
+        outState.putString(SURCHARGE_AMOUNT, surcharge.toString());
+        outState.putString(DISCOUNT_AMOUNT, discount.toString());
+        outState.putSerializable(PAYMENTS_ARRAY, payments);
     }
 
     /**
