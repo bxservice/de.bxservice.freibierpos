@@ -28,7 +28,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.daomanager.PosTableGroupManagement;
@@ -43,6 +45,7 @@ import de.bxservice.bxpos.ui.fragment.MainTableFragment;
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private PosTableGroupManagement dataProvider;
+    private List<Fragment> createdFragments = new ArrayList<>();
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -64,42 +67,53 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return dataProvider.getAllTableGroups().get(position).getName();
     }
 
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+
+        //Save a reference of the existing fragments
+        if (createdFragments != null && !createdFragments.contains(createdFragment))
+            createdFragments.add(createdFragment);
+
+        return createdFragment;
+    }
+
     /**
      * Update table status in the data set in the fragment
-     * @param fm
      * @param selectedTable
      */
-    public void updateStatus(FragmentManager fm, Table selectedTable) {
+    public void updateStatus(Table selectedTable) {
 
-        List<Fragment> allFragments = fm.getFragments();
-        boolean found = false;
+        if (createdFragments != null) {
+            boolean found = false;
 
-        for(Fragment fragment : allFragments) {
+            for (Fragment fragment : createdFragments) {
 
-            if(fragment instanceof  MainTableFragment && !found) {
-                MainTableFragment tableFragment = (MainTableFragment) fragment;
+                if (fragment instanceof MainTableFragment && !found) {
+                    MainTableFragment tableFragment = (MainTableFragment) fragment;
 
-                for(Table table : tableFragment.getmGridData()) {
+                    for (Table table : tableFragment.getmGridData()) {
 
-                    if (table.getTableID() == selectedTable.getTableID()) {
-                        tableFragment.updateTableStatus(tableFragment.getmGridData().indexOf(table), selectedTable);
-                        found = true;
-                        break;
+                        if (table.getTableID() == selectedTable.getTableID()) {
+                            tableFragment.updateTableStatus(tableFragment.getmGridData().indexOf(table), selectedTable);
+                            found = true;
+                            break;
+                        }
                     }
                 }
             }
         }
     }
 
-    public void updateAllTables(FragmentManager fm) {
+    public void updateAllTables() {
 
-        List<Fragment> allFragments = fm.getFragments();
+        if (createdFragments != null) {
+            for (Fragment fragment : createdFragments) {
 
-        for (Fragment fragment : allFragments) {
-
-            if (fragment instanceof MainTableFragment) {
-                MainTableFragment menuFragment = (MainTableFragment) fragment;
-                menuFragment.refreshAllTables();
+                if (fragment instanceof MainTableFragment) {
+                    MainTableFragment menuFragment = (MainTableFragment) fragment;
+                    menuFragment.refreshAllTables();
+                }
             }
         }
     }
