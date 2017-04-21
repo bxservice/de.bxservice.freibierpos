@@ -560,6 +560,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         paymentDialog.setTotal(getTotal());
         paymentDialog.setPaidAmount(paidAmount);
         paymentDialog.setChangeAmount(getChange());
+        paymentDialog.setCancelable(false);
         paymentDialog.show(getFragmentManager(), "PaymentDialogFragment");
     }
 
