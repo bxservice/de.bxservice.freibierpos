@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
             Log.d(LOG_TAG, "Update table request received");
             Table table = (Table) intent.getSerializableExtra(EXTRA_UPDATED_TABLE);
             if (table != null)
-                mMainPagerAdapter.updateStatus(getSupportFragmentManager(), table);
+                mMainPagerAdapter.updateStatus(table);
         }
     };
 
@@ -399,7 +399,7 @@ public class MainActivity extends AppCompatActivity
                 requestCode == OPEN_ORDER_REQUEST) {
 
             //Notify changes -> always in case of a change in a different device
-            mMainPagerAdapter.updateAllTables(getSupportFragmentManager());
+            mMainPagerAdapter.updateAllTables();
         }
     }
 
