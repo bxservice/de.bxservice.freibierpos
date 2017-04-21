@@ -80,37 +80,6 @@ public class PosOrderLineHelper extends PosObjectHelper {
     }
 
     /*
-   * get single order line
-   */
-    public POSOrderLine getOrderLine(long orderline_id) {
-        SQLiteDatabase db = getReadableDatabase();
-
-        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " WHERE "
-                + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = " + orderline_id;
-
-        Log.e(LOG_TAG, selectQuery);
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if (c != null)
-            c.moveToFirst();
-
-        PosProductHelper productHelper = new PosProductHelper(mContext);
-
-        POSOrderLine orderLine = new POSOrderLine();
-        orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
-        orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
-        orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
-        orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
-        orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
-        orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
-
-        c.close();
-
-        return orderLine;
-    }
-
-    /*
     * Updating a order line
     */
     public int updateOrderLine(POSOrderLine orderLine) {
@@ -135,50 +104,6 @@ public class PosOrderLineHelper extends PosObjectHelper {
         // updating row
         return db.update(Tables.TABLE_POSORDER_LINE, values,PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?",
                 new String[] { String.valueOf(orderLine.getOrderLineId()) });
-    }
-
-    /**
-     * Getting all lines belonging to an order
-     * @param order
-     * @return
-     */
-    public ArrayList<POSOrderLine> getAllOrderLines(POSOrder order) {
-        ArrayList<POSOrderLine> lines = new ArrayList<>();
-
-        String selectQuery = "SELECT  * FROM " + Tables.TABLE_POSORDER_LINE + " orderline " +
-                " WHERE orderline." + PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID
-                + " = ?";
-
-        Log.d(LOG_TAG, selectQuery);
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId())});
-
-        // looping through all rows and adding to list
-        if (c.moveToFirst()) {
-            PosProductHelper productHelper = new PosProductHelper(mContext);
-            do {
-                POSOrderLine orderLine = new POSOrderLine();
-                orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
-                orderLine.setOrder(order);
-                orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
-                orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
-                orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
-                orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
-                orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
-
-                Boolean flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_COMPLIMENTARY)) != 0);
-                orderLine.setComplimentaryProduct(flag);
-
-                flag = (c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ISPRINTED)) != 0);
-                orderLine.setPrinted(flag);
-
-                lines.add(orderLine);
-            } while (c.moveToNext());
-            c.close();
-        }
-
-        return lines;
     }
 
     /**
@@ -207,7 +132,6 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
         return getAllOrderLines(order, whereClause, new String[] {String.valueOf(order.getOrderId()), POSOrderLine.ORDERED, POSOrderLine.VOIDED});
     }
-
 
     /**
      * Getting all lines belonging to an order in a
@@ -262,51 +186,6 @@ public class PosOrderLineHelper extends PosObjectHelper {
     {
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(Tables.TABLE_POSORDER_LINE, PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID + " = ?", new String[] { String.valueOf(orderLine.getOrderLineId()) });
-    }
-
-    /**
-     * Used for reports
-     * @param fromDate
-     * @param toDate
-     * @return Array list with all the voided lines within the time frame
-     */
-    public ArrayList<POSOrderLine> getVoidedItems(long fromDate, long toDate) {
-
-        ArrayList<POSOrderLine> lines = new ArrayList<>();
-        StringBuilder selectQuery = new StringBuilder();
-
-        selectQuery.append("SELECT  * FROM ");
-        selectQuery.append(Tables.TABLE_POSORDER_LINE);
-        selectQuery.append(" WHERE ");
-        selectQuery.append(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS);
-        selectQuery.append(" = ? AND ");
-        selectQuery.append(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_UPDATED_AT);
-        selectQuery.append(" BETWEEN ? AND ? ");
-
-        Log.d(LOG_TAG, selectQuery.toString());
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery.toString(), new String[] {String.valueOf(POSOrderLine.VOIDED), String.valueOf(fromDate), String.valueOf(toDate)});
-
-        // looping through all rows and adding to list
-        if (c.moveToFirst()) {
-            PosProductHelper productHelper = new PosProductHelper(mContext);
-            do {
-                POSOrderLine orderLine = new POSOrderLine();
-                orderLine.setOrderLineId(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_ID)));
-                orderLine.setLineStatus(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS)));
-                orderLine.setLineNo(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENO)));
-                orderLine.setProductRemark(c.getString(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_REMARK)));
-                orderLine.setQtyOrdered(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_QUANTITY)));
-                orderLine.setLineTotalFromInt(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_LINENETAMT)));
-                orderLine.setProduct(productHelper.getProduct(c.getInt(c.getColumnIndex(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID))));
-
-                lines.add(orderLine);
-            } while (c.moveToNext());
-            c.close();
-        }
-
-        return lines;
     }
 
     public ArrayList<POSOrderLine> getPrintKitchenLines(POSOrder order) {

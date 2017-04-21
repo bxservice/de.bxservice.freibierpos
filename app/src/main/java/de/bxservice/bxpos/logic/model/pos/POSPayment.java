@@ -123,11 +123,6 @@ public class POSPayment implements Serializable {
         return PosTenderType.CASH_PAYMENT_TENDER_TYPE_VALUE;
     }
 
-    public boolean updatePayment(Context ctx) {
-        paymentManager = new PosPaymentManagement(ctx);
-        return paymentManager.update(this);
-    }
-
     public boolean createPayment(Context ctx) {
         paymentManager = new PosPaymentManagement(ctx);
         return paymentManager.create(this);

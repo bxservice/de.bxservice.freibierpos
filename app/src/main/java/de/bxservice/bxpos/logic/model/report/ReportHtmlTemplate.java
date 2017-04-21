@@ -24,10 +24,6 @@
  **********************************************************************/
 package de.bxservice.bxpos.logic.model.report;
 
-import android.content.Context;
-
-import de.bxservice.bxpos.R;
-
 /**
  * Default template for reports in the app
  * Created by Diego Ruiz on 30/03/16.
@@ -93,11 +89,6 @@ public class ReportHtmlTemplate {
      */
     public String getHtmlColumn(String alignment) {
         return "<td align=\""+ alignment +"\">" + ROW_TAG + "</td>";
-    }
-
-    public String getTotalLine(Context ctx) {
-        String totalLine = ctx.getResources().getString(R.string.total);
-        return "<p><b>" + totalLine +"</b>" + ROW_TAG + "</p>";
     }
 
 }

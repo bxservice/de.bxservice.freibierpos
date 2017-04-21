@@ -838,11 +838,6 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
-    public void addNewOrderLines(ArrayList<POSOrderLine> orderLines) {
-        for(POSOrderLine line : orderLines)
-            order.getOrderingLines().add(line);
-    }
-
     /**
      * When Long click - shows the CAB and perform the corresponding action
      * @param idx

@@ -387,16 +387,6 @@ public class POSOrder implements Serializable {
         this.payments = payments;
     }
 
-    /**
-     * Clear all the objects related to order lines
-     */
-
-    private void clearOrderLines() {
-        orderingLines.clear();
-        orderlineProductQtyHashMap.clear();
-        orderlineProductHashMap.clear();
-    }
-
     public long getOrderId() {
         return orderId;
     }

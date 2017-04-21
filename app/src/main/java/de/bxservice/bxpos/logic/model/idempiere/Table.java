@@ -42,7 +42,6 @@ public class Table implements Serializable {
     //Table status
     public static final String FREE_STATUS     = "FREE";
     public static final String BUSY_STATUS     = "BUSY";
-    private static final String RESERVED_STATUS = "RESERVED";
 
     public static final String BAY_Table_ID = "BAY_Table_ID";
 
@@ -87,8 +86,7 @@ public class Table implements Serializable {
 
     public void setStatus(String status) {
         if (status.equals(FREE_STATUS) ||
-                status.equals(BUSY_STATUS) ||
-                status.equals(RESERVED_STATUS))
+                status.equals(BUSY_STATUS))
             this.status = status;
     }
 
@@ -176,12 +174,6 @@ public class Table implements Serializable {
         }
 
         return false;
-    }
-
-    public boolean reserveTable(Context ctx) {
-        status = RESERVED_STATUS;
-        isStatusChanged = true;
-        return updateTable(ctx);
     }
 
     public boolean updateTable(Context ctx) {

@@ -182,10 +182,6 @@ public class SurchargeDialogFragment extends DialogFragment {
         }
     }
 
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
@@ -198,11 +194,4 @@ public class SurchargeDialogFragment extends DialogFragment {
         this.surchargeAmount = surchargeAmount;
     }
 
-    public BigDecimal getSurchargePercent() {
-        return surchargePercent;
-    }
-
-    public void setSurchargePercent(BigDecimal surchargePercent) {
-        this.surchargePercent = surchargePercent;
-    }
 }
