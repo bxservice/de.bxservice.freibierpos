@@ -68,7 +68,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
     /*
     * get single product category
     */
-    public ProductCategory getProductCategory (long productCategory_id) {
+    public ProductCategory getProductCategory(long productCategory_id) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_CATEGORY + " WHERE "
@@ -80,8 +80,11 @@ public class PosProductCategoryHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         ProductCategory productCategory = new ProductCategory(c.getInt(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_PRODUCT_CATEGORY_ID)),
                 c.getString(c.getColumnIndex(ProductCategoryContract.ProductCategoryDB.COLUMN_NAME_NAME)));
@@ -95,7 +98,7 @@ public class PosProductCategoryHelper extends PosObjectHelper {
     /*
     * Updating a product category
     */
-    public int updateProductCategory (ProductCategory productCategory) {
+    public int updateProductCategory(ProductCategory productCategory) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -133,8 +136,10 @@ public class PosProductCategoryHelper extends PosObjectHelper {
                 // adding to category list
                 productCategories.add(productCategory);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return productCategories;
     }

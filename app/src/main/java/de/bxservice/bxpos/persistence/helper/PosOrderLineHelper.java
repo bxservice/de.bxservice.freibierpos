@@ -176,8 +176,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 lines.add(orderLine);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return lines;
     }
@@ -264,8 +266,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 lines.add(orderLine);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return lines;
     }
@@ -313,8 +317,10 @@ public class PosOrderLineHelper extends PosObjectHelper {
 
                 lines.add(reportObject);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return lines;
     }

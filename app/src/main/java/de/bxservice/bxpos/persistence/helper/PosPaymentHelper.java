@@ -119,8 +119,10 @@ public class PosPaymentHelper extends PosObjectHelper {
 
                 payments.add(posPayment);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return payments;
     }

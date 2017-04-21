@@ -51,7 +51,7 @@ public class PosProductHelper extends PosObjectHelper {
     /*
     * Creating a product
     */
-    public long createProduct (MProduct product) {
+    public long createProduct(MProduct product) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -73,7 +73,7 @@ public class PosProductHelper extends PosObjectHelper {
     /*
     * get single product
     */
-    public MProduct getProduct (long product_id) {
+    public MProduct getProduct(long product_id) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT + " WHERE "
@@ -85,8 +85,11 @@ public class PosProductHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         MProduct product = new MProduct();
         product.setProductID(c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID)));
@@ -107,7 +110,7 @@ public class PosProductHelper extends PosObjectHelper {
     /*
     * Updating a product
     */
-    public int updateProduct (MProduct product) {
+    public int updateProduct(MProduct product) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -160,8 +163,10 @@ public class PosProductHelper extends PosObjectHelper {
 
                 products.add(product);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return products;
     }
@@ -198,8 +203,10 @@ public class PosProductHelper extends PosObjectHelper {
 
                 products.add(product);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return products;
     }

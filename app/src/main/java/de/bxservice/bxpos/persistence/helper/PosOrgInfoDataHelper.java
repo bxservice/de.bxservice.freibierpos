@@ -64,7 +64,7 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
     /*
     * Updating the default data
     */
-    public int updateData (RestaurantInfo data) {
+    public int updateData(RestaurantInfo data) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -96,8 +96,11 @@ public class PosOrgInfoDataHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         RestaurantInfo restaurantInfo = new RestaurantInfo();
         restaurantInfo.setName(c.getString(c.getColumnIndex(OrgInfoContract.OrgInfoDB.COLUMN_NAME_NAME)));

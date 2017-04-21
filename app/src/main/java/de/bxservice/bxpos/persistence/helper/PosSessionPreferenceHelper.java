@@ -82,8 +82,11 @@ public class PosSessionPreferenceHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
-            return null;
+        else {
+            if (c != null)
+                c.close();
+            return "";
+        }
 
         String preferenceValue = c.getString(c.getColumnIndex(SessionPreferenceContract.SessionPreferenceDB.COLUMN_NAME_PREF_VALUE));
 
