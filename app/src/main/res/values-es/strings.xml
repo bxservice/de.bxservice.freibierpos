@@ -247,6 +247,7 @@
     <string name="order_number_prefix">Número inicial de orden</string>
     <string name="wrong_order_number">Ordénes con un número menos y el mismo prefijo ya existen. Seleccione un número mayor que %1$d.</string>
     <string name="unable_join">No hay más órdenes abiertas.</string>
+    <string name="server_data">Datos de conexión</string>
 </resources>
 
 

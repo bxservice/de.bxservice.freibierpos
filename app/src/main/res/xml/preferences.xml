@@ -45,62 +45,67 @@
             android:title="@string/pref_title_sync_frequency" />
     </PreferenceCategory>
 
-    <PreferenceScreen
+    <PreferenceCategory
         android:title="@string/pref_header_general"
         android:key="pref_key_storage_settings">
-        <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-        <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
-        <EditTextPreference
-            android:capitalize="words"
-            android:defaultValue="@string/pref_default_display_name"
-            android:inputType="textUri"
-            android:key="pref_serverurl"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/pref_title_display_name" />
 
-        <EditTextPreference
-            android:capitalize="words"
-            android:defaultValue=""
-            android:inputType="number"
-            android:key="pref_client"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/client" />
+        <PreferenceScreen
+            android:title="@string/server_data">
+            <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+            <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+            <EditTextPreference
+                android:capitalize="words"
+                android:defaultValue="@string/pref_default_display_name"
+                android:inputType="textUri"
+                android:key="pref_serverurl"
+                android:maxLines="1"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/pref_title_display_name" />
 
-        <EditTextPreference
-            android:capitalize="words"
-            android:defaultValue=""
-            android:inputType="number"
-            android:key="pref_org"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/organization" />
+            <EditTextPreference
+                android:capitalize="words"
+                android:defaultValue=""
+                android:inputType="number"
+                android:key="pref_client"
+                android:maxLines="1"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/client" />
 
-        <EditTextPreference
-            android:capitalize="words"
-            android:defaultValue=""
-            android:inputType="number"
-            android:key="pref_role"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/role_id" />
+            <EditTextPreference
+                android:capitalize="words"
+                android:defaultValue=""
+                android:inputType="number"
+                android:key="pref_org"
+                android:maxLines="1"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/organization" />
 
-        <EditTextPreference
-            android:capitalize="words"
-            android:defaultValue=""
-            android:inputType="number"
-            android:key="pref_warehouse"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/warehouse_id" />
+            <EditTextPreference
+                android:capitalize="words"
+                android:defaultValue=""
+                android:inputType="number"
+                android:key="pref_role"
+                android:maxLines="1"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/role_id" />
 
-    </PreferenceScreen>
+            <EditTextPreference
+                android:capitalize="words"
+                android:defaultValue=""
+                android:inputType="number"
+                android:key="pref_warehouse"
+                android:maxLines="1"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="@string/warehouse_id" />
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
 
     <PreferenceScreen
         android:title="@string/about"

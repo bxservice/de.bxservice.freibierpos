@@ -225,6 +225,7 @@
     <string name="order_number_prefix">Initial order number</string>
     <string name="wrong_order_number">Orders with a lower number and the same prefix already exist. Set a number greater than %1$d.</string>
     <string name="unable_join">No open orders to join.</string>
+    <string name="server_data">Connection data</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
