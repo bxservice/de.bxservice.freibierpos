@@ -74,10 +74,10 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
         if(data != null) {
             //If the request is suggested
             if (String.valueOf(BXPOSNotificationCode.RECOMMENDED_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
-                sendNotification(notificationBody, notificationTitle);
+                sendNotification(notificationBody, notificationTitle, BXPOSNotificationCode.RECOMMENDED_REQUEST_CODE);
             }
             else if (String.valueOf(BXPOSNotificationCode.MANDATORY_REQUEST_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
-                mandatoryUpdate();
+                sendNotification(notificationBody, notificationTitle, BXPOSNotificationCode.MANDATORY_REQUEST_CODE);
             }
             else if (String.valueOf(BXPOSNotificationCode.TABLE_STATUS_CHANGED_CODE).equals(data.get(BXPOSNotificationCode.REQUEST_TYPE))) {
                 Log.d(TAG, "Request to change table " + data.get(BXPOSNotificationCode.CHANGED_TABLE_ID));
@@ -93,9 +93,21 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody  FCM message body received.
      * @param messageTitle FCM message title received.
      */
-    private void sendNotification(String messageBody, String messageTitle) {
+    private void sendNotification(String messageBody, String messageTitle, int requestCode) {
         Intent intent = new Intent(this, FCMNotificationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        //Setting the clickAction
+        String clickAction = "";
+        switch(requestCode) {
+            case BXPOSNotificationCode.RECOMMENDED_REQUEST_CODE:
+                clickAction = BXPOSNotificationCode.RECOMMENDED_UPDATE_ACTION;
+                break;
+            case BXPOSNotificationCode.MANDATORY_REQUEST_CODE:
+                clickAction = BXPOSNotificationCode.MANDATORY_UPDATE_ACTION;
+        }
+        intent.setAction(clickAction);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -114,15 +126,6 @@ public class BxPosFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
-
-    /**
-     * Performs an update on the data on the background
-     */
-    private void mandatoryUpdate() {
-        // Read the data needed - Products. MProduct Category - Table ...
-        ReadServerDataTask initiateData = new ReadServerDataTask(null);
-        initiateData.execute();
     }
 
     private void updateTable(String tableId, Boolean isBusy, String serverName) {
