@@ -91,6 +91,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private EditPagerAdapter mEditPagerAdapter;
 
     private static final String ORDER_STATE = "orderState";
+    private static final String SPLIT_ITEMS = "splitItems";
+    private static final String VOID_ITEMS  = "voidItems";
+    private static final String VOID_QTY    = "voidQty";
     public final static String EXTRA_ORDER   = "de.bxservice.bxpos.ORDER";
     public final static String DRAFT_ORDER   = "de.bxservice.bxpos.DRAFT_ORDER";
     public final static String CALLER_ACTIVITY        = "de.bxservice.bxpos.CALLER";
@@ -127,7 +130,8 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private ActionMode mActionMode;
 
     //Voiding items
-    private List<Integer> positionItemsToVoid = null;
+    private ArrayList<Integer> positionItemsToVoid = null;
+    private int qtyItemsToVoid = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -392,9 +396,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         confirmationPinDialog.setVoidOrder(voidOrder);
         confirmationPinDialog.setReason(reason);
 
-        if(voidOrder)
+        if (voidOrder)
             confirmationPinDialog.setNoItems(Integer.parseInt(order.getOrderNo()));
-        else
+        else if (positionItemsToVoid != null)
             confirmationPinDialog.setNoItems(positionItemsToVoid.size());
 
         confirmationPinDialog.show(getFragmentManager(), "ConfirmationPinDialogFragment");
@@ -603,11 +607,14 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
         savedInstanceState.putBoolean(ORDER_STATE, orderChanged);
+        savedInstanceState.putSerializable(SPLIT_ITEMS, selectedItemsToSplit);
+        savedInstanceState.putSerializable(VOID_ITEMS, positionItemsToVoid);
+        savedInstanceState.putInt(VOID_QTY, qtyItemsToVoid);
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
+
     }
 
     @Override
@@ -617,6 +624,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
 
         // Restore state members from saved instance
         orderChanged = savedInstanceState.getBoolean(ORDER_STATE);
+        selectedItemsToSplit = (ArrayList<POSOrderLine>) savedInstanceState.getSerializable(SPLIT_ITEMS);
+        positionItemsToVoid = (ArrayList<Integer>) savedInstanceState.getSerializable(VOID_ITEMS);
+        qtyItemsToVoid = savedInstanceState.getInt(VOID_QTY);
     }
 
     @Override
