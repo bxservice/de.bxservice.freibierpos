@@ -54,7 +54,7 @@ public class PosTableHelper extends PosObjectHelper {
     /*
     * Creating a table
     */
-    public long createTable (Table table) {
+    public long createTable(Table table) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -84,8 +84,11 @@ public class PosTableHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         PosTableGroupHelper tableGroupHelper = new PosTableGroupHelper(mContext);
 
@@ -154,8 +157,10 @@ public class PosTableHelper extends PosObjectHelper {
                 // adding to orders list
                 tables.add(table);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return tables;
     }
@@ -191,8 +196,10 @@ public class PosTableHelper extends PosObjectHelper {
 
                 tables.add(table);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return tables;
     }
@@ -217,10 +224,10 @@ public class PosTableHelper extends PosObjectHelper {
 
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(table.getTableID()), POSOrder.COMPLETE_STATUS, POSOrder.VOID_STATUS});
 
-        if (c != null)
+        if (c != null) {
             orders = c.getCount();
-
-        c.close();
+            c.close();
+        }
 
         //If there is at least 1 order in the table -> table is occupied
         return orders <= 0;

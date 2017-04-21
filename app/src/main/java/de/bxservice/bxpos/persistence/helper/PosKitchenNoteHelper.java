@@ -63,6 +63,7 @@ public class PosKitchenNoteHelper extends PosObjectHelper {
     */
     public boolean noteExist(String note) {
 
+        boolean exists;
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT " + KitchenNoteContract.KitchenNoteDB.COLUMN_NAME_KITCHEN_NOTE_ID +
@@ -73,12 +74,15 @@ public class PosKitchenNoteHelper extends PosObjectHelper {
 
         Cursor c = db.rawQuery(selectQuery, new String[] {note.toLowerCase()});
 
-        if (c != null && c.getCount() > 0) {
-            c.close();
-            return true;
-        }
+        if (c != null && c.getCount() > 0)
+            exists = true;
         else
-            return false;
+            exists = false;
+
+        if (c != null)
+            c.close();
+
+        return exists;
     }
 
     /**

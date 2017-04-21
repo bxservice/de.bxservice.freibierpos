@@ -84,8 +84,11 @@ public class PosUserHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         PosUser td = new PosUser();
         td.setId(c.getInt(c.getColumnIndex(UserContract.User.COLUMN_NAME_USER_ID)));
@@ -113,8 +116,11 @@ public class PosUserHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         PosUser td = new PosUser();
         td.setId(c.getInt(c.getColumnIndex(UserContract.User.COLUMN_NAME_USER_ID)));
@@ -223,8 +229,11 @@ public class PosUserHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         String userName = c.getString(c.getColumnIndex(UserContract.User.COLUMN_NAME_DISPLAY_NAME));
 

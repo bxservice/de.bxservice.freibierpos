@@ -327,8 +327,10 @@ public class PosOrderHelper extends PosObjectHelper {
 
                 orders.add(reportObject);
             } while (c.moveToNext());
-            c.close();
         }
+
+        if (c != null)
+            c.close();
 
         return orders;
     }

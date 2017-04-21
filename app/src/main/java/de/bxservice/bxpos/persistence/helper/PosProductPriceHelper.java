@@ -49,7 +49,7 @@ public class PosProductPriceHelper extends PosObjectHelper {
     /*
     * Creating a product price
     */
-    public long createProductPrice (ProductPrice productPrice) {
+    public long createProductPrice(ProductPrice productPrice) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -66,7 +66,7 @@ public class PosProductPriceHelper extends PosObjectHelper {
     /*
     * get single product price
     */
-    public ProductPrice getProductPrice (long productPrice_id) {
+    public ProductPrice getProductPrice(long productPrice_id) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_PRICE + " WHERE "
@@ -78,9 +78,11 @@ public class PosProductPriceHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
-
+        }
 
         PosProductHelper productHelper = new PosProductHelper(mContext);
 
@@ -100,7 +102,7 @@ public class PosProductPriceHelper extends PosObjectHelper {
     /*
     * get single product price by product id
     */
-    public ProductPrice getProductPriceByProduct (MProduct product) {
+    public ProductPrice getProductPriceByProduct(MProduct product) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT_PRICE +
@@ -110,8 +112,13 @@ public class PosProductPriceHelper extends PosObjectHelper {
 
         Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(product.getProductID())});
 
-        if (c != null)
+        if (c != null && c.getCount() > 0)
             c.moveToFirst();
+        else {
+            if (c != null)
+                c.close();
+            return null;
+        }
 
         ProductPrice productPrice = new ProductPrice();
         productPrice.setProductPriceID(c.getInt(c.getColumnIndex(ProductPriceContract.ProductPriceDB.COLUMN_NAME_PRODUCT_PRICE_ID)));

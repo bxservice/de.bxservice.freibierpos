@@ -88,8 +88,11 @@ public class PosTenderTypeHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         PosTenderType posTenderType = new PosTenderType();
         posTenderType.setC_POSTenderType_ID(c.getInt(c.getColumnIndex(PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE_ID)));
@@ -112,8 +115,11 @@ public class PosTenderTypeHelper extends PosObjectHelper {
 
         if (c != null && c.getCount() > 0)
             c.moveToFirst();
-        else
+        else {
+            if (c != null)
+                c.close();
             return null;
+        }
 
         PosTenderType posTenderType = new PosTenderType();
         posTenderType.setC_POSTenderType_ID(c.getInt(c.getColumnIndex(PosTenderTypeContract.PosTenderTypeDB.COLUMN_NAME_TENDER_TYPE_ID)));

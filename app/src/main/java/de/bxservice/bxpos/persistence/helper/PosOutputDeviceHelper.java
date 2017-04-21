@@ -64,7 +64,7 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
     /*
     * Updating the default data
     */
-    public int updateData (POSOutputDevice device) {
+    public int updateData(POSOutputDevice device) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -97,6 +97,8 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
             c.moveToFirst();
         else {
             Log.i(LOG_TAG, "No output device found");
+            if (c != null)
+                c.close();
             return null;
         }
 
@@ -131,6 +133,8 @@ public class PosOutputDeviceHelper extends PosObjectHelper {
             c.moveToFirst();
         else {
             Log.i(LOG_TAG, "No output device found for the target: " + target);
+            if (c != null)
+                c.close();
             return null;
         }
 
