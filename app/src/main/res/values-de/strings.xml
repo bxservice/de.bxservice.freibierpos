@@ -251,5 +251,6 @@
     <string name="order_number_prefix">Startbelegnummer</string>
     <string name="wrong_order_number">Es existieren bereits Belege mit dem gleichen Prefix und einer kleineren Belegnummer. Geben Sie eine Nummer höher als %1$d an.</string>
     <string name="unable_join">Keine offenen Belege zum Zusammenfassen.</string>
+    <string name="server_data">Verbindungsdaten</string>
 
 </resources>
