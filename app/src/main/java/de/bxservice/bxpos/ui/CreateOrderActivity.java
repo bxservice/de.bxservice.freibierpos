@@ -160,9 +160,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 NewOrderGridItem selectedItem = mAdapter.getSelectedItem(position);
                 addOrderItem(itemProductHashMap.get(selectedItem));
 
-                mCreateOrderPagerAdapter.updateQty(getSupportFragmentManager(), selectedItem, getProductQtyOrdered(itemProductHashMap.get(selectedItem)));
+                mCreateOrderPagerAdapter.updateQty(selectedItem, getProductQtyOrdered(itemProductHashMap.get(selectedItem)));
                 onBackPressed();
-
             }
         });
 
@@ -589,7 +588,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      * Refresh the quantity ordered on the product items buttons
      */
     private void updateOrderLinesQuantity() {
-        mCreateOrderPagerAdapter.refreshAllQty(getSupportFragmentManager());
+        mCreateOrderPagerAdapter.refreshAllQty();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

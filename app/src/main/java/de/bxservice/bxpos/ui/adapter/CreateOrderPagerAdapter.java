@@ -28,6 +28,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.logic.daomanager.PosProductCategoryManagement;
@@ -41,6 +44,7 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
     private PosProductCategoryManagement dataProvider;
+    private List<Fragment> foodFragments = new ArrayList<>();
 
     public CreateOrderPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -75,46 +79,57 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * Updates the quantity when the item is selected from the search list
-     * @param fm
      * @param selectedItem
      * @param quantity
      */
-    public void updateQty (FragmentManager fm, NewOrderGridItem selectedItem, int quantity) {
+    public void updateQty(NewOrderGridItem selectedItem, int quantity) {
 
-        List<Fragment> allFragments = fm.getFragments();
-        boolean found = false;
+        if (foodFragments != null) {
+            boolean found = false;
 
-        for(Fragment fragment : allFragments) {
+            for (Fragment fragment : foodFragments) {
 
-            if(fragment instanceof  FoodMenuFragment && !found) {
-                FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
+                if (fragment instanceof FoodMenuFragment && !found) {
+                    FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
 
-                for(NewOrderGridItem item : menuFragment.getmGridData()) {
+                    for (NewOrderGridItem item : menuFragment.getmGridData()) {
 
-                    if (item.getKey().equals(selectedItem.getKey())) {
-                        menuFragment.updateQtyOnClick(menuFragment.getmGridData().indexOf(item), quantity);
-                        found = true;
+                        if (item.getKey().equals(selectedItem.getKey())) {
+                            menuFragment.updateQtyOnClick(menuFragment.getmGridData().indexOf(item), quantity);
+                            found = true;
+                        }
                     }
+
                 }
 
             }
-
         }
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+
+        //Save a reference of the existing fragments
+        if (foodFragments != null && !foodFragments.contains(createdFragment))
+            foodFragments.add(createdFragment);
+
+        return createdFragment;
     }
 
     /**
      * Refresh the quantity when some items have been deleted
-     * @param fm
      */
-    public void refreshAllQty (FragmentManager fm) {
+    public void refreshAllQty() {
 
-        List<Fragment> allFragments = fm.getFragments();
+        if (foodFragments != null) {
 
-        for (Fragment fragment : allFragments) {
+            for (Fragment fragment : foodFragments) {
 
-            if (fragment instanceof FoodMenuFragment) {
-                FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
-                menuFragment.refreshAllQty();
+                if (fragment instanceof FoodMenuFragment) {
+                    FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
+                    menuFragment.refreshAllQty();
+                }
             }
         }
     }
