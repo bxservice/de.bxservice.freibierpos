@@ -118,6 +118,15 @@ public class PaymentCompletedDialogFragment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        // handles https://code.google.com/p/android/issues/detail?id=17423
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setDismissMessage(null);
+        }
+        super.onDestroyView();
+    }
+
     public BigDecimal getTotal() {
         return total;
     }
