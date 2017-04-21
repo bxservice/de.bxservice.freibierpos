@@ -77,6 +77,8 @@ public class DiscountDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        setRetainInstance(true);
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -143,7 +145,8 @@ public class DiscountDialogFragment extends DialogFragment {
 
                     BigDecimal n2 = number.multiply(ONE_HUNDRED);
 
-                    discountPercent = n2.divide(subtotal, 2, BigDecimal.ROUND_HALF_UP);  //Number*100/total
+                    if (subtotal.compareTo(BigDecimal.ZERO) != 0)
+                        discountPercent = n2.divide(subtotal, 2, BigDecimal.ROUND_HALF_UP);  //Number*100/total
                 }catch (NumberFormatException e) {
                     discountPercent = BigDecimal.ZERO;
                 }
@@ -214,6 +217,15 @@ public class DiscountDialogFragment extends DialogFragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        // handles https://code.google.com/p/android/issues/detail?id=17423
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setDismissMessage(null);
+        }
+        super.onDestroyView();
     }
 
     public void setSubtotal(BigDecimal subtotal) {
