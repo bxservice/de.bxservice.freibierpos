@@ -44,7 +44,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,13 +53,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -68,7 +65,6 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.fcm.BxPosFirebaseInstanceIDService;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
-import de.bxservice.bxpos.logic.model.pos.PosRoles;
 import de.bxservice.bxpos.logic.tasks.CreateDeviceTokenTask;
 import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.logic.util.SecureEngine;
@@ -93,12 +89,7 @@ public class LoginActivity extends AppCompatActivity  {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private ArrayList<String> roles;
-    private Spinner rolesSpinner;
     private ImageButton settingsButton;
-
-    // Reference to the role code in the properties file
-    private HashMap<String, String> roleCodes;
 
     //Web service request data
     private SharedPreferences sharedPref;
@@ -146,14 +137,6 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
-        getRoleNames();
-
-        rolesSpinner = (Spinner) findViewById(R.id.roles_spinner);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.selected_item, roles);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rolesSpinner.setAdapter(adapter);
-
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
@@ -188,30 +171,6 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     /**
-     * Sets the role name in the corresponding language
-     * set the hashmap for inner references
-     */
-    private void getRoleNames() {
-        roles = new ArrayList<>();
-        roleCodes = new HashMap<>();
-
-        String roleName;
-        try {
-            Class res = R.string.class;
-            for( String role : PosRoles.getRoles() ){
-                Field field = res.getField(role);
-                int drawableId = field.getInt(null);
-                roleName = getString(drawableId);
-                roles.add(roleName);
-                roleCodes.put(roleName, role);
-            }
-        }
-        catch (Exception e) {
-            Log.e(LOG_TAG, "Failure to get drawable id.", e);
-        }
-    }
-
-    /**
      * Attempts to sign in .
      * If there are form errors (invalid username, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
@@ -228,8 +187,6 @@ public class LoginActivity extends AppCompatActivity  {
         // Store values at the time of the login attempt.
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        String roleName = rolesSpinner.getSelectedItem().toString();
-        String role     = roleCodes.get(roleName);
 
         boolean cancel = false;
         View focusView = null;
@@ -262,7 +219,7 @@ public class LoginActivity extends AppCompatActivity  {
                 // perform the user login attempt.
                 showProgress(true);
 
-                mAuthTask = new UserLoginTask(username, password, role);
+                mAuthTask = new UserLoginTask(username, password);
                 mAuthTask.execute((Void) null);
 
             } else {
@@ -401,12 +358,10 @@ public class LoginActivity extends AppCompatActivity  {
 
         private final String mUsername;
         private final String mPassword;
-        private final String mRole;
 
-        UserLoginTask(String email, String password, String role) {
+        UserLoginTask(String email, String password) {
             mUsername = email;
             mPassword = password;
-            mRole     = role;
         }
 
         @Override

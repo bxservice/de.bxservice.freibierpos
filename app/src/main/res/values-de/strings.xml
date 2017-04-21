@@ -6,8 +6,6 @@
     <string name="navigation_drawer_open">Öffnen der Navigationsleiste</string>
     <string name="navigation_drawer_close">Schließen der Navigationsleiste</string>
     <string name="search">Suche</string>
-    <string name="action_settings">Einstellungen</string>
-    <string name="reservation">Reservierung</string>
     <string name="report">Bericht</string>
     <string name="save">speichern</string>
 
@@ -62,8 +60,6 @@
     <string name="title_activity_create_order">Neuer Beleg</string>
     <string name="title_activity_add_items">Artikel hinzufügen</string>
     <string name="title_activity_view_open_orders">Offene Aufträge</string>
-    <string name="title_activity_create_reservation">Reservierung</string>
-    <string name="title_activity_login">Anmelden</string>
 
     <!-- Strings related to orders -->
     <string name="empty_order">Der Beleg ist leer</string>
@@ -78,9 +74,7 @@
 
 
     <!-- Strings related to roles -->
-    <string name="role">Rolle</string>
     <string name="waiter_role"> Kellner</string>
-    <string name="supervisor_role">Vorgesetzter</string>
     <string name="title_activity_admin_settings">Einstellungen</string>
 
     <!-- Strings related to Settings -->
@@ -133,7 +127,6 @@
     <string name="set_extra"> Zuschlag</string>
     <string name="add_discount">Rabatt</string>
     <string name="title_activity_pay_order">Zahlung</string>
-    <string name="close">Schließen</string>
 
     <string name="reason">Grund</string>
     <string name="change">Wechselgeld</string>
@@ -161,13 +154,9 @@
     <string name="synchronize">Aufträge synchronisieren</string>
     <string name="no_unsync_orders">Super! Alle Aufträge sind im iDempiere</string>
     <string name="comm_category">Kommunikation</string>
-    <string name="share">Aktie</string>
 
     <string name="void_item">Storno</string>
     <string name="already_voided_item">Diese Zeile ist bereits storniert</string>
-    <string name="pref_header_data_security">Sicherheit</string>
-    <string name="pref_summary_void_approval">Request a PIN when an item is voided</string>
-    <string name="pref_title_void_approval">Block void items</string>
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">Es muss ein Grund angegeben werden</string>
     <string name="approve_void">Bestätigung für Storno</string>
@@ -180,7 +169,6 @@
     <string name="no_report_selected">Suchen Sie eine Berichtsart aus.</string>
     <string name="no_records">Es wurden keine Daten gefunden</string>
     <string name="net_sales">Gesamtumsatz</string>
-    <string name="voided_items">Stornierte Artikel</string>
     <string name="sales">Verkauf</string>
     <string name="pref_header_restaurant">Restaurant</string>
     <string name="order_prefix">Auftragsprefix</string>
@@ -188,7 +176,6 @@
     <string name="complimentary">gratis</string>
     <string name="give_complimentary_product">Sind Sie sicher, dass Sie das gratis geben wollen?</string>
     <string name="give">gratis</string>
-    <string name="type">Typ</string>
     <string name="receipt">Bon</string>
     <string name="cash">Bargeld</string>
     <string name="logout">ausloggen</string>
@@ -233,7 +220,6 @@
     <string name="no_allow_complimentary">Der Artikel %1$s darf nicht gratis gegeben werden.</string>
     <string name="complete_order">Zahlung abschliessen?</string>
     <string name="no_undone_operation">Diese Aktion kann nicht rückgängig gemacht werden.</string>
-    <string name="complete">Abschliessen</string>
 
     <!-- About activity strings -->
     <string name="about">Über</string>

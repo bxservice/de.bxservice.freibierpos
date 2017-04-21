@@ -6,8 +6,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="search">Search</string>
-    <string name="action_settings">Settings</string>
-    <string name="reservation">Reservation</string>
     <string name="report">Report</string>
     <string name="save">Save</string>
 
@@ -62,8 +60,6 @@
     <string name="title_activity_create_order">New order</string>
     <string name="title_activity_add_items">Add items</string>
     <string name="title_activity_view_open_orders">Open orders</string>
-    <string name="title_activity_create_reservation">Reservation</string>
-    <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to orders -->
     <string name="empty_order">The order is empty</string>
@@ -77,9 +73,7 @@
     <string name="quantity_summary">Quantity: %1$d</string>
 
     <!-- Strings related to roles -->
-    <string name="role">Role</string>
     <string name="waiter_role">Server</string>
-    <string name="supervisor_role">Supervisor</string>
     <string name="title_activity_admin_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -141,7 +135,6 @@
     <string name="paid_value">Paid: %1$s</string>
     <string name="percentage_sign">%</string>
     <string name="currency_symbol">€</string>
-    <string name="close">Close</string>
 
     <string name="order">Order</string>
     <string name="unset_table">To go/Bar</string>
@@ -158,13 +151,9 @@
     <string name="synchronize">Synchronize orders</string>
     <string name="no_unsync_orders">Great! All the orders are in iDempiere</string>
     <string name="comm_category">Communication</string>
-    <string name="share">Share</string>
 
     <string name="void_item">Void</string>
     <string name="already_voided_item">You can\'t void a voided line</string>
-    <string name="pref_header_data_security">Security</string>
-    <string name="pref_summary_void_approval">Request a PIN when an item is voided</string>
-    <string name="pref_title_void_approval">Block void items</string>
     <string name="pref_title_pin_code">PIN</string>
     <string name="error_invalid_reason">A reason must be introduced</string>
     <string name="approve_void">Void approval</string>
@@ -177,7 +166,6 @@
     <string name="no_report_selected">You must select at least one report type</string>
     <string name="no_records">No records</string>
     <string name="net_sales">Net sales</string>
-    <string name="voided_items">Voided items</string>
     <string name="sales">Sales</string>
     <string name="pref_header_restaurant">Restaurant</string>
     <string name="order_prefix">Order prefix</string>
@@ -185,7 +173,6 @@
     <string name="complimentary">Complimentary</string>
     <string name="give_complimentary_product">Are you sure you want to give this item for free?</string>
     <string name="give">Give</string>
-    <string name="type">Type</string>
     <string name="receipt">Receipt</string>
     <string name="cash">Cash</string>
     <string name="logout">Logout</string>
@@ -207,7 +194,6 @@
     <string name="no_allow_complimentary">The item %1$s cannot be free</string>
     <string name="complete_order">Pay order?</string>
     <string name="no_undone_operation">This operation cannot be undone</string>
-    <string name="complete">Complete</string>
 
     <!-- About activity strings -->
     <string name="about">About</string>
