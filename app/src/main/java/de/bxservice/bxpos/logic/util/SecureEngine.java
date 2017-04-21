@@ -191,8 +191,7 @@ public class SecureEngine {
             Cipher cipher = Cipher.getInstance("DES");
             cipher.init(Cipher.ENCRYPT_MODE, key);
 
-            String encryptedValue = Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
-            return encryptedValue;
+            return Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,8 +213,7 @@ public class SecureEngine {
             cipher.init(Cipher.DECRYPT_MODE, key);
             byte[] decryptedValueBytes = (cipher.doFinal(encryptedPwdBytes));
 
-            String decryptedValue = new String(decryptedValueBytes);
-            return decryptedValue;
+            return new String(decryptedValueBytes);
 
         } catch (Exception e) {
             e.printStackTrace();
