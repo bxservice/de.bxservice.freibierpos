@@ -163,6 +163,8 @@ public class FoodMenuFragment extends Fragment {
     }
 
     public void updateQtyOnClick(int position, int quantity) {
+        if (mGridData == null || mGridAdapter == null)
+            return;
         mGridData.get(position).setQty("x"+Integer.toString(quantity));
         mGridAdapter.setGridData(mGridData);
     }
@@ -171,6 +173,9 @@ public class FoodMenuFragment extends Fragment {
      * Refresh the quantity in the orderItems
      */
     public void refreshAllQty() {
+        if (mGridData == null || mGridAdapter == null)
+            return;
+
         for (int i = 0; i < mGridData.size(); i++) {
             MProduct product = itemProductHashMap.get(mGridData.get(i));
             int productQty = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
