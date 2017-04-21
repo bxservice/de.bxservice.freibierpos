@@ -78,6 +78,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         PaymentCompletedDialogFragment.PaymentCompletedListener, View.OnLongClickListener {
 
     private static final String LOG_TAG = "Pay Order Activity";
+    public final static String COMPLETED_ORDER = "de.bxservice.bxpos.completeOrder";
 
     private POSOrder order;
 
@@ -194,9 +195,8 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
     private void getExtras() {
         Intent intent = getIntent();
 
-        if(intent != null) {
-
-            order = (POSOrder)intent.getSerializableExtra("completedOrder");
+        if (intent != null) {
+            order = (POSOrder)intent.getSerializableExtra(COMPLETED_ORDER);
         }
     }
 

@@ -58,6 +58,8 @@ import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 
 public class ReportResultActivity extends AppCompatActivity {
 
+    public final static String REPORT_RESULTS = "de.bxservice.bxpos.REPORT_RESULTS";
+
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -216,7 +218,7 @@ public class ReportResultActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if(intent != null) {
-            reportResults = (ArrayList<String>) intent.getSerializableExtra("results");
+            reportResults = (ArrayList<String>) intent.getSerializableExtra(REPORT_RESULTS);
         }
     }
 
