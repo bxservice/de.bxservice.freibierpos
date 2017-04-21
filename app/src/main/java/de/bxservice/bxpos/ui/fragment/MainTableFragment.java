@@ -127,10 +127,17 @@ public class MainTableFragment extends Fragment {
     }
 
     public void refreshAllTables() {
+
+        if (mGridAdapter == null)
+            return;
+
         int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
         List<TableGroup> tableGroupList = TableGroup.getAllTableGroups(getActivity().getBaseContext());
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
+
+        if (mGridData == null)
+            mGridData = tableGroup.getTables();
 
         List<Table> updatedTables = tableGroup.getTables();
         for (int i = 0; i < mGridData.size(); i++) {
