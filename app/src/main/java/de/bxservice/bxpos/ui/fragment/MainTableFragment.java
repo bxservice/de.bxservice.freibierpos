@@ -119,6 +119,9 @@ public class MainTableFragment extends Fragment {
     }
 
     public void updateTableStatus(int position, Table table) {
+        if (mGridAdapter == null || mGridData == null || table == null)
+            return;
+
         mGridData.get(position).setStatus(table.getStatus());
         mGridData.get(position).setServerName(table.getServerName());
         mGridData.get(position).setStatusChangeTime(table.getStatusChangeTime());
