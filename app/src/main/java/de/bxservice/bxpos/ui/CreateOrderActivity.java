@@ -85,6 +85,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     private CreateOrderPagerAdapter mCreateOrderPagerAdapter;
     static final int PICK_CONFIRMATION_REQUEST = 1;  // The request code
+    private static final String ORDER          = "createdOrder";
     public final static String CALLER_ACTIVITY = "CreateOrderActivity.CALLER";
 
     private PagerSlidingTabStrip tabs;
@@ -122,6 +123,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         //Get Table # and # of guests
         getExtras();
+
+        if (savedInstanceState != null) {
+            posOrder = (POSOrder) savedInstanceState.getSerializable(ORDER);
+        }
 
         if("EditOrderActivity".equals(caller))
             setTitle(R.string.title_activity_add_items);
@@ -181,6 +186,10 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                     openConfirmationActivity();
             }
         });
+
+        if (posOrder != null) {
+            remarkNote = posOrder.getOrderRemark();
+        }
 
     }
 
@@ -608,5 +617,14 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         }
         super.finish();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable(ORDER, posOrder);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 
 }
