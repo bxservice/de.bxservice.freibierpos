@@ -62,7 +62,7 @@
     <string name="title_activity_view_open_orders">Órdenes abiertas</string>
 
     <!-- Strings related to orders -->
-    <string name="empty_order">La orden esta vacia</string>
+    <string name="empty_order">La orden está vacía</string>
     <string name="ordering">ORDENAR</string>
     <string name="ordered">ORDENADO</string>
     <string name="quantity">Cantidad</string>
