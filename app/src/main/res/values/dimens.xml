@@ -10,4 +10,7 @@
 
     <!-- Navigation drawer width. -->
     <dimen name="width">304dp</dimen>
+
+    <!-- Default fab size plus fab margin, per the Android Design guidelines. -->
+    <dimen name="margin_over_fab">78dp</dimen>
 </resources>
