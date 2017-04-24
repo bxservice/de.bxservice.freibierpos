@@ -97,8 +97,10 @@ public class DataReader {
             @Override
             public void run() {
                 OutputDeviceWebServiceAdapter deviceWS = new OutputDeviceWebServiceAdapter(wsData);
-                outputDeviceList = deviceWS.getOutputDeviceList();
-                persistDeviceList();
+                if (deviceWS.isSuccess()) {
+                    outputDeviceList = deviceWS.getOutputDeviceList();
+                    persistDeviceList();
+                }
             }
         });
 
@@ -123,15 +125,23 @@ public class DataReader {
                 ProductCategoryWebServiceAdapter productCategoryWS = new ProductCategoryWebServiceAdapter(wsData);
                 productCategoryList = productCategoryWS.getProductCategoryList();
 
-                ProductWebServiceAdapter productWS = new ProductWebServiceAdapter(wsData);
-                productList = productWS.getProductList();
+                if (productCategoryWS.isSuccess()) {
 
-                ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter(wsData);
-                productPriceList = productPriceWS.getProductPriceList();
+                    ProductWebServiceAdapter productWS = new ProductWebServiceAdapter(wsData);
+                    productList = productWS.getProductList();
 
-                setProductRelations();
-                if (!error)
-                    persistProductAttributes();
+                    if (productWS.isSuccess()) {
+
+                        ProductPriceWebServiceAdapter productPriceWS = new ProductPriceWebServiceAdapter(wsData);
+                        productPriceList = productPriceWS.getProductPriceList();
+
+                        if (productPriceWS.isSuccess()) {
+                            setProductRelations();
+                            if (!error)
+                                persistProductAttributes();
+                        }
+                    }
+                }
             }
         });
 
@@ -141,8 +151,10 @@ public class DataReader {
             @Override
             public void run() {
                 TableWebServiceAdapter tableWS = new TableWebServiceAdapter(wsData);
-                tableGroupList = tableWS.getTableGroupList();
-                persistTables();
+                if (tableWS.isSuccess()) {
+                    tableGroupList = tableWS.getTableGroupList();
+                    persistTables();
+                }
             }
         });
 
@@ -152,8 +164,10 @@ public class DataReader {
             @Override
             public void run() {
                 DefaultPosDataWebServiceAdapter dataWS = new DefaultPosDataWebServiceAdapter(wsData);
-                defaultData = dataWS.getDefaultPosData();
-                persistPosData();
+                if (dataWS.isSuccess()) {
+                    defaultData = dataWS.getDefaultPosData();
+                    persistPosData();
+                }
             }
         });
 
@@ -162,9 +176,11 @@ public class DataReader {
         Thread orgInfoThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                OrgInfoWebServiceAdapter dataWS = new OrgInfoWebServiceAdapter(wsData);
-                restaurantInfo = dataWS.getRestaurantInfo();
-                persistOrgInfo();
+                OrgInfoWebServiceAdapter orgInfoWS = new OrgInfoWebServiceAdapter(wsData);
+                if (orgInfoWS.isSuccess()) {
+                    restaurantInfo = orgInfoWS.getRestaurantInfo();
+                    persistOrgInfo();
+                }
             }
         });
 
@@ -174,8 +190,10 @@ public class DataReader {
             @Override
             public void run() {
                 PosTenderTypeWebServiceAdapter tenderTypeWS = new PosTenderTypeWebServiceAdapter(wsData);
-                tenderTypeList = tenderTypeWS.getTenderTypeList();
-                persistTenderTypes();
+                if (tenderTypeWS.isSuccess()) {
+                    tenderTypeList = tenderTypeWS.getTenderTypeList();
+                    persistTenderTypes();
+                }
             }
         });
 
