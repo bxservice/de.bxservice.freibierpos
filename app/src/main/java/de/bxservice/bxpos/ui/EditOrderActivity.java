@@ -70,6 +70,7 @@ import de.bxservice.bxpos.ui.dialog.KitchenNoteDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SplitOrderDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
+import de.bxservice.bxpos.ui.dialog.VoidQuantityDialogFragment;
 import de.bxservice.bxpos.ui.dialog.VoidReasonDialogFragment;
 import de.bxservice.bxpos.ui.fragment.OrderedItemsFragment;
 import de.bxservice.bxpos.ui.fragment.OrderingItemsFragment;
@@ -78,7 +79,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         RemarkDialogFragment.RemarkDialogListener, KitchenNoteDialogFragment.KitchenDialogListener,
         SwitchTableDialogFragment.SwitchTableDialogListener, SelectOrderDialogFragment.SelectOrderDialogListener,
         SplitOrderDialogFragment.SplitOrderDialogListener, VoidReasonDialogFragment.VoidReasonDialogListener,
-        ConfirmationPinDialogFragment.ConfirmationPinDialogListener {
+        ConfirmationPinDialogFragment.ConfirmationPinDialogListener, VoidQuantityDialogFragment.VoidQuantityDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -387,10 +388,27 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         }
     }
 
-    private void showVoidReasonDialog() {
+    private void showVoidQtyDialog() {
+        int maxQtyVoid = 0;
+
+        if (positionItemsToVoid != null)
+            maxQtyVoid = order.getOrderedLines().get(positionItemsToVoid.get(0)).getQtyOrdered();
+
+        if (maxQtyVoid > 1) {
+            VoidQuantityDialogFragment voidQuantityDialog = new VoidQuantityDialogFragment();
+            if (positionItemsToVoid != null)
+                voidQuantityDialog.setMaxQty(maxQtyVoid);
+            voidQuantityDialog.show(getFragmentManager(), "VoidQuantityDialogFragment");
+        } else {
+            showVoidReasonDialog(maxQtyVoid);
+        }
+
+    }
+
+    private void showVoidReasonDialog(int noItems) {
         VoidReasonDialogFragment voidReasonDialog = new VoidReasonDialogFragment();
         voidReasonDialog.setVoidOrder(false);
-        voidReasonDialog.setNoItems(positionItemsToVoid.size());
+        voidReasonDialog.setNoItems(noItems);
         voidReasonDialog.show(getFragmentManager(), "VoidReasonDialogFragment");
     }
 
@@ -577,6 +595,13 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                     voidSelectedItems(dialog.getReason());
             }
         }
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onDialogPositiveClick(VoidQuantityDialogFragment dialog) {
+        qtyItemsToVoid = dialog.getQty();
+        showVoidReasonDialog(qtyItemsToVoid);
         dialog.dismiss();
     }
 
@@ -1002,6 +1027,9 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
                 return false;
             }
 
+            if (!DefaultPosData.get(getBaseContext()).isSeparateOrderItems() && positionItemsToVoid.size() > 1)
+                return false;
+
             for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
                 if(!order.getOrderedLines().get(positionItemsToVoid.get(i)).isVoidable()) {
                     positionItemsToVoid = null;
@@ -1024,14 +1052,17 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     private void voidSelectedItems(String reason) {
         if(positionItemsToVoid != null) {
 
-            for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
-                order.voidLine(positionItemsToVoid.get(i), reason, getBaseContext());
+            if (qtyItemsToVoid > 0 && positionItemsToVoid.size() == 1) {
+                order.voidLine(positionItemsToVoid.get(0), reason, qtyItemsToVoid, getBaseContext());
+            } else {
+                for (int i = positionItemsToVoid.size() - 1; i >= 0; i--) {
+                    order.voidLine(positionItemsToVoid.get(i), reason, getBaseContext());
+                }
             }
 
             this.recreate(); //TODO: Improve fragment recreation
         }
-        //itemsFragment.refresh(order);
-        //updateSummary(EditPagerAdapter.ORDERED_POSITION);
+        qtyItemsToVoid = 0;
     }
 
     private List<Integer> getSelectedItems() {
@@ -1176,8 +1207,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.ctx_item_void:
-                    if(isValidVoidAttempt())
-                        showVoidReasonDialog();
+                    if (isValidVoidAttempt()) {
+                        if (DefaultPosData.get(getBaseContext()).isSeparateOrderItems())
+                            showVoidReasonDialog(positionItemsToVoid.size());
+                        else
+                            showVoidQtyDialog();
+                    }
                     else
                         Toast.makeText(getBaseContext(), getString(R.string.already_voided_item),
                                 Toast.LENGTH_LONG).show();

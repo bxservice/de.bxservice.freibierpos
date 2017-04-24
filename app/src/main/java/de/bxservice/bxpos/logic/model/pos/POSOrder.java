@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.bxservice.bxpos.logic.daomanager.PosOrderManagement;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.IOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.StandardTaxProvider;
@@ -62,14 +63,9 @@ public class POSOrder implements Serializable {
     /**
      * Boolean that defines if the lines are shown as individual always
      * or as sum up lines. e.g. 2 Apples - instead of w lines with 1 apple
-     *
-     * By default it will always be single line, but this is left here for
-     * future customization if wanted
      */
     private boolean isAlwaysOneLine = true;
 
-    //Checks if the product was ordered before
-    private HashMap<MProduct, POSOrderLine> orderlineProductHashMap = new HashMap<>();
     //Checks how many times a product has been ordered
     private HashMap<Integer, Integer> orderlineProductQtyHashMap = new HashMap<>();
 
@@ -94,37 +90,43 @@ public class POSOrder implements Serializable {
     private BigDecimal changeAmt  = BigDecimal.ZERO;
     private boolean sync = false;
 
+    public POSOrder() {
+        //Define if the items will be shown in single lines or summarized
+        isAlwaysOneLine = DefaultPosData.get(null).isSeparateOrderItems();
+    }
+
     public void addItem(MProduct product, Context ctx) {
 
         boolean newItem = true;
+        POSOrderLine orderLine = null;
 
         if (!isAlwaysOneLine) {
 
             //Check if the product was ordered before
-            if (!orderlineProductHashMap.isEmpty()) {
+            if (!orderingLines.isEmpty()) {
 
-                POSOrderLine orderLine = orderlineProductHashMap.get(product);
+                orderLine = getOrderingLine(product);
                 if(orderLine != null){
-                    orderLine.setQtyOrdered(orderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
                     newItem = false;
-                    orderLine.createLine(ctx);
+                    orderLine.setQtyOrdered(orderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
+                    orderLine.updateLine(ctx);
                 }
             }
         }
 
-        if(newItem) {
+        if (newItem) {
 
-            POSOrderLine posOrderLine = new POSOrderLine();
-            posOrderLine.setOrder(this);
-            posOrderLine.setProduct(product);
-            posOrderLine.setQtyOrdered(1); //If new item - is the first item that is added
-            posOrderLine.setLineStatus(POSOrderLine.ORDERING);
-            posOrderLine.setLineNo(currentLineNo);
+            orderLine = new POSOrderLine();
+            orderLine.setOrder(this);
+            orderLine.setProduct(product);
+            orderLine.setQtyOrdered(1); //If new item - is the first item that is added
+            orderLine.setLineStatus(POSOrderLine.ORDERING);
+            orderLine.setLineNo(currentLineNo);
 
-            orderingLines.add(posOrderLine);
-            posOrderLine.createLine(ctx);
+            orderingLines.add(orderLine);
+            orderLine.createLine(ctx);
 
-            if(isAlwaysOneLine) {
+            if (isAlwaysOneLine) {
 
                 //If the list is empty - is the first time the product is ordered
                 if (orderlineProductQtyHashMap.isEmpty() || orderlineProductQtyHashMap.get(product.getProductID()) == null) {
@@ -132,9 +134,6 @@ public class POSOrder implements Serializable {
                 } else {
                      orderlineProductQtyHashMap.put(product.getProductID(), orderlineProductQtyHashMap.get(product.getProductID()) + 1);
                 }
-
-            }else {
-                orderlineProductHashMap.put(product, posOrderLine);
             }
 
             currentLineNo += 10; //Sets the lineNo 10 by 10 like in iDempiere
@@ -153,12 +152,17 @@ public class POSOrder implements Serializable {
 
     /**
      * Removes an item from the list
-     * @param position
+     * @param position of the item in the list
      */
-    public void removeItem (int position) {
+    public void removeItem(int position) {
 
         POSOrderLine orderLine = orderingLines.get(position);
-        MProduct product = orderLine.getProduct();
+        removeItemFromHashMap(orderLine.getProduct());
+        orderingLines.remove(position);
+        orderLine.remove(null);
+    }
+
+    private void removeItemFromHashMap(MProduct product ) {
 
         if (isAlwaysOneLine && orderlineProductQtyHashMap.get(product.getProductID()) != null) {
             //If there was one product - remove it
@@ -167,13 +171,7 @@ public class POSOrder implements Serializable {
             } else {
                 orderlineProductQtyHashMap.put(product.getProductID(), orderlineProductQtyHashMap.get(product.getProductID()) - 1);
             }
-
-        } else {
-            orderlineProductHashMap.remove(product);
         }
-
-        orderingLines.remove(position);
-        orderLine.remove(null);
     }
 
     /**
@@ -181,29 +179,25 @@ public class POSOrder implements Serializable {
      * @param position
      * @param orderLine
      */
-    public void addItem (int position, POSOrderLine orderLine) {
+    public void addItem(int position, POSOrderLine orderLine) {
 
         //Copy the orderLine
-        if(orderingLines.contains(orderLine)) {
+        if (orderingLines.contains(orderLine)) {
             addItem(orderLine.getProduct(), null);
             return;
         }
 
-        MProduct product = orderLine.getProduct();
-
         orderingLines.add(position, orderLine);
 
         if (isAlwaysOneLine) {
+            MProduct product = orderLine.getProduct();
             //If the list is empty - is the first time the product is ordered
             if (orderlineProductQtyHashMap.isEmpty() || orderlineProductQtyHashMap.get(product.getProductID()) == null) {
                 orderlineProductQtyHashMap.put(product.getProductID(), 1);
             } else {
                 orderlineProductQtyHashMap.put(product.getProductID(), orderlineProductQtyHashMap.get(product.getProductID()) + 1);
             }
-        } else {
-            orderlineProductHashMap.put(product, orderLine);
         }
-
     }
 
     public int getProductQtyOrdered(MProduct product) {
@@ -211,9 +205,11 @@ public class POSOrder implements Serializable {
         if (isAlwaysOneLine && orderlineProductQtyHashMap.get(product.getProductID()) != null) {
             return orderlineProductQtyHashMap.get(product.getProductID());
 
+        } else {
+            POSOrderLine orderingLine = getOrderingLine(product);
+            if (orderingLine != null)
+                return orderingLine.getQtyOrdered();
         }
-        else if (orderlineProductHashMap.get(product) != null)
-            return orderlineProductHashMap.get(product).getQtyOrdered();
 
         return 0;
     }
@@ -599,11 +595,30 @@ public class POSOrder implements Serializable {
 
     private void completeOrder(Context ctx) {
         status = SENT_STATUS;
-        for (POSOrderLine orderLine : orderingLines) {
-            orderLine.completeLine();
-            orderLine.updateLine(ctx);
-            orderedLines.add(orderLine);
+
+        if (isAlwaysOneLine || orderedLines.isEmpty()) {
+            for (POSOrderLine orderLine : orderingLines) {
+                orderLine.completeLine();
+                orderLine.updateLine(ctx);
+                orderedLines.add(orderLine);
+            }
+        } else {
+            POSOrderLine previousOrderedLine;
+            for (POSOrderLine orderLine : orderingLines) {
+                previousOrderedLine = getOrderedLine(orderLine.getProduct());
+
+                if (previousOrderedLine != null) {
+                    previousOrderedLine.setQtyOrdered(previousOrderedLine.getQtyOrdered() + orderLine.getQtyOrdered());
+                    orderLine.remove(ctx);
+                    previousOrderedLine.updateLine(ctx);
+                } else {
+                    orderLine.completeLine();
+                    orderLine.updateLine(ctx);
+                    orderedLines.add(orderLine);
+                }
+            }
         }
+
         orderingLines.clear();
     }
 
@@ -761,6 +776,26 @@ public class POSOrder implements Serializable {
 
     }	//	calculateTaxTotal
 
+    private POSOrderLine getOrderingLine(MProduct product) {
+        for (POSOrderLine line : orderingLines) {
+            if (line.getProduct().getProductID() == product.getProductID())
+                return line;
+        }
+
+        return null;
+    }
+
+    private POSOrderLine getOrderedLine(MProduct product) {
+        for (POSOrderLine line : orderedLines) {
+            if (line.getProduct().getProductID() == product.getProductID()
+                    && !line.getLineStatus().equals(POSOrderLine.VOIDED)
+                    && line.getQtyOrdered() > 0)
+                return line;
+        }
+
+        return null;
+    }
+
     /**
      * Get the tax amount grouped by tax rate
      * @return Map with the pairs rate - tax amount
@@ -804,36 +839,80 @@ public class POSOrder implements Serializable {
             return orderManager.getPaidOrders(fromDate, toDate);
     }
 
+    public boolean voidLine(int position, String reason, Context ctx) {
+        return voidLine(orderedLines.get(position) /*Original line to be voided*/, reason, 1, ctx, false);
+    }
+
+    public boolean voidLine(int position, String reason, int qtyItemsToVoid, Context ctx) {
+        return voidLine(orderedLines.get(position) /*Original line to be voided*/, reason, qtyItemsToVoid, ctx, false);
+    }
+
     /**
      * Void line by creating a copy of the original line
      * but with negative qty
      */
-    public boolean voidLine(int position, String reason, Context ctx) {
+    private boolean voidLine(POSOrderLine voidedLine, String reason, int qtyItemsToVoid, Context ctx, boolean forceVoid) {
 
-        POSOrderLine voidedLine = orderedLines.get(position); //Original line to be voided
-
-        //If the selected line is voided or is a voiding error
-        if(!voidedLine.isVoidable())
+        if (voidedLine == null)
             return false;
 
-        POSOrderLine voidLine = new POSOrderLine(); //Line that voids with -quantity
+        //If the selected line is voided or is a voiding error
+        if (!voidedLine.isVoidable() && !forceVoid)
+            return false;
 
-        //Copy all the values from the original line
-        voidLine.setProductRemark(voidedLine.getProductRemark());
-        voidLine.setProduct(voidedLine.getProduct());
-        voidLine.setOrder(voidedLine.getOrder());
-        voidLine.setQtyOrdered(-1 * voidedLine.getQtyOrdered()); //Same quantity opposite sign
-        voidLine.setLineNo(voidedLine.getLineNo() + 5); //Normal lines raise from 10 to 10
-        voidLine.completeLine();
+        if (isAlwaysOneLine || qtyItemsToVoid == voidedLine.getQtyOrdered()) {
 
-        voidedLine.voidLine(reason);
-        voidedLine.updateLine(null);
+            POSOrderLine voidLine = cloneLine(voidedLine, -1 * voidedLine.getQtyOrdered()); //Line that voids with -quantity
+            voidLine.setLineNo(voidedLine.getLineNo() + 5); //Normal lines raise from 10 to 10
+            voidLine.completeLine();
 
-        orderedLines.add(position + 1, voidLine);
-        voidLine.createLine(ctx);
+            voidedLine.voidLine(reason);
+            voidedLine.updateLine(ctx);
+
+            orderedLines.add(orderedLines.indexOf(voidedLine) + 1, voidLine);
+            voidLine.createLine(ctx);
+
+        } else {
+
+            if (qtyItemsToVoid < 1)
+                return false;
+
+            POSOrderLine newVoidedLine = cloneLine(voidedLine, qtyItemsToVoid); //Copy of the original with the voided qty
+            POSOrderLine voidLine = cloneLine(voidedLine, -1 * qtyItemsToVoid); //Line that voids with -quantity
+
+            //Update the qty in the original line and leave it with complete status
+            voidedLine.setQtyOrdered(voidedLine.getQtyOrdered() - qtyItemsToVoid);
+            voidedLine.updateLine(ctx);
+
+            //Create a new voided line with void status
+            newVoidedLine.setLineNo(voidedLine.getLineNo() + 1); //Normal lines raise from 10 to 10
+            newVoidedLine.voidLine(reason);
+            newVoidedLine.createLine(ctx);
+
+            //Copy all the values from the voided line and create the negative line
+            voidLine.setLineNo(voidedLine.getLineNo() + 1); //Normal lines raise from 10 to 10
+            voidLine.completeLine();
+            voidLine.createLine(ctx);
+
+            orderedLines.add(orderedLines.indexOf(voidedLine) + 1, newVoidedLine);
+            orderedLines.add(orderedLines.indexOf(newVoidedLine) + 1, voidLine);
+
+        }
 
         return true;
-    }
+    } //voidLine
+
+    private POSOrderLine cloneLine(POSOrderLine originalLine, int qty) {
+        POSOrderLine clonedLine = new POSOrderLine();
+
+        //Copy all the values from the original line
+        clonedLine.setProductRemark(originalLine.getProductRemark());
+        clonedLine.setProduct(originalLine.getProduct());
+        clonedLine.setOrder(originalLine.getOrder());
+        clonedLine.setQtyOrdered(qty);
+
+        return clonedLine;
+    } //cloneLine
 
     public boolean voidOrder(Context ctx, String reason) {
         status = VOID_STATUS;

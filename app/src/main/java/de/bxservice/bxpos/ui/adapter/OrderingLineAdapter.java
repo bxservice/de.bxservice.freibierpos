@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.POSOrderLine;
 
 /**
@@ -228,7 +229,10 @@ public class OrderingLineAdapter extends RecyclerView.Adapter<OrderingLineAdapte
      */
     private void copyData(int position) {
         POSOrderLine orderLine = mDataset.get(position);
-        mDataset.add(orderLine);
+
+        if (DefaultPosData.get(null).isSeparateOrderItems())
+            mDataset.add(orderLine);
+
         notifyItemInserted(position);
         if(mOnDataChangeListener != null){
             mOnDataChangeListener.onItemAdded(position, orderLine);

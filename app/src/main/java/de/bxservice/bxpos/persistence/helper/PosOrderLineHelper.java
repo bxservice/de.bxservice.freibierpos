@@ -61,6 +61,7 @@ public class PosOrderLineHelper extends PosObjectHelper {
         ContentValues values = new ContentValues();
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_AT, Long.parseLong(getCurrentDate()));
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_CREATED_BY, userId);
+        values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_UPDATED_AT, Long.parseLong(getCurrentDate()));
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDER_ID, orderLine.getOrder().getOrderId());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_ORDERLINE_STATUS, orderLine.getLineStatus());
         values.put(PosOrderLineContract.POSOrderLineDB.COLUMN_NAME_PRODUCT_ID, orderLine.getProduct().getProductID());
