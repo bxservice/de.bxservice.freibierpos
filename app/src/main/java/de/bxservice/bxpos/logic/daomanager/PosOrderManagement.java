@@ -54,6 +54,10 @@ public class PosOrderManagement extends AbstractObjectManagement {
         return dataMapper.getOpenOrders();
     }
 
+    public List<POSOrder> getClosedOrders() {
+        return dataMapper.getClosedOrders();
+    }
+
     public List<POSOrder> getUnsynchronizedOrders() {
         return dataMapper.getUnsynchronizedOrders();
     }
@@ -84,5 +88,9 @@ public class PosOrderManagement extends AbstractObjectManagement {
 
     public int getMaxDocumentNo(String orderPrefix) {
         return dataMapper.getMaxDocumentNo(orderPrefix);
+    }
+
+    public long getOrderDate(POSOrder order) {
+        return dataMapper.getOrderDate(order);
     }
 }

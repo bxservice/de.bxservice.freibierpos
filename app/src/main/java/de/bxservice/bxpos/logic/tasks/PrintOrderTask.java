@@ -39,9 +39,11 @@ import de.bxservice.bxpos.logic.print.POSPrinter;
 import de.bxservice.bxpos.logic.print.POSPrinterFactory;
 import de.bxservice.bxpos.logic.print.POSPrinterService;
 import de.bxservice.bxpos.logic.print.POSPrinterServiceFactory;
+import de.bxservice.bxpos.ui.ClosedOrderDetailActivity;
+import de.bxservice.bxpos.ui.ClosedOrdersActivity;
 import de.bxservice.bxpos.ui.EditOrderActivity;
-import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
 import de.bxservice.bxpos.ui.PayOrderActivity;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * Created by Diego Ruiz on 20/04/16.
@@ -78,12 +80,12 @@ public class PrintOrderTask extends AsyncTask<POSOrder, Void, Boolean> {
                             order.getTable() != null ? order.getTable().getTableName() : mActivity.getResources().getString(R.string.unset_table),
                             mActivity.getResources().getString(R.string.waiter_role),
                             mActivity.getResources().getString(R.string.guests)));
-                } else if(mActivity instanceof PayOrderActivity) {
+                } else if(mActivity instanceof PayOrderActivity || mActivity instanceof ClosedOrdersActivity || mActivity instanceof ClosedOrderDetailActivity) {
 
                     RestaurantInfo restaurantInfo = RestaurantInfo.getDefaultRestaurantInfo(mActivity.getBaseContext()); //Get org info to print in the receipt
 
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mActivity.getBaseContext());
-                    String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, "");
+                    String orderPrefix = sharedPref.getString(PreferenceActivityHelper.KEY_ORDER_PREFIX, "");
 
                     bt.sendData(printer.printReceipt(restaurantInfo.getName(),
                             restaurantInfo.getAddress1(),

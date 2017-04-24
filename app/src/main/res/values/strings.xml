@@ -60,6 +60,8 @@
     <string name="title_activity_create_order">New order</string>
     <string name="title_activity_add_items">Add items</string>
     <string name="title_activity_view_open_orders">Open orders</string>
+    <string name="title_activity_closed_orders">Closed orders</string>
+    <string name="title_activity_review_closed_order">Review order</string>
 
     <!-- Strings related to orders -->
     <string name="empty_order">The order is empty</string>
@@ -217,6 +219,10 @@
     <string name="pref_change_error">There are orders waiting to be synchronized. Please synchronize them before changing this setting</string>
     <string name="void_qty">How many items do you want to void?</string>
     <string name="error_qty_void">The maximum qty to void is: %1$d</string>
+    <string name="order_no">Order: %1$s</string>
+    <string name="voided">Voided</string>
+    <string name="net_label">Subtotal without tax</string>
+    <string name="tax_label">VAT</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
