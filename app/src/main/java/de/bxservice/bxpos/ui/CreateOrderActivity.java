@@ -60,7 +60,6 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
-import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
@@ -198,7 +197,6 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     private void initSearchListItems() {
 
-        ProductPrice productPrice;
         NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         NewOrderGridItem gridItem;
@@ -206,14 +204,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
         for (MProduct product : MProduct.getAllProducts(getBaseContext())) {
             gridItem = new NewOrderGridItem();
-            productPrice = product.getProductPrice(getBaseContext());
 
             //If the key and the name are the same, don't repeat
             if (product.getProductName().equalsIgnoreCase(product.getProductKey()))
                 gridItem.setName(product.getProductName());
             else
                 gridItem.setName(product.getProductKey() + " " + product.getProductName());
-            gridItem.setPrice(currencyFormat.format(productPrice.getStdPrice()));
+            gridItem.setPrice(currencyFormat.format(product.getProductPriceValue()));
             gridItem.setKey(product.getProductKey());
 
             items.add(gridItem);

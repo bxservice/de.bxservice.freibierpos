@@ -42,7 +42,6 @@ import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.idempiere.ProductCategory;
-import de.bxservice.bxpos.logic.model.idempiere.ProductPrice;
 import de.bxservice.bxpos.logic.model.pos.PosProperties;
 import de.bxservice.bxpos.ui.CreateOrderActivity;
 import de.bxservice.bxpos.ui.adapter.GridOrderViewAdapter;
@@ -102,15 +101,13 @@ public class FoodMenuFragment extends Fragment {
         NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
 
         NewOrderGridItem item;
-        ProductPrice productPrice;
         int qtyOrdered;
         for(MProduct product : productCategory.getProducts()) {
             item = new NewOrderGridItem();
             item.setName(product.getProductKey());
             item.setKey(product.getProductKey());
 
-            productPrice = product.getProductPrice(getActivity().getBaseContext());
-            item.setPrice(currencyFormat.format(productPrice.getStdPrice()));
+            item.setPrice(currencyFormat.format(product.getProductPriceValue()));
 
             //When you navigate through the tabs it paints again everything - this lets the number stay
             qtyOrdered = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
