@@ -57,15 +57,16 @@ public class WebServiceRequestData {
     private String warehouseId     = null;
 
     public WebServiceRequestData(Context context) {
+        if (context != null) {
+            //Variables from preferences
+            readPreferenceVariables(context);
 
-        //Variables from preferences
-        readPreferenceVariables(context);
+            //Variables in the properties file
+            readValues(context);
 
-        //Variables in the properties file
-        readValues(context);
-
-        //username and password
-        readCredentials(context);
+            //username and password
+            readCredentials(context);
+        }
     }
 
     /**
