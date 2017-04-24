@@ -54,7 +54,6 @@ public class MainTableFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private GridView grid;
     private GridTableViewAdapter mGridAdapter;
     private List<Table> mGridData;
 
@@ -86,7 +85,7 @@ public class MainTableFragment extends Fragment {
 
         int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
-        grid = (GridView) rootView.findViewById(R.id.tableView);
+        GridView grid = (GridView) rootView.findViewById(R.id.tableView);
 
         List<TableGroup> tableGroupList = TableGroup.getAllTableGroups(getActivity().getBaseContext());
         TableGroup tableGroup = tableGroupList.get(sectionNumber);
