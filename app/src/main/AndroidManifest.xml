@@ -100,7 +100,7 @@
                 android:value="de.bxservice.bxpos.ui.EditOrderActivity" />
         </activity>
         <activity
-            android:name=".ui.ReportsActivity"
+            android:name=".ui.ReportActivity"
             android:label="@string/report"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme">
@@ -111,11 +111,11 @@
         <activity
             android:name=".ui.ReportResultActivity"
             android:label="@string/report"
-            android:parentActivityName=".ui.ReportsActivity"
+            android:parentActivityName=".ui.ReportActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.bxservice.bxpos.ui.ReportsActivity" />
+                android:value="de.bxservice.bxpos.ui.ReportActivity" />
         </activity>
         <activity android:name=".ui.FCMNotificationActivity">
             <intent-filter>

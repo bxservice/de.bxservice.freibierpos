@@ -57,7 +57,7 @@ public class ReportFactory {
                     break;
                 case MY_SALES_CODE:
                     report = new SalesReport(mContext, true);
-                    report.setCode(VOID_ITEMS_CODE);
+                    report.setCode(MY_SALES_CODE);
                     report.setName(names[i]);
                     break;
                 case VOID_ITEMS_CODE:

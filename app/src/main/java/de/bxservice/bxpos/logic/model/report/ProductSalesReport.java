@@ -87,9 +87,11 @@ public class ProductSalesReport extends Report {
 
             //Close HTML table
             htmlResult.append(htmlTemplate.getHtmlTableClose());
+            htmlResult.append(htmlTemplate.getHtmlClose());
         }
         else {
             htmlResult.append(htmlTemplate.getRowText().replace(ReportHtmlTemplate.ROW_TAG, mContext.getString(R.string.no_records)));
+            htmlResult.append(htmlTemplate.getHtmlClose());
         }
 
     }

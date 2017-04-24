@@ -48,7 +48,7 @@ import de.bxservice.bxpos.ui.adapter.ReportTypeListAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 import de.bxservice.bxpos.ui.dialog.DatePickerFragment;
 
-public class ReportsActivity extends AppCompatActivity implements
+public class ReportActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener {
 
     //View components
@@ -120,7 +120,7 @@ public class ReportsActivity extends AppCompatActivity implements
                 }
 
                 if (!someSelected)
-                    Toast.makeText(ReportsActivity.this,
+                    Toast.makeText(ReportActivity.this,
                             getString(R.string.no_report_selected), Toast.LENGTH_LONG)
                             .show();
                 else

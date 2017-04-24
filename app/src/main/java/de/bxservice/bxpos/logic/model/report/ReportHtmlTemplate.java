@@ -42,6 +42,7 @@ public class ReportHtmlTemplate {
      */
     public String getHtmlTemplate() {
         htmlTemplate = new StringBuilder();
+        htmlTemplate.append("<HTML><HEAD><meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'></HEAD><body>");
         htmlTemplate.append("<h4 align=\"center\"><u>"+ TITLE_TAG +"</u></h4>"); //Title
         return htmlTemplate.toString();
     }
@@ -89,6 +90,10 @@ public class ReportHtmlTemplate {
      */
     public String getHtmlColumn(String alignment) {
         return "<td align=\""+ alignment +"\">" + ROW_TAG + "</td>";
+    }
+
+    public String getHtmlClose() {
+        return "</body></HTML>";
     }
 
 }
