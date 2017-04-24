@@ -59,7 +59,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -284,6 +284,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED + " INTEGER" +
                     ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG + " INTEGER" +
+                    ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN + " INTEGER" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_AD_LANGUAGE + " VARCHAR(6)" +
@@ -416,6 +418,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "ALTER TABLE "             + Tables.TABLE_POSORDER +
                     " ADD COLUMN " + PosOrderContract.POSOrderDB.COLUMN_NAME_DOCUMENT_NO + " VARCHAR(30) NOT NULL UNIQUE";
 
+    private static final String ALTER_DEFAULT_POS_DATA_GUEST_DIALOG =
+            "ALTER TABLE "             + Tables.TABLE_DEFAULT_POS_DATA +
+                    " ADD COLUMN " + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG + " INTEGER";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -484,6 +490,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             }
             if (oldVersion < 6) {
                 db.execSQL(ALTER_ORDER_DOCUMENT_NO);
+            }
+            if (oldVersion < 7) {
+                db.execSQL(ALTER_DEFAULT_POS_DATA_GUEST_DIALOG);
             }
         }
     }

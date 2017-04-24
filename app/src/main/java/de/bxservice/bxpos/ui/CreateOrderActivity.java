@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.idempiere.MProduct;
@@ -329,6 +330,13 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_create_order_activity, menu);
+
+        MenuItem guestItem = menu.findItem(R.id.set_guests);
+
+        if (guestItem != null) {
+            if (!DefaultPosData.get(getBaseContext()).isShowGuestDialog())
+                guestItem.setVisible(false);
+        }
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);

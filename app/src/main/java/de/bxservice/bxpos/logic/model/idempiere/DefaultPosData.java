@@ -49,7 +49,8 @@ public class DefaultPosData {
     private int stdPrecision = 0;
     private boolean printAfterSent = false;
     private boolean combineItems   = false;
-    private boolean IsTaxIncluded  = false;
+    private boolean isTaxIncluded = false;
+    private boolean showGuestDialog = false;
     private String currencyIsoCode  = "";
     private String clientAdLanguage  = "";
     private String receiptFooter  = "";
@@ -143,11 +144,11 @@ public class DefaultPosData {
     }
 
     public boolean isTaxIncluded() {
-        return IsTaxIncluded;
+        return isTaxIncluded;
     }
 
     public void setTaxIncluded(boolean taxIncluded) {
-        IsTaxIncluded = taxIncluded;
+        isTaxIncluded = taxIncluded;
     }
 
     public String getCurrencyIsoCode() {
@@ -168,6 +169,15 @@ public class DefaultPosData {
 
     public String getReceiptFooter() {
         return receiptFooter;
+    }
+
+
+    public boolean isShowGuestDialog() {
+        return showGuestDialog;
+    }
+
+    public void setShowGuestDialog(boolean showGuestDialog) {
+        this.showGuestDialog = showGuestDialog;
     }
 
     public void setReceiptFooter(String receiptFooter) {

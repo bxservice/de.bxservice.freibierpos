@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.logic.model.idempiere.DefaultPosData;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.idempiere.TableGroup;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
@@ -107,9 +108,12 @@ public class MainTableFragment extends Fragment {
 
                 ((MainActivity) getActivity()).setSelectedTable(item);
 
-                if (item.getStatus().equals(Table.FREE_STATUS))
-                    ((MainActivity) getActivity()).showGuestNumberDialog();
-                else if (item.getStatus().equals(Table.BUSY_STATUS)) {
+                if (item.getStatus().equals(Table.FREE_STATUS)) {
+                    if (DefaultPosData.get(getActivity()).isShowGuestDialog())
+                        ((MainActivity) getActivity()).showGuestNumberDialog();
+                    else
+                        ((MainActivity) getActivity()).createOrder();
+                } else if (item.getStatus().equals(Table.BUSY_STATUS)) {
                     ((MainActivity) getActivity()).editOrder(POSOrder.getTableOrders(getActivity().getBaseContext(), item));
                 }
             }

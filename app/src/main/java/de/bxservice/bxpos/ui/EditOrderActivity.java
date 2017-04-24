@@ -240,6 +240,12 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_order, menu);
+        MenuItem guestItem = menu.findItem(R.id.set_guests);
+
+        if (guestItem != null) {
+            if (!DefaultPosData.get(getBaseContext()).isShowGuestDialog())
+                guestItem.setVisible(false);
+        }
         return true;
     }
 
