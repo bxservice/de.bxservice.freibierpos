@@ -229,6 +229,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     + Tables.TABLE_TAX_CATEGORY + "(" + TaxCategoryContract.TaxCategoryDB.COLUMN_NAME_TAX_CATEGORY_ID + ") " +  //FK to the tax category
                     ", " +
                     ProductContract.ProductDB.COLUMN_IS_ACTIVE + " INTEGER" +
+                    ", " +
+                    ProductContract.ProductDB.COLUMN_NAME_IS_SOLD + " INTEGER" +
                     ")";
 
     private static final String CREATE_PRODUCT_CATEGORY_TABLE =
@@ -422,6 +424,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "ALTER TABLE "             + Tables.TABLE_DEFAULT_POS_DATA +
                     " ADD COLUMN " + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG + " INTEGER";
 
+    private static final String ALTER_PRODUCT_IS_SOLD =
+            "ALTER TABLE "             + Tables.TABLE_PRODUCT +
+                    " ADD COLUMN " + ProductContract.ProductDB.COLUMN_NAME_IS_SOLD + " INTEGER";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -493,6 +499,9 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             }
             if (oldVersion < 7) {
                 db.execSQL(ALTER_DEFAULT_POS_DATA_GUEST_DIALOG);
+            }
+            if (oldVersion < 8) {
+                db.execSQL(ALTER_PRODUCT_IS_SOLD);
             }
         }
     }

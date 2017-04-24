@@ -47,6 +47,7 @@ public class MProduct implements Serializable {
     private int productCategoryId;
     private int outputDeviceId;
     private boolean isActive;
+    private boolean isSold;
     private PosProductManagement productManager;
 
     public int getProductID() {
@@ -120,6 +121,14 @@ public class MProduct implements Serializable {
         isActive = active;
     }
 
+    public boolean isSold() {
+        return isSold;
+    }
+
+    public void setSold(boolean sold) {
+        isSold = sold;
+    }
+
     /**
      * Save if the object does not exist it creates it
      * otherwise it updates it
@@ -147,9 +156,8 @@ public class MProduct implements Serializable {
         return productManager.create(this);
     }
 
-    public static List<MProduct> getAllProducts(Context ctx) {
+    public static List<MProduct> getSoldProducts(Context ctx) {
         PosProductManagement dataProvider = new PosProductManagement(ctx);
-        return dataProvider.getAllProducts();
+        return dataProvider.getSoldProducts();
     }
-
 }

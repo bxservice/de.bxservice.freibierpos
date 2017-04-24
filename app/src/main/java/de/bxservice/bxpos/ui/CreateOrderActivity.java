@@ -203,7 +203,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         NewOrderGridItem gridItem;
         itemProductHashMap = new HashMap<>();
 
-        for (MProduct product : MProduct.getAllProducts(getBaseContext())) {
+        for (MProduct product : MProduct.getSoldProducts(getBaseContext())) {
             gridItem = new NewOrderGridItem();
 
             //If the key and the name are the same, don't repeat

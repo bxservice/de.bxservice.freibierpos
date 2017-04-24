@@ -66,6 +66,9 @@ public class PosProductHelper extends PosObjectHelper {
         int flag = (product.isActive()) ? 1 : 0;
         values.put(ProductContract.ProductDB.COLUMN_IS_ACTIVE, flag);
 
+        flag = (product.isSold()) ? 1 : 0;
+        values.put(ProductContract.ProductDB.COLUMN_NAME_IS_SOLD, flag);
+
         // insert row
         return db.insert(Tables.TABLE_PRODUCT, null, values);
     }
@@ -102,6 +105,9 @@ public class PosProductHelper extends PosObjectHelper {
         Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
         product.setActive(flag);
 
+        flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_IS_SOLD)) != 0);
+        product.setSold(flag);
+
         c.close();
 
         return product;
@@ -123,6 +129,9 @@ public class PosProductHelper extends PosObjectHelper {
 
         int flag = (product.isActive()) ? 1 : 0;
         values.put(ProductContract.ProductDB.COLUMN_IS_ACTIVE, flag);
+
+        flag = (product.isSold()) ? 1 : 0;
+        values.put(ProductContract.ProductDB.COLUMN_NAME_IS_SOLD, flag);
 
         // updating row
         return db.update(Tables.TABLE_PRODUCT, values, ProductContract.ProductDB.COLUMN_NAME_PRODUCT_ID + " = ?",
@@ -161,6 +170,9 @@ public class PosProductHelper extends PosObjectHelper {
                 Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
                 product.setActive(flag);
 
+                flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_IS_SOLD)) != 0);
+                product.setSold(flag);
+
                 products.add(product);
             } while (c.moveToNext());
         }
@@ -172,14 +184,15 @@ public class PosProductHelper extends PosObjectHelper {
     }
 
     /**
-     * Get all products
+     * Get all products that are sold in the POS
      * @return
      */
-    public ArrayList<MProduct> getAllProducts() {
+    public ArrayList<MProduct> getSoldProducts() {
         ArrayList<MProduct> products = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + Tables.TABLE_PRODUCT +
                 " WHERE " + ProductContract.ProductDB.COLUMN_IS_ACTIVE + " = 1" +
+                " AND " + ProductContract.ProductDB.COLUMN_NAME_IS_SOLD + " = 1" +
                 " ORDER BY " + ProductContract.ProductDB.COLUMN_NAME_NAME;
 
         Log.d(LOG_TAG, selectQuery);
@@ -200,6 +213,9 @@ public class PosProductHelper extends PosObjectHelper {
 
                 Boolean flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_IS_ACTIVE)) != 0);
                 product.setActive(flag);
+
+                flag = (c.getInt(c.getColumnIndex(ProductContract.ProductDB.COLUMN_NAME_IS_SOLD)) != 0);
+                product.setSold(flag);
 
                 products.add(product);
             } while (c.moveToNext());
