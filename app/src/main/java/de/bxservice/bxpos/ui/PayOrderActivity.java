@@ -71,6 +71,7 @@ import de.bxservice.bxpos.ui.dialog.SurchargeDialogFragment;
 import de.bxservice.bxpos.ui.dialog.DiscountDialogFragment;
 import de.bxservice.bxpos.ui.dialog.PaymentCompletedDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 
 public class PayOrderActivity extends AppCompatActivity implements RemarkDialogFragment.RemarkDialogListener,
@@ -621,7 +622,7 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         order.setPaymentRule(selectedPaymentType);
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+        String syncConnPref = sharedPref.getString(PreferenceActivityHelper.KEY_PREF_SYNC_CONN, "");
 
         //If the synchronization settings are configured as Never
         if (!"0".equals(syncConnPref)) {

@@ -41,7 +41,7 @@ import de.bxservice.bxpos.logic.model.idempiere.MProduct;
 import de.bxservice.bxpos.logic.model.idempiere.StandardTaxProvider;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.report.ReportGenericObject;
-import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * This represents the draft order - contains
@@ -578,14 +578,14 @@ public class POSOrder implements Serializable {
 
         //get values from preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx);
-        String orderPrefix = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX, "");
-        int orderNumber = Integer.parseInt(sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER, "1"));
+        String orderPrefix = sharedPref.getString(PreferenceActivityHelper.KEY_ORDER_PREFIX, "");
+        int orderNumber = Integer.parseInt(sharedPref.getString(PreferenceActivityHelper.KEY_ORDER_NUMBER, "1"));
         documentNo = orderPrefix + orderNumber;
 
         //If the order is created successfully - order Number +1
         if (orderManager.create(this)) {
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER, String.valueOf(orderNumber +1));
+            editor.putString(PreferenceActivityHelper.KEY_ORDER_NUMBER, String.valueOf(orderNumber +1));
             editor.apply();
             return true;
         } else

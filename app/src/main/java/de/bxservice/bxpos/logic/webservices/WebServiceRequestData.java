@@ -34,7 +34,7 @@ import de.bxservice.bxpos.logic.AssetsPropertyReader;
 import de.bxservice.bxpos.logic.PosProperties;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.logic.util.SecureEngine;
-import de.bxservice.bxpos.ui.OfflineAdminSettingsActivity;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * Created by Diego Ruiz on 6/11/15.
@@ -75,11 +75,11 @@ public class WebServiceRequestData {
     private void readPreferenceVariables(Context context) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
-        urlBase =  sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_URL, "");
-        orgId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ORG_ID, "");
-        clientId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_CLIENT_ID, "");
-        roleId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_ROLE_ID, "");
-        warehouseId = sharedPref.getString(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID, "");
+        urlBase =  sharedPref.getString(PreferenceActivityHelper.KEY_PREF_URL, "");
+        orgId = sharedPref.getString(PreferenceActivityHelper.KEY_ORG_ID, "");
+        clientId = sharedPref.getString(PreferenceActivityHelper.KEY_CLIENT_ID, "");
+        roleId = sharedPref.getString(PreferenceActivityHelper.KEY_ROLE_ID, "");
+        warehouseId = sharedPref.getString(PreferenceActivityHelper.KEY_WAREHOUSE_ID, "");
     }
 
     private void readValues(Context context) {
