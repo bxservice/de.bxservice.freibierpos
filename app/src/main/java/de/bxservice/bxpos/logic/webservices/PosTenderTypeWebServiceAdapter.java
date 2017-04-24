@@ -72,6 +72,7 @@ public class PosTenderTypeWebServiceAdapter extends AbstractWSObject{
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 Log.e("Error ws response", response.getErrorMessage());
+                success = false;
             } else {
 
                 Log.i("info", "Total rows: " + response.getNumRows());
@@ -99,6 +100,7 @@ public class PosTenderTypeWebServiceAdapter extends AbstractWSObject{
 
         } catch (Exception e) {
             e.printStackTrace();
+            success = false;
         }
     }
 
