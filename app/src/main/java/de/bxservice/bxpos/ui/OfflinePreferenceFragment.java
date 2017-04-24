@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * Created by Diego Ruiz on 16/12/15.
@@ -59,14 +60,14 @@ public class OfflinePreferenceFragment extends PreferenceFragment {
         // to their values. When their values change, their summaries are
         // updated to reflect the new value, per the Android Design
         // guidelines.
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_PREFIX));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_URL));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ORG_ID));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_CLIENT_ID));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_ROLE_ID));
-        activity.bindPreferenceSummaryToValue(findPreference(OfflineAdminSettingsActivity.KEY_WAREHOUSE_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ORDER_PREFIX));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ORDER_NUMBER));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_PREF_URL));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_PREF_SYNC_CONN));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ORG_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_CLIENT_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ROLE_ID));
+        activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_WAREHOUSE_ID));
 
     }
 }

@@ -239,5 +239,7 @@
     <string name="unable_join">Keine offenen Belege zum Zusammenfassen.</string>
     <string name="server_data">Verbindungsdaten</string>
     <string name="table_switched">Tisch gewechselt</string>
+    <string name="pending_orders">Pending orders</string>
+    <string name="pref_change_error">There are orders waiting to be synchronized. Please synchronize them before changing this setting</string>
 
 </resources>

@@ -235,6 +235,8 @@
     <string name="unable_join">No hay más órdenes abiertas.</string>
     <string name="server_data">Datos de conexión</string>
     <string name="table_switched">Mesa cambiada</string>
+    <string name="pending_orders">Órdenes pendientes</string>
+    <string name="pref_change_error">Hay órdenes sin sincronizar. Por favor sincronicelas antes de cambiar esta preferencia</string>
 </resources>
 
 

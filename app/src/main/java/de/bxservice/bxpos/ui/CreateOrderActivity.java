@@ -70,6 +70,7 @@ import de.bxservice.bxpos.ui.dialog.MultipleItemsDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener,
@@ -545,7 +546,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                                 //If the order is discarded -> the preference value goes back to what it was
                                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                                 SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putString(OfflineAdminSettingsActivity.KEY_ORDER_NUMBER, posOrder.getOrderNo());
+                                editor.putString(PreferenceActivityHelper.KEY_ORDER_NUMBER, posOrder.getOrderNo());
                                 editor.apply();
 
                                 CreateOrderActivity.super.onBackPressed();

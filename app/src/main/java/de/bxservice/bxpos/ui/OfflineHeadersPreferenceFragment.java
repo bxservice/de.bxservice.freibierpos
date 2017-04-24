@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 import de.bxservice.bxpos.R;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * Created by Diego Ruiz on 9/9/16.
@@ -42,19 +43,19 @@ public class OfflineHeadersPreferenceFragment extends PreferenceFragment {
         String settings = getArguments().getString("settings");
         if ("order_settings".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_order_settings);
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORDER_PREFIX));
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORDER_NUMBER));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ORDER_PREFIX));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ORDER_NUMBER));
         } else if ("data_sync".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_data_sync);
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_PREF_SYNC_CONN));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_PREF_SYNC_CONN));
 
         } else if ("server".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_server);
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_PREF_URL));
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ORG_ID));
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_CLIENT_ID));
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_ROLE_ID));
-            activity.bindPreferenceSummaryToValue(findPreference(HeadersActivity.KEY_WAREHOUSE_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_PREF_URL));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ORG_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_CLIENT_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_ROLE_ID));
+            activity.bindPreferenceSummaryToValue(findPreference(PreferenceActivityHelper.KEY_WAREHOUSE_ID));
         } else if ("about".equals(settings)) {
             addPreferencesFromResource(R.xml.pref_about);
         }

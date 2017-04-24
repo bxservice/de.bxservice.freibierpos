@@ -73,6 +73,7 @@ import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.MultipleOrdersTableDialogFragment;
 import de.bxservice.bxpos.ui.fragment.AsyncFragment;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * First Activity after login
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity
         userNameTextView.setText(PosUser.getCurrentUserDisplayName(getBaseContext()));
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+        syncConnPref = sharedPref.getString(PreferenceActivityHelper.KEY_PREF_SYNC_CONN, "");
         callAsynchronousTask();
 
         mProgressView = findViewById(R.id.load_data_progress);

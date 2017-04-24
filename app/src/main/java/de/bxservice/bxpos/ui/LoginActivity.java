@@ -71,6 +71,7 @@ import de.bxservice.bxpos.logic.util.SecureEngine;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
 import de.bxservice.bxpos.ui.fragment.AsyncFragment;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 /**
  * A login screen that offers login via username/password.
@@ -242,7 +243,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncFragment.Pa
 
             } else {
 
-                String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+                String syncConnPref = sharedPref.getString(PreferenceActivityHelper.KEY_PREF_SYNC_CONN, "");
 
                 // If the sync configuration chosen was Always offline login not allowed
                 if("0".equals(syncConnPref)) {
@@ -459,7 +460,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncFragment.Pa
 
             } else {
 
-                String syncConnPref = sharedPref.getString(OfflineAdminSettingsActivity.KEY_PREF_SYNC_CONN, "");
+                String syncConnPref = sharedPref.getString(PreferenceActivityHelper.KEY_PREF_SYNC_CONN, "");
 
                 // If the sync configuration chosen was Always offline login not allowed
                 if (!"0".equals(syncConnPref)) {

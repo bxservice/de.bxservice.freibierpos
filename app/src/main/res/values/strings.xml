@@ -213,6 +213,8 @@
     <string name="unable_join">No open orders to join.</string>
     <string name="server_data">Connection data</string>
     <string name="table_switched">Table switched</string>
+    <string name="pending_orders">Pending orders</string>
+    <string name="pref_change_error">There are orders waiting to be synchronized. Please synchronize them before changing this setting</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">

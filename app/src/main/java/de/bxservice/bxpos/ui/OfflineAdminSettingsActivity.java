@@ -25,9 +25,7 @@
 package de.bxservice.bxpos.ui;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -37,37 +35,17 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
-import de.bxservice.bxpos.R;
-import de.bxservice.bxpos.logic.model.pos.POSOrder;
-import de.bxservice.bxpos.persistence.helper.PosDatabaseHelper;
+import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 
 /**
  * Created by Diego Ruiz on 16/12/15.
  */
 public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
-
-    private static final String LOG_TAG = "Admin Settings";
-
-    //Restaurant
-    public static final String KEY_ORDER_PREFIX = "pref_order_prefix";
-    public static final String KEY_ORDER_NUMBER = "pref_order_number";
-
-    //General
-    public static final String KEY_PREF_URL = "pref_serverurl";
-    public static final String KEY_ORG_ID = "pref_org";
-    public static final String KEY_CLIENT_ID = "pref_client";
-    public static final String KEY_ROLE_ID = "pref_role";
-    public static final String KEY_WAREHOUSE_ID = "pref_warehouse";
-
-    //Sync & Data
-    public static final String KEY_PREF_SYNC_CONN = "sync_frequency";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,47 +141,15 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
                 preference.setSummary(preference.getSummary());
             } else {
 
-                //If the key changed is the URL and the value was really changed -> not only selected
-                if (KEY_PREF_URL.equals(preference.getKey())) {
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext().getApplicationContext());
-                    String urlConnPref = sharedPref.getString(KEY_PREF_URL, "");
-
-                    if (stringValue != null && urlConnPref != null && !urlConnPref.equals(getString(R.string.pref_default_display_name))
-                            && !stringValue.equals(urlConnPref)) {
-
-                        final Preference urlPref = preference;
-                        new AlertDialog.Builder(OfflineAdminSettingsActivity.this)
-                                .setTitle(R.string.change_url)
-                                .setNegativeButton(R.string.no, null)
-                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        Log.d(LOG_TAG, "URL Changed");
-                                        deleteDatabase();
-                                        setUrl(urlPref, stringValue);
-                                    }
-                                }).create().show();
-
-                        //Return false always to control the confirmation dialog
+                if (PreferenceActivityHelper.KEY_PREF_URL.equals(preference.getKey()) || PreferenceActivityHelper.KEY_CLIENT_ID.equals(preference.getKey())) {
+                    if (!PreferenceActivityHelper.validateServerChange(OfflineAdminSettingsActivity.this, preference.getKey(), stringValue, preference))
                         return false;
-                    }
                 }
 
                 //Check if the Document No is valid
-                if (KEY_ORDER_NUMBER.equals(preference.getKey())) {
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext().getApplicationContext());
-                    String orderPrefix = sharedPref.getString(KEY_ORDER_PREFIX, "");
-                    String orderNumber = sharedPref.getString(KEY_ORDER_NUMBER, "");
-
-                    if (!stringValue.equals(orderNumber)) {
-                        int maxDocumentNo = POSOrder.getMaxDocumentNo(getBaseContext(), orderPrefix);
-                        if (Integer.parseInt(stringValue) <= maxDocumentNo) {
-
-                            new AlertDialog.Builder(OfflineAdminSettingsActivity.this)
-                                    .setMessage(getString(R.string.wrong_order_number, maxDocumentNo))
-                                    .setPositiveButton(android.R.string.ok, null).create().show();
-                            return false;
-                        }
-                    }
+                if (PreferenceActivityHelper.KEY_ORDER_NUMBER.equals(preference.getKey())) {
+                    if (!PreferenceActivityHelper.checkDocumentNo(OfflineAdminSettingsActivity.this, stringValue))
+                        return false;
                 }
 
                 // For all other preferences, set the summary to the value's
@@ -214,18 +160,6 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
             return true;
         }
     };
-
-    private void deleteDatabase() {
-        Log.d(LOG_TAG, "Deleting database");
-        PosDatabaseHelper databaseHelper = PosDatabaseHelper.getInstance(getBaseContext());
-        databaseHelper.deleteDatabase(getBaseContext());
-    }
-
-    private void setUrl(Preference preference, String newUrl) {
-        //Because I return false anyway, I change the preference manually here
-        ((EditTextPreference)preference).setText(newUrl);
-        preference.setSummary(newUrl);
-    }
 
     /**
      * Binds a preference's summary to its value. More specifically, when the
@@ -254,8 +188,6 @@ public class OfflineAdminSettingsActivity extends AppCompatPreferenceActivity {
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getString(preference.getKey(), ""));
-
-
     }
 
 }
