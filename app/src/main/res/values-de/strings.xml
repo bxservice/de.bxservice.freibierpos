@@ -241,5 +241,7 @@
     <string name="table_switched">Tisch gewechselt</string>
     <string name="pending_orders">Pending orders</string>
     <string name="pref_change_error">There are orders waiting to be synchronized. Please synchronize them before changing this setting</string>
+    <string name="void_qty">How many items do you want to void?</string>
+    <string name="error_qty_void">The maximum qty to void is: %1$d</string>
 
 </resources>

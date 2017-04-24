@@ -116,7 +116,7 @@ public class POSOrderLine implements Serializable {
 
         if(isComplimentaryProduct)
             lineNetAmt = BigDecimal.ZERO;
-        else if(lineNetAmt.equals(BigDecimal.ZERO) && product != null) //If the amt was not calculated before
+        else if(product != null && product.getProductPriceValue().compareTo(BigDecimal.ZERO) != 0) //If the amt was not calculated before - and is not a zero price product
             lineNetAmt = product.getProductPriceValue().multiply(BigDecimal.valueOf(qtyOrdered));
 
         return lineNetAmt;

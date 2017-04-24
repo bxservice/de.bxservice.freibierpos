@@ -237,6 +237,8 @@
     <string name="table_switched">Mesa cambiada</string>
     <string name="pending_orders">Órdenes pendientes</string>
     <string name="pref_change_error">Hay órdenes sin sincronizar. Por favor sincronicelas antes de cambiar esta preferencia</string>
+    <string name="void_qty">¿Cuantos ítems desea anular?</string>
+    <string name="error_qty_void">La cantidad máxima a anular es %1$d</string>
 </resources>
 
 
