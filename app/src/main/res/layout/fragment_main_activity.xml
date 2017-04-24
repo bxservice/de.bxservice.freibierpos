@@ -17,7 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:choiceMode="singleChoice"
-        android:numColumns="auto_fit"
+        android:numColumns="@integer/column_count"
         tools:listitem="@android:layout/simple_list_item_2"
         android:clickable="false"
         android:layout_gravity="center_horizontal"
