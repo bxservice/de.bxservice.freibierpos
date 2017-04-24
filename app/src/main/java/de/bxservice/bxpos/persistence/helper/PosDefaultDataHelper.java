@@ -71,6 +71,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         flag = (data.isTaxIncluded()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED, flag);
 
+        flag = (data.isShowGuestDialog()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG, flag);
+
         // insert row
         return database.insert(Tables.TABLE_DEFAULT_POS_DATA, null, values);
     }
@@ -78,7 +81,7 @@ public class PosDefaultDataHelper extends PosObjectHelper {
     /*
     * Updating the default data
     */
-    public int updateData (DefaultPosData data) {
+    public int updateData(DefaultPosData data) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -103,6 +106,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (data.isTaxIncluded()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED, flag);
+
+        flag = (data.isShowGuestDialog()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG, flag);
 
         // updating row
         return db.update(Tables.TABLE_DEFAULT_POS_DATA, values, DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " = ?",
@@ -149,6 +155,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED)) != 0);
         defaultData.setTaxIncluded(flag);
+
+        flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG)) != 0);
+        defaultData.setShowGuestDialog(flag);
 
         c.close();
 

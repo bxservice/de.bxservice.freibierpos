@@ -55,6 +55,7 @@ public class DefaultPosDataContract {
         public static final String COLUMN_NAME_RECEIPT_FOOTER = "receiptFooter";
         public static final String COLUMN_NAME_STDPRECISION = "stdPrecision";
         public static final String COLUMN_NAME_BPARTNER_TOGO = "defaultBPartnerToGo";
+        public static final String COLUMN_NAME_SHOW_GUEST_DIALOG = "showGuestDialog";
     }
 
 }

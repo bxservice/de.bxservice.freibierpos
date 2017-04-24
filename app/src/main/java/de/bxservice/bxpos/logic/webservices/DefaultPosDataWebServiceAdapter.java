@@ -118,7 +118,8 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                             defaultPosData.setStdPrecision((Integer.valueOf(field.getStringValue())));
                         else if ("BXS_BPToGoCashTrx_ID".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setDefaultBPartnerToGo(Integer.valueOf(field.getStringValue()));
-
+                        else if ("BXS_ShowGuestDialog".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setShowGuestDialog("Y".equalsIgnoreCase(field.getStringValue()));
                     }
                 }
             }
