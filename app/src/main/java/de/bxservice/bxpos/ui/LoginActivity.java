@@ -439,13 +439,19 @@ public class LoginActivity extends AppCompatActivity implements AsyncFragment.Pa
             if (success) {
 
                 //New user -> create it in the database
-                if (PosUser.getUser(getBaseContext(), mUsername) == null) {
+                PosUser user = PosUser.getUser(getBaseContext(), mUsername);
+                if (user == null) {
                     PosUser newUser = new PosUser();
                     newUser.setUsername(mUsername);
                     newUser.setPassword(mPassword);
                     newUser.createUser(getBaseContext());
 
                     Log.i(LOG_TAG, "New user created " + mUsername);
+                } else if (!user.authenticateHash(mPassword)) {
+                    user.setPassword(mPassword);
+                    user.updateUser(getBaseContext());
+
+                    Log.i(LOG_TAG, "Password updated for " + mUsername);
                 }
 
                 // Read the data needed - Products. MProduct Category - Table ...
