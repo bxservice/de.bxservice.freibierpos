@@ -104,6 +104,7 @@ public class CreateOrderWebServiceAdapter extends AbstractWSObject {
         data.addField("M_Warehouse_ID", String.valueOf(defaultPosData.getDefaultWarehouse()));
         data.addField("AD_Org_ID", orgId);
         data.addField("C_Currency_ID", String.valueOf(defaultPosData.getDefaultCurrency()));
+        data.addField("C_POS_ID", String.valueOf(defaultPosData.getDefaultPOSID()));
         data.addField("C_DocTypeTarget_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("C_DocType_ID", IOrder.DocTypeSO); //PosOrder
         data.addField("Description", order.getOrderRemark());
