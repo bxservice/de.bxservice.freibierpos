@@ -29,32 +29,48 @@ import android.os.Bundle;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.fcm.BXPOSNotificationCode;
-import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
+import de.bxservice.bxpos.ui.fragment.AsyncFragment;
 
-public class FCMNotificationActivity extends AppCompatActivity {
+public class FCMNotificationActivity extends AppCompatActivity implements AsyncFragment.ParentActivity {
+
+    private AsyncFragment mAsyncFragment;
+    private static final String ASYNC_FRAGMENT_TAG = "FCM_ASYNC_FRAGMENT_TAG";
+
+    private String clickAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fcmnotification);
 
-        String clickAction = getIntent().getAction();
+        clickAction = getIntent().getAction();
+
+        mAsyncFragment = (AsyncFragment) getSupportFragmentManager().findFragmentByTag(ASYNC_FRAGMENT_TAG);
+        if (mAsyncFragment == null) {
+            mAsyncFragment = new AsyncFragment();
+            getSupportFragmentManager().beginTransaction().add(mAsyncFragment, ASYNC_FRAGMENT_TAG).commit();
+        }
+    }
+
+    @Override
+    public void handleReadDataTaskFinish(boolean success) {
+        finish();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         if (BXPOSNotificationCode.MANDATORY_UPDATE_ACTION.equals(clickAction)) {
-            // Read the data needed - Products. MProduct Category - Table ...
-            ReadServerDataTask initiateData = new ReadServerDataTask(this);
-            initiateData.execute();
+            mAsyncFragment.runAsyncTask();
         } else if (BXPOSNotificationCode.RECOMMENDED_UPDATE_ACTION.equals(clickAction)) {
             onBackPressed();
         } else {
             onBackPressed();
         }
-    }
-
-    /**
-     * Called when the read data task finishes
-     */
-    public void postExecuteReadDataTask() {
-        onBackPressed();
     }
 }
