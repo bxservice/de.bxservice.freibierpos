@@ -96,7 +96,7 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                         else if ("BXS_POSSurcharge_ID".equalsIgnoreCase(field.getColumn()) && !field.getStringValue().isEmpty())
                             defaultPosData.setSurchargeId(Integer.valueOf(field.getStringValue()));
                         else if ("BXS_CombineItems".equalsIgnoreCase(field.getColumn()))
-                            defaultPosData.setCombineItems("Y".equalsIgnoreCase(field.getStringValue()));
+                            defaultPosData.setCombineReceiptItems("Y".equalsIgnoreCase(field.getStringValue()));
                         else if ("BXS_PrintAfterSend".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setPrintAfterSent("Y".equalsIgnoreCase(field.getStringValue()));
                         else if ("PIN".equalsIgnoreCase(field.getColumn())) {
@@ -120,6 +120,10 @@ public class DefaultPosDataWebServiceAdapter extends AbstractWSObject {
                             defaultPosData.setDefaultBPartnerToGo(Integer.valueOf(field.getStringValue()));
                         else if ("BXS_ShowGuestDialog".equalsIgnoreCase(field.getColumn()))
                             defaultPosData.setShowGuestDialog("Y".equalsIgnoreCase(field.getStringValue()));
+                        else if ("BXS_SeparateOrderItems".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setSeparateOrderItems("Y".equalsIgnoreCase(field.getStringValue()));
+                        else if ("C_POS_ID".equalsIgnoreCase(field.getColumn()))
+                            defaultPosData.setDefaultPOSID(Integer.valueOf(field.getStringValue()));
                     }
                 }
             }

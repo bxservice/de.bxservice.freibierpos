@@ -45,10 +45,12 @@ public class DefaultPosData {
     private int defaultWarehouse = 0;
     private int discountId = 0;
     private int surchargeId = 0;
+    private int defaultPOSID = 0;
     private int pin = 0;
     private int stdPrecision = 0;
     private boolean printAfterSent = false;
-    private boolean combineItems   = false;
+    private boolean combineReceiptItems = false;
+    private boolean separateOrderItems = false;
     private boolean isTaxIncluded = false;
     private boolean showGuestDialog = false;
     private String currencyIsoCode  = "";
@@ -111,12 +113,12 @@ public class DefaultPosData {
         this.surchargeId = surchargeId;
     }
 
-    public boolean isCombineItems() {
-        return combineItems;
+    public boolean isCombineReceiptItems() {
+        return combineReceiptItems;
     }
 
-    public void setCombineItems(boolean combineItems) {
-        this.combineItems = combineItems;
+    public void setCombineReceiptItems(boolean combineReceiptItems) {
+        this.combineReceiptItems = combineReceiptItems;
     }
 
     public boolean isPrintAfterSent() {
@@ -182,6 +184,22 @@ public class DefaultPosData {
 
     public void setReceiptFooter(String receiptFooter) {
         this.receiptFooter = receiptFooter;
+    }
+
+    public boolean isSeparateOrderItems() {
+        return separateOrderItems;
+    }
+
+    public void setSeparateOrderItems(boolean separateOrderItems) {
+        this.separateOrderItems = separateOrderItems;
+    }
+
+    public int getDefaultPOSID() {
+        return defaultPOSID;
+    }
+
+    public void setDefaultPOSID(int defaultPOSID) {
+        this.defaultPOSID = defaultPOSID;
     }
 
     public static int getPrecision(Context ctx) {
