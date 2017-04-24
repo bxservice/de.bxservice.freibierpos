@@ -35,7 +35,7 @@ import java.util.List;
 
 import de.bxservice.bxpos.logic.daomanager.PosProductCategoryManagement;
 import de.bxservice.bxpos.logic.model.pos.NewOrderGridItem;
-import de.bxservice.bxpos.ui.fragment.FoodMenuFragment;
+import de.bxservice.bxpos.ui.fragment.ProductMenuFragment;
 
 /**
  * Created by Diego Ruiz on 19/11/15.
@@ -55,8 +55,8 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a FoodMenuFragment (defined as a static inner class below).
-        return FoodMenuFragment.newInstance(position);
+        // Return a ProductMenuFragment (defined as a static inner class below).
+        return ProductMenuFragment.newInstance(position);
     }
 
     @Override
@@ -89,8 +89,8 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
             for (Fragment fragment : foodFragments) {
 
-                if (fragment instanceof FoodMenuFragment && !found) {
-                    FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
+                if (fragment instanceof ProductMenuFragment && !found) {
+                    ProductMenuFragment menuFragment = (ProductMenuFragment) fragment;
 
                     for (NewOrderGridItem item : menuFragment.getmGridData()) {
 
@@ -126,8 +126,8 @@ public class CreateOrderPagerAdapter extends FragmentPagerAdapter {
 
             for (Fragment fragment : foodFragments) {
 
-                if (fragment instanceof FoodMenuFragment) {
-                    FoodMenuFragment menuFragment = (FoodMenuFragment) fragment;
+                if (fragment instanceof ProductMenuFragment) {
+                    ProductMenuFragment menuFragment = (ProductMenuFragment) fragment;
                     menuFragment.refreshAllQty();
                 }
             }
