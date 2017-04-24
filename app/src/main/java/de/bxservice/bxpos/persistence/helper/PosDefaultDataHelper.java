@@ -61,8 +61,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER, data.getReceiptFooter());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION, data.getStdPrecision());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO, data.getDefaultBPartnerToGo());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_C_POS_ID, data.getDefaultPOSID());
 
-        int flag = (data.isCombineItems()) ? 1 : 0;
+        int flag = (data.isCombineReceiptItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
 
         flag = (data.isPrintAfterSent()) ? 1 : 0;
@@ -73,6 +74,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (data.isShowGuestDialog()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG, flag);
+
+        flag = (data.isSeparateOrderItems()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SEPARATE_ORDER_ITEMS, flag);
 
         // insert row
         return database.insert(Tables.TABLE_DEFAULT_POS_DATA, null, values);
@@ -97,8 +101,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER, data.getReceiptFooter());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION, data.getStdPrecision());
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO, data.getDefaultBPartnerToGo());
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_C_POS_ID, data.getDefaultPOSID());
 
-        int flag = (data.isCombineItems()) ? 1 : 0;
+        int flag = (data.isCombineReceiptItems()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS, flag);
 
         flag = (data.isPrintAfterSent()) ? 1 : 0;
@@ -109,6 +114,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (data.isShowGuestDialog()) ? 1 : 0;
         values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG, flag);
+
+        flag = (data.isSeparateOrderItems()) ? 1 : 0;
+        values.put(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SEPARATE_ORDER_ITEMS, flag);
 
         // updating row
         return db.update(Tables.TABLE_DEFAULT_POS_DATA, values, DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_DEFAULT_DATA_ID + " = ?",
@@ -146,9 +154,10 @@ public class PosDefaultDataHelper extends PosObjectHelper {
         defaultData.setReceiptFooter(c.getString(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_RECEIPT_FOOTER)));
         defaultData.setDefaultBPartnerToGo(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_BPARTNER_TOGO)));
         defaultData.setStdPrecision(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_STDPRECISION)));
+        defaultData.setDefaultPOSID(c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_C_POS_ID)));
 
         Boolean flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS)) != 0);
-        defaultData.setCombineItems(flag);
+        defaultData.setCombineReceiptItems(flag);
 
         flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND)) != 0);
         defaultData.setPrintAfterSent(flag);
@@ -158,6 +167,9 @@ public class PosDefaultDataHelper extends PosObjectHelper {
 
         flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG)) != 0);
         defaultData.setShowGuestDialog(flag);
+
+        flag = (c.getInt(c.getColumnIndex(DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SEPARATE_ORDER_ITEMS)) != 0);
+        defaultData.setSeparateOrderItems(flag);
 
         c.close();
 

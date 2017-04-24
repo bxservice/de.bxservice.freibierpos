@@ -164,7 +164,7 @@ public class CPCLPrinter extends AbstractPOSPrinter {
         DefaultPosData defaultPosData = DefaultPosData.get(null);
 
         //If single lines for every product -> Configurable
-        if(!defaultPosData.isCombineItems()) {
+        if(!defaultPosData.isCombineReceiptItems()) {
             for(POSOrderLine line : order.getOrderedLines()) {
                 ticket.append(line.getQtyOrdered() + "  " + line.getProduct().getProductName() + "            "+
                         currencyFormat.format(line.getLineNetAmt()) + "\r\n");

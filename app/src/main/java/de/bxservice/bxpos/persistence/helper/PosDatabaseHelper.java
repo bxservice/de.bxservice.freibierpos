@@ -59,7 +59,7 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "PosDatabaseHelper";
 
     // Database Version - change this value when you change the database model
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "freibier_pos.db";
 
     public interface MetaColumns {
@@ -280,6 +280,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SURCHARGE_ID + " INTEGER" +
                     ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_C_POS_ID + " INTEGER" +
+                    ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_COMBINE_ITEMS + " INTEGER" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PRINT_AFTER_SEND + " INTEGER" +
@@ -287,6 +289,8 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_IS_TAX_INCLUDED + " INTEGER" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SHOW_GUEST_DIALOG + " INTEGER" +
+                    ", " +
+                    DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SEPARATE_ORDER_ITEMS + " INTEGER" +
                     ", " +
                     DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_PIN + " INTEGER" +
                     ", " +
@@ -428,6 +432,14 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             "ALTER TABLE "             + Tables.TABLE_PRODUCT +
                     " ADD COLUMN " + ProductContract.ProductDB.COLUMN_NAME_IS_SOLD + " INTEGER";
 
+    private static final String ALTER_DEFAULT_POS_DATA_SEPARATE_ORDER =
+            "ALTER TABLE "             + Tables.TABLE_DEFAULT_POS_DATA +
+                    " ADD COLUMN " + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_SEPARATE_ORDER_ITEMS + " INTEGER";
+
+    private static final String ALTER_DEFAULT_POS_DATA_CPOS =
+            "ALTER TABLE "             + Tables.TABLE_DEFAULT_POS_DATA +
+                    " ADD COLUMN " + DefaultPosDataContract.DefaultDataDB.COLUMN_NAME_C_POS_ID + " INTEGER";
+
     //Control database version
     private static final String INSERT_BUILD_VERSION =
             "INSERT INTO " + Tables.TABLE_META_INDEX +
@@ -502,6 +514,10 @@ public class PosDatabaseHelper extends SQLiteOpenHelper {
             }
             if (oldVersion < 8) {
                 db.execSQL(ALTER_PRODUCT_IS_SOLD);
+            }
+            if (oldVersion < 9) {
+                db.execSQL(ALTER_DEFAULT_POS_DATA_SEPARATE_ORDER);
+                db.execSQL(ALTER_DEFAULT_POS_DATA_CPOS);
             }
         }
     }
