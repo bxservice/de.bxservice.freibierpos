@@ -6,8 +6,9 @@
             android:icon="@android:drawable/ic_menu_today"
             android:title="@string/title_activity_view_open_orders" />
 
-        <!-- Login progress<item android:id="@+id/nav_reservation" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="@string/reservation" /> -->
+        <item android:id="@+id/closed_orders"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="@string/title_activity_closed_orders" />
 
         <item android:id="@+id/nav_report"
             android:icon="@android:drawable/ic_menu_agenda"

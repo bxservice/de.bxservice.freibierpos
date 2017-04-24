@@ -60,6 +60,8 @@
     <string name="title_activity_create_order">Nueva orden</string>
     <string name="title_activity_add_items">Añadir ítems</string>
     <string name="title_activity_view_open_orders">Órdenes abiertas</string>
+    <string name="title_activity_closed_orders">Órdenes cerradas</string>
+    <string name="title_activity_review_closed_order">Revisar orden</string>
 
     <!-- Strings related to orders -->
     <string name="empty_order">La orden está vacía</string>
@@ -239,6 +241,10 @@
     <string name="pref_change_error">Hay órdenes sin sincronizar. Por favor sincronicelas antes de cambiar esta preferencia</string>
     <string name="void_qty">¿Cuantos ítems desea anular?</string>
     <string name="error_qty_void">La cantidad máxima a anular es %1$d</string>
+    <string name="order_no">Orden: %1$s</string>
+    <string name="voided">Anulada</string>
+    <string name="net_label">Subtotal sin IVA</string>
+    <string name="tax_label">IVA</string>
 </resources>
 
 

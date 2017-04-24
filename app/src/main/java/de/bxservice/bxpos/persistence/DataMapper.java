@@ -542,6 +542,11 @@ public class DataMapper implements Serializable {
         return orderHelper.getOpenOrders();
     }
 
+    public List<POSOrder> getClosedOrders() {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getClosedOrders();
+    }
+
     public List<POSOrder> getUnsynchronizedOrders() {
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
         return orderHelper.getUnsynchronizedOrders();
@@ -565,6 +570,11 @@ public class DataMapper implements Serializable {
     public int getMaxDocumentNo(String orderPrefix) {
         PosOrderHelper orderHelper = new PosOrderHelper(mContext);
         return orderHelper.getMaxDocumentNo(orderPrefix);
+    }
+
+    public long getOrderDate(POSOrder order) {
+        PosOrderHelper orderHelper = new PosOrderHelper(mContext);
+        return orderHelper.getOrderDate(order);
     }
 
     public ProductPrice getProductPriceByProduct(MProduct product) {

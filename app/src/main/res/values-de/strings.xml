@@ -60,6 +60,8 @@
     <string name="title_activity_create_order">Neuer Beleg</string>
     <string name="title_activity_add_items">Artikel hinzufügen</string>
     <string name="title_activity_view_open_orders">Offene Aufträge</string>
+    <string name="title_activity_closed_orders">Abgeschlossene Aufträge</string>
+    <string name="title_activity_review_closed_order">Beleg anzeigen</string>
 
     <!-- Strings related to orders -->
     <string name="empty_order">Der Beleg ist leer</string>
@@ -243,5 +245,8 @@
     <string name="pref_change_error">There are orders waiting to be synchronized. Please synchronize them before changing this setting</string>
     <string name="void_qty">How many items do you want to void?</string>
     <string name="error_qty_void">The maximum qty to void is: %1$d</string>
-
+    <string name="voided">Stornierte</string>
+    <string name="order_no">Auftrag: %1$s</string>
+    <string name="net_label">Netto</string>
+    <string name="tax_label">MWST</string>
 </resources>

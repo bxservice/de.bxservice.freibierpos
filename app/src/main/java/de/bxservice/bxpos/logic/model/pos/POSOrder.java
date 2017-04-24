@@ -30,6 +30,7 @@ import android.preference.PreferenceManager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -468,6 +469,11 @@ public class POSOrder implements Serializable {
         return totallines;
     }
 
+    public String getTotal() {
+        NumberFormat currencyFormat = PosProperties.getInstance().getCurrencyFormat();
+        return currencyFormat.format(getTotallines());
+    }
+
     public BigDecimal getChangeAmt() {
         return changeAmt;
     }
@@ -490,6 +496,13 @@ public class POSOrder implements Serializable {
 
     public void setDiscountReason(String discountReason) {
         this.discountReason = discountReason;
+    }
+
+    public long getOrderDate(Context ctx) {
+        if (orderManager == null)
+            orderManager = new PosOrderManagement(ctx);
+
+        return orderManager.getOrderDate(this);
     }
 
     /**
@@ -824,6 +837,11 @@ public class POSOrder implements Serializable {
     public static List<POSOrder> getOpenOrders(Context ctx) {
         PosOrderManagement orderManager = new PosOrderManagement(ctx);
         return orderManager.getAllOpenOrders();
+    }
+
+    public static List<POSOrder> getClosedOrders(Context ctx) {
+        PosOrderManagement orderManager = new PosOrderManagement(ctx);
+        return orderManager.getClosedOrders();
     }
 
     public static List<POSOrder> getTableOrders(Context ctx, Table table) {

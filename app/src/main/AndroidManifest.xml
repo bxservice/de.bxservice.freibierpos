@@ -132,6 +132,24 @@
         <activity android:name=".ui.AboutActivity"
             android:label="@string/about"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ui.ClosedOrdersActivity"
+            android:label="@string/title_activity_closed_orders"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.bxservice.bxpos.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.ClosedOrderDetailActivity"
+            android:label="@string/title_activity_review_closed_order"
+            android:parentActivityName=".ui.ClosedOrdersActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.bxservice.bxpos.ui.ClosedOrdersActivity" />
+        </activity>
 
         <service android:name=".fcm.BxPosFirebaseMessagingService">
             <intent-filter>

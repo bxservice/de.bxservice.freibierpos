@@ -211,6 +211,22 @@ public class PosOrderHelper extends PosObjectHelper {
     }
 
     /**
+     * Get all closed orders of the day
+     * @return array list with all the closed orders
+     */
+    public ArrayList<POSOrder> getClosedOrders() {
+        int userId = getLoggedUser();
+
+        long today = Long.parseLong(getCurrentDate()) / 10000;
+
+        String whereClause =" WHERE " + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_STATUS + " IN (?,?)" +
+                " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_CREATED_BY + " = ? " +
+                " AND " + PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT + " LIKE ? ";
+
+        return getOrders(whereClause, new String[] {POSOrder.COMPLETE_STATUS, POSOrder.VOID_STATUS, String.valueOf(userId), String.valueOf(today) + "%"});
+    }
+
+    /**
      * Get all orders that were paid but were not sent to iDempiere
      * @return
      */
@@ -397,6 +413,28 @@ public class PosOrderHelper extends PosObjectHelper {
         c.close();
 
         return maxDocument;
+    }
+
+    public long getOrderDate(POSOrder order) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT " + PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT
+                + " FROM " + Tables.TABLE_POSORDER + " WHERE "
+                + PosOrderContract.POSOrderDB.COLUMN_NAME_ORDER_ID + " = ?";
+
+        Log.d(LOG_TAG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {String.valueOf(order.getOrderId())});
+
+        if (c != null)
+            c.moveToFirst();
+
+        c.getCount();
+
+        long date = c.getLong(c.getColumnIndex(PosOrderContract.POSOrderDB.COLUMN_NAME_UPDATED_AT));
+
+        c.close();
+        return date;
     }
 
 }
