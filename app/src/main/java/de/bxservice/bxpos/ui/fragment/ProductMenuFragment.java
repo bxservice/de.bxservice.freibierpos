@@ -50,7 +50,7 @@ import de.bxservice.bxpos.ui.adapter.GridOrderViewAdapter;
  * A placeholder fragment containing a simple view.
  * Created by Diego Ruiz on 18/12/15.
  */
-public class FoodMenuFragment extends Fragment {
+public class ProductMenuFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -70,15 +70,15 @@ public class FoodMenuFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static FoodMenuFragment newInstance(int sectionNumber) {
-        FoodMenuFragment fragment = new FoodMenuFragment();
+    public static ProductMenuFragment newInstance(int sectionNumber) {
+        ProductMenuFragment fragment = new ProductMenuFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public FoodMenuFragment() {
+    public ProductMenuFragment() {
     }
 
     @Override
