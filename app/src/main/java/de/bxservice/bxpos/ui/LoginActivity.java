@@ -66,23 +66,26 @@ import de.bxservice.bxpos.fcm.BxPosFirebaseInstanceIDService;
 import de.bxservice.bxpos.logic.daomanager.PosSessionPreferenceManagement;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.tasks.CreateDeviceTokenTask;
-import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.logic.util.SecureEngine;
 import de.bxservice.bxpos.logic.webservices.AuthenticationWebService;
 import de.bxservice.bxpos.logic.webservices.WebServiceRequestData;
+import de.bxservice.bxpos.ui.fragment.AsyncFragment;
 
 /**
  * A login screen that offers login via username/password.
  * Created by Diego Ruiz
  */
-public class LoginActivity extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity implements AsyncFragment.ParentActivity {
 
     private static final String LOG_TAG = "Login Activity";
+    private static final String ASYNC_FRAGMENT_TAG = "LOGIN_ASYNC_FRAGMENT_TAG";
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private AsyncFragment mAsyncFragment;
+    private CreateDeviceTokenTask createDeviceTokenTask = null;
 
     // UI references.
     private AutoCompleteTextView mUsernameView;
@@ -150,6 +153,20 @@ public class LoginActivity extends AppCompatActivity  {
         });
 
         checkPlayServices();
+
+        mAsyncFragment = (AsyncFragment) getSupportFragmentManager().findFragmentByTag(ASYNC_FRAGMENT_TAG);
+        if (mAsyncFragment == null) {
+            mAsyncFragment = new AsyncFragment();
+            getSupportFragmentManager().beginTransaction().add(mAsyncFragment, ASYNC_FRAGMENT_TAG).commit();
+        }
+
+        if (mAsyncFragment.isTaskRunning())
+            showProgress(true);
+        else {
+            //The app might have crashed and the data remain there -> Force to clean
+            PosSessionPreferenceManagement sessionPreferenceManager = new PosSessionPreferenceManagement(getBaseContext());
+            sessionPreferenceManager.cleanSession();
+        }
     }
 
     /**
@@ -350,6 +367,27 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
+    private boolean isCreateTokenTaskRunning() {
+        return (createDeviceTokenTask != null) && (createDeviceTokenTask.getStatus() == AsyncTask.Status.RUNNING);
+    }
+
+    private boolean isAuthTaskRunning() {
+        return (mAuthTask != null) && (    mAuthTask.getStatus() == AsyncTask.Status.RUNNING);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Cancel the task if it's running
+        if (isAuthTaskRunning()) {
+            mAuthTask.cancel(true);
+        }
+        if (isCreateTokenTaskRunning()) {
+            createDeviceTokenTask.cancel(true);
+        }
+    }
+
     /**
      * Represents an asynchronous login task used to authenticate
      * the user.
@@ -401,8 +439,7 @@ public class LoginActivity extends AppCompatActivity  {
                 }
 
                 // Read the data needed - Products. MProduct Category - Table ...
-                ReadServerDataTask initiateData = new ReadServerDataTask(LoginActivity.this);
-                initiateData.execute();
+                mAsyncFragment.runAsyncTask();
 
             } else {
 
@@ -441,14 +478,11 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
-    /**
-     * Called when the read data task finishes
-     * @param result
-     */
-    public void postExecuteReadDataTask(Boolean result) {
+    @Override
+    public void handleReadDataTaskFinish(boolean success) {
         showProgress(false);
 
-        if (result) {
+        if (success) {
 
             //Check if the device has already subscribed to the server for push notifications
             SharedPreferences tokenSharedPref = getApplicationContext().getSharedPreferences(BxPosFirebaseInstanceIDService.TOKEN_SHARED_PREF, Context.MODE_PRIVATE);
@@ -460,7 +494,7 @@ public class LoginActivity extends AppCompatActivity  {
                 Log.d(LOG_TAG, "Registering -> " + token);
 
                 //Send the token to the server
-                CreateDeviceTokenTask createDeviceTokenTask = new CreateDeviceTokenTask(tokenSharedPref, this.getBaseContext());
+                createDeviceTokenTask = new CreateDeviceTokenTask(tokenSharedPref, this.getBaseContext());
                 createDeviceTokenTask.execute(token);
             }
 

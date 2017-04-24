@@ -68,11 +68,11 @@ import de.bxservice.bxpos.logic.model.idempiere.Table;
 import de.bxservice.bxpos.logic.model.pos.POSOrder;
 import de.bxservice.bxpos.logic.model.pos.PosUser;
 import de.bxservice.bxpos.logic.tasks.CreateOrderTask;
-import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.persistence.helper.PosObjectHelper;
 import de.bxservice.bxpos.ui.adapter.MainPagerAdapter;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.MultipleOrdersTableDialogFragment;
+import de.bxservice.bxpos.ui.fragment.AsyncFragment;
 
 /**
  * First Activity after login
@@ -80,12 +80,13 @@ import de.bxservice.bxpos.ui.dialog.MultipleOrdersTableDialogFragment;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GuestNumberDialogFragment.GuestNumberDialogListener,
-        MultipleOrdersTableDialogFragment.MultipleOrdersTableDialogListener {
+        MultipleOrdersTableDialogFragment.MultipleOrdersTableDialogListener, AsyncFragment.ParentActivity {
 
     private static final String LOG_TAG = "Main Activity";
     private static final boolean DEVELOPER_MODE = true;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private static final String SELECTED_TABLE = "selectedTable";
+    private static final String ASYNC_FRAGMENT_TAG = "MAIN_ASYNC_FRAGMENT_TAG";
 
     static final int NEW_ORDER_REQUEST  = 1;  // The request code
     static final int EDIT_ORDER_REQUEST = 2;  // The request code
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity
 
     private String syncConnPref;
     private long backPressed;
+
+    private AsyncFragment mAsyncFragment;
 
     private IntentFilter myFilter;
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
@@ -180,6 +183,15 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState != null) {
             selectedTable = (Table) savedInstanceState.getSerializable(SELECTED_TABLE);
         }
+
+        mAsyncFragment = (AsyncFragment) getSupportFragmentManager().findFragmentByTag(ASYNC_FRAGMENT_TAG);
+        if (mAsyncFragment == null) {
+            mAsyncFragment = new AsyncFragment();
+            getSupportFragmentManager().beginTransaction().add(mAsyncFragment, ASYNC_FRAGMENT_TAG).commit();
+        }
+
+        if (mAsyncFragment.isTaskRunning())
+            showProgress(true);
 
         //Configuration to recreate UI on push notification
         myFilter = new IntentFilter(TABLE_UPDATED_ACTION);
@@ -273,9 +285,7 @@ public class MainActivity extends AppCompatActivity
         //Check the internet connection
         if (networkInfo != null && networkInfo.isConnected()) {
             showProgress(true);
-
-            ReadServerDataTask readDataTask = new ReadServerDataTask(this);
-            readDataTask.execute();
+            mAsyncFragment.runAsyncTask();
         }
         else
             Toast.makeText(getBaseContext(), getString(R.string.error_no_connection_on_sync_order),
@@ -478,14 +488,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * gets call after the read data server task finishes
-     * @param success flag to check if the task was successful
-     */
-    public void postExecuteReadDataTask(boolean success) {
+    @Override
+    public void handleReadDataTaskFinish(boolean success) {
         showProgress(false);
 
-        if(success)
+        if (success)
             Toast.makeText(getBaseContext(), getString(R.string.success_on_load_data),
                     Toast.LENGTH_SHORT).show();
         else
