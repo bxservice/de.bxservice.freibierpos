@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import de.bxservice.bxpos.R;
@@ -83,8 +84,10 @@ public class RemarkDialogFragment extends DialogFragment {
                     }
                 });
 
-        // Create the AlertDialog object and return it
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+        return dialog;
     }
 
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener

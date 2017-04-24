@@ -33,6 +33,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -97,10 +98,10 @@ public class ConfirmationPinDialogFragment extends DialogFragment {
                     }
                 });
 
+        Dialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-
-        // Create the AlertDialog object and return it
-        return builder.create();
+        return dialog;
     }
 
     @Override
