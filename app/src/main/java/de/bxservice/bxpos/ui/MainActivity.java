@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, ClosedOrdersActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_report) {
-            Intent intent = new Intent(this, ReportsActivity.class);
+            Intent intent = new Intent(this, ReportActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_send) {
 
