@@ -48,6 +48,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -261,8 +262,22 @@ public class LoginActivity extends AppCompatActivity implements AsyncFragment.Pa
 
                     PosUser loggedUser = PosUser.getUser(getBaseContext(), username);
 
+                    if (loggedUser != null && loggedUser.authenticateHash(password)) {
+                        offlineLogin(loggedUser, password);
+                    }
                     //Username does not exist and no internet connection
-                    if(loggedUser == null) {
+                    else {
+                        //Close soft keyboard to see the message
+                        try {
+                            View view = this.getCurrentFocus();
+                            if (view != null) {
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         Snackbar snackbar = Snackbar
                                 .make(mLoginFormView, getString(R.string.error_no_connection_username), Snackbar.LENGTH_LONG)
                                 .setAction(getString(R.string.action_retry), new View.OnClickListener() {
@@ -275,11 +290,6 @@ public class LoginActivity extends AppCompatActivity implements AsyncFragment.Pa
                         // Changing message text color
                         snackbar.setActionTextColor(Color.RED);
                         snackbar.show();
-                    } else {
-                        //No internet connection but the user is known
-                        if (loggedUser.authenticateHash(password)) {
-                            offlineLogin(loggedUser, password);
-                        }
                     }
                 }
             }
