@@ -161,17 +161,17 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (order.sendOrder(getApplicationContext())) {
+                if (!order.getOrderingLines().isEmpty() && order.sendOrder(getApplicationContext())) {
                     orderSent = true;
                     DefaultPosData defaultPosData = DefaultPosData.get(getBaseContext());
 
                     //If the option is marked in POS Terminal -> Print
-                    if(defaultPosData.isPrintAfterSent())
+                    if (defaultPosData.isPrintAfterSent())
                         printOrder(false);
 
                     finish();
                 } else
-                    Snackbar.make(mainView, "Error", Snackbar.LENGTH_LONG)
+                    Snackbar.make(mainView, R.string.empty_order, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
             }
         });
@@ -180,7 +180,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (order.getOrderingLines() != null && !order.getOrderingLines().isEmpty()) {
+                if (order.getOrderingLines().isEmpty() && order.getOrderedLines().isEmpty())
+                    Snackbar.make(mainView, R.string.empty_order, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                else if (order.getOrderingLines() != null && !order.getOrderingLines().isEmpty()) {
                     new AlertDialog.Builder(EditOrderActivity.this)
                             .setTitle(R.string.unsent_lines)
                             .setNegativeButton(R.string.remove, new DialogInterface.OnClickListener() {
