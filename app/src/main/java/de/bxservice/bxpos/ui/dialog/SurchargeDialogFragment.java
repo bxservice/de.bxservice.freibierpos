@@ -34,6 +34,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -166,8 +167,10 @@ public class SurchargeDialogFragment extends DialogFragment {
                     }
                 });
 
-        // Create the AlertDialog object and return it
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+        return dialog;
     }
 
     // Override the Fragment.onAttach() method to instantiate the GuestNumberDialogListener
