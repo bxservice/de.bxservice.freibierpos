@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="de.bxservice.bxpos.ui.fragment.CreateOrderDetailFragment">
+
+    <include
+        layout="@layout/content_order_detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0" />
+
+    <View
+        android:id="@+id/top_separator"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:visibility="gone"
+        android:background="@android:color/darker_gray" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ordering_lines"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <View
+        android:id="@+id/foot_separator"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:visibility="gone"
+        android:background="@android:color/darker_gray" />
+
+    <include
+        layout="@layout/content_order_detail_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="0"
+        android:gravity="bottom" />
+
+</LinearLayout>
+

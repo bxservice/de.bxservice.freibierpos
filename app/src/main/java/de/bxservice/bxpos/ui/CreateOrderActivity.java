@@ -50,6 +50,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.text.NumberFormat;
@@ -70,6 +72,7 @@ import de.bxservice.bxpos.ui.dialog.MultipleItemsDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
+import de.bxservice.bxpos.ui.fragment.CreateOrderDetailFragment;
 import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
@@ -113,14 +116,19 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     private ViewPager mViewPager;
 
+    //If the app is running on a large-screen device
+    private boolean mTablet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_order_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.create_order_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Get Table # and # of guests
         getExtras();
@@ -187,8 +195,14 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             }
         });
 
+        ViewGroup fragmentContainer = (ViewGroup) findViewById(R.id.detail_order_fragment);
+        mTablet = (fragmentContainer != null);
+
         if (posOrder != null) {
             remarkNote = posOrder.getOrderRemark();
+            if (mTablet) {
+                updateCreateOrderDetailFragment();
+            }
         }
 
     }
@@ -478,6 +492,8 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             createOrder();
 
         posOrder.addItem(product, getBaseContext());
+        if (mTablet)
+            updateCreateOrderDetailFragment();
     }
 
     public void addMultipleItems(MProduct product) {
@@ -595,9 +611,22 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
      */
     private void updateOrderLinesQuantity() {
         mCreateOrderPagerAdapter.refreshAllQty();
+        if (mTablet)
+            updateCreateOrderDetailFragment();
+    }
+
+    private void updateCreateOrderDetailFragment() {
+        CreateOrderDetailFragment fragment =
+                CreateOrderDetailFragment.newInstance(posOrder);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.detail_order_fragment, fragment)
+                .commit();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         // Check which request we're responding to
         if (requestCode == PICK_CONFIRMATION_REQUEST) {
             // Make sure the request was successful
