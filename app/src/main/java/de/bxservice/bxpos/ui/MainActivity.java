@@ -38,6 +38,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         MultipleOrdersTableDialogFragment.MultipleOrdersTableDialogListener {
 
     private static final String LOG_TAG = "Main Activity";
+    private static final boolean DEVELOPER_MODE = true;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private static final String SELECTED_TABLE = "selectedTable";
 
@@ -117,6 +119,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (DEVELOPER_MODE) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectNetwork()
+                    .penaltyLog()
+                    .penaltyDialog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll()
+                    .penaltyLog()
+                    .build());
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
