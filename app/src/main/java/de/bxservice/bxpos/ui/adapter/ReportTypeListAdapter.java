@@ -119,8 +119,14 @@ public class ReportTypeListAdapter extends RecyclerView.Adapter<ReportTypeListAd
         return mDataset.size();
     }
 
-    public ArrayList<Report> getReports() {
-        return mDataset;
+    public ArrayList<Report> getSelectedReports() {
+        ArrayList<Report> selectedReports = new ArrayList<>();
+        for (Report report : mDataset) {
+            if(report.isSelected())
+                selectedReports.add(report);
+        }
+
+        return selectedReports;
     }
 
 }

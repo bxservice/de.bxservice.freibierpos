@@ -24,42 +24,48 @@
  **********************************************************************/
 package de.bxservice.bxpos.ui;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.report.Report;
-import de.bxservice.bxpos.logic.model.report.ReportFactory;
-import de.bxservice.bxpos.ui.adapter.ReportTypeListAdapter;
-import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
-import de.bxservice.bxpos.ui.dialog.DatePickerFragment;
+import de.bxservice.bxpos.ui.fragment.ReportResultFragment;
+import de.bxservice.bxpos.ui.fragment.ReportsFragment;
+import de.bxservice.bxpos.ui.utilities.ReportActivityHelper;
 
 public class ReportActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener {
 
-    //View components
-    private Button  fromButton, toButton;
-    private RecyclerView recyclerView;
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
-    //The dates will are stored as int in yyyymmdd format
-    private long fromDate, toDate;
-    private boolean isFromDate;
+    //If the app is running on a large-screen device
+    private boolean mTablet;
+    private boolean mShowSaveItem = false;
 
     //Components to call the result activity
+    private ArrayList<Integer> ranReportCodes;
     private ArrayList<String> reportResults;
 
     @Override
@@ -67,166 +73,167 @@ public class ReportActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        fromButton   = (Button) findViewById(R.id.from_button);
-        toButton     = (Button) findViewById(R.id.to_button);
-        recyclerView = (RecyclerView) findViewById(R.id.report_types);
-
-        Calendar c = Calendar.getInstance();
-
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1; //Calendar month returns the position of the month 0 being January
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
-        setFromButtonText(year, month, day);
-        setToButtonText(year, month, day);
-        fromDate = getFormattedDate(year, month, day, 0, 0); //From the beginning of the day
-        toDate   = getFormattedDate(year, month, day,23,59); //To the end of the day
-
-        String[] reportTypeNames  = getResources().getStringArray(R.array.report_types_titles);
-        String[] reportTypeValues = getResources().getStringArray(R.array.report_types_values);
-
-        ReportFactory reports = new ReportFactory(getBaseContext(), reportTypeNames, reportTypeValues);
-        final ReportTypeListAdapter mAdapter = new ReportTypeListAdapter(reports.getReports());
-
-        // use a linear layout manager
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getBaseContext());
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), DividerItemDecoration.VERTICAL_LIST));
-
-        recyclerView.setAdapter(mAdapter);
-
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.query_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<Report> selectedReports = getReportsFragment().getSelectedReports();
 
-                boolean someSelected = false; //Check if there has been at least one selected
-                ArrayList<Report> selectedReports = mAdapter.getReports();
-                reportResults = new ArrayList<>();
-
-                for (Report report : selectedReports) {
-
-                    if (report.isSelected()) {
-                        someSelected = true;
-                        report.setFromDate(fromDate);
-                        report.setToDate(toDate);
-                        report.runReport();
-                        reportResults.add(report.getHtmlResult().toString());
+                if (selectedReports.size() > 0) {
+                    for (Report report : selectedReports) {
+                        runReport(report);
                     }
-                }
 
-                if (!someSelected)
+                } else {
                     Toast.makeText(ReportActivity.this,
                             getString(R.string.no_report_selected), Toast.LENGTH_LONG)
                             .show();
-                else
-                    startPrintResultActivity();
+                }
+
+                if (reportResults != null && !reportResults.isEmpty())
+                    viewDetailFragment();
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
+        ViewGroup fragmentContainer = (ViewGroup) findViewById(R.id.detail_report_fragment_container);
+        mTablet = (fragmentContainer != null);
     }
 
-    /**
-     * On Button listener defined in the xml file
-     * @param view
-     */
-    public void onButtonClick(View view) {
-        switch (view.getId()) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_report_result, menu);
+        return true;
+    }
 
-            case R.id.from_button:
-                isFromDate = true;
-                showDatePickerDialog();
-                break;
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
 
-            case R.id.to_button:
-                isFromDate = false;
-                showDatePickerDialog();
-                break;
+        MenuItem saveItem = menu.findItem(R.id.save_pdf);
+
+        if (mTablet) {
+            if (saveItem != null) {
+                saveItem.setEnabled(mShowSaveItem);
+                saveItem.setVisible(mShowSaveItem);
+            }
+        } else {
+            saveItem.setEnabled(false);
+            saveItem.setVisible(false);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_pdf:
+                int permissionCheck = ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                //Version API 23+, you have to ask for permission in the activity to be allow to save files
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    // We don't have permission so prompt the user
+                    ActivityCompat.requestPermissions(
+                            this,
+                            PERMISSIONS_STORAGE,
+                            REQUEST_EXTERNAL_STORAGE
+                    );
+                } else {
+                    //We have permission so save the pdf
+                    if (getReportResultFragment() != null)
+                        ReportActivityHelper.saveToPdf(this, getReportResultFragment().getRecyclerView());
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
-    private void showDatePickerDialog() {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+    private ReportsFragment getReportsFragment() {
+        return (ReportsFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.report_fragment);
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day) {
+    private ReportResultFragment getReportResultFragment() {
+        return (ReportResultFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.detail_report_fragment_container);
+    }
 
-        if (isFromDate) {
-            setFromButtonText(year, month+1, day);
-            fromDate = getFormattedDate(year, month+1, day, 0, 0); //From the beginning of the day
+    private void viewDetailFragment() {
+
+        if (mTablet) {
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            ReportResultFragment fragment =
+                    ReportResultFragment.newInstance(reportResults);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.detail_report_fragment_container, fragment)
+                    .commit();
+
+            mShowSaveItem  = true;
+            invalidateOptionsMenu();
+
+        } else {
+            Intent intent = new Intent(this, ReportResultActivity.class);
+            intent.putExtra(ReportResultFragment.REPORT_RESULTS, reportResults);
+            startActivity(intent);
         }
-        else {
-            setToButtonText(year, month+1, day);
-            toDate = getFormattedDate(year, month+1, day, 23, 59); //To the end of the day
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        getReportsFragment().onDateSet(year, month, day);
+    }
+
+    private void runReport(Report report) {
+        boolean runReport = true;
+
+        if (ranReportCodes != null && ranReportCodes.size() > 0) {
+            for (Integer reportCode : ranReportCodes) {
+                if (reportCode == report.getCode()) {
+                    runReport = false; //The report was ran before
+                    break;
+                }
+            }
+        } else {
+            ranReportCodes = new ArrayList<>();
+            reportResults = new ArrayList<>();
         }
 
+        if (runReport) {
+            report.setFromDate(getReportsFragment().getFromDate());
+            report.setToDate(getReportsFragment().getToDate());
+            report.runReport();
+            if (!report.getHtmlResult().toString().isEmpty()) {
+                reportResults.add(report.getHtmlResult().toString());
+                ranReportCodes.add(report.getCode());
+            }
+        }
     }
 
-    private void setFromButtonText(int year, int month, int day) {
-        StringBuilder date = new StringBuilder();
-        if(day < 10)
-            date.append("0");
-        date.append(day).append(".");
-        if(month < 10)
-            date.append("0");
-        date.append(month).append(".").append(year);
-
-        fromButton.setText(getString(R.string.from_date, date));
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    runReport(getReportsFragment().getSelectedReports().get(0));
+                } else {
+                    // permission denied
+                }
+            }
+        }
     }
-
-    private void setToButtonText(int year, int month, int day) {
-        StringBuilder date = new StringBuilder();
-        if(day < 10)
-            date.append("0");
-        date.append(day).append(".");
-        if(month < 10)
-            date.append("0");
-        date.append(month).append(".").append(year);
-        toButton.setText(getString(R.string.to_date, date));
-    }
-
-    /**
-     *
-     * @param year
-     * @param month
-     * @param day
-     * @return formatted date
-     */
-    private long getFormattedDate(int year, int month, int day, int hour, int minute) {
-        StringBuilder date = new StringBuilder();
-
-        date.append(year);
-
-        if(month < 10)
-            date.append("0");
-        date.append(month);
-
-        if(day < 10)
-            date.append("0");
-        date.append(day);
-
-        if(hour < 10)
-            date.append("0");
-        date.append(hour);
-
-        if(minute < 10)
-            date.append("0");
-        date.append(minute);
-
-        return Long.parseLong(date.toString());
-    }
-
-    private void startPrintResultActivity() {
-        Intent intent = new Intent(this, ReportResultActivity.class);
-        intent.putExtra(ReportResultActivity.REPORT_RESULTS, reportResults);
-        startActivity(intent);
-    }
-
 }
