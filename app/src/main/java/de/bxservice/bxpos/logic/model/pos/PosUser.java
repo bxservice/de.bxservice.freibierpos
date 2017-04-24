@@ -90,14 +90,8 @@ public class PosUser {
      * @return
      */
     public boolean createUser(Context ctx) {
-
         userManager = new PosUserManagement(ctx);
-        boolean result;
-
-        result = userManager.create(this);
-
-        return result;
-
+        return userManager.create(this);
     }
 
     public void setSalt(String salt) {
