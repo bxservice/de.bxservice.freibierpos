@@ -27,6 +27,7 @@ package de.bxservice.bxpos.logic.model.pos;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -97,6 +98,17 @@ public class POSOrder implements Serializable {
     }
 
     public void addItem(MProduct product, Context ctx) {
+        addItem(product, null, ctx);
+    }
+
+    /**
+     * Add an order line to the order
+     * if the product has related products to be added automatically, add those line also
+     * @param product         Product in the line
+     * @param overridePrice   Override product price with a different value
+     * @param ctx             Context
+     */
+    public void addItem(MProduct product, @Nullable BigDecimal overridePrice, Context ctx) {
 
         boolean newItem = true;
         POSOrderLine orderLine = null;
@@ -110,6 +122,9 @@ public class POSOrder implements Serializable {
                 if(orderLine != null){
                     newItem = false;
                     orderLine.setQtyOrdered(orderLine.getQtyOrdered() + 1); //add 1 to the qty previously ordered
+                    if (overridePrice != null) {
+                        orderLine.setLineNetAmt(orderLine.getLineNetAmt().add(overridePrice));
+                    }
                     orderLine.updateLine(ctx);
                 }
             }
@@ -123,6 +138,9 @@ public class POSOrder implements Serializable {
             orderLine.setQtyOrdered(1); //If new item - is the first item that is added
             orderLine.setLineStatus(POSOrderLine.ORDERING);
             orderLine.setLineNo(currentLineNo);
+            if (overridePrice != null) {
+                orderLine.setLineNetAmt(overridePrice);
+            }
 
             orderingLines.add(orderLine);
             orderLine.createLine(ctx);
@@ -184,7 +202,7 @@ public class POSOrder implements Serializable {
 
         //Copy the orderLine
         if (orderingLines.contains(orderLine)) {
-            addItem(orderLine.getProduct(), null);
+            addItem(orderLine.getProduct(), orderLine.getLineNetAmt(), null);
             return;
         }
 

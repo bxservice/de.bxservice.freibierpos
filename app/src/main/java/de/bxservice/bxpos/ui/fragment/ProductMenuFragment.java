@@ -107,7 +107,10 @@ public class ProductMenuFragment extends Fragment {
             item.setName(product.getProductKey());
             item.setKey(product.getProductKey());
 
-            item.setPrice(currencyFormat.format(product.getProductPriceValue()));
+            if (!product.askForPrice())
+                item.setPrice(currencyFormat.format(product.getProductPriceValue()));
+            else
+                item.setPrice("");
 
             //When you navigate through the tabs it paints again everything - this lets the number stay
             qtyOrdered = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
@@ -138,7 +141,8 @@ public class ProductMenuFragment extends Fragment {
 
                 int productQty = ((CreateOrderActivity) getActivity()).getProductQtyOrdered(product);
 
-                updateQtyOnClick(position, productQty);
+                if (productQty != 0)
+                    updateQtyOnClick(position, productQty);
             }
         });
 
@@ -150,7 +154,8 @@ public class ProductMenuFragment extends Fragment {
                 NewOrderGridItem item = (NewOrderGridItem) parent.getItemAtPosition(position);
                 MProduct product = itemProductHashMap.get(item);
 
-                ((CreateOrderActivity) getActivity()).addMultipleItems(product);
+                if (!product.askForPrice())
+                    ((CreateOrderActivity) getActivity()).addMultipleItems(product);
 
                 return true;
             }

@@ -245,6 +245,9 @@
     <string name="voided">Anulada</string>
     <string name="net_label">Subtotal sin IVA</string>
     <string name="tax_label">IVA</string>
+    <string name="error_invalid_price">Precio inválido. Debe ser mayor a %1$s</string>
+    <string name="price">Precio</string>
+
 </resources>
 
 

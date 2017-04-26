@@ -249,4 +249,7 @@
     <string name="order_no">Auftrag: %1$s</string>
     <string name="net_label">Netto</string>
     <string name="tax_label">MWST</string>
+    <string name="error_invalid_price">Invalid price. Must be greater than %1$s</string>
+    <string name="price">Preis</string>
+
 </resources>

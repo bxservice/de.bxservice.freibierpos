@@ -69,6 +69,7 @@ import de.bxservice.bxpos.ui.adapter.CreateOrderPagerAdapter;
 import de.bxservice.bxpos.ui.adapter.SearchItemAdapter;
 import de.bxservice.bxpos.ui.decorator.DividerItemDecoration;
 import de.bxservice.bxpos.ui.dialog.MultipleItemsDialogFragment;
+import de.bxservice.bxpos.ui.dialog.OverridePriceDialogFragment;
 import de.bxservice.bxpos.ui.dialog.SwitchTableDialogFragment;
 import de.bxservice.bxpos.ui.dialog.GuestNumberDialogFragment;
 import de.bxservice.bxpos.ui.dialog.RemarkDialogFragment;
@@ -77,7 +78,8 @@ import de.bxservice.bxpos.ui.utilities.PreferenceActivityHelper;
 
 public class CreateOrderActivity extends AppCompatActivity implements GuestNumberDialogFragment.GuestNumberDialogListener,
         RemarkDialogFragment.RemarkDialogListener, SwitchTableDialogFragment.SwitchTableDialogListener,
-        MultipleItemsDialogFragment.MultipleItemsDialogListener, SearchView.OnQueryTextListener {
+        MultipleItemsDialogFragment.MultipleItemsDialogListener, OverridePriceDialogFragment.OverridePriceDialogListener,
+        SearchView.OnQueryTextListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -225,7 +227,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
                 gridItem.setName(product.getProductName());
             else
                 gridItem.setName(product.getProductKey() + " " + product.getProductName());
-            gridItem.setPrice(currencyFormat.format(product.getProductPriceValue()));
+
+            if (!product.askForPrice())
+                gridItem.setPrice(currencyFormat.format(product.getProductPriceValue()));
+            else
+                gridItem.setPrice("");
+
             gridItem.setKey(product.getProductKey());
 
             items.add(gridItem);
@@ -433,6 +440,12 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
         multipleItemsDialog.show(getFragmentManager(), "MultipleItemsDialogFragment");
     }
 
+    private void showSetPriceDialog(MProduct product) {
+        OverridePriceDialogFragment priceDialogFragment = new OverridePriceDialogFragment();
+        priceDialogFragment.setProduct(product);
+        priceDialogFragment.show(getFragmentManager(), "OverridePriceDialogFragment");
+    }
+
     /**
      * Click set on guest number dialog
      * @param dialog
@@ -486,14 +499,28 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     }
 
+    @Override
+    public void onDialogPositiveClick(OverridePriceDialogFragment dialog) {
+        if (dialog.getOverridePrice() != null) {
+            posOrder.addItem(dialog.getProduct(), dialog.getOverridePrice(), getBaseContext());
+            updateOrderLinesQuantity();
+        }
+        dialog.dismiss();
+    }
+
     public void addOrderItem(MProduct product) {
 
         if(posOrder == null)
             createOrder();
 
-        posOrder.addItem(product, getBaseContext());
-        if (mTablet)
-            updateCreateOrderDetailFragment();
+        //If the product price is zero and the price limit > 0
+        if (product.askForPrice()) {
+            showSetPriceDialog(product);
+        } else {
+            posOrder.addItem(product, getBaseContext());
+            if (mTablet)
+                updateCreateOrderDetailFragment();
+        }
     }
 
     public void addMultipleItems(MProduct product) {
