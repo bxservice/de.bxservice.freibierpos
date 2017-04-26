@@ -37,7 +37,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -129,9 +128,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_order);
         Toolbar toolbar = (Toolbar) findViewById(R.id.PaymentToolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getExtras();
 

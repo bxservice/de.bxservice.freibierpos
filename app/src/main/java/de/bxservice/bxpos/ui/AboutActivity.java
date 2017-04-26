@@ -54,7 +54,8 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.about_toolbar);
-        setSupportActionBar(toolbar);
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
 
         TextView versionTv = (TextView) findViewById(R.id.versionTextView);
         versionTv.setText(getString(R.string.about_version, BuildConfig.VERSION_NAME));
@@ -72,7 +73,8 @@ public class AboutActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.developerTextView);
         tv.setText( builder, TextView.BufferType.SPANNABLE);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -60,7 +60,10 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_open_orders);
         Toolbar toolbar = (Toolbar) findViewById(R.id.open_order_toolbar);
-        setSupportActionBar(toolbar);
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         gridview = (GridView) findViewById(R.id.open_orders_gridview);
 
@@ -107,9 +110,6 @@ public class ViewOpenOrdersActivity extends AppCompatActivity {
                 openEditOrder(order);
             }
         });
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     @Override

@@ -74,10 +74,7 @@ public class PosKitchenNoteHelper extends PosObjectHelper {
 
         Cursor c = db.rawQuery(selectQuery, new String[] {note.toLowerCase()});
 
-        if (c != null && c.getCount() > 0)
-            exists = true;
-        else
-            exists = false;
+        exists = c != null && c.getCount() > 0;
 
         if (c != null)
             c.close();

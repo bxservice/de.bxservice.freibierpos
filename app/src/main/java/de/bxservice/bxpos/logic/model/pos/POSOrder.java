@@ -111,7 +111,7 @@ public class POSOrder implements Serializable {
     public void addItem(MProduct product, @Nullable BigDecimal overridePrice, Context ctx) {
 
         boolean newItem = true;
-        POSOrderLine orderLine = null;
+        POSOrderLine orderLine;
 
         if (!isAlwaysOneLine) {
 

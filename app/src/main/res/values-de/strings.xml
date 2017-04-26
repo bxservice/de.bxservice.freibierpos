@@ -7,7 +7,6 @@
     <string name="navigation_drawer_close">Schließen der Navigationsleiste</string>
     <string name="search">Suche</string>
     <string name="report">Bericht</string>
-    <string name="save">speichern</string>
 
     <!-- Strings related to dialogs -->
     <string name="discard_draft_order">Beleg verwerfen?</string>
@@ -24,7 +23,6 @@
     <string name="delete">Entf</string>
     <string name="copy">Kopieren</string>
     <string name="selected_count">%1$d ausgewählt</string>
-    <string name="set_table">Tisch wählen</string>
     <string name="change_table">Tisch wechseln</string>
     <string name="split_order">Split-Bestellung</string>
     <string name="join_orders">Aufträge kombinieren</string>

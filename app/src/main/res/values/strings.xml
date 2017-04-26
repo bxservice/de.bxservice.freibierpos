@@ -7,7 +7,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="search">Search</string>
     <string name="report">Report</string>
-    <string name="save">Save</string>
 
     <!-- Strings related to dialogs -->
     <string name="discard_draft_order">Discard order?</string>
@@ -24,7 +23,6 @@
     <string name="delete">Delete</string>
     <string name="copy">Copy</string>
     <string name="selected_count">%1$d selected</string>
-    <string name="set_table">Set table</string>
     <string name="change_table">Switch table</string>
     <string name="split_order">Split order</string>
     <string name="join_orders">Join orders</string>
