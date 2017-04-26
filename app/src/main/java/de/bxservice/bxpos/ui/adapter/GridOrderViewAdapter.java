@@ -82,8 +82,10 @@ public class GridOrderViewAdapter extends ArrayAdapter<NewOrderGridItem> {
         }
 
         NewOrderGridItem item = mGridData.get(position);
-        holder.titleTextView.setText(Html.fromHtml(item.getName()));
-        holder.priceTextView.setText(Html.fromHtml(item.getPrice()));
+        if (item.getName() != null && !item.getName().isEmpty())
+            holder.titleTextView.setText(Html.fromHtml(item.getName()));
+        if (item.getPrice() != null && !item.getPrice().isEmpty())
+            holder.priceTextView.setText(Html.fromHtml(item.getPrice()));
         holder.qtyTextView.setText(Html.fromHtml(item.getQty()));
 
         return row;

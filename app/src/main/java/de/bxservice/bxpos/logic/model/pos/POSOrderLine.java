@@ -122,14 +122,23 @@ public class POSOrderLine implements Serializable {
         return lineNetAmt;
     }
 
+    public void setLineNetAmt(BigDecimal lineNetAmt) {
+        this.lineNetAmt = lineNetAmt;
+    }
+
     public BigDecimal getPriceActual() {
 
-        //return unitary value to be sent to iDempiere
-        if (product != null && !isComplimentaryProduct)
+        //if it is a complimentary line -> return zero
+        if (isComplimentaryProduct)
+            return BigDecimal.ZERO;
+
+        //return unitary value to be sent to iDempiere if the product price is different than zero
+        else if (product != null && product.getProductPriceValue().compareTo(BigDecimal.ZERO) != 0)
             return product.getProductPriceValue();
 
-        //if it is a complimentary line -> return zero
-        return BigDecimal.ZERO;
+        //if the line is not complimentary but the price is 0 -> override price
+        else
+            return lineNetAmt.abs();
     }
 
     /**

@@ -129,6 +129,11 @@ public class MProduct implements Serializable {
         isSold = sold;
     }
 
+    public boolean askForPrice() {
+        ProductPrice productPrice = getProductPrice(null);
+        return productPrice.getStdPrice().compareTo(BigDecimal.ZERO) == 0 && productPrice.getPriceLimit().compareTo(BigDecimal.ZERO) != 0;
+    }
+
     /**
      * Save if the object does not exist it creates it
      * otherwise it updates it
