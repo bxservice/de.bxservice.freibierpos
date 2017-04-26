@@ -26,8 +26,6 @@ package de.bxservice.bxpos.logic.daomanager;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-
 import de.bxservice.bxpos.logic.print.POSOutputDevice;
 
 /**

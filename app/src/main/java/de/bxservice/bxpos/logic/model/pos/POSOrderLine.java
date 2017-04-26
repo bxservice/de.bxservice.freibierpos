@@ -235,10 +235,7 @@ public class POSOrderLine implements Serializable {
      * @return
      */
     public boolean isVoidable() {
-        if(lineStatus.equals(VOIDED) || qtyOrdered < 0)
-            return false;
-
-        return true;
+        return !(lineStatus.equals(VOIDED) || qtyOrdered < 0);
     }
 
 }

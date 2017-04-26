@@ -76,7 +76,7 @@ public class GridTableViewAdapter extends ArrayAdapter<Table> {
         View row = convertView;
         ViewHolder holder;
 
-        LinearLayout linear = null;
+        LinearLayout linear;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();

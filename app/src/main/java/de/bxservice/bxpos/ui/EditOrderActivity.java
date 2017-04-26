@@ -140,8 +140,10 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
         setContentView(R.layout.activity_edit_order);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.edit_order_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (toolbar != null)
+           setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getExtras();
 

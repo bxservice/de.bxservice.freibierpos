@@ -7,7 +7,6 @@
     <string name="navigation_drawer_close">Cerrar panel de navegación</string>
     <string name="search">Buscar</string>
     <string name="report">Reporte</string>
-    <string name="save">Guardar</string>
 
     <!-- Strings related to dialogs -->
     <string name="discard_draft_order">¿Descartar orden?</string>
@@ -24,7 +23,6 @@
     <string name="delete">Eliminar</string>
     <string name="copy">Copiar</string>
     <string name="selected_count">%1$d seleccionado</string>
-    <string name="set_table">Establecer mesa</string>
     <string name="change_table">Cambiar mesa</string>
     <string name="split_order">Dividir orden</string>
     <string name="join_orders">Juntar órdenes</string>
