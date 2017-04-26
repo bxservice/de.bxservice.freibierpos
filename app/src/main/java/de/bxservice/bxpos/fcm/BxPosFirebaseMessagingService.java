@@ -43,7 +43,6 @@ import java.util.Map;
 
 import de.bxservice.bxpos.R;
 import de.bxservice.bxpos.logic.model.idempiere.Table;
-import de.bxservice.bxpos.logic.tasks.ReadServerDataTask;
 import de.bxservice.bxpos.ui.FCMNotificationActivity;
 import de.bxservice.bxpos.ui.MainActivity;
 
