@@ -195,11 +195,11 @@
 
     <!-- Report types -->
     <string-array name="report_types_titles">
-        <item>Sales</item>
-        <item>My sales</item>
-        <item>Void items</item>
-        <item>Table sales</item>
-        <item>Product sales</item>
+        <item>Umsatz</item>
+        <item>Mein Umsatz</item>
+        <item>Storniert</item>
+        <item>Umsätze per Tisch</item>
+        <item>Umsätze per Artikel</item>
     </string-array>
     <string-array name="report_types_values">
         <item>0</item>
