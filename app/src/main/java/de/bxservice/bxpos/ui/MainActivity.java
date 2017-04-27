@@ -35,6 +35,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity
     private String syncConnPref;
     private long backPressed;
 
+    private CreateOrderTask createOrderTask = null;
     private AsyncFragment mAsyncFragment;
 
     private IntentFilter myFilter;
@@ -236,22 +238,27 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_send) {
 
-            final List<POSOrder> unsynchronizedOrders = POSOrder.getUnsynchronizedOrders(getBaseContext());
-
-            if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.synchronize_orders_title)
-                        .setMessage(getString(R.string.synchronize_orders_message, unsynchronizedOrders.size()))
-                        .setNegativeButton(R.string.cancel, null)
-                        .setPositiveButton(R.string.synchronize, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                synchronizePendingOrders(unsynchronizedOrders, false);
-                            }
-                        }).create().show();
-            }
-            else
-                Toast.makeText(getBaseContext(), getString(R.string.no_unsync_orders),
+            if (isCreateOrderTaskRunning())
+                Toast.makeText(getBaseContext(), getString(R.string.sync_task_running),
                         Toast.LENGTH_SHORT).show();
+            else {
+
+                final List<POSOrder> unsynchronizedOrders = POSOrder.getUnsynchronizedOrders(getBaseContext());
+
+                if (unsynchronizedOrders != null && unsynchronizedOrders.size() != 0) {
+                    new AlertDialog.Builder(this)
+                            .setTitle(R.string.synchronize_orders_title)
+                            .setMessage(getString(R.string.synchronize_orders_message, unsynchronizedOrders.size()))
+                            .setNegativeButton(R.string.cancel, null)
+                            .setPositiveButton(R.string.synchronize, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    synchronizePendingOrders(unsynchronizedOrders, false);
+                                }
+                            }).create().show();
+                } else
+                    Toast.makeText(getBaseContext(), getString(R.string.no_unsync_orders),
+                            Toast.LENGTH_SHORT).show();
+            }
 
         } else if (id == R.id.nav_reload_data) {
             new AlertDialog.Builder(this)
@@ -308,7 +315,7 @@ public class MainActivity extends AppCompatActivity
 
         //When no internet connection
         if (networkInfo != null && networkInfo.isConnected()) {
-            CreateOrderTask createOrderTask = new CreateOrderTask(this);
+            createOrderTask = new CreateOrderTask(this);
             //Convert from List to POSOrder[] to send as a parameter to the async task
             POSOrder[] orderArray = unsynchronizedOrders.toArray(new POSOrder[unsynchronizedOrders.size()]);
             createOrderTask.execute(orderArray);
@@ -316,6 +323,10 @@ public class MainActivity extends AppCompatActivity
         else if (!automatic)
             Toast.makeText(getBaseContext(), getString(R.string.error_no_connection_on_sync_order),
                     Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isCreateOrderTaskRunning() {
+        return (createOrderTask != null) && (createOrderTask.getStatus() == AsyncTask.Status.RUNNING);
     }
 
     public void showGuestNumberDialog() {
