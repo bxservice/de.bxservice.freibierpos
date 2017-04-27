@@ -245,6 +245,7 @@
     <string name="tax_label">IVA</string>
     <string name="error_invalid_price">Precio inválido. Debe ser mayor a %1$s</string>
     <string name="price">Precio</string>
+    <string name="sync_task_running">Las órdenes ya están siendo sincronizadas</string>
 
 </resources>
 

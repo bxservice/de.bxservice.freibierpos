@@ -249,5 +249,6 @@
     <string name="tax_label">MWST</string>
     <string name="error_invalid_price">Invalid price. Must be greater than %1$s</string>
     <string name="price">Preis</string>
+    <string name="sync_task_running">Orders are already being synchronized</string>
 
 </resources>

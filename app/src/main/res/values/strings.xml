@@ -223,6 +223,7 @@
     <string name="tax_label">VAT</string>
     <string name="error_invalid_price">Invalid price. Must be greater than %1$s</string>
     <string name="price">Price</string>
+    <string name="sync_task_running">Orders are already being synchronized</string>
 
     <!-- Report types -->
     <string-array name="report_types_titles">
