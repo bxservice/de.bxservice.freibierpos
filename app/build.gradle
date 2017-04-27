@@ -23,8 +23,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile files('libs/idempierewsc.jar')
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
