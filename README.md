@@ -4,6 +4,7 @@ Android Freibier POS
 Description
 -----------
 The Freibier POS app is intended to help you interact with iDempiere more quickly and efficiently. After installing the app, you will be able to:
+
 * Taking customers' orders
 * Create sales orders in iDempiere ERP from your Android device
 * See daily reports (Daily cash)
