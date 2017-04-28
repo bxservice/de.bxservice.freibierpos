@@ -271,8 +271,10 @@ public class PayOrderActivity extends AppCompatActivity implements RemarkDialogF
                 onPay();
                 break;
             case R.id.dec:
-                if (payAmount.toString().isEmpty() || payAmount.toString().contains(getString(R.string.decimal)))
-                    break;
+                if (payAmount.toString().isEmpty() || payAmount.toString().contains(getString(R.string.decimal)));
+                else
+                    payAmount.append(".");
+                break;
             default:
                 payAmount.append(((Button) view).getText().toString());
                 updatePayField();
