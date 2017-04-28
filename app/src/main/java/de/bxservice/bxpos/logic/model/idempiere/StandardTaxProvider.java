@@ -25,19 +25,21 @@ public class StandardTaxProvider implements ITaxProvider {
         for (POSOrderLine line : order.getOrderedLines())
         {
             totalLines = totalLines.add(line.getLineNetAmt());
-            Integer taxID = new Integer(line.getLineTax().getTaxID());
-            if (!taxList.contains(taxID))
-            {
-                Tax tax = Tax.getTax(taxID, ctx);
-                POSOrderTax oTax = new POSOrderTax();
-                oTax.setTax(tax);
-                oTax.setOrder(order);
-                oTax.setPrecision(DefaultPosData.getPrecision(ctx));
 
-                order.getOrderTaxes().add(oTax);
-                if (!oTax.calculateTaxFromLines())
-                    return false;
-                taxList.add(taxID);
+            if (line.getLineTax() != null) {
+                Integer taxID = new Integer(line.getLineTax().getTaxID());
+                if (!taxList.contains(taxID)) {
+                    Tax tax = Tax.getTax(taxID, ctx);
+                    POSOrderTax oTax = new POSOrderTax();
+                    oTax.setTax(tax);
+                    oTax.setOrder(order);
+                    oTax.setPrecision(DefaultPosData.getPrecision(ctx));
+
+                    order.getOrderTaxes().add(oTax);
+                    if (!oTax.calculateTaxFromLines())
+                        return false;
+                    taxList.add(taxID);
+                }
             }
         }
 
