@@ -265,11 +265,11 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
             return true;
         }
         if (id == R.id.add_item) {
-            if(caller.equals("CreateOrderActivity")) {
+            if (caller.equals("CreateOrderActivity")) {
                 addNewItemsOnBack = true;
                 onBackPressed();
                 return true;
-            }else if (caller.equals("MainActivity") ||
+            } else if (caller.equals("MainActivity") ||
                     caller.equals("ViewOpenOrdersActivity")) {
                 openAddItemsActivity();
                 return true;
@@ -828,7 +828,7 @@ public class EditOrderActivity extends AppCompatActivity implements GuestNumberD
      */
     private void openAddItemsActivity() {
         Intent intent = new Intent(this, CreateOrderActivity.class);
-        intent.putExtra("caller","EditOrderActivity");
+        intent.putExtra(CreateOrderActivity.CALLER_ACTIVITY,"EditOrderActivity");
         intent.putExtra(EXTRA_ORDER, order);
 
         startActivityForResult(intent, ADD_ITEMS_REQUEST);
