@@ -327,22 +327,20 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
     private void getExtras() {
         Bundle extras = getIntent().getExtras();
 
-        if(extras != null) {
+        if (extras != null) {
 
-            caller = getIntent().getStringExtra("caller");
+            caller = getIntent().getStringExtra(CALLER_ACTIVITY);
 
-            if (caller.equals("MainActivity")) {
+            if ("MainActivity".equals(caller)) {
                 if(getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE) != null)
                     selectedTable = (Table) getIntent().getSerializableExtra(MainActivity.EXTRA_ASSIGNED_TABLE);
 
                 numberOfGuests = extras.getInt(MainActivity.EXTRA_NUMBER_OF_GUESTS);
-            } else if (caller.equals("EditOrderActivity")) {
+            } else if ("EditOrderActivity".equals(caller)) {
                 posOrder = (POSOrder) getIntent().getSerializableExtra(EditOrderActivity.EXTRA_ORDER);
                 selectedTable = posOrder.getTable();
                 numberOfGuests = posOrder.getGuestNumber();
-                //posOrder.getOrderingLines().clear();
             }
-
         }
     }
 
@@ -583,7 +581,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
             mSearchView.onActionViewCollapsed();
             showSearchList(false);
         }
-        else if(posOrder != null && caller.equals("MainActivity")) {
+        else if (posOrder != null && "MainActivity".equals(caller)) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.discard_draft_order)
                     .setNegativeButton(R.string.cancel, null)
@@ -671,7 +669,7 @@ public class CreateOrderActivity extends AppCompatActivity implements GuestNumbe
 
     @Override
     public void finish() {
-        if (caller.equals("EditOrderActivity") && itemsAdded) {
+        if ("EditOrderActivity".equals(caller) && itemsAdded) {
             Intent data = new Intent();
             data.putExtra(EditOrderActivity.EXTRA_ORDER, posOrder);
             setResult(RESULT_OK, data);
