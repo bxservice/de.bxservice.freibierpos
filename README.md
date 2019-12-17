@@ -21,12 +21,12 @@ Features
 
 Documentation
 -------------
-- You can find all the documentation and some sample data [here](https://bitbucket.org/tbayen_bxservice/bx-freibier-pos-documentation).
+- You can find all the documentation and some sample data [here](https://github.com/bxservice/bx-freibier-pos-documentation).
 
 Dependencies
 -------------
 - You need to have a running [iDempiere](http://www.idempiere.org) server to be able to use the app.
-- This [plugin](https://bitbucket.org/tbayen_bxservice/de.bxservice.bxpos.fcm-server) must be installed in the server before using the app.
+- This [plugin](https://github.com/bxservice/de.bxservice.bxpos.fcm-server) must be installed in the server before using the app.
 
 Questions or feedback
 -------------
